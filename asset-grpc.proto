@@ -56,6 +56,7 @@ message UserAssetListQuery {
     optional string Wallet = 4;
     optional string AssetID = 5;
     optional UserAssetStatus Status = 6;
+    optional bool Visible = 7;
 }
 
 message JurisdictionQuery {
