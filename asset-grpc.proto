@@ -12,7 +12,7 @@ service AssetListService {
     // Get Asset by ID
     rpc GetAsset(AssetID) returns (Asset);
     // Get all Assets for a given filter
-    rpc GetAssetsByAdmin(AssetQuery) returns (Assets);
+    rpc GetAssets(AssetQuery) returns (Assets);
 
     // Upsert on UserAssetList
     rpc UpsertUserAssetList(UserAssetList) returns (AssetID);
@@ -46,6 +46,7 @@ message AssetQuery {
     // Query on Asset properties
     optional string ExchangeTickerSymbol = 7;
     optional string Exchange = 8;
+    optional bool Listed = 9;
 }
 
 message UserAssetListQuery {
