@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package asset;
+
+import "asset.proto";
+
+option go_package = "github.com/sologenic/com-fs-asset-model;asset";
+
+service AssetListService {
+    // Upsert on Asset
+    rpc UpsertAsset(Asset) returns (AssetID);
+    // Get Asset by ID
+    rpc GetAsset(AssetID) returns (Asset);
+    // Get all Assets for a given filter
+    rpc GetAssetsByAdmin(AssetQuery) returns (Assets);
+
+    // Upsert on UserAssetList
+    rpc UpsertUserAssetList(UserAssetList) returns (AssetID);
+    // Get UserAssetList by ID
+    rpc GetUserAssetList(UserAssetListID) returns (UserAssetList);
+    // Get all UserAssetList for a given filter
+    rpc GetUserAssetLists(UserAssetListQuery) returns (UserAssetLists);
+    
+    // Upsert on Jurisdiction
+    rpc UpsertJurisdiction(Jurisdiction) returns (JurisdictionID);
+    // Get Jurisdiction by ID
+    rpc GetJurisdiction(JurisdictionID) returns (Jurisdiction);
+    // Get all Jurisdictions for a given filter
+    rpc GetJurisdictions(JurisdictionQuery) returns (Jurisdictions);
+
+    // Upsert on User Jurisdiction
+    rpc UpsertUserJurisdiction(UserJurisdiction) returns (UserJurisdictionID);
+    // Get User Jurisdiction by ID
+    rpc GetUserJurisdiction(UserJurisdictionID) returns (UserJurisdiction);
+    // Get all User Jurisdictions for a given filter
+    rpc GetUserJurisdictions(UserJurisdictionQuery) returns (UserJurisdictions);
+}   
+
+message AssetQuery {
+    string Network = 1;
+    optional int32 Offset = 2;
+    optional string Owner = 3;
+    optional AssetStatus Status = 4;
+    optional string Jurisdiction = 5;
+    optional string AssetType = 6;
+    // Query on Asset properties
+    optional string ExchangeTickerSymbol = 7;
+    optional string Exchange = 8;
+}
+
+message UserAssetListQuery {
+    string Network = 1;
+    optional int32 Offset = 2;
+    optional string UserID = 3;
+    optional string Wallet = 4;
+    optional string AssetID = 5;
+    optional UserAssetStatus Status = 6;
+}
+
+message JurisdictionQuery {
+    string Network = 1;
+    optional int32 Offset = 2;
+    optional string Owner = 3;
+    optional string Name = 4;
+    optional string ExternalID = 5;
+}
+
+message UserJurisdictionQuery {
+    string Network = 1;
+    optional int32 Offset = 2;
+    optional string UserID = 3;
+    optional string Wallet = 4;
+    optional string JurisdictionID = 5;
+    optional UserJurisdictionStatus Status = 6;
+}

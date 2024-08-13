@@ -16,12 +16,21 @@ message Asset {
     string Network = 6;
     google.protobuf.Timestamp CreatedAt = 7;
     google.protobuf.Timestamp UpdatedAt = 8;
+    AssetType Type = 9;
     
     // Asset can have only one of the following properties
     oneof Properties {
-        StockProperties StockProperties = 9;
+        StockProperties StockProperties = 10;
         // Add more properties here
     }
+}
+
+message AssetID {
+    string ID = 1;
+}
+
+message Assets {
+    repeated Asset Assets = 1;
 }
 
 message StockProperties {
@@ -48,6 +57,14 @@ message UserAssetList {
     google.protobuf.Timestamp UpdatedAt = 9;
 }
 
+message UserAssetListID {
+    string ID = 1;
+}
+
+message UserAssetLists {
+    repeated UserAssetList UserAssetLists = 1;
+}
+
 message Jurisdiction {
     string ID = 1; // UUID
     string Owner = 2; // Organization's owner
@@ -59,6 +76,14 @@ message Jurisdiction {
     google.protobuf.Timestamp UpdatedAt = 8;
 }
 
+message JurisdictionID {
+    string ID = 1;
+}
+
+message Jurisdictions {
+    repeated Jurisdiction Jurisdictions = 1;
+}
+
 message UserJurisdiction {
     string Id = 1; // UUID
     string UserID = 2;
@@ -68,6 +93,14 @@ message UserJurisdiction {
     google.protobuf.Timestamp CreatedAt = 6;
     google.protobuf.Timestamp UpdatedAt = 7;
     string Network = 8;
+}
+
+message UserJurisdictionID {
+    string ID = 1;
+}
+
+message UserJurisdictions {
+    repeated UserJurisdiction UserJurisdictions = 1;
 }
 
 enum AssetStatus {
