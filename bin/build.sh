@@ -38,7 +38,7 @@ protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto \
 --ts_proto_out=. \
 --ts_proto_opt=esModuleInterop=true \
 --ts_proto_opt=outputServices=grpc-js \
-multisig.proto
+asset.proto
 
 npm run build-ts
 rm -rf node_modules
