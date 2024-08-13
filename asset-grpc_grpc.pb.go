@@ -23,7 +23,7 @@ type AssetListServiceClient interface {
 	// Get Asset by ID
 	GetAsset(ctx context.Context, in *AssetID, opts ...grpc.CallOption) (*Asset, error)
 	// Get all Assets for a given filter
-	GetAssetsByAdmin(ctx context.Context, in *AssetQuery, opts ...grpc.CallOption) (*Assets, error)
+	GetAssets(ctx context.Context, in *AssetQuery, opts ...grpc.CallOption) (*Assets, error)
 	// Upsert on UserAssetList
 	UpsertUserAssetList(ctx context.Context, in *UserAssetList, opts ...grpc.CallOption) (*AssetID, error)
 	// Get UserAssetList by ID
@@ -70,9 +70,9 @@ func (c *assetListServiceClient) GetAsset(ctx context.Context, in *AssetID, opts
 	return out, nil
 }
 
-func (c *assetListServiceClient) GetAssetsByAdmin(ctx context.Context, in *AssetQuery, opts ...grpc.CallOption) (*Assets, error) {
+func (c *assetListServiceClient) GetAssets(ctx context.Context, in *AssetQuery, opts ...grpc.CallOption) (*Assets, error) {
 	out := new(Assets)
-	err := c.cc.Invoke(ctx, "/asset.AssetListService/GetAssetsByAdmin", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/asset.AssetListService/GetAssets", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -169,7 +169,7 @@ type AssetListServiceServer interface {
 	// Get Asset by ID
 	GetAsset(context.Context, *AssetID) (*Asset, error)
 	// Get all Assets for a given filter
-	GetAssetsByAdmin(context.Context, *AssetQuery) (*Assets, error)
+	GetAssets(context.Context, *AssetQuery) (*Assets, error)
 	// Upsert on UserAssetList
 	UpsertUserAssetList(context.Context, *UserAssetList) (*AssetID, error)
 	// Get UserAssetList by ID
@@ -200,8 +200,8 @@ func (UnimplementedAssetListServiceServer) UpsertAsset(context.Context, *Asset) 
 func (UnimplementedAssetListServiceServer) GetAsset(context.Context, *AssetID) (*Asset, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAsset not implemented")
 }
-func (UnimplementedAssetListServiceServer) GetAssetsByAdmin(context.Context, *AssetQuery) (*Assets, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAssetsByAdmin not implemented")
+func (UnimplementedAssetListServiceServer) GetAssets(context.Context, *AssetQuery) (*Assets, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAssets not implemented")
 }
 func (UnimplementedAssetListServiceServer) UpsertUserAssetList(context.Context, *UserAssetList) (*AssetID, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpsertUserAssetList not implemented")
@@ -278,20 +278,20 @@ func _AssetListService_GetAsset_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AssetListService_GetAssetsByAdmin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AssetListService_GetAssets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AssetQuery)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AssetListServiceServer).GetAssetsByAdmin(ctx, in)
+		return srv.(AssetListServiceServer).GetAssets(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/asset.AssetListService/GetAssetsByAdmin",
+		FullMethod: "/asset.AssetListService/GetAssets",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AssetListServiceServer).GetAssetsByAdmin(ctx, req.(*AssetQuery))
+		return srv.(AssetListServiceServer).GetAssets(ctx, req.(*AssetQuery))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -474,8 +474,8 @@ var AssetListService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AssetListService_GetAsset_Handler,
 		},
 		{
-			MethodName: "GetAssetsByAdmin",
-			Handler:    _AssetListService_GetAssetsByAdmin_Handler,
+			MethodName: "GetAssets",
+			Handler:    _AssetListService_GetAssets_Handler,
 		},
 		{
 			MethodName: "UpsertUserAssetList",
