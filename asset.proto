@@ -1,0 +1,106 @@
+syntax = "proto3";
+
+package asset;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/sologenic/com-fs-asset-model;asset";
+
+// Base structure for an asset
+message Asset {
+    string ID = 1;
+    string Owner = 2; // External entity (broket) that owns this asset, e.g. issuer
+    AssetStatus Status = 3;
+    Reason Reason = 4;
+    repeated string Jurisdictions = 5; // list of jurisdictions where this asset is allowed to be traded
+    string Network = 6;
+    google.protobuf.Timestamp CreatedAt = 7;
+    google.protobuf.Timestamp UpdatedAt = 8;
+    
+    // Asset can have only one of the following properties
+    oneof Properties {
+        StockProperties StockProperties = 9;
+        // Add more properties here
+    }
+}
+
+message StockProperties {
+    string Symbol = 1; // currency-issuer 
+    string Currency = 2;
+    string Version = 3;
+    int32 Precision = 4;
+    string Name = 5;
+    string ExchangeTickerSymbol = 6;
+    string Exchange = 7;
+    string Description = 8;
+    bool Listed = 9; // Only 1 version of the asset can be True at a time
+}
+
+message UserAssetList {
+    string ID = 1; // UUID
+    string UserID = 2;
+    string Wallet = 3;
+    string AssetID = 4; // UUID of the asset
+    UserAssetStatus Status = 5;
+    string Network = 6;
+    bool Visible = 7;
+    google.protobuf.Timestamp CreatedAt = 8;
+    google.protobuf.Timestamp UpdatedAt = 9;
+}
+
+message Jurisdiction {
+    string ID = 1; // UUID
+    string Owner = 2; // Organization's owner
+    string Name = 3;
+    string Description = 4;
+    string ExternalID = 5;
+    string Network = 6;
+    google.protobuf.Timestamp CreatedAt = 7;
+    google.protobuf.Timestamp UpdatedAt = 8;
+}
+
+message UserJurisdiction {
+    string Id = 1; // UUID
+    string UserID = 2;
+    string Wallet = 3;
+    string JurisdictionID = 4; // Jurisdiction UUID
+    UserJurisdictionStatus Status = 5; // Allowed or Not allowed
+    google.protobuf.Timestamp CreatedAt = 6;
+    google.protobuf.Timestamp UpdatedAt = 7;
+    string Network = 8;
+}
+
+enum AssetStatus {
+    ASSET_STATUS_DO_NOT_USE = 0;
+    DO_NOT_LIST = 1; // Owner only
+    REQUEST_LISTING = 2; // Owner only
+    LISTED = 3; // Super admin only
+    SUPER_ADMIN_DO_NOT_LIST = 4; // Super admin only 
+}
+
+enum Reason {
+    REASON_DO_NOT_USE = 0;
+    DUPLICATE = 1;
+    UNWANTED_ASSET = 2;
+    UNSTABLE_ASSET = 3;
+}
+
+enum AssetType {
+    ASSET_TYPE_DO_NOT_USE = 0;
+    STOCK = 1;
+    FUTURE = 2; // Will be implemented in the future
+    OPTION = 3; // Will be implemented in the future
+}
+
+enum UserAssetStatus {
+    USER_ASSET_STATUS_DO_NOT_USE = 0;
+    NOT_WHITELISTED = 1;
+    WHITELISTING_REQUESTED = 2;
+    WHITELISTED = 3;
+}
+
+enum UserJurisdictionStatus {
+    USER_JURISDICTION_STATUS_DO_NOT_USE = 0;
+    ALLOWED = 1;
+    NOT_ALLOWED = 2;
+}
