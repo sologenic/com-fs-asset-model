@@ -42,7 +42,7 @@ message AssetQuery {
     optional string Owner = 3;
     optional AssetStatus Status = 4;
     optional string Jurisdiction = 5;
-    optional string AssetType = 6;
+    optional AssetType AssetType = 6;
     // Query on Asset properties
     optional string ExchangeTickerSymbol = 7;
     optional string Exchange = 8;
