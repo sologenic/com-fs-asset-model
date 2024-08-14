@@ -112,6 +112,7 @@ enum UserAssetStatus {
     NOT_WHITELISTED = 1;
     WHITELISTING_REQUESTED = 2;
     WHITELISTED = 3;
+    OUTDATED_VERSION = 4;
 }
 
 enum UserJurisdictionStatus {
