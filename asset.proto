@@ -105,8 +105,6 @@ enum Reason {
 enum AssetType {
     ASSET_TYPE_DO_NOT_USE = 0;
     STOCK = 1;
-    FUTURE = 2; // Will be implemented in the future
-    OPTION = 3; // Will be implemented in the future
 }
 
 enum UserAssetStatus {
