@@ -64,14 +64,14 @@ message Jurisdictions {
 }
 
 message UserJurisdiction {
-    string Id = 1; // UUID
-    string UserID = 2;
-    string Wallet = 3;
-    string JurisdictionID = 4;
-    UserJurisdictionStatus Status = 5;
-    google.protobuf.Timestamp CreatedAt = 6;
-    google.protobuf.Timestamp UpdatedAt = 7;
-    string Network = 8;
+    // Key combination: UserID-Wallet-JurisdictionID
+    string UserID = 1;
+    string Wallet = 2;
+    string JurisdictionID = 3;
+    UserJurisdictionStatus Status = 4;
+    google.protobuf.Timestamp CreatedAt = 5;
+    google.protobuf.Timestamp UpdatedAt = 6;
+    string Network = 7;
 }
 
 message UserJurisdictions {
