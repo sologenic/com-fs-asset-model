@@ -42,9 +42,9 @@ message AssetID {
 
 message AssetQuery {
     string Network = 1;
-    repeated string JurisdictionIds = 2;
+    repeated string JurisdictionIDs = 2;
     optional int32 Offset = 3;
-    optional string Owner = 4;
+    optional string OrganizationID = 4;
     optional AssetStatus Status = 5;
     optional string Jurisdiction = 6;
     optional AssetType AssetType = 7;
@@ -73,7 +73,7 @@ message JurisdictionID {
 message JurisdictionQuery {
     string Network = 1;
     optional int32 Offset = 2;
-    optional string Owner = 3;
+    optional string OrganizationID = 3;
     optional string Name = 4;
     optional string ExternalID = 5;
 }
