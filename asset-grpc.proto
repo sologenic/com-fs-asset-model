@@ -8,16 +8,16 @@ option go_package = "github.com/sologenic/com-fs-asset-model;asset";
 
 service AssetListService {
     // Upsert on Asset
-    rpc UpsertAsset(Asset) returns (AssetID);
+    rpc UpsertAsset(Asset) returns (AssetKey);
     // Get Asset by ID
-    rpc GetAsset(AssetID) returns (Asset);
+    rpc GetAsset(AssetKey) returns (Asset);
     // Get all Assets for a given filter
     rpc GetAssets(AssetQuery) returns (Assets);
 
     // Upsert on UserAssetList
-    rpc UpsertUserAssetList(UserAssetList) returns (AssetID);
+    rpc UpsertUserAssetList(UserAssetList) returns (AssetKey);
     // Get UserAssetList by ID
-    rpc GetUserAssetList(UserAssetListID) returns (UserAssetList);
+    rpc GetUserAssetList(UserAssetListKey) returns (UserAssetList);
     // Get all UserAssetList for a given filter
     rpc GetUserAssetLists(UserAssetListQuery) returns (UserAssetLists);
     
@@ -29,15 +29,15 @@ service AssetListService {
     rpc GetJurisdictions(JurisdictionQuery) returns (Jurisdictions);
 
     // Upsert on User Jurisdiction
-    rpc UpsertUserJurisdiction(UserJurisdiction) returns (UserJurisdictionID);
+    rpc UpsertUserJurisdiction(UserJurisdiction) returns (UserJurisdictionKey);
     // Get User Jurisdiction by ID
-    rpc GetUserJurisdiction(UserJurisdictionID) returns (UserJurisdiction);
+    rpc GetUserJurisdiction(UserJurisdictionKey) returns (UserJurisdiction);
     // Get all User Jurisdictions for a given filter
     rpc GetUserJurisdictions(UserJurisdictionQuery) returns (UserJurisdictions);
 }   
 
-message AssetID {
-    string ID = 1;
+message AssetKey {
+    string Key = 1;
 }
 
 message AssetQuery {
@@ -52,8 +52,8 @@ message AssetQuery {
     optional string Exchange = 9;
 }
 
-message UserAssetListID {
-    string ID = 1;
+message UserAssetListKey {
+    string Key = 1;
 }
 
 message UserAssetListQuery {
@@ -78,8 +78,8 @@ message JurisdictionQuery {
     optional string ExternalID = 5;
 }
 
-message UserJurisdictionID {
-    string ID = 1;
+message UserJurisdictionKey {
+    string Key = 1;
 }
 
 message UserJurisdictionQuery {
