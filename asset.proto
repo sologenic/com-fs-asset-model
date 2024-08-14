@@ -33,15 +33,15 @@ message Assets {
 }
 
 message UserAssetList {
-    string ID = 1; // UUID
-    string UserID = 2;
-    string Wallet = 3;
-    string AssetID = 4; // UUID of the asset
-    UserAssetStatus Status = 5;
-    string Network = 6;
-    bool Visible = 7;
-    google.protobuf.Timestamp CreatedAt = 8;
-    google.protobuf.Timestamp UpdatedAt = 9;
+    // Key combination: Currency-OrganizationID-Version-UserID
+    string UserID = 1;
+    string Wallet = 2;
+    string AssetID = 3; // Stable Key: "Currency-OrganizationID-Version"
+    UserAssetStatus Status = 4;
+    string Network = 5;
+    bool Visible = 6;
+    google.protobuf.Timestamp CreatedAt = 7;
+    google.protobuf.Timestamp UpdatedAt = 8;
 }
 
 message UserAssetLists {
