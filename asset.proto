@@ -83,7 +83,8 @@ enum AssetStatus {
     DO_NOT_LIST = 1; // Organization admin only
     REQUEST_LISTING = 2; // Organization admin only
     LISTED = 3; // Super admin only
-    SUPER_ADMIN_DO_NOT_LIST = 4; // Super admin only 
+    SUPER_ADMIN_DO_NOT_LIST = 4; // Super admin only
+    OUTDATED_ASSET_VERSION = 5;
 }
 
 enum Reason {
