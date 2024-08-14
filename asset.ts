@@ -12,14 +12,15 @@ export const protobufPackage = "asset";
 
 export enum AssetStatus {
   ASSET_STATUS_DO_NOT_USE = 0,
-  /** DO_NOT_LIST - Owner only */
+  /** DO_NOT_LIST - Organization admin only */
   DO_NOT_LIST = 1,
-  /** REQUEST_LISTING - Owner only */
+  /** REQUEST_LISTING - Organization admin only */
   REQUEST_LISTING = 2,
   /** LISTED - Super admin only */
   LISTED = 3,
   /** SUPER_ADMIN_DO_NOT_LIST - Super admin only */
   SUPER_ADMIN_DO_NOT_LIST = 4,
+  OUTDATED_ASSET_VERSION = 5,
   UNRECOGNIZED = -1,
 }
 
@@ -40,6 +41,9 @@ export function assetStatusFromJSON(object: any): AssetStatus {
     case 4:
     case "SUPER_ADMIN_DO_NOT_LIST":
       return AssetStatus.SUPER_ADMIN_DO_NOT_LIST;
+    case 5:
+    case "OUTDATED_ASSET_VERSION":
+      return AssetStatus.OUTDATED_ASSET_VERSION;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -59,6 +63,8 @@ export function assetStatusToJSON(object: AssetStatus): string {
       return "LISTED";
     case AssetStatus.SUPER_ADMIN_DO_NOT_LIST:
       return "SUPER_ADMIN_DO_NOT_LIST";
+    case AssetStatus.OUTDATED_ASSET_VERSION:
+      return "OUTDATED_ASSET_VERSION";
     case AssetStatus.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -113,10 +119,6 @@ export function reasonToJSON(object: Reason): string {
 export enum AssetType {
   ASSET_TYPE_DO_NOT_USE = 0,
   STOCK = 1,
-  /** FUTURE - Will be implemented in the future */
-  FUTURE = 2,
-  /** OPTION - Will be implemented in the future */
-  OPTION = 3,
   UNRECOGNIZED = -1,
 }
 
@@ -128,12 +130,6 @@ export function assetTypeFromJSON(object: any): AssetType {
     case 1:
     case "STOCK":
       return AssetType.STOCK;
-    case 2:
-    case "FUTURE":
-      return AssetType.FUTURE;
-    case 3:
-    case "OPTION":
-      return AssetType.OPTION;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -147,10 +143,6 @@ export function assetTypeToJSON(object: AssetType): string {
       return "ASSET_TYPE_DO_NOT_USE";
     case AssetType.STOCK:
       return "STOCK";
-    case AssetType.FUTURE:
-      return "FUTURE";
-    case AssetType.OPTION:
-      return "OPTION";
     case AssetType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -162,6 +154,7 @@ export enum UserAssetStatus {
   NOT_WHITELISTED = 1,
   WHITELISTING_REQUESTED = 2,
   WHITELISTED = 3,
+  OUTDATED_VERSION = 4,
   UNRECOGNIZED = -1,
 }
 
@@ -179,6 +172,9 @@ export function userAssetStatusFromJSON(object: any): UserAssetStatus {
     case 3:
     case "WHITELISTED":
       return UserAssetStatus.WHITELISTED;
+    case 4:
+    case "OUTDATED_VERSION":
+      return UserAssetStatus.OUTDATED_VERSION;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -196,6 +192,8 @@ export function userAssetStatusToJSON(object: UserAssetStatus): string {
       return "WHITELISTING_REQUESTED";
     case UserAssetStatus.WHITELISTED:
       return "WHITELISTED";
+    case UserAssetStatus.OUTDATED_VERSION:
+      return "OUTDATED_VERSION";
     case UserAssetStatus.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -241,33 +239,20 @@ export function userJurisdictionStatusToJSON(object: UserJurisdictionStatus): st
   }
 }
 
-/** Base structure for an asset */
 export interface Asset {
-  ID: string;
-  /** External entity (broket) that owns this asset, e.g. issuer */
-  Owner: string;
+  /** Key combination: Currency-OrganizationID-Version */
+  OrganizationID: string;
   Status: AssetStatus;
-  Reason: Reason;
+  Reason?:
+    | Reason
+    | undefined;
   /** list of jurisdictions where this asset is allowed to be traded */
   Jurisdictions: string[];
   Network: string;
   CreatedAt: Date | undefined;
   UpdatedAt: Date | undefined;
   Type: AssetType;
-  /** Add more properties here */
-  StockProperties?: StockProperties | undefined;
-}
-
-export interface AssetID {
-  ID: string;
-}
-
-export interface Assets {
-  Assets: Asset[];
-}
-
-export interface StockProperties {
-  /** currency-issuer */
+  /** Flattened StockProperties */
   Symbol: string;
   Currency: string;
   Version: string;
@@ -276,26 +261,23 @@ export interface StockProperties {
   ExchangeTickerSymbol: string;
   Exchange: string;
   Description: string;
-  /** Only 1 version of the asset can be True at a time */
-  Listed: boolean;
+}
+
+export interface Assets {
+  Assets: Asset[];
 }
 
 export interface UserAssetList {
-  /** UUID */
-  ID: string;
+  /** Key combination: Currency-OrganizationID-Version-UserID */
   UserID: string;
   Wallet: string;
-  /** UUID of the asset */
+  /** Stable Key: "Currency-OrganizationID-Version" */
   AssetID: string;
   Status: UserAssetStatus;
   Network: string;
   Visible: boolean;
   CreatedAt: Date | undefined;
   UpdatedAt: Date | undefined;
-}
-
-export interface UserAssetListID {
-  ID: string;
 }
 
 export interface UserAssetLists {
@@ -305,8 +287,7 @@ export interface UserAssetLists {
 export interface Jurisdiction {
   /** UUID */
   ID: string;
-  /** Organization's owner */
-  Owner: string;
+  OrganizationID: string;
   Name: string;
   Description: string;
   ExternalID: string;
@@ -315,30 +296,19 @@ export interface Jurisdiction {
   UpdatedAt: Date | undefined;
 }
 
-export interface JurisdictionID {
-  ID: string;
-}
-
 export interface Jurisdictions {
   Jurisdictions: Jurisdiction[];
 }
 
 export interface UserJurisdiction {
-  /** UUID */
-  Id: string;
+  /** Key combination: UserID-Wallet-JurisdictionID */
   UserID: string;
   Wallet: string;
-  /** Jurisdiction UUID */
   JurisdictionID: string;
-  /** Allowed or Not allowed */
   Status: UserJurisdictionStatus;
   CreatedAt: Date | undefined;
   UpdatedAt: Date | undefined;
   Network: string;
-}
-
-export interface UserJurisdictionID {
-  ID: string;
 }
 
 export interface UserJurisdictions {
@@ -347,50 +317,74 @@ export interface UserJurisdictions {
 
 function createBaseAsset(): Asset {
   return {
-    ID: "",
-    Owner: "",
+    OrganizationID: "",
     Status: 0,
-    Reason: 0,
+    Reason: undefined,
     Jurisdictions: [],
     Network: "",
     CreatedAt: undefined,
     UpdatedAt: undefined,
     Type: 0,
-    StockProperties: undefined,
+    Symbol: "",
+    Currency: "",
+    Version: "",
+    Precision: 0,
+    Name: "",
+    ExchangeTickerSymbol: "",
+    Exchange: "",
+    Description: "",
   };
 }
 
 export const Asset = {
   encode(message: Asset, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.ID !== "") {
-      writer.uint32(10).string(message.ID);
-    }
-    if (message.Owner !== "") {
-      writer.uint32(18).string(message.Owner);
+    if (message.OrganizationID !== "") {
+      writer.uint32(10).string(message.OrganizationID);
     }
     if (message.Status !== 0) {
-      writer.uint32(24).int32(message.Status);
+      writer.uint32(16).int32(message.Status);
     }
-    if (message.Reason !== 0) {
-      writer.uint32(32).int32(message.Reason);
+    if (message.Reason !== undefined) {
+      writer.uint32(24).int32(message.Reason);
     }
     for (const v of message.Jurisdictions) {
-      writer.uint32(42).string(v!);
+      writer.uint32(34).string(v!);
     }
     if (message.Network !== "") {
-      writer.uint32(50).string(message.Network);
+      writer.uint32(42).string(message.Network);
     }
     if (message.CreatedAt !== undefined) {
-      Timestamp.encode(toTimestamp(message.CreatedAt), writer.uint32(58).fork()).ldelim();
+      Timestamp.encode(toTimestamp(message.CreatedAt), writer.uint32(50).fork()).ldelim();
     }
     if (message.UpdatedAt !== undefined) {
-      Timestamp.encode(toTimestamp(message.UpdatedAt), writer.uint32(66).fork()).ldelim();
+      Timestamp.encode(toTimestamp(message.UpdatedAt), writer.uint32(58).fork()).ldelim();
     }
     if (message.Type !== 0) {
-      writer.uint32(72).int32(message.Type);
+      writer.uint32(64).int32(message.Type);
     }
-    if (message.StockProperties !== undefined) {
-      StockProperties.encode(message.StockProperties, writer.uint32(82).fork()).ldelim();
+    if (message.Symbol !== "") {
+      writer.uint32(74).string(message.Symbol);
+    }
+    if (message.Currency !== "") {
+      writer.uint32(82).string(message.Currency);
+    }
+    if (message.Version !== "") {
+      writer.uint32(90).string(message.Version);
+    }
+    if (message.Precision !== 0) {
+      writer.uint32(96).int32(message.Precision);
+    }
+    if (message.Name !== "") {
+      writer.uint32(106).string(message.Name);
+    }
+    if (message.ExchangeTickerSymbol !== "") {
+      writer.uint32(114).string(message.ExchangeTickerSymbol);
+    }
+    if (message.Exchange !== "") {
+      writer.uint32(122).string(message.Exchange);
+    }
+    if (message.Description !== "") {
+      writer.uint32(130).string(message.Description);
     }
     return writer;
   },
@@ -407,70 +401,112 @@ export const Asset = {
             break;
           }
 
-          message.ID = reader.string();
+          message.OrganizationID = reader.string();
           continue;
         case 2:
-          if (tag !== 18) {
+          if (tag !== 16) {
             break;
           }
 
-          message.Owner = reader.string();
+          message.Status = reader.int32() as any;
           continue;
         case 3:
           if (tag !== 24) {
             break;
           }
 
-          message.Status = reader.int32() as any;
+          message.Reason = reader.int32() as any;
           continue;
         case 4:
-          if (tag !== 32) {
+          if (tag !== 34) {
             break;
           }
 
-          message.Reason = reader.int32() as any;
+          message.Jurisdictions.push(reader.string());
           continue;
         case 5:
           if (tag !== 42) {
             break;
           }
 
-          message.Jurisdictions.push(reader.string());
+          message.Network = reader.string();
           continue;
         case 6:
           if (tag !== 50) {
             break;
           }
 
-          message.Network = reader.string();
+          message.CreatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
           continue;
         case 7:
           if (tag !== 58) {
             break;
           }
 
-          message.CreatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
-          continue;
-        case 8:
-          if (tag !== 66) {
-            break;
-          }
-
           message.UpdatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
           continue;
-        case 9:
-          if (tag !== 72) {
+        case 8:
+          if (tag !== 64) {
             break;
           }
 
           message.Type = reader.int32() as any;
+          continue;
+        case 9:
+          if (tag !== 74) {
+            break;
+          }
+
+          message.Symbol = reader.string();
           continue;
         case 10:
           if (tag !== 82) {
             break;
           }
 
-          message.StockProperties = StockProperties.decode(reader, reader.uint32());
+          message.Currency = reader.string();
+          continue;
+        case 11:
+          if (tag !== 90) {
+            break;
+          }
+
+          message.Version = reader.string();
+          continue;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+
+          message.Precision = reader.int32();
+          continue;
+        case 13:
+          if (tag !== 106) {
+            break;
+          }
+
+          message.Name = reader.string();
+          continue;
+        case 14:
+          if (tag !== 114) {
+            break;
+          }
+
+          message.ExchangeTickerSymbol = reader.string();
+          continue;
+        case 15:
+          if (tag !== 122) {
+            break;
+          }
+
+          message.Exchange = reader.string();
+          continue;
+        case 16:
+          if (tag !== 130) {
+            break;
+          }
+
+          message.Description = reader.string();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -483,10 +519,9 @@ export const Asset = {
 
   fromJSON(object: any): Asset {
     return {
-      ID: isSet(object.ID) ? globalThis.String(object.ID) : "",
-      Owner: isSet(object.Owner) ? globalThis.String(object.Owner) : "",
+      OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
       Status: isSet(object.Status) ? assetStatusFromJSON(object.Status) : 0,
-      Reason: isSet(object.Reason) ? reasonFromJSON(object.Reason) : 0,
+      Reason: isSet(object.Reason) ? reasonFromJSON(object.Reason) : undefined,
       Jurisdictions: globalThis.Array.isArray(object?.Jurisdictions)
         ? object.Jurisdictions.map((e: any) => globalThis.String(e))
         : [],
@@ -494,22 +529,26 @@ export const Asset = {
       CreatedAt: isSet(object.CreatedAt) ? fromJsonTimestamp(object.CreatedAt) : undefined,
       UpdatedAt: isSet(object.UpdatedAt) ? fromJsonTimestamp(object.UpdatedAt) : undefined,
       Type: isSet(object.Type) ? assetTypeFromJSON(object.Type) : 0,
-      StockProperties: isSet(object.StockProperties) ? StockProperties.fromJSON(object.StockProperties) : undefined,
+      Symbol: isSet(object.Symbol) ? globalThis.String(object.Symbol) : "",
+      Currency: isSet(object.Currency) ? globalThis.String(object.Currency) : "",
+      Version: isSet(object.Version) ? globalThis.String(object.Version) : "",
+      Precision: isSet(object.Precision) ? globalThis.Number(object.Precision) : 0,
+      Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
+      ExchangeTickerSymbol: isSet(object.ExchangeTickerSymbol) ? globalThis.String(object.ExchangeTickerSymbol) : "",
+      Exchange: isSet(object.Exchange) ? globalThis.String(object.Exchange) : "",
+      Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
     };
   },
 
   toJSON(message: Asset): unknown {
     const obj: any = {};
-    if (message.ID !== "") {
-      obj.ID = message.ID;
-    }
-    if (message.Owner !== "") {
-      obj.Owner = message.Owner;
+    if (message.OrganizationID !== "") {
+      obj.OrganizationID = message.OrganizationID;
     }
     if (message.Status !== 0) {
       obj.Status = assetStatusToJSON(message.Status);
     }
-    if (message.Reason !== 0) {
+    if (message.Reason !== undefined) {
       obj.Reason = reasonToJSON(message.Reason);
     }
     if (message.Jurisdictions?.length) {
@@ -527,8 +566,29 @@ export const Asset = {
     if (message.Type !== 0) {
       obj.Type = assetTypeToJSON(message.Type);
     }
-    if (message.StockProperties !== undefined) {
-      obj.StockProperties = StockProperties.toJSON(message.StockProperties);
+    if (message.Symbol !== "") {
+      obj.Symbol = message.Symbol;
+    }
+    if (message.Currency !== "") {
+      obj.Currency = message.Currency;
+    }
+    if (message.Version !== "") {
+      obj.Version = message.Version;
+    }
+    if (message.Precision !== 0) {
+      obj.Precision = Math.round(message.Precision);
+    }
+    if (message.Name !== "") {
+      obj.Name = message.Name;
+    }
+    if (message.ExchangeTickerSymbol !== "") {
+      obj.ExchangeTickerSymbol = message.ExchangeTickerSymbol;
+    }
+    if (message.Exchange !== "") {
+      obj.Exchange = message.Exchange;
+    }
+    if (message.Description !== "") {
+      obj.Description = message.Description;
     }
     return obj;
   },
@@ -538,75 +598,22 @@ export const Asset = {
   },
   fromPartial<I extends Exact<DeepPartial<Asset>, I>>(object: I): Asset {
     const message = createBaseAsset();
-    message.ID = object.ID ?? "";
-    message.Owner = object.Owner ?? "";
+    message.OrganizationID = object.OrganizationID ?? "";
     message.Status = object.Status ?? 0;
-    message.Reason = object.Reason ?? 0;
+    message.Reason = object.Reason ?? undefined;
     message.Jurisdictions = object.Jurisdictions?.map((e) => e) || [];
     message.Network = object.Network ?? "";
     message.CreatedAt = object.CreatedAt ?? undefined;
     message.UpdatedAt = object.UpdatedAt ?? undefined;
     message.Type = object.Type ?? 0;
-    message.StockProperties = (object.StockProperties !== undefined && object.StockProperties !== null)
-      ? StockProperties.fromPartial(object.StockProperties)
-      : undefined;
-    return message;
-  },
-};
-
-function createBaseAssetID(): AssetID {
-  return { ID: "" };
-}
-
-export const AssetID = {
-  encode(message: AssetID, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.ID !== "") {
-      writer.uint32(10).string(message.ID);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): AssetID {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseAssetID();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.ID = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): AssetID {
-    return { ID: isSet(object.ID) ? globalThis.String(object.ID) : "" };
-  },
-
-  toJSON(message: AssetID): unknown {
-    const obj: any = {};
-    if (message.ID !== "") {
-      obj.ID = message.ID;
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<AssetID>, I>>(base?: I): AssetID {
-    return AssetID.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<AssetID>, I>>(object: I): AssetID {
-    const message = createBaseAssetID();
-    message.ID = object.ID ?? "";
+    message.Symbol = object.Symbol ?? "";
+    message.Currency = object.Currency ?? "";
+    message.Version = object.Version ?? "";
+    message.Precision = object.Precision ?? 0;
+    message.Name = object.Name ?? "";
+    message.ExchangeTickerSymbol = object.ExchangeTickerSymbol ?? "";
+    message.Exchange = object.Exchange ?? "";
+    message.Description = object.Description ?? "";
     return message;
   },
 };
@@ -668,198 +675,8 @@ export const Assets = {
   },
 };
 
-function createBaseStockProperties(): StockProperties {
-  return {
-    Symbol: "",
-    Currency: "",
-    Version: "",
-    Precision: 0,
-    Name: "",
-    ExchangeTickerSymbol: "",
-    Exchange: "",
-    Description: "",
-    Listed: false,
-  };
-}
-
-export const StockProperties = {
-  encode(message: StockProperties, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.Symbol !== "") {
-      writer.uint32(10).string(message.Symbol);
-    }
-    if (message.Currency !== "") {
-      writer.uint32(18).string(message.Currency);
-    }
-    if (message.Version !== "") {
-      writer.uint32(26).string(message.Version);
-    }
-    if (message.Precision !== 0) {
-      writer.uint32(32).int32(message.Precision);
-    }
-    if (message.Name !== "") {
-      writer.uint32(42).string(message.Name);
-    }
-    if (message.ExchangeTickerSymbol !== "") {
-      writer.uint32(50).string(message.ExchangeTickerSymbol);
-    }
-    if (message.Exchange !== "") {
-      writer.uint32(58).string(message.Exchange);
-    }
-    if (message.Description !== "") {
-      writer.uint32(66).string(message.Description);
-    }
-    if (message.Listed !== false) {
-      writer.uint32(72).bool(message.Listed);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): StockProperties {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseStockProperties();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.Symbol = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
-
-          message.Currency = reader.string();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
-
-          message.Version = reader.string();
-          continue;
-        case 4:
-          if (tag !== 32) {
-            break;
-          }
-
-          message.Precision = reader.int32();
-          continue;
-        case 5:
-          if (tag !== 42) {
-            break;
-          }
-
-          message.Name = reader.string();
-          continue;
-        case 6:
-          if (tag !== 50) {
-            break;
-          }
-
-          message.ExchangeTickerSymbol = reader.string();
-          continue;
-        case 7:
-          if (tag !== 58) {
-            break;
-          }
-
-          message.Exchange = reader.string();
-          continue;
-        case 8:
-          if (tag !== 66) {
-            break;
-          }
-
-          message.Description = reader.string();
-          continue;
-        case 9:
-          if (tag !== 72) {
-            break;
-          }
-
-          message.Listed = reader.bool();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): StockProperties {
-    return {
-      Symbol: isSet(object.Symbol) ? globalThis.String(object.Symbol) : "",
-      Currency: isSet(object.Currency) ? globalThis.String(object.Currency) : "",
-      Version: isSet(object.Version) ? globalThis.String(object.Version) : "",
-      Precision: isSet(object.Precision) ? globalThis.Number(object.Precision) : 0,
-      Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
-      ExchangeTickerSymbol: isSet(object.ExchangeTickerSymbol) ? globalThis.String(object.ExchangeTickerSymbol) : "",
-      Exchange: isSet(object.Exchange) ? globalThis.String(object.Exchange) : "",
-      Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
-      Listed: isSet(object.Listed) ? globalThis.Boolean(object.Listed) : false,
-    };
-  },
-
-  toJSON(message: StockProperties): unknown {
-    const obj: any = {};
-    if (message.Symbol !== "") {
-      obj.Symbol = message.Symbol;
-    }
-    if (message.Currency !== "") {
-      obj.Currency = message.Currency;
-    }
-    if (message.Version !== "") {
-      obj.Version = message.Version;
-    }
-    if (message.Precision !== 0) {
-      obj.Precision = Math.round(message.Precision);
-    }
-    if (message.Name !== "") {
-      obj.Name = message.Name;
-    }
-    if (message.ExchangeTickerSymbol !== "") {
-      obj.ExchangeTickerSymbol = message.ExchangeTickerSymbol;
-    }
-    if (message.Exchange !== "") {
-      obj.Exchange = message.Exchange;
-    }
-    if (message.Description !== "") {
-      obj.Description = message.Description;
-    }
-    if (message.Listed !== false) {
-      obj.Listed = message.Listed;
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<StockProperties>, I>>(base?: I): StockProperties {
-    return StockProperties.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<StockProperties>, I>>(object: I): StockProperties {
-    const message = createBaseStockProperties();
-    message.Symbol = object.Symbol ?? "";
-    message.Currency = object.Currency ?? "";
-    message.Version = object.Version ?? "";
-    message.Precision = object.Precision ?? 0;
-    message.Name = object.Name ?? "";
-    message.ExchangeTickerSymbol = object.ExchangeTickerSymbol ?? "";
-    message.Exchange = object.Exchange ?? "";
-    message.Description = object.Description ?? "";
-    message.Listed = object.Listed ?? false;
-    return message;
-  },
-};
-
 function createBaseUserAssetList(): UserAssetList {
   return {
-    ID: "",
     UserID: "",
     Wallet: "",
     AssetID: "",
@@ -873,32 +690,29 @@ function createBaseUserAssetList(): UserAssetList {
 
 export const UserAssetList = {
   encode(message: UserAssetList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.ID !== "") {
-      writer.uint32(10).string(message.ID);
-    }
     if (message.UserID !== "") {
-      writer.uint32(18).string(message.UserID);
+      writer.uint32(10).string(message.UserID);
     }
     if (message.Wallet !== "") {
-      writer.uint32(26).string(message.Wallet);
+      writer.uint32(18).string(message.Wallet);
     }
     if (message.AssetID !== "") {
-      writer.uint32(34).string(message.AssetID);
+      writer.uint32(26).string(message.AssetID);
     }
     if (message.Status !== 0) {
-      writer.uint32(40).int32(message.Status);
+      writer.uint32(32).int32(message.Status);
     }
     if (message.Network !== "") {
-      writer.uint32(50).string(message.Network);
+      writer.uint32(42).string(message.Network);
     }
     if (message.Visible !== false) {
-      writer.uint32(56).bool(message.Visible);
+      writer.uint32(48).bool(message.Visible);
     }
     if (message.CreatedAt !== undefined) {
-      Timestamp.encode(toTimestamp(message.CreatedAt), writer.uint32(66).fork()).ldelim();
+      Timestamp.encode(toTimestamp(message.CreatedAt), writer.uint32(58).fork()).ldelim();
     }
     if (message.UpdatedAt !== undefined) {
-      Timestamp.encode(toTimestamp(message.UpdatedAt), writer.uint32(74).fork()).ldelim();
+      Timestamp.encode(toTimestamp(message.UpdatedAt), writer.uint32(66).fork()).ldelim();
     }
     return writer;
   },
@@ -915,59 +729,52 @@ export const UserAssetList = {
             break;
           }
 
-          message.ID = reader.string();
+          message.UserID = reader.string();
           continue;
         case 2:
           if (tag !== 18) {
             break;
           }
 
-          message.UserID = reader.string();
+          message.Wallet = reader.string();
           continue;
         case 3:
           if (tag !== 26) {
             break;
           }
 
-          message.Wallet = reader.string();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
-
           message.AssetID = reader.string();
           continue;
-        case 5:
-          if (tag !== 40) {
+        case 4:
+          if (tag !== 32) {
             break;
           }
 
           message.Status = reader.int32() as any;
           continue;
-        case 6:
-          if (tag !== 50) {
+        case 5:
+          if (tag !== 42) {
             break;
           }
 
           message.Network = reader.string();
           continue;
-        case 7:
-          if (tag !== 56) {
+        case 6:
+          if (tag !== 48) {
             break;
           }
 
           message.Visible = reader.bool();
           continue;
-        case 8:
-          if (tag !== 66) {
+        case 7:
+          if (tag !== 58) {
             break;
           }
 
           message.CreatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
           continue;
-        case 9:
-          if (tag !== 74) {
+        case 8:
+          if (tag !== 66) {
             break;
           }
 
@@ -984,7 +791,6 @@ export const UserAssetList = {
 
   fromJSON(object: any): UserAssetList {
     return {
-      ID: isSet(object.ID) ? globalThis.String(object.ID) : "",
       UserID: isSet(object.UserID) ? globalThis.String(object.UserID) : "",
       Wallet: isSet(object.Wallet) ? globalThis.String(object.Wallet) : "",
       AssetID: isSet(object.AssetID) ? globalThis.String(object.AssetID) : "",
@@ -998,9 +804,6 @@ export const UserAssetList = {
 
   toJSON(message: UserAssetList): unknown {
     const obj: any = {};
-    if (message.ID !== "") {
-      obj.ID = message.ID;
-    }
     if (message.UserID !== "") {
       obj.UserID = message.UserID;
     }
@@ -1033,7 +836,6 @@ export const UserAssetList = {
   },
   fromPartial<I extends Exact<DeepPartial<UserAssetList>, I>>(object: I): UserAssetList {
     const message = createBaseUserAssetList();
-    message.ID = object.ID ?? "";
     message.UserID = object.UserID ?? "";
     message.Wallet = object.Wallet ?? "";
     message.AssetID = object.AssetID ?? "";
@@ -1042,63 +844,6 @@ export const UserAssetList = {
     message.Visible = object.Visible ?? false;
     message.CreatedAt = object.CreatedAt ?? undefined;
     message.UpdatedAt = object.UpdatedAt ?? undefined;
-    return message;
-  },
-};
-
-function createBaseUserAssetListID(): UserAssetListID {
-  return { ID: "" };
-}
-
-export const UserAssetListID = {
-  encode(message: UserAssetListID, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.ID !== "") {
-      writer.uint32(10).string(message.ID);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): UserAssetListID {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUserAssetListID();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.ID = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UserAssetListID {
-    return { ID: isSet(object.ID) ? globalThis.String(object.ID) : "" };
-  },
-
-  toJSON(message: UserAssetListID): unknown {
-    const obj: any = {};
-    if (message.ID !== "") {
-      obj.ID = message.ID;
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<UserAssetListID>, I>>(base?: I): UserAssetListID {
-    return UserAssetListID.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<UserAssetListID>, I>>(object: I): UserAssetListID {
-    const message = createBaseUserAssetListID();
-    message.ID = object.ID ?? "";
     return message;
   },
 };
@@ -1167,7 +912,7 @@ export const UserAssetLists = {
 function createBaseJurisdiction(): Jurisdiction {
   return {
     ID: "",
-    Owner: "",
+    OrganizationID: "",
     Name: "",
     Description: "",
     ExternalID: "",
@@ -1182,8 +927,8 @@ export const Jurisdiction = {
     if (message.ID !== "") {
       writer.uint32(10).string(message.ID);
     }
-    if (message.Owner !== "") {
-      writer.uint32(18).string(message.Owner);
+    if (message.OrganizationID !== "") {
+      writer.uint32(18).string(message.OrganizationID);
     }
     if (message.Name !== "") {
       writer.uint32(26).string(message.Name);
@@ -1225,7 +970,7 @@ export const Jurisdiction = {
             break;
           }
 
-          message.Owner = reader.string();
+          message.OrganizationID = reader.string();
           continue;
         case 3:
           if (tag !== 26) {
@@ -1281,7 +1026,7 @@ export const Jurisdiction = {
   fromJSON(object: any): Jurisdiction {
     return {
       ID: isSet(object.ID) ? globalThis.String(object.ID) : "",
-      Owner: isSet(object.Owner) ? globalThis.String(object.Owner) : "",
+      OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
       Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
       Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
       ExternalID: isSet(object.ExternalID) ? globalThis.String(object.ExternalID) : "",
@@ -1296,8 +1041,8 @@ export const Jurisdiction = {
     if (message.ID !== "") {
       obj.ID = message.ID;
     }
-    if (message.Owner !== "") {
-      obj.Owner = message.Owner;
+    if (message.OrganizationID !== "") {
+      obj.OrganizationID = message.OrganizationID;
     }
     if (message.Name !== "") {
       obj.Name = message.Name;
@@ -1326,70 +1071,13 @@ export const Jurisdiction = {
   fromPartial<I extends Exact<DeepPartial<Jurisdiction>, I>>(object: I): Jurisdiction {
     const message = createBaseJurisdiction();
     message.ID = object.ID ?? "";
-    message.Owner = object.Owner ?? "";
+    message.OrganizationID = object.OrganizationID ?? "";
     message.Name = object.Name ?? "";
     message.Description = object.Description ?? "";
     message.ExternalID = object.ExternalID ?? "";
     message.Network = object.Network ?? "";
     message.CreatedAt = object.CreatedAt ?? undefined;
     message.UpdatedAt = object.UpdatedAt ?? undefined;
-    return message;
-  },
-};
-
-function createBaseJurisdictionID(): JurisdictionID {
-  return { ID: "" };
-}
-
-export const JurisdictionID = {
-  encode(message: JurisdictionID, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.ID !== "") {
-      writer.uint32(10).string(message.ID);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): JurisdictionID {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseJurisdictionID();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.ID = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): JurisdictionID {
-    return { ID: isSet(object.ID) ? globalThis.String(object.ID) : "" };
-  },
-
-  toJSON(message: JurisdictionID): unknown {
-    const obj: any = {};
-    if (message.ID !== "") {
-      obj.ID = message.ID;
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<JurisdictionID>, I>>(base?: I): JurisdictionID {
-    return JurisdictionID.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<JurisdictionID>, I>>(object: I): JurisdictionID {
-    const message = createBaseJurisdictionID();
-    message.ID = object.ID ?? "";
     return message;
   },
 };
@@ -1457,7 +1145,6 @@ export const Jurisdictions = {
 
 function createBaseUserJurisdiction(): UserJurisdiction {
   return {
-    Id: "",
     UserID: "",
     Wallet: "",
     JurisdictionID: "",
@@ -1470,29 +1157,26 @@ function createBaseUserJurisdiction(): UserJurisdiction {
 
 export const UserJurisdiction = {
   encode(message: UserJurisdiction, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.Id !== "") {
-      writer.uint32(10).string(message.Id);
-    }
     if (message.UserID !== "") {
-      writer.uint32(18).string(message.UserID);
+      writer.uint32(10).string(message.UserID);
     }
     if (message.Wallet !== "") {
-      writer.uint32(26).string(message.Wallet);
+      writer.uint32(18).string(message.Wallet);
     }
     if (message.JurisdictionID !== "") {
-      writer.uint32(34).string(message.JurisdictionID);
+      writer.uint32(26).string(message.JurisdictionID);
     }
     if (message.Status !== 0) {
-      writer.uint32(40).int32(message.Status);
+      writer.uint32(32).int32(message.Status);
     }
     if (message.CreatedAt !== undefined) {
-      Timestamp.encode(toTimestamp(message.CreatedAt), writer.uint32(50).fork()).ldelim();
+      Timestamp.encode(toTimestamp(message.CreatedAt), writer.uint32(42).fork()).ldelim();
     }
     if (message.UpdatedAt !== undefined) {
-      Timestamp.encode(toTimestamp(message.UpdatedAt), writer.uint32(58).fork()).ldelim();
+      Timestamp.encode(toTimestamp(message.UpdatedAt), writer.uint32(50).fork()).ldelim();
     }
     if (message.Network !== "") {
-      writer.uint32(66).string(message.Network);
+      writer.uint32(58).string(message.Network);
     }
     return writer;
   },
@@ -1509,52 +1193,45 @@ export const UserJurisdiction = {
             break;
           }
 
-          message.Id = reader.string();
+          message.UserID = reader.string();
           continue;
         case 2:
           if (tag !== 18) {
             break;
           }
 
-          message.UserID = reader.string();
+          message.Wallet = reader.string();
           continue;
         case 3:
           if (tag !== 26) {
             break;
           }
 
-          message.Wallet = reader.string();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
-
           message.JurisdictionID = reader.string();
           continue;
-        case 5:
-          if (tag !== 40) {
+        case 4:
+          if (tag !== 32) {
             break;
           }
 
           message.Status = reader.int32() as any;
+          continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          message.CreatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
           continue;
         case 6:
           if (tag !== 50) {
             break;
           }
 
-          message.CreatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          message.UpdatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
           continue;
         case 7:
           if (tag !== 58) {
-            break;
-          }
-
-          message.UpdatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
-          continue;
-        case 8:
-          if (tag !== 66) {
             break;
           }
 
@@ -1571,7 +1248,6 @@ export const UserJurisdiction = {
 
   fromJSON(object: any): UserJurisdiction {
     return {
-      Id: isSet(object.Id) ? globalThis.String(object.Id) : "",
       UserID: isSet(object.UserID) ? globalThis.String(object.UserID) : "",
       Wallet: isSet(object.Wallet) ? globalThis.String(object.Wallet) : "",
       JurisdictionID: isSet(object.JurisdictionID) ? globalThis.String(object.JurisdictionID) : "",
@@ -1584,9 +1260,6 @@ export const UserJurisdiction = {
 
   toJSON(message: UserJurisdiction): unknown {
     const obj: any = {};
-    if (message.Id !== "") {
-      obj.Id = message.Id;
-    }
     if (message.UserID !== "") {
       obj.UserID = message.UserID;
     }
@@ -1616,7 +1289,6 @@ export const UserJurisdiction = {
   },
   fromPartial<I extends Exact<DeepPartial<UserJurisdiction>, I>>(object: I): UserJurisdiction {
     const message = createBaseUserJurisdiction();
-    message.Id = object.Id ?? "";
     message.UserID = object.UserID ?? "";
     message.Wallet = object.Wallet ?? "";
     message.JurisdictionID = object.JurisdictionID ?? "";
@@ -1624,63 +1296,6 @@ export const UserJurisdiction = {
     message.CreatedAt = object.CreatedAt ?? undefined;
     message.UpdatedAt = object.UpdatedAt ?? undefined;
     message.Network = object.Network ?? "";
-    return message;
-  },
-};
-
-function createBaseUserJurisdictionID(): UserJurisdictionID {
-  return { ID: "" };
-}
-
-export const UserJurisdictionID = {
-  encode(message: UserJurisdictionID, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.ID !== "") {
-      writer.uint32(10).string(message.ID);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): UserJurisdictionID {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUserJurisdictionID();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.ID = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UserJurisdictionID {
-    return { ID: isSet(object.ID) ? globalThis.String(object.ID) : "" };
-  },
-
-  toJSON(message: UserJurisdictionID): unknown {
-    const obj: any = {};
-    if (message.ID !== "") {
-      obj.ID = message.ID;
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<UserJurisdictionID>, I>>(base?: I): UserJurisdictionID {
-    return UserJurisdictionID.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<UserJurisdictionID>, I>>(object: I): UserJurisdictionID {
-    const message = createBaseUserJurisdictionID();
-    message.ID = object.ID ?? "";
     return message;
   },
 };
