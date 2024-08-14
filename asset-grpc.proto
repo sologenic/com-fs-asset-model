@@ -36,6 +36,10 @@ service AssetListService {
     rpc GetUserJurisdictions(UserJurisdictionQuery) returns (UserJurisdictions);
 }   
 
+message AssetID {
+    string ID = 1;
+}
+
 message AssetQuery {
     string Network = 1;
     optional int32 Offset = 2;
@@ -49,6 +53,10 @@ message AssetQuery {
     optional bool Listed = 9;
 }
 
+message UserAssetListID {
+    string ID = 1;
+}
+
 message UserAssetListQuery {
     string Network = 1;
     optional int32 Offset = 2;
@@ -59,12 +67,20 @@ message UserAssetListQuery {
     optional bool Visible = 7;
 }
 
+message JurisdictionID {
+    string ID = 1;
+}
+
 message JurisdictionQuery {
     string Network = 1;
     optional int32 Offset = 2;
     optional string Owner = 3;
     optional string Name = 4;
     optional string ExternalID = 5;
+}
+
+message UserJurisdictionID {
+    string ID = 1;
 }
 
 message UserJurisdictionQuery {

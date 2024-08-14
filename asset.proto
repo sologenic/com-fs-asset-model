@@ -25,10 +25,6 @@ message Asset {
     }
 }
 
-message AssetID {
-    string ID = 1;
-}
-
 message Assets {
     repeated Asset Assets = 1;
 }
@@ -57,10 +53,6 @@ message UserAssetList {
     google.protobuf.Timestamp UpdatedAt = 9;
 }
 
-message UserAssetListID {
-    string ID = 1;
-}
-
 message UserAssetLists {
     repeated UserAssetList UserAssetLists = 1;
 }
@@ -76,10 +68,6 @@ message Jurisdiction {
     google.protobuf.Timestamp UpdatedAt = 8;
 }
 
-message JurisdictionID {
-    string ID = 1;
-}
-
 message Jurisdictions {
     repeated Jurisdiction Jurisdictions = 1;
 }
@@ -93,10 +81,6 @@ message UserJurisdiction {
     google.protobuf.Timestamp CreatedAt = 6;
     google.protobuf.Timestamp UpdatedAt = 7;
     string Network = 8;
-}
-
-message UserJurisdictionID {
-    string ID = 1;
 }
 
 message UserJurisdictions {
