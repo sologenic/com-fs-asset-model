@@ -9,7 +9,7 @@ option go_package = "github.com/sologenic/com-fs-asset-model;asset";
 // Base structure for an asset
 message Asset {
     string ID = 1;
-    string Owner = 2; // External entity (broket) that owns this asset, e.g. issuer
+    string OrganizationID = 2; // External entity (broker) that owns this asset, e.g. issuer
     AssetStatus Status = 3;
     Reason Reason = 4;
     repeated string Jurisdictions = 5; // list of jurisdictions where this asset is allowed to be traded
@@ -59,7 +59,7 @@ message UserAssetLists {
 
 message Jurisdiction {
     string ID = 1; // UUID
-    string Owner = 2; // Organization's owner
+    string OrganizationID = 2;
     string Name = 3;
     string Description = 4;
     string ExternalID = 5;
@@ -89,8 +89,8 @@ message UserJurisdictions {
 
 enum AssetStatus {
     ASSET_STATUS_DO_NOT_USE = 0;
-    DO_NOT_LIST = 1; // Owner only
-    REQUEST_LISTING = 2; // Owner only
+    DO_NOT_LIST = 1; // Organization admin only
+    REQUEST_LISTING = 2; // Organization admin only
     LISTED = 3; // Super admin only
     SUPER_ADMIN_DO_NOT_LIST = 4; // Super admin only 
 }
