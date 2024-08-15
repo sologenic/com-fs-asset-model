@@ -42,14 +42,13 @@ message AssetKey {
 
 message AssetQuery {
     string Network = 1;
-    repeated string JurisdictionIDs = 2;
-    optional int32 Offset = 3;
+    optional int32 Offset = 2;
+    repeated string JurisdictionIDs = 3;
     optional string OrganizationID = 4;
     optional AssetStatus Status = 5;
-    optional string Jurisdiction = 6;
-    optional AssetType AssetType = 7;
-    optional string ExchangeTickerSymbol = 8;
-    optional string Exchange = 9;
+    optional AssetType AssetType = 6;
+    optional string ExchangeTickerSymbol = 7;
+    optional string Exchange = 8;
 }
 
 message UserAssetListKey {
