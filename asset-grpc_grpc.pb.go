@@ -20,28 +20,16 @@ const _ = grpc.SupportPackageIsVersion7
 type AssetListServiceClient interface {
 	// Upsert on Asset
 	UpsertAsset(ctx context.Context, in *Asset, opts ...grpc.CallOption) (*AssetKey, error)
-	// Get Asset by ID
+	// Get Asset by Key
 	GetAsset(ctx context.Context, in *AssetKey, opts ...grpc.CallOption) (*Asset, error)
 	// Get all Assets for a given filter
 	GetAssets(ctx context.Context, in *AssetQuery, opts ...grpc.CallOption) (*Assets, error)
 	// Upsert on UserAssetList
 	UpsertUserAssetList(ctx context.Context, in *UserAssetList, opts ...grpc.CallOption) (*AssetKey, error)
-	// Get UserAssetList by ID
+	// Get UserAssetList by Key
 	GetUserAssetList(ctx context.Context, in *UserAssetListKey, opts ...grpc.CallOption) (*UserAssetList, error)
 	// Get all UserAssetList for a given filter
 	GetUserAssetLists(ctx context.Context, in *UserAssetListQuery, opts ...grpc.CallOption) (*UserAssetLists, error)
-	// Upsert on Jurisdiction
-	UpsertJurisdiction(ctx context.Context, in *Jurisdiction, opts ...grpc.CallOption) (*JurisdictionID, error)
-	// Get Jurisdiction by ID
-	GetJurisdiction(ctx context.Context, in *JurisdictionID, opts ...grpc.CallOption) (*Jurisdiction, error)
-	// Get all Jurisdictions for a given filter
-	GetJurisdictions(ctx context.Context, in *JurisdictionQuery, opts ...grpc.CallOption) (*Jurisdictions, error)
-	// Upsert on User Jurisdiction
-	UpsertUserJurisdiction(ctx context.Context, in *UserJurisdiction, opts ...grpc.CallOption) (*UserJurisdictionKey, error)
-	// Get User Jurisdiction by ID
-	GetUserJurisdiction(ctx context.Context, in *UserJurisdictionKey, opts ...grpc.CallOption) (*UserJurisdiction, error)
-	// Get all User Jurisdictions for a given filter
-	GetUserJurisdictions(ctx context.Context, in *UserJurisdictionQuery, opts ...grpc.CallOption) (*UserJurisdictions, error)
 }
 
 type assetListServiceClient struct {
@@ -106,88 +94,22 @@ func (c *assetListServiceClient) GetUserAssetLists(ctx context.Context, in *User
 	return out, nil
 }
 
-func (c *assetListServiceClient) UpsertJurisdiction(ctx context.Context, in *Jurisdiction, opts ...grpc.CallOption) (*JurisdictionID, error) {
-	out := new(JurisdictionID)
-	err := c.cc.Invoke(ctx, "/asset.AssetListService/UpsertJurisdiction", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *assetListServiceClient) GetJurisdiction(ctx context.Context, in *JurisdictionID, opts ...grpc.CallOption) (*Jurisdiction, error) {
-	out := new(Jurisdiction)
-	err := c.cc.Invoke(ctx, "/asset.AssetListService/GetJurisdiction", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *assetListServiceClient) GetJurisdictions(ctx context.Context, in *JurisdictionQuery, opts ...grpc.CallOption) (*Jurisdictions, error) {
-	out := new(Jurisdictions)
-	err := c.cc.Invoke(ctx, "/asset.AssetListService/GetJurisdictions", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *assetListServiceClient) UpsertUserJurisdiction(ctx context.Context, in *UserJurisdiction, opts ...grpc.CallOption) (*UserJurisdictionKey, error) {
-	out := new(UserJurisdictionKey)
-	err := c.cc.Invoke(ctx, "/asset.AssetListService/UpsertUserJurisdiction", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *assetListServiceClient) GetUserJurisdiction(ctx context.Context, in *UserJurisdictionKey, opts ...grpc.CallOption) (*UserJurisdiction, error) {
-	out := new(UserJurisdiction)
-	err := c.cc.Invoke(ctx, "/asset.AssetListService/GetUserJurisdiction", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *assetListServiceClient) GetUserJurisdictions(ctx context.Context, in *UserJurisdictionQuery, opts ...grpc.CallOption) (*UserJurisdictions, error) {
-	out := new(UserJurisdictions)
-	err := c.cc.Invoke(ctx, "/asset.AssetListService/GetUserJurisdictions", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // AssetListServiceServer is the server API for AssetListService service.
 // All implementations should embed UnimplementedAssetListServiceServer
 // for forward compatibility
 type AssetListServiceServer interface {
 	// Upsert on Asset
 	UpsertAsset(context.Context, *Asset) (*AssetKey, error)
-	// Get Asset by ID
+	// Get Asset by Key
 	GetAsset(context.Context, *AssetKey) (*Asset, error)
 	// Get all Assets for a given filter
 	GetAssets(context.Context, *AssetQuery) (*Assets, error)
 	// Upsert on UserAssetList
 	UpsertUserAssetList(context.Context, *UserAssetList) (*AssetKey, error)
-	// Get UserAssetList by ID
+	// Get UserAssetList by Key
 	GetUserAssetList(context.Context, *UserAssetListKey) (*UserAssetList, error)
 	// Get all UserAssetList for a given filter
 	GetUserAssetLists(context.Context, *UserAssetListQuery) (*UserAssetLists, error)
-	// Upsert on Jurisdiction
-	UpsertJurisdiction(context.Context, *Jurisdiction) (*JurisdictionID, error)
-	// Get Jurisdiction by ID
-	GetJurisdiction(context.Context, *JurisdictionID) (*Jurisdiction, error)
-	// Get all Jurisdictions for a given filter
-	GetJurisdictions(context.Context, *JurisdictionQuery) (*Jurisdictions, error)
-	// Upsert on User Jurisdiction
-	UpsertUserJurisdiction(context.Context, *UserJurisdiction) (*UserJurisdictionKey, error)
-	// Get User Jurisdiction by ID
-	GetUserJurisdiction(context.Context, *UserJurisdictionKey) (*UserJurisdiction, error)
-	// Get all User Jurisdictions for a given filter
-	GetUserJurisdictions(context.Context, *UserJurisdictionQuery) (*UserJurisdictions, error)
 }
 
 // UnimplementedAssetListServiceServer should be embedded to have forward compatible implementations.
@@ -211,24 +133,6 @@ func (UnimplementedAssetListServiceServer) GetUserAssetList(context.Context, *Us
 }
 func (UnimplementedAssetListServiceServer) GetUserAssetLists(context.Context, *UserAssetListQuery) (*UserAssetLists, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserAssetLists not implemented")
-}
-func (UnimplementedAssetListServiceServer) UpsertJurisdiction(context.Context, *Jurisdiction) (*JurisdictionID, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpsertJurisdiction not implemented")
-}
-func (UnimplementedAssetListServiceServer) GetJurisdiction(context.Context, *JurisdictionID) (*Jurisdiction, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetJurisdiction not implemented")
-}
-func (UnimplementedAssetListServiceServer) GetJurisdictions(context.Context, *JurisdictionQuery) (*Jurisdictions, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetJurisdictions not implemented")
-}
-func (UnimplementedAssetListServiceServer) UpsertUserJurisdiction(context.Context, *UserJurisdiction) (*UserJurisdictionKey, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpsertUserJurisdiction not implemented")
-}
-func (UnimplementedAssetListServiceServer) GetUserJurisdiction(context.Context, *UserJurisdictionKey) (*UserJurisdiction, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUserJurisdiction not implemented")
-}
-func (UnimplementedAssetListServiceServer) GetUserJurisdictions(context.Context, *UserJurisdictionQuery) (*UserJurisdictions, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUserJurisdictions not implemented")
 }
 
 // UnsafeAssetListServiceServer may be embedded to opt out of forward compatibility for this service.
@@ -350,114 +254,6 @@ func _AssetListService_GetUserAssetLists_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AssetListService_UpsertJurisdiction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Jurisdiction)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AssetListServiceServer).UpsertJurisdiction(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/asset.AssetListService/UpsertJurisdiction",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AssetListServiceServer).UpsertJurisdiction(ctx, req.(*Jurisdiction))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AssetListService_GetJurisdiction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(JurisdictionID)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AssetListServiceServer).GetJurisdiction(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/asset.AssetListService/GetJurisdiction",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AssetListServiceServer).GetJurisdiction(ctx, req.(*JurisdictionID))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AssetListService_GetJurisdictions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(JurisdictionQuery)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AssetListServiceServer).GetJurisdictions(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/asset.AssetListService/GetJurisdictions",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AssetListServiceServer).GetJurisdictions(ctx, req.(*JurisdictionQuery))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AssetListService_UpsertUserJurisdiction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserJurisdiction)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AssetListServiceServer).UpsertUserJurisdiction(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/asset.AssetListService/UpsertUserJurisdiction",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AssetListServiceServer).UpsertUserJurisdiction(ctx, req.(*UserJurisdiction))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AssetListService_GetUserJurisdiction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserJurisdictionKey)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AssetListServiceServer).GetUserJurisdiction(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/asset.AssetListService/GetUserJurisdiction",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AssetListServiceServer).GetUserJurisdiction(ctx, req.(*UserJurisdictionKey))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AssetListService_GetUserJurisdictions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserJurisdictionQuery)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AssetListServiceServer).GetUserJurisdictions(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/asset.AssetListService/GetUserJurisdictions",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AssetListServiceServer).GetUserJurisdictions(ctx, req.(*UserJurisdictionQuery))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // AssetListService_ServiceDesc is the grpc.ServiceDesc for AssetListService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -488,30 +284,6 @@ var AssetListService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUserAssetLists",
 			Handler:    _AssetListService_GetUserAssetLists_Handler,
-		},
-		{
-			MethodName: "UpsertJurisdiction",
-			Handler:    _AssetListService_UpsertJurisdiction_Handler,
-		},
-		{
-			MethodName: "GetJurisdiction",
-			Handler:    _AssetListService_GetJurisdiction_Handler,
-		},
-		{
-			MethodName: "GetJurisdictions",
-			Handler:    _AssetListService_GetJurisdictions_Handler,
-		},
-		{
-			MethodName: "UpsertUserJurisdiction",
-			Handler:    _AssetListService_UpsertUserJurisdiction_Handler,
-		},
-		{
-			MethodName: "GetUserJurisdiction",
-			Handler:    _AssetListService_GetUserJurisdiction_Handler,
-		},
-		{
-			MethodName: "GetUserJurisdictions",
-			Handler:    _AssetListService_GetUserJurisdictions_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

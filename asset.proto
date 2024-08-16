@@ -11,7 +11,7 @@ message Asset {
     string OrganizationID = 1; // External entity (broker) that owns this asset, e.g. issuer
     AssetStatus Status = 2;
     optional Reason Reason = 3;
-    repeated string Jurisdictions = 4; // list of jurisdictions where this asset is allowed to be traded
+    repeated string JurisdictionIDs = 4; // list of jurisdictionIDs where this asset is allowed to be traded
     string Network = 5;
     google.protobuf.Timestamp CreatedAt = 6;
     google.protobuf.Timestamp UpdatedAt = 7;
@@ -48,36 +48,6 @@ message UserAssetLists {
     repeated UserAssetList UserAssetLists = 1;
 }
 
-message Jurisdiction {
-    string ID = 1; // UUID
-    string OrganizationID = 2;
-    string Name = 3;
-    string Description = 4;
-    string ExternalID = 5;
-    string Network = 6;
-    google.protobuf.Timestamp CreatedAt = 7;
-    google.protobuf.Timestamp UpdatedAt = 8;
-}
-
-message Jurisdictions {
-    repeated Jurisdiction Jurisdictions = 1;
-}
-
-message UserJurisdiction {
-    // Key combination: UserID-Wallet-JurisdictionID
-    string UserID = 1;
-    string Wallet = 2;
-    string JurisdictionID = 3;
-    UserJurisdictionStatus Status = 4;
-    google.protobuf.Timestamp CreatedAt = 5;
-    google.protobuf.Timestamp UpdatedAt = 6;
-    string Network = 7;
-}
-
-message UserJurisdictions {
-    repeated UserJurisdiction UserJurisdictions = 1;
-}
-
 enum AssetStatus {
     ASSET_STATUS_DO_NOT_USE = 0;
     DO_NOT_LIST = 1; // Organization admin only
@@ -105,10 +75,4 @@ enum UserAssetStatus {
     WHITELISTING_REQUESTED = 2;
     WHITELISTED = 3;
     OUTDATED_VERSION = 4;
-}
-
-enum UserJurisdictionStatus {
-    USER_JURISDICTION_STATUS_DO_NOT_USE = 0;
-    ALLOWED = 1;
-    NOT_ALLOWED = 2;
 }

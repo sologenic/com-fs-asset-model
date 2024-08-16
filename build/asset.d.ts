@@ -41,21 +41,13 @@ export declare enum UserAssetStatus {
 }
 export declare function userAssetStatusFromJSON(object: any): UserAssetStatus;
 export declare function userAssetStatusToJSON(object: UserAssetStatus): string;
-export declare enum UserJurisdictionStatus {
-    USER_JURISDICTION_STATUS_DO_NOT_USE = 0,
-    ALLOWED = 1,
-    NOT_ALLOWED = 2,
-    UNRECOGNIZED = -1
-}
-export declare function userJurisdictionStatusFromJSON(object: any): UserJurisdictionStatus;
-export declare function userJurisdictionStatusToJSON(object: UserJurisdictionStatus): string;
 export interface Asset {
     /** Key combination: Currency-OrganizationID-Version */
     OrganizationID: string;
     Status: AssetStatus;
     Reason?: Reason | undefined;
-    /** list of jurisdictions where this asset is allowed to be traded */
-    Jurisdictions: string[];
+    /** list of jurisdictionIDs where this asset is allowed to be traded */
+    JurisdictionIDs: string[];
     Network: string;
     CreatedAt: Date | undefined;
     UpdatedAt: Date | undefined;
@@ -88,33 +80,6 @@ export interface UserAssetList {
 export interface UserAssetLists {
     UserAssetLists: UserAssetList[];
 }
-export interface Jurisdiction {
-    /** UUID */
-    ID: string;
-    OrganizationID: string;
-    Name: string;
-    Description: string;
-    ExternalID: string;
-    Network: string;
-    CreatedAt: Date | undefined;
-    UpdatedAt: Date | undefined;
-}
-export interface Jurisdictions {
-    Jurisdictions: Jurisdiction[];
-}
-export interface UserJurisdiction {
-    /** Key combination: UserID-Wallet-JurisdictionID */
-    UserID: string;
-    Wallet: string;
-    JurisdictionID: string;
-    Status: UserJurisdictionStatus;
-    CreatedAt: Date | undefined;
-    UpdatedAt: Date | undefined;
-    Network: string;
-}
-export interface UserJurisdictions {
-    UserJurisdictions: UserJurisdiction[];
-}
 export declare const Asset: {
     encode(message: Asset, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): Asset;
@@ -124,7 +89,7 @@ export declare const Asset: {
         OrganizationID?: string | undefined;
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
-        Jurisdictions?: string[] | undefined;
+        JurisdictionIDs?: string[] | undefined;
         Network?: string | undefined;
         CreatedAt?: Date | undefined;
         UpdatedAt?: Date | undefined;
@@ -141,7 +106,7 @@ export declare const Asset: {
         OrganizationID?: string | undefined;
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
-        Jurisdictions?: (string[] & string[] & { [K in Exclude<keyof I["Jurisdictions"], keyof string[]>]: never; }) | undefined;
+        JurisdictionIDs?: (string[] & string[] & { [K in Exclude<keyof I["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
         Network?: string | undefined;
         CreatedAt?: Date | undefined;
         UpdatedAt?: Date | undefined;
@@ -159,7 +124,7 @@ export declare const Asset: {
         OrganizationID?: string | undefined;
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
-        Jurisdictions?: string[] | undefined;
+        JurisdictionIDs?: string[] | undefined;
         Network?: string | undefined;
         CreatedAt?: Date | undefined;
         UpdatedAt?: Date | undefined;
@@ -176,7 +141,7 @@ export declare const Asset: {
         OrganizationID?: string | undefined;
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
-        Jurisdictions?: (string[] & string[] & { [K_2 in Exclude<keyof I_1["Jurisdictions"], keyof string[]>]: never; }) | undefined;
+        JurisdictionIDs?: (string[] & string[] & { [K_2 in Exclude<keyof I_1["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
         Network?: string | undefined;
         CreatedAt?: Date | undefined;
         UpdatedAt?: Date | undefined;
@@ -201,7 +166,7 @@ export declare const Assets: {
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
-            Jurisdictions?: string[] | undefined;
+            JurisdictionIDs?: string[] | undefined;
             Network?: string | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -220,7 +185,7 @@ export declare const Assets: {
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
-            Jurisdictions?: string[] | undefined;
+            JurisdictionIDs?: string[] | undefined;
             Network?: string | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -237,7 +202,7 @@ export declare const Assets: {
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
-            Jurisdictions?: string[] | undefined;
+            JurisdictionIDs?: string[] | undefined;
             Network?: string | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -254,7 +219,7 @@ export declare const Assets: {
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
-            Jurisdictions?: (string[] & string[] & { [K in Exclude<keyof I["Assets"][number]["Jurisdictions"], keyof string[]>]: never; }) | undefined;
+            JurisdictionIDs?: (string[] & string[] & { [K in Exclude<keyof I["Assets"][number]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
             Network?: string | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -271,7 +236,7 @@ export declare const Assets: {
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
-            Jurisdictions?: string[] | undefined;
+            JurisdictionIDs?: string[] | undefined;
             Network?: string | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -291,7 +256,7 @@ export declare const Assets: {
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
-            Jurisdictions?: string[] | undefined;
+            JurisdictionIDs?: string[] | undefined;
             Network?: string | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -310,7 +275,7 @@ export declare const Assets: {
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
-            Jurisdictions?: string[] | undefined;
+            JurisdictionIDs?: string[] | undefined;
             Network?: string | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -327,7 +292,7 @@ export declare const Assets: {
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
-            Jurisdictions?: string[] | undefined;
+            JurisdictionIDs?: string[] | undefined;
             Network?: string | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -344,7 +309,7 @@ export declare const Assets: {
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
-            Jurisdictions?: (string[] & string[] & { [K_4 in Exclude<keyof I_1["Assets"][number]["Jurisdictions"], keyof string[]>]: never; }) | undefined;
+            JurisdictionIDs?: (string[] & string[] & { [K_4 in Exclude<keyof I_1["Assets"][number]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
             Network?: string | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -361,7 +326,7 @@ export declare const Assets: {
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
-            Jurisdictions?: string[] | undefined;
+            JurisdictionIDs?: string[] | undefined;
             Network?: string | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -526,292 +491,6 @@ export declare const UserAssetLists: {
             UpdatedAt?: Date | undefined;
         }[]>]: never; }) | undefined;
     } & { [K_5 in Exclude<keyof I_1, "UserAssetLists">]: never; }>(object: I_1): UserAssetLists;
-};
-export declare const Jurisdiction: {
-    encode(message: Jurisdiction, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): Jurisdiction;
-    fromJSON(object: any): Jurisdiction;
-    toJSON(message: Jurisdiction): unknown;
-    create<I extends {
-        ID?: string | undefined;
-        OrganizationID?: string | undefined;
-        Name?: string | undefined;
-        Description?: string | undefined;
-        ExternalID?: string | undefined;
-        Network?: string | undefined;
-        CreatedAt?: Date | undefined;
-        UpdatedAt?: Date | undefined;
-    } & {
-        ID?: string | undefined;
-        OrganizationID?: string | undefined;
-        Name?: string | undefined;
-        Description?: string | undefined;
-        ExternalID?: string | undefined;
-        Network?: string | undefined;
-        CreatedAt?: Date | undefined;
-        UpdatedAt?: Date | undefined;
-    } & { [K in Exclude<keyof I, keyof Jurisdiction>]: never; }>(base?: I | undefined): Jurisdiction;
-    fromPartial<I_1 extends {
-        ID?: string | undefined;
-        OrganizationID?: string | undefined;
-        Name?: string | undefined;
-        Description?: string | undefined;
-        ExternalID?: string | undefined;
-        Network?: string | undefined;
-        CreatedAt?: Date | undefined;
-        UpdatedAt?: Date | undefined;
-    } & {
-        ID?: string | undefined;
-        OrganizationID?: string | undefined;
-        Name?: string | undefined;
-        Description?: string | undefined;
-        ExternalID?: string | undefined;
-        Network?: string | undefined;
-        CreatedAt?: Date | undefined;
-        UpdatedAt?: Date | undefined;
-    } & { [K_1 in Exclude<keyof I_1, keyof Jurisdiction>]: never; }>(object: I_1): Jurisdiction;
-};
-export declare const Jurisdictions: {
-    encode(message: Jurisdictions, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): Jurisdictions;
-    fromJSON(object: any): Jurisdictions;
-    toJSON(message: Jurisdictions): unknown;
-    create<I extends {
-        Jurisdictions?: {
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Name?: string | undefined;
-            Description?: string | undefined;
-            ExternalID?: string | undefined;
-            Network?: string | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-        }[] | undefined;
-    } & {
-        Jurisdictions?: ({
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Name?: string | undefined;
-            Description?: string | undefined;
-            ExternalID?: string | undefined;
-            Network?: string | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-        }[] & ({
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Name?: string | undefined;
-            Description?: string | undefined;
-            ExternalID?: string | undefined;
-            Network?: string | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-        } & {
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Name?: string | undefined;
-            Description?: string | undefined;
-            ExternalID?: string | undefined;
-            Network?: string | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-        } & { [K in Exclude<keyof I["Jurisdictions"][number], keyof Jurisdiction>]: never; })[] & { [K_1 in Exclude<keyof I["Jurisdictions"], keyof {
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Name?: string | undefined;
-            Description?: string | undefined;
-            ExternalID?: string | undefined;
-            Network?: string | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-        }[]>]: never; }) | undefined;
-    } & { [K_2 in Exclude<keyof I, "Jurisdictions">]: never; }>(base?: I | undefined): Jurisdictions;
-    fromPartial<I_1 extends {
-        Jurisdictions?: {
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Name?: string | undefined;
-            Description?: string | undefined;
-            ExternalID?: string | undefined;
-            Network?: string | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-        }[] | undefined;
-    } & {
-        Jurisdictions?: ({
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Name?: string | undefined;
-            Description?: string | undefined;
-            ExternalID?: string | undefined;
-            Network?: string | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-        }[] & ({
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Name?: string | undefined;
-            Description?: string | undefined;
-            ExternalID?: string | undefined;
-            Network?: string | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-        } & {
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Name?: string | undefined;
-            Description?: string | undefined;
-            ExternalID?: string | undefined;
-            Network?: string | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-        } & { [K_3 in Exclude<keyof I_1["Jurisdictions"][number], keyof Jurisdiction>]: never; })[] & { [K_4 in Exclude<keyof I_1["Jurisdictions"], keyof {
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Name?: string | undefined;
-            Description?: string | undefined;
-            ExternalID?: string | undefined;
-            Network?: string | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-        }[]>]: never; }) | undefined;
-    } & { [K_5 in Exclude<keyof I_1, "Jurisdictions">]: never; }>(object: I_1): Jurisdictions;
-};
-export declare const UserJurisdiction: {
-    encode(message: UserJurisdiction, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): UserJurisdiction;
-    fromJSON(object: any): UserJurisdiction;
-    toJSON(message: UserJurisdiction): unknown;
-    create<I extends {
-        UserID?: string | undefined;
-        Wallet?: string | undefined;
-        JurisdictionID?: string | undefined;
-        Status?: UserJurisdictionStatus | undefined;
-        CreatedAt?: Date | undefined;
-        UpdatedAt?: Date | undefined;
-        Network?: string | undefined;
-    } & {
-        UserID?: string | undefined;
-        Wallet?: string | undefined;
-        JurisdictionID?: string | undefined;
-        Status?: UserJurisdictionStatus | undefined;
-        CreatedAt?: Date | undefined;
-        UpdatedAt?: Date | undefined;
-        Network?: string | undefined;
-    } & { [K in Exclude<keyof I, keyof UserJurisdiction>]: never; }>(base?: I | undefined): UserJurisdiction;
-    fromPartial<I_1 extends {
-        UserID?: string | undefined;
-        Wallet?: string | undefined;
-        JurisdictionID?: string | undefined;
-        Status?: UserJurisdictionStatus | undefined;
-        CreatedAt?: Date | undefined;
-        UpdatedAt?: Date | undefined;
-        Network?: string | undefined;
-    } & {
-        UserID?: string | undefined;
-        Wallet?: string | undefined;
-        JurisdictionID?: string | undefined;
-        Status?: UserJurisdictionStatus | undefined;
-        CreatedAt?: Date | undefined;
-        UpdatedAt?: Date | undefined;
-        Network?: string | undefined;
-    } & { [K_1 in Exclude<keyof I_1, keyof UserJurisdiction>]: never; }>(object: I_1): UserJurisdiction;
-};
-export declare const UserJurisdictions: {
-    encode(message: UserJurisdictions, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): UserJurisdictions;
-    fromJSON(object: any): UserJurisdictions;
-    toJSON(message: UserJurisdictions): unknown;
-    create<I extends {
-        UserJurisdictions?: {
-            UserID?: string | undefined;
-            Wallet?: string | undefined;
-            JurisdictionID?: string | undefined;
-            Status?: UserJurisdictionStatus | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-            Network?: string | undefined;
-        }[] | undefined;
-    } & {
-        UserJurisdictions?: ({
-            UserID?: string | undefined;
-            Wallet?: string | undefined;
-            JurisdictionID?: string | undefined;
-            Status?: UserJurisdictionStatus | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-            Network?: string | undefined;
-        }[] & ({
-            UserID?: string | undefined;
-            Wallet?: string | undefined;
-            JurisdictionID?: string | undefined;
-            Status?: UserJurisdictionStatus | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-            Network?: string | undefined;
-        } & {
-            UserID?: string | undefined;
-            Wallet?: string | undefined;
-            JurisdictionID?: string | undefined;
-            Status?: UserJurisdictionStatus | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-            Network?: string | undefined;
-        } & { [K in Exclude<keyof I["UserJurisdictions"][number], keyof UserJurisdiction>]: never; })[] & { [K_1 in Exclude<keyof I["UserJurisdictions"], keyof {
-            UserID?: string | undefined;
-            Wallet?: string | undefined;
-            JurisdictionID?: string | undefined;
-            Status?: UserJurisdictionStatus | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-            Network?: string | undefined;
-        }[]>]: never; }) | undefined;
-    } & { [K_2 in Exclude<keyof I, "UserJurisdictions">]: never; }>(base?: I | undefined): UserJurisdictions;
-    fromPartial<I_1 extends {
-        UserJurisdictions?: {
-            UserID?: string | undefined;
-            Wallet?: string | undefined;
-            JurisdictionID?: string | undefined;
-            Status?: UserJurisdictionStatus | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-            Network?: string | undefined;
-        }[] | undefined;
-    } & {
-        UserJurisdictions?: ({
-            UserID?: string | undefined;
-            Wallet?: string | undefined;
-            JurisdictionID?: string | undefined;
-            Status?: UserJurisdictionStatus | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-            Network?: string | undefined;
-        }[] & ({
-            UserID?: string | undefined;
-            Wallet?: string | undefined;
-            JurisdictionID?: string | undefined;
-            Status?: UserJurisdictionStatus | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-            Network?: string | undefined;
-        } & {
-            UserID?: string | undefined;
-            Wallet?: string | undefined;
-            JurisdictionID?: string | undefined;
-            Status?: UserJurisdictionStatus | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-            Network?: string | undefined;
-        } & { [K_3 in Exclude<keyof I_1["UserJurisdictions"][number], keyof UserJurisdiction>]: never; })[] & { [K_4 in Exclude<keyof I_1["UserJurisdictions"], keyof {
-            UserID?: string | undefined;
-            Wallet?: string | undefined;
-            JurisdictionID?: string | undefined;
-            Status?: UserJurisdictionStatus | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-            Network?: string | undefined;
-        }[]>]: never; }) | undefined;
-    } & { [K_5 in Exclude<keyof I_1, "UserJurisdictions">]: never; }>(object: I_1): UserJurisdictions;
 };
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 export type DeepPartial<T> = T extends Builtin ? T : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>> : T extends {} ? {

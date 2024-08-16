@@ -189,49 +189,12 @@ export function userAssetStatusToJSON(object) {
             return "UNRECOGNIZED";
     }
 }
-export var UserJurisdictionStatus;
-(function (UserJurisdictionStatus) {
-    UserJurisdictionStatus[UserJurisdictionStatus["USER_JURISDICTION_STATUS_DO_NOT_USE"] = 0] = "USER_JURISDICTION_STATUS_DO_NOT_USE";
-    UserJurisdictionStatus[UserJurisdictionStatus["ALLOWED"] = 1] = "ALLOWED";
-    UserJurisdictionStatus[UserJurisdictionStatus["NOT_ALLOWED"] = 2] = "NOT_ALLOWED";
-    UserJurisdictionStatus[UserJurisdictionStatus["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
-})(UserJurisdictionStatus || (UserJurisdictionStatus = {}));
-export function userJurisdictionStatusFromJSON(object) {
-    switch (object) {
-        case 0:
-        case "USER_JURISDICTION_STATUS_DO_NOT_USE":
-            return UserJurisdictionStatus.USER_JURISDICTION_STATUS_DO_NOT_USE;
-        case 1:
-        case "ALLOWED":
-            return UserJurisdictionStatus.ALLOWED;
-        case 2:
-        case "NOT_ALLOWED":
-            return UserJurisdictionStatus.NOT_ALLOWED;
-        case -1:
-        case "UNRECOGNIZED":
-        default:
-            return UserJurisdictionStatus.UNRECOGNIZED;
-    }
-}
-export function userJurisdictionStatusToJSON(object) {
-    switch (object) {
-        case UserJurisdictionStatus.USER_JURISDICTION_STATUS_DO_NOT_USE:
-            return "USER_JURISDICTION_STATUS_DO_NOT_USE";
-        case UserJurisdictionStatus.ALLOWED:
-            return "ALLOWED";
-        case UserJurisdictionStatus.NOT_ALLOWED:
-            return "NOT_ALLOWED";
-        case UserJurisdictionStatus.UNRECOGNIZED:
-        default:
-            return "UNRECOGNIZED";
-    }
-}
 function createBaseAsset() {
     return {
         OrganizationID: "",
         Status: 0,
         Reason: undefined,
-        Jurisdictions: [],
+        JurisdictionIDs: [],
         Network: "",
         CreatedAt: undefined,
         UpdatedAt: undefined,
@@ -257,7 +220,7 @@ export const Asset = {
         if (message.Reason !== undefined) {
             writer.uint32(24).int32(message.Reason);
         }
-        for (const v of message.Jurisdictions) {
+        for (const v of message.JurisdictionIDs) {
             writer.uint32(34).string(v);
         }
         if (message.Network !== "") {
@@ -327,7 +290,7 @@ export const Asset = {
                     if (tag !== 34) {
                         break;
                     }
-                    message.Jurisdictions.push(reader.string());
+                    message.JurisdictionIDs.push(reader.string());
                     continue;
                 case 5:
                     if (tag !== 42) {
@@ -414,8 +377,8 @@ export const Asset = {
             OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
             Status: isSet(object.Status) ? assetStatusFromJSON(object.Status) : 0,
             Reason: isSet(object.Reason) ? reasonFromJSON(object.Reason) : undefined,
-            Jurisdictions: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Jurisdictions)
-                ? object.Jurisdictions.map((e) => globalThis.String(e))
+            JurisdictionIDs: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.JurisdictionIDs)
+                ? object.JurisdictionIDs.map((e) => globalThis.String(e))
                 : [],
             Network: isSet(object.Network) ? globalThis.String(object.Network) : "",
             CreatedAt: isSet(object.CreatedAt) ? fromJsonTimestamp(object.CreatedAt) : undefined,
@@ -443,8 +406,8 @@ export const Asset = {
         if (message.Reason !== undefined) {
             obj.Reason = reasonToJSON(message.Reason);
         }
-        if ((_a = message.Jurisdictions) === null || _a === void 0 ? void 0 : _a.length) {
-            obj.Jurisdictions = message.Jurisdictions;
+        if ((_a = message.JurisdictionIDs) === null || _a === void 0 ? void 0 : _a.length) {
+            obj.JurisdictionIDs = message.JurisdictionIDs;
         }
         if (message.Network !== "") {
             obj.Network = message.Network;
@@ -493,7 +456,7 @@ export const Asset = {
         message.OrganizationID = (_a = object.OrganizationID) !== null && _a !== void 0 ? _a : "";
         message.Status = (_b = object.Status) !== null && _b !== void 0 ? _b : 0;
         message.Reason = (_c = object.Reason) !== null && _c !== void 0 ? _c : undefined;
-        message.Jurisdictions = ((_d = object.Jurisdictions) === null || _d === void 0 ? void 0 : _d.map((e) => e)) || [];
+        message.JurisdictionIDs = ((_d = object.JurisdictionIDs) === null || _d === void 0 ? void 0 : _d.map((e) => e)) || [];
         message.Network = (_e = object.Network) !== null && _e !== void 0 ? _e : "";
         message.CreatedAt = (_f = object.CreatedAt) !== null && _f !== void 0 ? _f : undefined;
         message.UpdatedAt = (_g = object.UpdatedAt) !== null && _g !== void 0 ? _g : undefined;
@@ -774,423 +737,6 @@ export const UserAssetLists = {
         var _a;
         const message = createBaseUserAssetLists();
         message.UserAssetLists = ((_a = object.UserAssetLists) === null || _a === void 0 ? void 0 : _a.map((e) => UserAssetList.fromPartial(e))) || [];
-        return message;
-    },
-};
-function createBaseJurisdiction() {
-    return {
-        ID: "",
-        OrganizationID: "",
-        Name: "",
-        Description: "",
-        ExternalID: "",
-        Network: "",
-        CreatedAt: undefined,
-        UpdatedAt: undefined,
-    };
-}
-export const Jurisdiction = {
-    encode(message, writer = _m0.Writer.create()) {
-        if (message.ID !== "") {
-            writer.uint32(10).string(message.ID);
-        }
-        if (message.OrganizationID !== "") {
-            writer.uint32(18).string(message.OrganizationID);
-        }
-        if (message.Name !== "") {
-            writer.uint32(26).string(message.Name);
-        }
-        if (message.Description !== "") {
-            writer.uint32(34).string(message.Description);
-        }
-        if (message.ExternalID !== "") {
-            writer.uint32(42).string(message.ExternalID);
-        }
-        if (message.Network !== "") {
-            writer.uint32(50).string(message.Network);
-        }
-        if (message.CreatedAt !== undefined) {
-            Timestamp.encode(toTimestamp(message.CreatedAt), writer.uint32(58).fork()).ldelim();
-        }
-        if (message.UpdatedAt !== undefined) {
-            Timestamp.encode(toTimestamp(message.UpdatedAt), writer.uint32(66).fork()).ldelim();
-        }
-        return writer;
-    },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseJurisdiction();
-        while (reader.pos < end) {
-            const tag = reader.uint32();
-            switch (tag >>> 3) {
-                case 1:
-                    if (tag !== 10) {
-                        break;
-                    }
-                    message.ID = reader.string();
-                    continue;
-                case 2:
-                    if (tag !== 18) {
-                        break;
-                    }
-                    message.OrganizationID = reader.string();
-                    continue;
-                case 3:
-                    if (tag !== 26) {
-                        break;
-                    }
-                    message.Name = reader.string();
-                    continue;
-                case 4:
-                    if (tag !== 34) {
-                        break;
-                    }
-                    message.Description = reader.string();
-                    continue;
-                case 5:
-                    if (tag !== 42) {
-                        break;
-                    }
-                    message.ExternalID = reader.string();
-                    continue;
-                case 6:
-                    if (tag !== 50) {
-                        break;
-                    }
-                    message.Network = reader.string();
-                    continue;
-                case 7:
-                    if (tag !== 58) {
-                        break;
-                    }
-                    message.CreatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
-                    continue;
-                case 8:
-                    if (tag !== 66) {
-                        break;
-                    }
-                    message.UpdatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
-                    continue;
-            }
-            if ((tag & 7) === 4 || tag === 0) {
-                break;
-            }
-            reader.skipType(tag & 7);
-        }
-        return message;
-    },
-    fromJSON(object) {
-        return {
-            ID: isSet(object.ID) ? globalThis.String(object.ID) : "",
-            OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
-            Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
-            Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
-            ExternalID: isSet(object.ExternalID) ? globalThis.String(object.ExternalID) : "",
-            Network: isSet(object.Network) ? globalThis.String(object.Network) : "",
-            CreatedAt: isSet(object.CreatedAt) ? fromJsonTimestamp(object.CreatedAt) : undefined,
-            UpdatedAt: isSet(object.UpdatedAt) ? fromJsonTimestamp(object.UpdatedAt) : undefined,
-        };
-    },
-    toJSON(message) {
-        const obj = {};
-        if (message.ID !== "") {
-            obj.ID = message.ID;
-        }
-        if (message.OrganizationID !== "") {
-            obj.OrganizationID = message.OrganizationID;
-        }
-        if (message.Name !== "") {
-            obj.Name = message.Name;
-        }
-        if (message.Description !== "") {
-            obj.Description = message.Description;
-        }
-        if (message.ExternalID !== "") {
-            obj.ExternalID = message.ExternalID;
-        }
-        if (message.Network !== "") {
-            obj.Network = message.Network;
-        }
-        if (message.CreatedAt !== undefined) {
-            obj.CreatedAt = message.CreatedAt.toISOString();
-        }
-        if (message.UpdatedAt !== undefined) {
-            obj.UpdatedAt = message.UpdatedAt.toISOString();
-        }
-        return obj;
-    },
-    create(base) {
-        return Jurisdiction.fromPartial(base !== null && base !== void 0 ? base : {});
-    },
-    fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h;
-        const message = createBaseJurisdiction();
-        message.ID = (_a = object.ID) !== null && _a !== void 0 ? _a : "";
-        message.OrganizationID = (_b = object.OrganizationID) !== null && _b !== void 0 ? _b : "";
-        message.Name = (_c = object.Name) !== null && _c !== void 0 ? _c : "";
-        message.Description = (_d = object.Description) !== null && _d !== void 0 ? _d : "";
-        message.ExternalID = (_e = object.ExternalID) !== null && _e !== void 0 ? _e : "";
-        message.Network = (_f = object.Network) !== null && _f !== void 0 ? _f : "";
-        message.CreatedAt = (_g = object.CreatedAt) !== null && _g !== void 0 ? _g : undefined;
-        message.UpdatedAt = (_h = object.UpdatedAt) !== null && _h !== void 0 ? _h : undefined;
-        return message;
-    },
-};
-function createBaseJurisdictions() {
-    return { Jurisdictions: [] };
-}
-export const Jurisdictions = {
-    encode(message, writer = _m0.Writer.create()) {
-        for (const v of message.Jurisdictions) {
-            Jurisdiction.encode(v, writer.uint32(10).fork()).ldelim();
-        }
-        return writer;
-    },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseJurisdictions();
-        while (reader.pos < end) {
-            const tag = reader.uint32();
-            switch (tag >>> 3) {
-                case 1:
-                    if (tag !== 10) {
-                        break;
-                    }
-                    message.Jurisdictions.push(Jurisdiction.decode(reader, reader.uint32()));
-                    continue;
-            }
-            if ((tag & 7) === 4 || tag === 0) {
-                break;
-            }
-            reader.skipType(tag & 7);
-        }
-        return message;
-    },
-    fromJSON(object) {
-        return {
-            Jurisdictions: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Jurisdictions)
-                ? object.Jurisdictions.map((e) => Jurisdiction.fromJSON(e))
-                : [],
-        };
-    },
-    toJSON(message) {
-        var _a;
-        const obj = {};
-        if ((_a = message.Jurisdictions) === null || _a === void 0 ? void 0 : _a.length) {
-            obj.Jurisdictions = message.Jurisdictions.map((e) => Jurisdiction.toJSON(e));
-        }
-        return obj;
-    },
-    create(base) {
-        return Jurisdictions.fromPartial(base !== null && base !== void 0 ? base : {});
-    },
-    fromPartial(object) {
-        var _a;
-        const message = createBaseJurisdictions();
-        message.Jurisdictions = ((_a = object.Jurisdictions) === null || _a === void 0 ? void 0 : _a.map((e) => Jurisdiction.fromPartial(e))) || [];
-        return message;
-    },
-};
-function createBaseUserJurisdiction() {
-    return {
-        UserID: "",
-        Wallet: "",
-        JurisdictionID: "",
-        Status: 0,
-        CreatedAt: undefined,
-        UpdatedAt: undefined,
-        Network: "",
-    };
-}
-export const UserJurisdiction = {
-    encode(message, writer = _m0.Writer.create()) {
-        if (message.UserID !== "") {
-            writer.uint32(10).string(message.UserID);
-        }
-        if (message.Wallet !== "") {
-            writer.uint32(18).string(message.Wallet);
-        }
-        if (message.JurisdictionID !== "") {
-            writer.uint32(26).string(message.JurisdictionID);
-        }
-        if (message.Status !== 0) {
-            writer.uint32(32).int32(message.Status);
-        }
-        if (message.CreatedAt !== undefined) {
-            Timestamp.encode(toTimestamp(message.CreatedAt), writer.uint32(42).fork()).ldelim();
-        }
-        if (message.UpdatedAt !== undefined) {
-            Timestamp.encode(toTimestamp(message.UpdatedAt), writer.uint32(50).fork()).ldelim();
-        }
-        if (message.Network !== "") {
-            writer.uint32(58).string(message.Network);
-        }
-        return writer;
-    },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseUserJurisdiction();
-        while (reader.pos < end) {
-            const tag = reader.uint32();
-            switch (tag >>> 3) {
-                case 1:
-                    if (tag !== 10) {
-                        break;
-                    }
-                    message.UserID = reader.string();
-                    continue;
-                case 2:
-                    if (tag !== 18) {
-                        break;
-                    }
-                    message.Wallet = reader.string();
-                    continue;
-                case 3:
-                    if (tag !== 26) {
-                        break;
-                    }
-                    message.JurisdictionID = reader.string();
-                    continue;
-                case 4:
-                    if (tag !== 32) {
-                        break;
-                    }
-                    message.Status = reader.int32();
-                    continue;
-                case 5:
-                    if (tag !== 42) {
-                        break;
-                    }
-                    message.CreatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
-                    continue;
-                case 6:
-                    if (tag !== 50) {
-                        break;
-                    }
-                    message.UpdatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
-                    continue;
-                case 7:
-                    if (tag !== 58) {
-                        break;
-                    }
-                    message.Network = reader.string();
-                    continue;
-            }
-            if ((tag & 7) === 4 || tag === 0) {
-                break;
-            }
-            reader.skipType(tag & 7);
-        }
-        return message;
-    },
-    fromJSON(object) {
-        return {
-            UserID: isSet(object.UserID) ? globalThis.String(object.UserID) : "",
-            Wallet: isSet(object.Wallet) ? globalThis.String(object.Wallet) : "",
-            JurisdictionID: isSet(object.JurisdictionID) ? globalThis.String(object.JurisdictionID) : "",
-            Status: isSet(object.Status) ? userJurisdictionStatusFromJSON(object.Status) : 0,
-            CreatedAt: isSet(object.CreatedAt) ? fromJsonTimestamp(object.CreatedAt) : undefined,
-            UpdatedAt: isSet(object.UpdatedAt) ? fromJsonTimestamp(object.UpdatedAt) : undefined,
-            Network: isSet(object.Network) ? globalThis.String(object.Network) : "",
-        };
-    },
-    toJSON(message) {
-        const obj = {};
-        if (message.UserID !== "") {
-            obj.UserID = message.UserID;
-        }
-        if (message.Wallet !== "") {
-            obj.Wallet = message.Wallet;
-        }
-        if (message.JurisdictionID !== "") {
-            obj.JurisdictionID = message.JurisdictionID;
-        }
-        if (message.Status !== 0) {
-            obj.Status = userJurisdictionStatusToJSON(message.Status);
-        }
-        if (message.CreatedAt !== undefined) {
-            obj.CreatedAt = message.CreatedAt.toISOString();
-        }
-        if (message.UpdatedAt !== undefined) {
-            obj.UpdatedAt = message.UpdatedAt.toISOString();
-        }
-        if (message.Network !== "") {
-            obj.Network = message.Network;
-        }
-        return obj;
-    },
-    create(base) {
-        return UserJurisdiction.fromPartial(base !== null && base !== void 0 ? base : {});
-    },
-    fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g;
-        const message = createBaseUserJurisdiction();
-        message.UserID = (_a = object.UserID) !== null && _a !== void 0 ? _a : "";
-        message.Wallet = (_b = object.Wallet) !== null && _b !== void 0 ? _b : "";
-        message.JurisdictionID = (_c = object.JurisdictionID) !== null && _c !== void 0 ? _c : "";
-        message.Status = (_d = object.Status) !== null && _d !== void 0 ? _d : 0;
-        message.CreatedAt = (_e = object.CreatedAt) !== null && _e !== void 0 ? _e : undefined;
-        message.UpdatedAt = (_f = object.UpdatedAt) !== null && _f !== void 0 ? _f : undefined;
-        message.Network = (_g = object.Network) !== null && _g !== void 0 ? _g : "";
-        return message;
-    },
-};
-function createBaseUserJurisdictions() {
-    return { UserJurisdictions: [] };
-}
-export const UserJurisdictions = {
-    encode(message, writer = _m0.Writer.create()) {
-        for (const v of message.UserJurisdictions) {
-            UserJurisdiction.encode(v, writer.uint32(10).fork()).ldelim();
-        }
-        return writer;
-    },
-    decode(input, length) {
-        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-        let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseUserJurisdictions();
-        while (reader.pos < end) {
-            const tag = reader.uint32();
-            switch (tag >>> 3) {
-                case 1:
-                    if (tag !== 10) {
-                        break;
-                    }
-                    message.UserJurisdictions.push(UserJurisdiction.decode(reader, reader.uint32()));
-                    continue;
-            }
-            if ((tag & 7) === 4 || tag === 0) {
-                break;
-            }
-            reader.skipType(tag & 7);
-        }
-        return message;
-    },
-    fromJSON(object) {
-        return {
-            UserJurisdictions: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.UserJurisdictions)
-                ? object.UserJurisdictions.map((e) => UserJurisdiction.fromJSON(e))
-                : [],
-        };
-    },
-    toJSON(message) {
-        var _a;
-        const obj = {};
-        if ((_a = message.UserJurisdictions) === null || _a === void 0 ? void 0 : _a.length) {
-            obj.UserJurisdictions = message.UserJurisdictions.map((e) => UserJurisdiction.toJSON(e));
-        }
-        return obj;
-    },
-    create(base) {
-        return UserJurisdictions.fromPartial(base !== null && base !== void 0 ? base : {});
-    },
-    fromPartial(object) {
-        var _a;
-        const message = createBaseUserJurisdictions();
-        message.UserJurisdictions = ((_a = object.UserJurisdictions) === null || _a === void 0 ? void 0 : _a.map((e) => UserJurisdiction.fromPartial(e))) || [];
         return message;
     },
 };

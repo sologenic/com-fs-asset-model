@@ -200,45 +200,6 @@ export function userAssetStatusToJSON(object: UserAssetStatus): string {
   }
 }
 
-export enum UserJurisdictionStatus {
-  USER_JURISDICTION_STATUS_DO_NOT_USE = 0,
-  ALLOWED = 1,
-  NOT_ALLOWED = 2,
-  UNRECOGNIZED = -1,
-}
-
-export function userJurisdictionStatusFromJSON(object: any): UserJurisdictionStatus {
-  switch (object) {
-    case 0:
-    case "USER_JURISDICTION_STATUS_DO_NOT_USE":
-      return UserJurisdictionStatus.USER_JURISDICTION_STATUS_DO_NOT_USE;
-    case 1:
-    case "ALLOWED":
-      return UserJurisdictionStatus.ALLOWED;
-    case 2:
-    case "NOT_ALLOWED":
-      return UserJurisdictionStatus.NOT_ALLOWED;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return UserJurisdictionStatus.UNRECOGNIZED;
-  }
-}
-
-export function userJurisdictionStatusToJSON(object: UserJurisdictionStatus): string {
-  switch (object) {
-    case UserJurisdictionStatus.USER_JURISDICTION_STATUS_DO_NOT_USE:
-      return "USER_JURISDICTION_STATUS_DO_NOT_USE";
-    case UserJurisdictionStatus.ALLOWED:
-      return "ALLOWED";
-    case UserJurisdictionStatus.NOT_ALLOWED:
-      return "NOT_ALLOWED";
-    case UserJurisdictionStatus.UNRECOGNIZED:
-    default:
-      return "UNRECOGNIZED";
-  }
-}
-
 export interface Asset {
   /** Key combination: Currency-OrganizationID-Version */
   OrganizationID: string;
@@ -246,8 +207,8 @@ export interface Asset {
   Reason?:
     | Reason
     | undefined;
-  /** list of jurisdictions where this asset is allowed to be traded */
-  Jurisdictions: string[];
+  /** list of jurisdictionIDs where this asset is allowed to be traded */
+  JurisdictionIDs: string[];
   Network: string;
   CreatedAt: Date | undefined;
   UpdatedAt: Date | undefined;
@@ -284,43 +245,12 @@ export interface UserAssetLists {
   UserAssetLists: UserAssetList[];
 }
 
-export interface Jurisdiction {
-  /** UUID */
-  ID: string;
-  OrganizationID: string;
-  Name: string;
-  Description: string;
-  ExternalID: string;
-  Network: string;
-  CreatedAt: Date | undefined;
-  UpdatedAt: Date | undefined;
-}
-
-export interface Jurisdictions {
-  Jurisdictions: Jurisdiction[];
-}
-
-export interface UserJurisdiction {
-  /** Key combination: UserID-Wallet-JurisdictionID */
-  UserID: string;
-  Wallet: string;
-  JurisdictionID: string;
-  Status: UserJurisdictionStatus;
-  CreatedAt: Date | undefined;
-  UpdatedAt: Date | undefined;
-  Network: string;
-}
-
-export interface UserJurisdictions {
-  UserJurisdictions: UserJurisdiction[];
-}
-
 function createBaseAsset(): Asset {
   return {
     OrganizationID: "",
     Status: 0,
     Reason: undefined,
-    Jurisdictions: [],
+    JurisdictionIDs: [],
     Network: "",
     CreatedAt: undefined,
     UpdatedAt: undefined,
@@ -347,7 +277,7 @@ export const Asset = {
     if (message.Reason !== undefined) {
       writer.uint32(24).int32(message.Reason);
     }
-    for (const v of message.Jurisdictions) {
+    for (const v of message.JurisdictionIDs) {
       writer.uint32(34).string(v!);
     }
     if (message.Network !== "") {
@@ -422,7 +352,7 @@ export const Asset = {
             break;
           }
 
-          message.Jurisdictions.push(reader.string());
+          message.JurisdictionIDs.push(reader.string());
           continue;
         case 5:
           if (tag !== 42) {
@@ -522,8 +452,8 @@ export const Asset = {
       OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
       Status: isSet(object.Status) ? assetStatusFromJSON(object.Status) : 0,
       Reason: isSet(object.Reason) ? reasonFromJSON(object.Reason) : undefined,
-      Jurisdictions: globalThis.Array.isArray(object?.Jurisdictions)
-        ? object.Jurisdictions.map((e: any) => globalThis.String(e))
+      JurisdictionIDs: globalThis.Array.isArray(object?.JurisdictionIDs)
+        ? object.JurisdictionIDs.map((e: any) => globalThis.String(e))
         : [],
       Network: isSet(object.Network) ? globalThis.String(object.Network) : "",
       CreatedAt: isSet(object.CreatedAt) ? fromJsonTimestamp(object.CreatedAt) : undefined,
@@ -551,8 +481,8 @@ export const Asset = {
     if (message.Reason !== undefined) {
       obj.Reason = reasonToJSON(message.Reason);
     }
-    if (message.Jurisdictions?.length) {
-      obj.Jurisdictions = message.Jurisdictions;
+    if (message.JurisdictionIDs?.length) {
+      obj.JurisdictionIDs = message.JurisdictionIDs;
     }
     if (message.Network !== "") {
       obj.Network = message.Network;
@@ -601,7 +531,7 @@ export const Asset = {
     message.OrganizationID = object.OrganizationID ?? "";
     message.Status = object.Status ?? 0;
     message.Reason = object.Reason ?? undefined;
-    message.Jurisdictions = object.Jurisdictions?.map((e) => e) || [];
+    message.JurisdictionIDs = object.JurisdictionIDs?.map((e) => e) || [];
     message.Network = object.Network ?? "";
     message.CreatedAt = object.CreatedAt ?? undefined;
     message.UpdatedAt = object.UpdatedAt ?? undefined;
@@ -905,458 +835,6 @@ export const UserAssetLists = {
   fromPartial<I extends Exact<DeepPartial<UserAssetLists>, I>>(object: I): UserAssetLists {
     const message = createBaseUserAssetLists();
     message.UserAssetLists = object.UserAssetLists?.map((e) => UserAssetList.fromPartial(e)) || [];
-    return message;
-  },
-};
-
-function createBaseJurisdiction(): Jurisdiction {
-  return {
-    ID: "",
-    OrganizationID: "",
-    Name: "",
-    Description: "",
-    ExternalID: "",
-    Network: "",
-    CreatedAt: undefined,
-    UpdatedAt: undefined,
-  };
-}
-
-export const Jurisdiction = {
-  encode(message: Jurisdiction, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.ID !== "") {
-      writer.uint32(10).string(message.ID);
-    }
-    if (message.OrganizationID !== "") {
-      writer.uint32(18).string(message.OrganizationID);
-    }
-    if (message.Name !== "") {
-      writer.uint32(26).string(message.Name);
-    }
-    if (message.Description !== "") {
-      writer.uint32(34).string(message.Description);
-    }
-    if (message.ExternalID !== "") {
-      writer.uint32(42).string(message.ExternalID);
-    }
-    if (message.Network !== "") {
-      writer.uint32(50).string(message.Network);
-    }
-    if (message.CreatedAt !== undefined) {
-      Timestamp.encode(toTimestamp(message.CreatedAt), writer.uint32(58).fork()).ldelim();
-    }
-    if (message.UpdatedAt !== undefined) {
-      Timestamp.encode(toTimestamp(message.UpdatedAt), writer.uint32(66).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): Jurisdiction {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseJurisdiction();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.ID = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
-
-          message.OrganizationID = reader.string();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
-
-          message.Name = reader.string();
-          continue;
-        case 4:
-          if (tag !== 34) {
-            break;
-          }
-
-          message.Description = reader.string();
-          continue;
-        case 5:
-          if (tag !== 42) {
-            break;
-          }
-
-          message.ExternalID = reader.string();
-          continue;
-        case 6:
-          if (tag !== 50) {
-            break;
-          }
-
-          message.Network = reader.string();
-          continue;
-        case 7:
-          if (tag !== 58) {
-            break;
-          }
-
-          message.CreatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
-          continue;
-        case 8:
-          if (tag !== 66) {
-            break;
-          }
-
-          message.UpdatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): Jurisdiction {
-    return {
-      ID: isSet(object.ID) ? globalThis.String(object.ID) : "",
-      OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
-      Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
-      Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
-      ExternalID: isSet(object.ExternalID) ? globalThis.String(object.ExternalID) : "",
-      Network: isSet(object.Network) ? globalThis.String(object.Network) : "",
-      CreatedAt: isSet(object.CreatedAt) ? fromJsonTimestamp(object.CreatedAt) : undefined,
-      UpdatedAt: isSet(object.UpdatedAt) ? fromJsonTimestamp(object.UpdatedAt) : undefined,
-    };
-  },
-
-  toJSON(message: Jurisdiction): unknown {
-    const obj: any = {};
-    if (message.ID !== "") {
-      obj.ID = message.ID;
-    }
-    if (message.OrganizationID !== "") {
-      obj.OrganizationID = message.OrganizationID;
-    }
-    if (message.Name !== "") {
-      obj.Name = message.Name;
-    }
-    if (message.Description !== "") {
-      obj.Description = message.Description;
-    }
-    if (message.ExternalID !== "") {
-      obj.ExternalID = message.ExternalID;
-    }
-    if (message.Network !== "") {
-      obj.Network = message.Network;
-    }
-    if (message.CreatedAt !== undefined) {
-      obj.CreatedAt = message.CreatedAt.toISOString();
-    }
-    if (message.UpdatedAt !== undefined) {
-      obj.UpdatedAt = message.UpdatedAt.toISOString();
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<Jurisdiction>, I>>(base?: I): Jurisdiction {
-    return Jurisdiction.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<Jurisdiction>, I>>(object: I): Jurisdiction {
-    const message = createBaseJurisdiction();
-    message.ID = object.ID ?? "";
-    message.OrganizationID = object.OrganizationID ?? "";
-    message.Name = object.Name ?? "";
-    message.Description = object.Description ?? "";
-    message.ExternalID = object.ExternalID ?? "";
-    message.Network = object.Network ?? "";
-    message.CreatedAt = object.CreatedAt ?? undefined;
-    message.UpdatedAt = object.UpdatedAt ?? undefined;
-    return message;
-  },
-};
-
-function createBaseJurisdictions(): Jurisdictions {
-  return { Jurisdictions: [] };
-}
-
-export const Jurisdictions = {
-  encode(message: Jurisdictions, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    for (const v of message.Jurisdictions) {
-      Jurisdiction.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): Jurisdictions {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseJurisdictions();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.Jurisdictions.push(Jurisdiction.decode(reader, reader.uint32()));
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): Jurisdictions {
-    return {
-      Jurisdictions: globalThis.Array.isArray(object?.Jurisdictions)
-        ? object.Jurisdictions.map((e: any) => Jurisdiction.fromJSON(e))
-        : [],
-    };
-  },
-
-  toJSON(message: Jurisdictions): unknown {
-    const obj: any = {};
-    if (message.Jurisdictions?.length) {
-      obj.Jurisdictions = message.Jurisdictions.map((e) => Jurisdiction.toJSON(e));
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<Jurisdictions>, I>>(base?: I): Jurisdictions {
-    return Jurisdictions.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<Jurisdictions>, I>>(object: I): Jurisdictions {
-    const message = createBaseJurisdictions();
-    message.Jurisdictions = object.Jurisdictions?.map((e) => Jurisdiction.fromPartial(e)) || [];
-    return message;
-  },
-};
-
-function createBaseUserJurisdiction(): UserJurisdiction {
-  return {
-    UserID: "",
-    Wallet: "",
-    JurisdictionID: "",
-    Status: 0,
-    CreatedAt: undefined,
-    UpdatedAt: undefined,
-    Network: "",
-  };
-}
-
-export const UserJurisdiction = {
-  encode(message: UserJurisdiction, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.UserID !== "") {
-      writer.uint32(10).string(message.UserID);
-    }
-    if (message.Wallet !== "") {
-      writer.uint32(18).string(message.Wallet);
-    }
-    if (message.JurisdictionID !== "") {
-      writer.uint32(26).string(message.JurisdictionID);
-    }
-    if (message.Status !== 0) {
-      writer.uint32(32).int32(message.Status);
-    }
-    if (message.CreatedAt !== undefined) {
-      Timestamp.encode(toTimestamp(message.CreatedAt), writer.uint32(42).fork()).ldelim();
-    }
-    if (message.UpdatedAt !== undefined) {
-      Timestamp.encode(toTimestamp(message.UpdatedAt), writer.uint32(50).fork()).ldelim();
-    }
-    if (message.Network !== "") {
-      writer.uint32(58).string(message.Network);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): UserJurisdiction {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUserJurisdiction();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.UserID = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
-
-          message.Wallet = reader.string();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
-
-          message.JurisdictionID = reader.string();
-          continue;
-        case 4:
-          if (tag !== 32) {
-            break;
-          }
-
-          message.Status = reader.int32() as any;
-          continue;
-        case 5:
-          if (tag !== 42) {
-            break;
-          }
-
-          message.CreatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
-          continue;
-        case 6:
-          if (tag !== 50) {
-            break;
-          }
-
-          message.UpdatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
-          continue;
-        case 7:
-          if (tag !== 58) {
-            break;
-          }
-
-          message.Network = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UserJurisdiction {
-    return {
-      UserID: isSet(object.UserID) ? globalThis.String(object.UserID) : "",
-      Wallet: isSet(object.Wallet) ? globalThis.String(object.Wallet) : "",
-      JurisdictionID: isSet(object.JurisdictionID) ? globalThis.String(object.JurisdictionID) : "",
-      Status: isSet(object.Status) ? userJurisdictionStatusFromJSON(object.Status) : 0,
-      CreatedAt: isSet(object.CreatedAt) ? fromJsonTimestamp(object.CreatedAt) : undefined,
-      UpdatedAt: isSet(object.UpdatedAt) ? fromJsonTimestamp(object.UpdatedAt) : undefined,
-      Network: isSet(object.Network) ? globalThis.String(object.Network) : "",
-    };
-  },
-
-  toJSON(message: UserJurisdiction): unknown {
-    const obj: any = {};
-    if (message.UserID !== "") {
-      obj.UserID = message.UserID;
-    }
-    if (message.Wallet !== "") {
-      obj.Wallet = message.Wallet;
-    }
-    if (message.JurisdictionID !== "") {
-      obj.JurisdictionID = message.JurisdictionID;
-    }
-    if (message.Status !== 0) {
-      obj.Status = userJurisdictionStatusToJSON(message.Status);
-    }
-    if (message.CreatedAt !== undefined) {
-      obj.CreatedAt = message.CreatedAt.toISOString();
-    }
-    if (message.UpdatedAt !== undefined) {
-      obj.UpdatedAt = message.UpdatedAt.toISOString();
-    }
-    if (message.Network !== "") {
-      obj.Network = message.Network;
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<UserJurisdiction>, I>>(base?: I): UserJurisdiction {
-    return UserJurisdiction.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<UserJurisdiction>, I>>(object: I): UserJurisdiction {
-    const message = createBaseUserJurisdiction();
-    message.UserID = object.UserID ?? "";
-    message.Wallet = object.Wallet ?? "";
-    message.JurisdictionID = object.JurisdictionID ?? "";
-    message.Status = object.Status ?? 0;
-    message.CreatedAt = object.CreatedAt ?? undefined;
-    message.UpdatedAt = object.UpdatedAt ?? undefined;
-    message.Network = object.Network ?? "";
-    return message;
-  },
-};
-
-function createBaseUserJurisdictions(): UserJurisdictions {
-  return { UserJurisdictions: [] };
-}
-
-export const UserJurisdictions = {
-  encode(message: UserJurisdictions, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    for (const v of message.UserJurisdictions) {
-      UserJurisdiction.encode(v!, writer.uint32(10).fork()).ldelim();
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): UserJurisdictions {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseUserJurisdictions();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.UserJurisdictions.push(UserJurisdiction.decode(reader, reader.uint32()));
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): UserJurisdictions {
-    return {
-      UserJurisdictions: globalThis.Array.isArray(object?.UserJurisdictions)
-        ? object.UserJurisdictions.map((e: any) => UserJurisdiction.fromJSON(e))
-        : [],
-    };
-  },
-
-  toJSON(message: UserJurisdictions): unknown {
-    const obj: any = {};
-    if (message.UserJurisdictions?.length) {
-      obj.UserJurisdictions = message.UserJurisdictions.map((e) => UserJurisdiction.toJSON(e));
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<UserJurisdictions>, I>>(base?: I): UserJurisdictions {
-    return UserJurisdictions.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<UserJurisdictions>, I>>(object: I): UserJurisdictions {
-    const message = createBaseUserJurisdictions();
-    message.UserJurisdictions = object.UserJurisdictions?.map((e) => UserJurisdiction.fromPartial(e)) || [];
     return message;
   },
 };
