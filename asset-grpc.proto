@@ -15,7 +15,7 @@ service AssetListService {
     rpc GetAssets(AssetQuery) returns (Assets);
 
     // Upsert on UserAssetList
-    rpc UpsertUserAssetList(UserAssetList) returns (AssetKey);
+    rpc UpsertUserAssetList(UserAssetList) returns (UserAssetListKey);
     // Get UserAssetList by Key
     rpc GetUserAssetList(UserAssetListKey) returns (UserAssetList);
     // Get all UserAssetList for a given filter
