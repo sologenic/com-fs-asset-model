@@ -25,7 +25,7 @@ type AssetListServiceClient interface {
 	// Get all Assets for a given filter
 	GetAssets(ctx context.Context, in *AssetQuery, opts ...grpc.CallOption) (*Assets, error)
 	// Upsert on UserAssetList
-	UpsertUserAssetList(ctx context.Context, in *UserAssetList, opts ...grpc.CallOption) (*AssetKey, error)
+	UpsertUserAssetList(ctx context.Context, in *UserAssetList, opts ...grpc.CallOption) (*UserAssetListKey, error)
 	// Get UserAssetList by Key
 	GetUserAssetList(ctx context.Context, in *UserAssetListKey, opts ...grpc.CallOption) (*UserAssetList, error)
 	// Get all UserAssetList for a given filter
@@ -67,8 +67,8 @@ func (c *assetListServiceClient) GetAssets(ctx context.Context, in *AssetQuery, 
 	return out, nil
 }
 
-func (c *assetListServiceClient) UpsertUserAssetList(ctx context.Context, in *UserAssetList, opts ...grpc.CallOption) (*AssetKey, error) {
-	out := new(AssetKey)
+func (c *assetListServiceClient) UpsertUserAssetList(ctx context.Context, in *UserAssetList, opts ...grpc.CallOption) (*UserAssetListKey, error) {
+	out := new(UserAssetListKey)
 	err := c.cc.Invoke(ctx, "/asset.AssetListService/UpsertUserAssetList", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -105,7 +105,7 @@ type AssetListServiceServer interface {
 	// Get all Assets for a given filter
 	GetAssets(context.Context, *AssetQuery) (*Assets, error)
 	// Upsert on UserAssetList
-	UpsertUserAssetList(context.Context, *UserAssetList) (*AssetKey, error)
+	UpsertUserAssetList(context.Context, *UserAssetList) (*UserAssetListKey, error)
 	// Get UserAssetList by Key
 	GetUserAssetList(context.Context, *UserAssetListKey) (*UserAssetList, error)
 	// Get all UserAssetList for a given filter
@@ -125,7 +125,7 @@ func (UnimplementedAssetListServiceServer) GetAsset(context.Context, *AssetKey) 
 func (UnimplementedAssetListServiceServer) GetAssets(context.Context, *AssetQuery) (*Assets, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAssets not implemented")
 }
-func (UnimplementedAssetListServiceServer) UpsertUserAssetList(context.Context, *UserAssetList) (*AssetKey, error) {
+func (UnimplementedAssetListServiceServer) UpsertUserAssetList(context.Context, *UserAssetList) (*UserAssetListKey, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpsertUserAssetList not implemented")
 }
 func (UnimplementedAssetListServiceServer) GetUserAssetList(context.Context, *UserAssetListKey) (*UserAssetList, error) {

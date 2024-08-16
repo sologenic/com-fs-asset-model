@@ -66,11 +66,11 @@ export interface Assets {
     Assets: Asset[];
 }
 export interface UserAssetList {
-    /** Key combination: Currency-OrganizationID-Version-UserID */
-    UserID: string;
+    /** Key combination: Currency-OrganizationID-Version-AccountID */
+    AccountID: string;
     Wallet: string;
     /** Stable Key: "Currency-OrganizationID-Version" */
-    AssetID: string;
+    AssetKey: string;
     Status: UserAssetStatus;
     Network: string;
     Visible: boolean;
@@ -348,18 +348,18 @@ export declare const UserAssetList: {
     fromJSON(object: any): UserAssetList;
     toJSON(message: UserAssetList): unknown;
     create<I extends {
-        UserID?: string | undefined;
+        AccountID?: string | undefined;
         Wallet?: string | undefined;
-        AssetID?: string | undefined;
+        AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
         Network?: string | undefined;
         Visible?: boolean | undefined;
         CreatedAt?: Date | undefined;
         UpdatedAt?: Date | undefined;
     } & {
-        UserID?: string | undefined;
+        AccountID?: string | undefined;
         Wallet?: string | undefined;
-        AssetID?: string | undefined;
+        AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
         Network?: string | undefined;
         Visible?: boolean | undefined;
@@ -367,18 +367,18 @@ export declare const UserAssetList: {
         UpdatedAt?: Date | undefined;
     } & { [K in Exclude<keyof I, keyof UserAssetList>]: never; }>(base?: I | undefined): UserAssetList;
     fromPartial<I_1 extends {
-        UserID?: string | undefined;
+        AccountID?: string | undefined;
         Wallet?: string | undefined;
-        AssetID?: string | undefined;
+        AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
         Network?: string | undefined;
         Visible?: boolean | undefined;
         CreatedAt?: Date | undefined;
         UpdatedAt?: Date | undefined;
     } & {
-        UserID?: string | undefined;
+        AccountID?: string | undefined;
         Wallet?: string | undefined;
-        AssetID?: string | undefined;
+        AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
         Network?: string | undefined;
         Visible?: boolean | undefined;
@@ -393,9 +393,9 @@ export declare const UserAssetLists: {
     toJSON(message: UserAssetLists): unknown;
     create<I extends {
         UserAssetLists?: {
-            UserID?: string | undefined;
+            AccountID?: string | undefined;
             Wallet?: string | undefined;
-            AssetID?: string | undefined;
+            AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             Network?: string | undefined;
             Visible?: boolean | undefined;
@@ -404,36 +404,36 @@ export declare const UserAssetLists: {
         }[] | undefined;
     } & {
         UserAssetLists?: ({
-            UserID?: string | undefined;
+            AccountID?: string | undefined;
             Wallet?: string | undefined;
-            AssetID?: string | undefined;
+            AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             Network?: string | undefined;
             Visible?: boolean | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
         }[] & ({
-            UserID?: string | undefined;
+            AccountID?: string | undefined;
             Wallet?: string | undefined;
-            AssetID?: string | undefined;
+            AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             Network?: string | undefined;
             Visible?: boolean | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
         } & {
-            UserID?: string | undefined;
+            AccountID?: string | undefined;
             Wallet?: string | undefined;
-            AssetID?: string | undefined;
+            AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             Network?: string | undefined;
             Visible?: boolean | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
         } & { [K in Exclude<keyof I["UserAssetLists"][number], keyof UserAssetList>]: never; })[] & { [K_1 in Exclude<keyof I["UserAssetLists"], keyof {
-            UserID?: string | undefined;
+            AccountID?: string | undefined;
             Wallet?: string | undefined;
-            AssetID?: string | undefined;
+            AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             Network?: string | undefined;
             Visible?: boolean | undefined;
@@ -443,9 +443,9 @@ export declare const UserAssetLists: {
     } & { [K_2 in Exclude<keyof I, "UserAssetLists">]: never; }>(base?: I | undefined): UserAssetLists;
     fromPartial<I_1 extends {
         UserAssetLists?: {
-            UserID?: string | undefined;
+            AccountID?: string | undefined;
             Wallet?: string | undefined;
-            AssetID?: string | undefined;
+            AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             Network?: string | undefined;
             Visible?: boolean | undefined;
@@ -454,36 +454,36 @@ export declare const UserAssetLists: {
         }[] | undefined;
     } & {
         UserAssetLists?: ({
-            UserID?: string | undefined;
+            AccountID?: string | undefined;
             Wallet?: string | undefined;
-            AssetID?: string | undefined;
+            AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             Network?: string | undefined;
             Visible?: boolean | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
         }[] & ({
-            UserID?: string | undefined;
+            AccountID?: string | undefined;
             Wallet?: string | undefined;
-            AssetID?: string | undefined;
+            AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             Network?: string | undefined;
             Visible?: boolean | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
         } & {
-            UserID?: string | undefined;
+            AccountID?: string | undefined;
             Wallet?: string | undefined;
-            AssetID?: string | undefined;
+            AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             Network?: string | undefined;
             Visible?: boolean | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
         } & { [K_3 in Exclude<keyof I_1["UserAssetLists"][number], keyof UserAssetList>]: never; })[] & { [K_4 in Exclude<keyof I_1["UserAssetLists"], keyof {
-            UserID?: string | undefined;
+            AccountID?: string | undefined;
             Wallet?: string | undefined;
-            AssetID?: string | undefined;
+            AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             Network?: string | undefined;
             Visible?: boolean | undefined;

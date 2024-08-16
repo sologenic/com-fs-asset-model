@@ -526,9 +526,9 @@ export const Assets = {
 };
 function createBaseUserAssetList() {
     return {
-        UserID: "",
+        AccountID: "",
         Wallet: "",
-        AssetID: "",
+        AssetKey: "",
         Status: 0,
         Network: "",
         Visible: false,
@@ -538,14 +538,14 @@ function createBaseUserAssetList() {
 }
 export const UserAssetList = {
     encode(message, writer = _m0.Writer.create()) {
-        if (message.UserID !== "") {
-            writer.uint32(10).string(message.UserID);
+        if (message.AccountID !== "") {
+            writer.uint32(10).string(message.AccountID);
         }
         if (message.Wallet !== "") {
             writer.uint32(18).string(message.Wallet);
         }
-        if (message.AssetID !== "") {
-            writer.uint32(26).string(message.AssetID);
+        if (message.AssetKey !== "") {
+            writer.uint32(26).string(message.AssetKey);
         }
         if (message.Status !== 0) {
             writer.uint32(32).int32(message.Status);
@@ -575,7 +575,7 @@ export const UserAssetList = {
                     if (tag !== 10) {
                         break;
                     }
-                    message.UserID = reader.string();
+                    message.AccountID = reader.string();
                     continue;
                 case 2:
                     if (tag !== 18) {
@@ -587,7 +587,7 @@ export const UserAssetList = {
                     if (tag !== 26) {
                         break;
                     }
-                    message.AssetID = reader.string();
+                    message.AssetKey = reader.string();
                     continue;
                 case 4:
                     if (tag !== 32) {
@@ -629,9 +629,9 @@ export const UserAssetList = {
     },
     fromJSON(object) {
         return {
-            UserID: isSet(object.UserID) ? globalThis.String(object.UserID) : "",
+            AccountID: isSet(object.AccountID) ? globalThis.String(object.AccountID) : "",
             Wallet: isSet(object.Wallet) ? globalThis.String(object.Wallet) : "",
-            AssetID: isSet(object.AssetID) ? globalThis.String(object.AssetID) : "",
+            AssetKey: isSet(object.AssetKey) ? globalThis.String(object.AssetKey) : "",
             Status: isSet(object.Status) ? userAssetStatusFromJSON(object.Status) : 0,
             Network: isSet(object.Network) ? globalThis.String(object.Network) : "",
             Visible: isSet(object.Visible) ? globalThis.Boolean(object.Visible) : false,
@@ -641,14 +641,14 @@ export const UserAssetList = {
     },
     toJSON(message) {
         const obj = {};
-        if (message.UserID !== "") {
-            obj.UserID = message.UserID;
+        if (message.AccountID !== "") {
+            obj.AccountID = message.AccountID;
         }
         if (message.Wallet !== "") {
             obj.Wallet = message.Wallet;
         }
-        if (message.AssetID !== "") {
-            obj.AssetID = message.AssetID;
+        if (message.AssetKey !== "") {
+            obj.AssetKey = message.AssetKey;
         }
         if (message.Status !== 0) {
             obj.Status = userAssetStatusToJSON(message.Status);
@@ -673,9 +673,9 @@ export const UserAssetList = {
     fromPartial(object) {
         var _a, _b, _c, _d, _e, _f, _g, _h;
         const message = createBaseUserAssetList();
-        message.UserID = (_a = object.UserID) !== null && _a !== void 0 ? _a : "";
+        message.AccountID = (_a = object.AccountID) !== null && _a !== void 0 ? _a : "";
         message.Wallet = (_b = object.Wallet) !== null && _b !== void 0 ? _b : "";
-        message.AssetID = (_c = object.AssetID) !== null && _c !== void 0 ? _c : "";
+        message.AssetKey = (_c = object.AssetKey) !== null && _c !== void 0 ? _c : "";
         message.Status = (_d = object.Status) !== null && _d !== void 0 ? _d : 0;
         message.Network = (_e = object.Network) !== null && _e !== void 0 ? _e : "";
         message.Visible = (_f = object.Visible) !== null && _f !== void 0 ? _f : false;

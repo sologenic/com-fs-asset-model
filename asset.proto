@@ -33,10 +33,10 @@ message Assets {
 }
 
 message UserAssetList {
-    // Key combination: Currency-OrganizationID-Version-UserID
-    string UserID = 1;
+    // Key combination: Currency-OrganizationID-Version-AccountID
+    string AccountID = 1;
     string Wallet = 2;
-    string AssetID = 3; // Stable Key: "Currency-OrganizationID-Version"
+    string AssetKey = 3; // Stable Key: "Currency-OrganizationID-Version"
     UserAssetStatus Status = 4;
     string Network = 5;
     bool Visible = 6;

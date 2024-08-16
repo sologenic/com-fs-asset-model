@@ -44,9 +44,9 @@ message UserAssetListKey {
 message UserAssetListQuery {
     string Network = 1;
     optional int32 Offset = 2;
-    optional string UserID = 3;
+    optional string AccountID = 3;
     optional string Wallet = 4;
-    optional string AssetID = 5;
+    optional string AssetKey = 5;
     optional UserAssetStatus Status = 6;
     optional bool Visible = 7;
 }

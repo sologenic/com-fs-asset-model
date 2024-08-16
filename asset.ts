@@ -229,11 +229,11 @@ export interface Assets {
 }
 
 export interface UserAssetList {
-  /** Key combination: Currency-OrganizationID-Version-UserID */
-  UserID: string;
+  /** Key combination: Currency-OrganizationID-Version-AccountID */
+  AccountID: string;
   Wallet: string;
   /** Stable Key: "Currency-OrganizationID-Version" */
-  AssetID: string;
+  AssetKey: string;
   Status: UserAssetStatus;
   Network: string;
   Visible: boolean;
@@ -607,9 +607,9 @@ export const Assets = {
 
 function createBaseUserAssetList(): UserAssetList {
   return {
-    UserID: "",
+    AccountID: "",
     Wallet: "",
-    AssetID: "",
+    AssetKey: "",
     Status: 0,
     Network: "",
     Visible: false,
@@ -620,14 +620,14 @@ function createBaseUserAssetList(): UserAssetList {
 
 export const UserAssetList = {
   encode(message: UserAssetList, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.UserID !== "") {
-      writer.uint32(10).string(message.UserID);
+    if (message.AccountID !== "") {
+      writer.uint32(10).string(message.AccountID);
     }
     if (message.Wallet !== "") {
       writer.uint32(18).string(message.Wallet);
     }
-    if (message.AssetID !== "") {
-      writer.uint32(26).string(message.AssetID);
+    if (message.AssetKey !== "") {
+      writer.uint32(26).string(message.AssetKey);
     }
     if (message.Status !== 0) {
       writer.uint32(32).int32(message.Status);
@@ -659,7 +659,7 @@ export const UserAssetList = {
             break;
           }
 
-          message.UserID = reader.string();
+          message.AccountID = reader.string();
           continue;
         case 2:
           if (tag !== 18) {
@@ -673,7 +673,7 @@ export const UserAssetList = {
             break;
           }
 
-          message.AssetID = reader.string();
+          message.AssetKey = reader.string();
           continue;
         case 4:
           if (tag !== 32) {
@@ -721,9 +721,9 @@ export const UserAssetList = {
 
   fromJSON(object: any): UserAssetList {
     return {
-      UserID: isSet(object.UserID) ? globalThis.String(object.UserID) : "",
+      AccountID: isSet(object.AccountID) ? globalThis.String(object.AccountID) : "",
       Wallet: isSet(object.Wallet) ? globalThis.String(object.Wallet) : "",
-      AssetID: isSet(object.AssetID) ? globalThis.String(object.AssetID) : "",
+      AssetKey: isSet(object.AssetKey) ? globalThis.String(object.AssetKey) : "",
       Status: isSet(object.Status) ? userAssetStatusFromJSON(object.Status) : 0,
       Network: isSet(object.Network) ? globalThis.String(object.Network) : "",
       Visible: isSet(object.Visible) ? globalThis.Boolean(object.Visible) : false,
@@ -734,14 +734,14 @@ export const UserAssetList = {
 
   toJSON(message: UserAssetList): unknown {
     const obj: any = {};
-    if (message.UserID !== "") {
-      obj.UserID = message.UserID;
+    if (message.AccountID !== "") {
+      obj.AccountID = message.AccountID;
     }
     if (message.Wallet !== "") {
       obj.Wallet = message.Wallet;
     }
-    if (message.AssetID !== "") {
-      obj.AssetID = message.AssetID;
+    if (message.AssetKey !== "") {
+      obj.AssetKey = message.AssetKey;
     }
     if (message.Status !== 0) {
       obj.Status = userAssetStatusToJSON(message.Status);
@@ -766,9 +766,9 @@ export const UserAssetList = {
   },
   fromPartial<I extends Exact<DeepPartial<UserAssetList>, I>>(object: I): UserAssetList {
     const message = createBaseUserAssetList();
-    message.UserID = object.UserID ?? "";
+    message.AccountID = object.AccountID ?? "";
     message.Wallet = object.Wallet ?? "";
-    message.AssetID = object.AssetID ?? "";
+    message.AssetKey = object.AssetKey ?? "";
     message.Status = object.Status ?? 0;
     message.Network = object.Network ?? "";
     message.Visible = object.Visible ?? false;
