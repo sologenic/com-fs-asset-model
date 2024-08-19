@@ -7,7 +7,7 @@ import (
 	grpcclient "github.com/sologenic/fs-utils-lib/go/grpc-client"
 )
 
-const endpoint = "ASSET_LIST_STORE"
+const endpoint = "ASSET_STORE"
 
 var (
 	client     *grpcdef.AssetListServiceClient
