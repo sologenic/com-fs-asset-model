@@ -8,24 +8,25 @@ option go_package = "github.com/sologenic/com-fs-asset-model;asset";
 
 message Asset {
     // Key combination: Currency-OrganizationID-Version
-    string OrganizationID = 1; // External entity (broker) that owns this asset, e.g. issuer
-    AssetStatus Status = 2;
-    optional Reason Reason = 3;
-    repeated string JurisdictionIDs = 4; // list of jurisdictionIDs where this asset is allowed to be traded
-    string Network = 5;
-    google.protobuf.Timestamp CreatedAt = 6;
-    google.protobuf.Timestamp UpdatedAt = 7;
-    AssetType Type = 8;
+    string ID = 1; // Key string to prevent composing the key all the time and reduce errors
+    string OrganizationID = 2; // External entity (broker) that owns this asset, e.g. issuer
+    AssetStatus Status = 3;
+    optional Reason Reason = 4;
+    repeated string JurisdictionIDs = 5; // list of jurisdictionIDs where this asset is allowed to be traded
+    string Network = 6;
+    google.protobuf.Timestamp CreatedAt = 7;
+    google.protobuf.Timestamp UpdatedAt = 8;
+    AssetType Type = 9;
 
     // Flattened StockProperties
-    string Symbol = 9; // Currency-OrganizationID(issuer) 
-    string Currency = 10;
-    string Version = 11;
-    int32 Precision = 12;
-    string Name = 13;
-    string ExchangeTickerSymbol = 14;
-    string Exchange = 15;
-    string Description = 16;
+    string Symbol = 10; // Currency-OrganizationID(issuer) 
+    string Currency = 11;
+    string Version = 12;
+    int32 Precision = 13;
+    string Name = 14;
+    string ExchangeTickerSymbol = 15;
+    string Exchange = 16;
+    string Description = 17;
 }
 
 message Assets {

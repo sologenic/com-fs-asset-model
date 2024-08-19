@@ -191,6 +191,7 @@ export function userAssetStatusToJSON(object) {
 }
 function createBaseAsset() {
     return {
+        ID: "",
         OrganizationID: "",
         Status: 0,
         Reason: undefined,
@@ -211,53 +212,56 @@ function createBaseAsset() {
 }
 export const Asset = {
     encode(message, writer = _m0.Writer.create()) {
+        if (message.ID !== "") {
+            writer.uint32(10).string(message.ID);
+        }
         if (message.OrganizationID !== "") {
-            writer.uint32(10).string(message.OrganizationID);
+            writer.uint32(18).string(message.OrganizationID);
         }
         if (message.Status !== 0) {
-            writer.uint32(16).int32(message.Status);
+            writer.uint32(24).int32(message.Status);
         }
         if (message.Reason !== undefined) {
-            writer.uint32(24).int32(message.Reason);
+            writer.uint32(32).int32(message.Reason);
         }
         for (const v of message.JurisdictionIDs) {
-            writer.uint32(34).string(v);
+            writer.uint32(42).string(v);
         }
         if (message.Network !== "") {
-            writer.uint32(42).string(message.Network);
+            writer.uint32(50).string(message.Network);
         }
         if (message.CreatedAt !== undefined) {
-            Timestamp.encode(toTimestamp(message.CreatedAt), writer.uint32(50).fork()).ldelim();
+            Timestamp.encode(toTimestamp(message.CreatedAt), writer.uint32(58).fork()).ldelim();
         }
         if (message.UpdatedAt !== undefined) {
-            Timestamp.encode(toTimestamp(message.UpdatedAt), writer.uint32(58).fork()).ldelim();
+            Timestamp.encode(toTimestamp(message.UpdatedAt), writer.uint32(66).fork()).ldelim();
         }
         if (message.Type !== 0) {
-            writer.uint32(64).int32(message.Type);
+            writer.uint32(72).int32(message.Type);
         }
         if (message.Symbol !== "") {
-            writer.uint32(74).string(message.Symbol);
+            writer.uint32(82).string(message.Symbol);
         }
         if (message.Currency !== "") {
-            writer.uint32(82).string(message.Currency);
+            writer.uint32(90).string(message.Currency);
         }
         if (message.Version !== "") {
-            writer.uint32(90).string(message.Version);
+            writer.uint32(98).string(message.Version);
         }
         if (message.Precision !== 0) {
-            writer.uint32(96).int32(message.Precision);
+            writer.uint32(104).int32(message.Precision);
         }
         if (message.Name !== "") {
-            writer.uint32(106).string(message.Name);
+            writer.uint32(114).string(message.Name);
         }
         if (message.ExchangeTickerSymbol !== "") {
-            writer.uint32(114).string(message.ExchangeTickerSymbol);
+            writer.uint32(122).string(message.ExchangeTickerSymbol);
         }
         if (message.Exchange !== "") {
-            writer.uint32(122).string(message.Exchange);
+            writer.uint32(130).string(message.Exchange);
         }
         if (message.Description !== "") {
-            writer.uint32(130).string(message.Description);
+            writer.uint32(138).string(message.Description);
         }
         return writer;
     },
@@ -272,94 +276,100 @@ export const Asset = {
                     if (tag !== 10) {
                         break;
                     }
-                    message.OrganizationID = reader.string();
+                    message.ID = reader.string();
                     continue;
                 case 2:
-                    if (tag !== 16) {
+                    if (tag !== 18) {
                         break;
                     }
-                    message.Status = reader.int32();
+                    message.OrganizationID = reader.string();
                     continue;
                 case 3:
                     if (tag !== 24) {
                         break;
                     }
-                    message.Reason = reader.int32();
+                    message.Status = reader.int32();
                     continue;
                 case 4:
-                    if (tag !== 34) {
+                    if (tag !== 32) {
                         break;
                     }
-                    message.JurisdictionIDs.push(reader.string());
+                    message.Reason = reader.int32();
                     continue;
                 case 5:
                     if (tag !== 42) {
                         break;
                     }
-                    message.Network = reader.string();
+                    message.JurisdictionIDs.push(reader.string());
                     continue;
                 case 6:
                     if (tag !== 50) {
                         break;
                     }
-                    message.CreatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+                    message.Network = reader.string();
                     continue;
                 case 7:
                     if (tag !== 58) {
                         break;
                     }
-                    message.UpdatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+                    message.CreatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
                     continue;
                 case 8:
-                    if (tag !== 64) {
+                    if (tag !== 66) {
+                        break;
+                    }
+                    message.UpdatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+                    continue;
+                case 9:
+                    if (tag !== 72) {
                         break;
                     }
                     message.Type = reader.int32();
-                    continue;
-                case 9:
-                    if (tag !== 74) {
-                        break;
-                    }
-                    message.Symbol = reader.string();
                     continue;
                 case 10:
                     if (tag !== 82) {
                         break;
                     }
-                    message.Currency = reader.string();
+                    message.Symbol = reader.string();
                     continue;
                 case 11:
                     if (tag !== 90) {
                         break;
                     }
-                    message.Version = reader.string();
+                    message.Currency = reader.string();
                     continue;
                 case 12:
-                    if (tag !== 96) {
+                    if (tag !== 98) {
+                        break;
+                    }
+                    message.Version = reader.string();
+                    continue;
+                case 13:
+                    if (tag !== 104) {
                         break;
                     }
                     message.Precision = reader.int32();
-                    continue;
-                case 13:
-                    if (tag !== 106) {
-                        break;
-                    }
-                    message.Name = reader.string();
                     continue;
                 case 14:
                     if (tag !== 114) {
                         break;
                     }
-                    message.ExchangeTickerSymbol = reader.string();
+                    message.Name = reader.string();
                     continue;
                 case 15:
                     if (tag !== 122) {
                         break;
                     }
-                    message.Exchange = reader.string();
+                    message.ExchangeTickerSymbol = reader.string();
                     continue;
                 case 16:
                     if (tag !== 130) {
+                        break;
+                    }
+                    message.Exchange = reader.string();
+                    continue;
+                case 17:
+                    if (tag !== 138) {
                         break;
                     }
                     message.Description = reader.string();
@@ -374,6 +384,7 @@ export const Asset = {
     },
     fromJSON(object) {
         return {
+            ID: isSet(object.ID) ? globalThis.String(object.ID) : "",
             OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
             Status: isSet(object.Status) ? assetStatusFromJSON(object.Status) : 0,
             Reason: isSet(object.Reason) ? reasonFromJSON(object.Reason) : undefined,
@@ -397,6 +408,9 @@ export const Asset = {
     toJSON(message) {
         var _a;
         const obj = {};
+        if (message.ID !== "") {
+            obj.ID = message.ID;
+        }
         if (message.OrganizationID !== "") {
             obj.OrganizationID = message.OrganizationID;
         }
@@ -451,24 +465,25 @@ export const Asset = {
         return Asset.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s;
         const message = createBaseAsset();
-        message.OrganizationID = (_a = object.OrganizationID) !== null && _a !== void 0 ? _a : "";
-        message.Status = (_b = object.Status) !== null && _b !== void 0 ? _b : 0;
-        message.Reason = (_c = object.Reason) !== null && _c !== void 0 ? _c : undefined;
-        message.JurisdictionIDs = ((_d = object.JurisdictionIDs) === null || _d === void 0 ? void 0 : _d.map((e) => e)) || [];
-        message.Network = (_e = object.Network) !== null && _e !== void 0 ? _e : "";
-        message.CreatedAt = (_f = object.CreatedAt) !== null && _f !== void 0 ? _f : undefined;
-        message.UpdatedAt = (_g = object.UpdatedAt) !== null && _g !== void 0 ? _g : undefined;
-        message.Type = (_h = object.Type) !== null && _h !== void 0 ? _h : 0;
-        message.Symbol = (_j = object.Symbol) !== null && _j !== void 0 ? _j : "";
-        message.Currency = (_k = object.Currency) !== null && _k !== void 0 ? _k : "";
-        message.Version = (_l = object.Version) !== null && _l !== void 0 ? _l : "";
-        message.Precision = (_m = object.Precision) !== null && _m !== void 0 ? _m : 0;
-        message.Name = (_o = object.Name) !== null && _o !== void 0 ? _o : "";
-        message.ExchangeTickerSymbol = (_p = object.ExchangeTickerSymbol) !== null && _p !== void 0 ? _p : "";
-        message.Exchange = (_q = object.Exchange) !== null && _q !== void 0 ? _q : "";
-        message.Description = (_r = object.Description) !== null && _r !== void 0 ? _r : "";
+        message.ID = (_a = object.ID) !== null && _a !== void 0 ? _a : "";
+        message.OrganizationID = (_b = object.OrganizationID) !== null && _b !== void 0 ? _b : "";
+        message.Status = (_c = object.Status) !== null && _c !== void 0 ? _c : 0;
+        message.Reason = (_d = object.Reason) !== null && _d !== void 0 ? _d : undefined;
+        message.JurisdictionIDs = ((_e = object.JurisdictionIDs) === null || _e === void 0 ? void 0 : _e.map((e) => e)) || [];
+        message.Network = (_f = object.Network) !== null && _f !== void 0 ? _f : "";
+        message.CreatedAt = (_g = object.CreatedAt) !== null && _g !== void 0 ? _g : undefined;
+        message.UpdatedAt = (_h = object.UpdatedAt) !== null && _h !== void 0 ? _h : undefined;
+        message.Type = (_j = object.Type) !== null && _j !== void 0 ? _j : 0;
+        message.Symbol = (_k = object.Symbol) !== null && _k !== void 0 ? _k : "";
+        message.Currency = (_l = object.Currency) !== null && _l !== void 0 ? _l : "";
+        message.Version = (_m = object.Version) !== null && _m !== void 0 ? _m : "";
+        message.Precision = (_o = object.Precision) !== null && _o !== void 0 ? _o : 0;
+        message.Name = (_p = object.Name) !== null && _p !== void 0 ? _p : "";
+        message.ExchangeTickerSymbol = (_q = object.ExchangeTickerSymbol) !== null && _q !== void 0 ? _q : "";
+        message.Exchange = (_r = object.Exchange) !== null && _r !== void 0 ? _r : "";
+        message.Description = (_s = object.Description) !== null && _s !== void 0 ? _s : "";
         return message;
     },
 };

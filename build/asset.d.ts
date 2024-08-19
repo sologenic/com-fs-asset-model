@@ -43,6 +43,8 @@ export declare function userAssetStatusFromJSON(object: any): UserAssetStatus;
 export declare function userAssetStatusToJSON(object: UserAssetStatus): string;
 export interface Asset {
     /** Key combination: Currency-OrganizationID-Version */
+    ID: string;
+    /** External entity (broker) that owns this asset, e.g. issuer */
     OrganizationID: string;
     Status: AssetStatus;
     Reason?: Reason | undefined;
@@ -86,6 +88,7 @@ export declare const Asset: {
     fromJSON(object: any): Asset;
     toJSON(message: Asset): unknown;
     create<I extends {
+        ID?: string | undefined;
         OrganizationID?: string | undefined;
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
@@ -103,6 +106,7 @@ export declare const Asset: {
         Exchange?: string | undefined;
         Description?: string | undefined;
     } & {
+        ID?: string | undefined;
         OrganizationID?: string | undefined;
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
@@ -121,6 +125,7 @@ export declare const Asset: {
         Description?: string | undefined;
     } & { [K_1 in Exclude<keyof I, keyof Asset>]: never; }>(base?: I | undefined): Asset;
     fromPartial<I_1 extends {
+        ID?: string | undefined;
         OrganizationID?: string | undefined;
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
@@ -138,6 +143,7 @@ export declare const Asset: {
         Exchange?: string | undefined;
         Description?: string | undefined;
     } & {
+        ID?: string | undefined;
         OrganizationID?: string | undefined;
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
@@ -163,6 +169,7 @@ export declare const Assets: {
     toJSON(message: Assets): unknown;
     create<I extends {
         Assets?: {
+            ID?: string | undefined;
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
@@ -182,6 +189,7 @@ export declare const Assets: {
         }[] | undefined;
     } & {
         Assets?: ({
+            ID?: string | undefined;
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
@@ -199,6 +207,7 @@ export declare const Assets: {
             Exchange?: string | undefined;
             Description?: string | undefined;
         }[] & ({
+            ID?: string | undefined;
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
@@ -216,6 +225,7 @@ export declare const Assets: {
             Exchange?: string | undefined;
             Description?: string | undefined;
         } & {
+            ID?: string | undefined;
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
@@ -233,6 +243,7 @@ export declare const Assets: {
             Exchange?: string | undefined;
             Description?: string | undefined;
         } & { [K_1 in Exclude<keyof I["Assets"][number], keyof Asset>]: never; })[] & { [K_2 in Exclude<keyof I["Assets"], keyof {
+            ID?: string | undefined;
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
@@ -253,6 +264,7 @@ export declare const Assets: {
     } & { [K_3 in Exclude<keyof I, "Assets">]: never; }>(base?: I | undefined): Assets;
     fromPartial<I_1 extends {
         Assets?: {
+            ID?: string | undefined;
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
@@ -272,6 +284,7 @@ export declare const Assets: {
         }[] | undefined;
     } & {
         Assets?: ({
+            ID?: string | undefined;
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
@@ -289,6 +302,7 @@ export declare const Assets: {
             Exchange?: string | undefined;
             Description?: string | undefined;
         }[] & ({
+            ID?: string | undefined;
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
@@ -306,6 +320,7 @@ export declare const Assets: {
             Exchange?: string | undefined;
             Description?: string | undefined;
         } & {
+            ID?: string | undefined;
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
@@ -323,6 +338,7 @@ export declare const Assets: {
             Exchange?: string | undefined;
             Description?: string | undefined;
         } & { [K_5 in Exclude<keyof I_1["Assets"][number], keyof Asset>]: never; })[] & { [K_6 in Exclude<keyof I_1["Assets"], keyof {
+            ID?: string | undefined;
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;

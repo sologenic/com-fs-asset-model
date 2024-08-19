@@ -202,6 +202,8 @@ export function userAssetStatusToJSON(object: UserAssetStatus): string {
 
 export interface Asset {
   /** Key combination: Currency-OrganizationID-Version */
+  ID: string;
+  /** External entity (broker) that owns this asset, e.g. issuer */
   OrganizationID: string;
   Status: AssetStatus;
   Reason?:
@@ -247,6 +249,7 @@ export interface UserAssetLists {
 
 function createBaseAsset(): Asset {
   return {
+    ID: "",
     OrganizationID: "",
     Status: 0,
     Reason: undefined,
@@ -268,53 +271,56 @@ function createBaseAsset(): Asset {
 
 export const Asset = {
   encode(message: Asset, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.ID !== "") {
+      writer.uint32(10).string(message.ID);
+    }
     if (message.OrganizationID !== "") {
-      writer.uint32(10).string(message.OrganizationID);
+      writer.uint32(18).string(message.OrganizationID);
     }
     if (message.Status !== 0) {
-      writer.uint32(16).int32(message.Status);
+      writer.uint32(24).int32(message.Status);
     }
     if (message.Reason !== undefined) {
-      writer.uint32(24).int32(message.Reason);
+      writer.uint32(32).int32(message.Reason);
     }
     for (const v of message.JurisdictionIDs) {
-      writer.uint32(34).string(v!);
+      writer.uint32(42).string(v!);
     }
     if (message.Network !== "") {
-      writer.uint32(42).string(message.Network);
+      writer.uint32(50).string(message.Network);
     }
     if (message.CreatedAt !== undefined) {
-      Timestamp.encode(toTimestamp(message.CreatedAt), writer.uint32(50).fork()).ldelim();
+      Timestamp.encode(toTimestamp(message.CreatedAt), writer.uint32(58).fork()).ldelim();
     }
     if (message.UpdatedAt !== undefined) {
-      Timestamp.encode(toTimestamp(message.UpdatedAt), writer.uint32(58).fork()).ldelim();
+      Timestamp.encode(toTimestamp(message.UpdatedAt), writer.uint32(66).fork()).ldelim();
     }
     if (message.Type !== 0) {
-      writer.uint32(64).int32(message.Type);
+      writer.uint32(72).int32(message.Type);
     }
     if (message.Symbol !== "") {
-      writer.uint32(74).string(message.Symbol);
+      writer.uint32(82).string(message.Symbol);
     }
     if (message.Currency !== "") {
-      writer.uint32(82).string(message.Currency);
+      writer.uint32(90).string(message.Currency);
     }
     if (message.Version !== "") {
-      writer.uint32(90).string(message.Version);
+      writer.uint32(98).string(message.Version);
     }
     if (message.Precision !== 0) {
-      writer.uint32(96).int32(message.Precision);
+      writer.uint32(104).int32(message.Precision);
     }
     if (message.Name !== "") {
-      writer.uint32(106).string(message.Name);
+      writer.uint32(114).string(message.Name);
     }
     if (message.ExchangeTickerSymbol !== "") {
-      writer.uint32(114).string(message.ExchangeTickerSymbol);
+      writer.uint32(122).string(message.ExchangeTickerSymbol);
     }
     if (message.Exchange !== "") {
-      writer.uint32(122).string(message.Exchange);
+      writer.uint32(130).string(message.Exchange);
     }
     if (message.Description !== "") {
-      writer.uint32(130).string(message.Description);
+      writer.uint32(138).string(message.Description);
     }
     return writer;
   },
@@ -331,108 +337,115 @@ export const Asset = {
             break;
           }
 
-          message.OrganizationID = reader.string();
+          message.ID = reader.string();
           continue;
         case 2:
-          if (tag !== 16) {
+          if (tag !== 18) {
             break;
           }
 
-          message.Status = reader.int32() as any;
+          message.OrganizationID = reader.string();
           continue;
         case 3:
           if (tag !== 24) {
             break;
           }
 
-          message.Reason = reader.int32() as any;
+          message.Status = reader.int32() as any;
           continue;
         case 4:
-          if (tag !== 34) {
+          if (tag !== 32) {
             break;
           }
 
-          message.JurisdictionIDs.push(reader.string());
+          message.Reason = reader.int32() as any;
           continue;
         case 5:
           if (tag !== 42) {
             break;
           }
 
-          message.Network = reader.string();
+          message.JurisdictionIDs.push(reader.string());
           continue;
         case 6:
           if (tag !== 50) {
             break;
           }
 
-          message.CreatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          message.Network = reader.string();
           continue;
         case 7:
           if (tag !== 58) {
             break;
           }
 
-          message.UpdatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          message.CreatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
           continue;
         case 8:
-          if (tag !== 64) {
+          if (tag !== 66) {
+            break;
+          }
+
+          message.UpdatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          continue;
+        case 9:
+          if (tag !== 72) {
             break;
           }
 
           message.Type = reader.int32() as any;
-          continue;
-        case 9:
-          if (tag !== 74) {
-            break;
-          }
-
-          message.Symbol = reader.string();
           continue;
         case 10:
           if (tag !== 82) {
             break;
           }
 
-          message.Currency = reader.string();
+          message.Symbol = reader.string();
           continue;
         case 11:
           if (tag !== 90) {
             break;
           }
 
-          message.Version = reader.string();
+          message.Currency = reader.string();
           continue;
         case 12:
-          if (tag !== 96) {
+          if (tag !== 98) {
+            break;
+          }
+
+          message.Version = reader.string();
+          continue;
+        case 13:
+          if (tag !== 104) {
             break;
           }
 
           message.Precision = reader.int32();
-          continue;
-        case 13:
-          if (tag !== 106) {
-            break;
-          }
-
-          message.Name = reader.string();
           continue;
         case 14:
           if (tag !== 114) {
             break;
           }
 
-          message.ExchangeTickerSymbol = reader.string();
+          message.Name = reader.string();
           continue;
         case 15:
           if (tag !== 122) {
             break;
           }
 
-          message.Exchange = reader.string();
+          message.ExchangeTickerSymbol = reader.string();
           continue;
         case 16:
           if (tag !== 130) {
+            break;
+          }
+
+          message.Exchange = reader.string();
+          continue;
+        case 17:
+          if (tag !== 138) {
             break;
           }
 
@@ -449,6 +462,7 @@ export const Asset = {
 
   fromJSON(object: any): Asset {
     return {
+      ID: isSet(object.ID) ? globalThis.String(object.ID) : "",
       OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
       Status: isSet(object.Status) ? assetStatusFromJSON(object.Status) : 0,
       Reason: isSet(object.Reason) ? reasonFromJSON(object.Reason) : undefined,
@@ -472,6 +486,9 @@ export const Asset = {
 
   toJSON(message: Asset): unknown {
     const obj: any = {};
+    if (message.ID !== "") {
+      obj.ID = message.ID;
+    }
     if (message.OrganizationID !== "") {
       obj.OrganizationID = message.OrganizationID;
     }
@@ -528,6 +545,7 @@ export const Asset = {
   },
   fromPartial<I extends Exact<DeepPartial<Asset>, I>>(object: I): Asset {
     const message = createBaseAsset();
+    message.ID = object.ID ?? "";
     message.OrganizationID = object.OrganizationID ?? "";
     message.Status = object.Status ?? 0;
     message.Reason = object.Reason ?? undefined;
