@@ -2,14 +2,14 @@ import _m0 from "protobufjs/minimal";
 export declare const protobufPackage = "asset";
 export declare enum AssetStatus {
     ASSET_STATUS_DO_NOT_USE = 0,
-    /** DO_NOT_LIST - Organization admin only */
+    /** DO_NOT_LIST - BROKER_ASSET_ADMINISTRATOR only */
     DO_NOT_LIST = 1,
-    /** REQUEST_LISTING - Organization admin only */
+    /** REQUEST_LISTING - BROKER_ASSET_ADMINISTRATOR only */
     REQUEST_LISTING = 2,
-    /** LISTED - Super admin only */
+    /** LISTED - ORGANIZATION_ASSET_ADMINISTRATOR only */
     LISTED = 3,
-    /** SUPER_ADMIN_DO_NOT_LIST - Super admin only */
-    SUPER_ADMIN_DO_NOT_LIST = 4,
+    /** ORGANIZATION_ADMIN_DO_NOT_LIST - ORGANIZATION_ASSET_ADMINISTRATOR only */
+    ORGANIZATION_ADMIN_DO_NOT_LIST = 4,
     OUTDATED_ASSET_VERSION = 5,
     UNRECOGNIZED = -1
 }

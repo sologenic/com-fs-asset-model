@@ -12,14 +12,14 @@ export const protobufPackage = "asset";
 
 export enum AssetStatus {
   ASSET_STATUS_DO_NOT_USE = 0,
-  /** DO_NOT_LIST - Organization admin only */
+  /** DO_NOT_LIST - BROKER_ASSET_ADMINISTRATOR only */
   DO_NOT_LIST = 1,
-  /** REQUEST_LISTING - Organization admin only */
+  /** REQUEST_LISTING - BROKER_ASSET_ADMINISTRATOR only */
   REQUEST_LISTING = 2,
-  /** LISTED - Super admin only */
+  /** LISTED - ORGANIZATION_ASSET_ADMINISTRATOR only */
   LISTED = 3,
-  /** SUPER_ADMIN_DO_NOT_LIST - Super admin only */
-  SUPER_ADMIN_DO_NOT_LIST = 4,
+  /** ORGANIZATION_ADMIN_DO_NOT_LIST - ORGANIZATION_ASSET_ADMINISTRATOR only */
+  ORGANIZATION_ADMIN_DO_NOT_LIST = 4,
   OUTDATED_ASSET_VERSION = 5,
   UNRECOGNIZED = -1,
 }
@@ -39,8 +39,8 @@ export function assetStatusFromJSON(object: any): AssetStatus {
     case "LISTED":
       return AssetStatus.LISTED;
     case 4:
-    case "SUPER_ADMIN_DO_NOT_LIST":
-      return AssetStatus.SUPER_ADMIN_DO_NOT_LIST;
+    case "ORGANIZATION_ADMIN_DO_NOT_LIST":
+      return AssetStatus.ORGANIZATION_ADMIN_DO_NOT_LIST;
     case 5:
     case "OUTDATED_ASSET_VERSION":
       return AssetStatus.OUTDATED_ASSET_VERSION;
@@ -61,8 +61,8 @@ export function assetStatusToJSON(object: AssetStatus): string {
       return "REQUEST_LISTING";
     case AssetStatus.LISTED:
       return "LISTED";
-    case AssetStatus.SUPER_ADMIN_DO_NOT_LIST:
-      return "SUPER_ADMIN_DO_NOT_LIST";
+    case AssetStatus.ORGANIZATION_ADMIN_DO_NOT_LIST:
+      return "ORGANIZATION_ADMIN_DO_NOT_LIST";
     case AssetStatus.OUTDATED_ASSET_VERSION:
       return "OUTDATED_ASSET_VERSION";
     case AssetStatus.UNRECOGNIZED:

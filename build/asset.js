@@ -10,14 +10,14 @@ export const protobufPackage = "asset";
 export var AssetStatus;
 (function (AssetStatus) {
     AssetStatus[AssetStatus["ASSET_STATUS_DO_NOT_USE"] = 0] = "ASSET_STATUS_DO_NOT_USE";
-    /** DO_NOT_LIST - Organization admin only */
+    /** DO_NOT_LIST - BROKER_ASSET_ADMINISTRATOR only */
     AssetStatus[AssetStatus["DO_NOT_LIST"] = 1] = "DO_NOT_LIST";
-    /** REQUEST_LISTING - Organization admin only */
+    /** REQUEST_LISTING - BROKER_ASSET_ADMINISTRATOR only */
     AssetStatus[AssetStatus["REQUEST_LISTING"] = 2] = "REQUEST_LISTING";
-    /** LISTED - Super admin only */
+    /** LISTED - ORGANIZATION_ASSET_ADMINISTRATOR only */
     AssetStatus[AssetStatus["LISTED"] = 3] = "LISTED";
-    /** SUPER_ADMIN_DO_NOT_LIST - Super admin only */
-    AssetStatus[AssetStatus["SUPER_ADMIN_DO_NOT_LIST"] = 4] = "SUPER_ADMIN_DO_NOT_LIST";
+    /** ORGANIZATION_ADMIN_DO_NOT_LIST - ORGANIZATION_ASSET_ADMINISTRATOR only */
+    AssetStatus[AssetStatus["ORGANIZATION_ADMIN_DO_NOT_LIST"] = 4] = "ORGANIZATION_ADMIN_DO_NOT_LIST";
     AssetStatus[AssetStatus["OUTDATED_ASSET_VERSION"] = 5] = "OUTDATED_ASSET_VERSION";
     AssetStatus[AssetStatus["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
 })(AssetStatus || (AssetStatus = {}));
@@ -36,8 +36,8 @@ export function assetStatusFromJSON(object) {
         case "LISTED":
             return AssetStatus.LISTED;
         case 4:
-        case "SUPER_ADMIN_DO_NOT_LIST":
-            return AssetStatus.SUPER_ADMIN_DO_NOT_LIST;
+        case "ORGANIZATION_ADMIN_DO_NOT_LIST":
+            return AssetStatus.ORGANIZATION_ADMIN_DO_NOT_LIST;
         case 5:
         case "OUTDATED_ASSET_VERSION":
             return AssetStatus.OUTDATED_ASSET_VERSION;
@@ -57,8 +57,8 @@ export function assetStatusToJSON(object) {
             return "REQUEST_LISTING";
         case AssetStatus.LISTED:
             return "LISTED";
-        case AssetStatus.SUPER_ADMIN_DO_NOT_LIST:
-            return "SUPER_ADMIN_DO_NOT_LIST";
+        case AssetStatus.ORGANIZATION_ADMIN_DO_NOT_LIST:
+            return "ORGANIZATION_ADMIN_DO_NOT_LIST";
         case AssetStatus.OUTDATED_ASSET_VERSION:
             return "OUTDATED_ASSET_VERSION";
         case AssetStatus.UNRECOGNIZED:
