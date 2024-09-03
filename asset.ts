@@ -201,7 +201,7 @@ export function userAssetStatusToJSON(object: UserAssetStatus): string {
 }
 
 export interface Asset {
-  /** Key combination: Currency-OrganizationID-Version */
+  /** Key combination: Currency-OrganizationID-Version (Symbol-Version) */
   ID: string;
   /** External entity (broker) that owns this asset, e.g. issuer */
   OrganizationID: string;
@@ -231,7 +231,7 @@ export interface Assets {
 }
 
 export interface UserAssetList {
-  /** Key combination: Currency-OrganizationID-Version-AccountID */
+  /** Key combination: Currency-OrganizationID-Version-AccountID-Wallet (AssetKey-AccountID-Wallet) */
   AccountID: string;
   Wallet: string;
   /** Stable Key: "Currency-OrganizationID-Version" */

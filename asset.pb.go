@@ -237,7 +237,7 @@ type Asset struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Key combination: Currency-OrganizationID-Version
+	// Key combination: Currency-OrganizationID-Version (Symbol-Version)
 	ID              string                 `protobuf:"bytes,1,opt,name=ID,proto3" json:"ID,omitempty"`                         // Key string to prevent composing the key all the time and reduce errors
 	OrganizationID  string                 `protobuf:"bytes,2,opt,name=OrganizationID,proto3" json:"OrganizationID,omitempty"` // External entity (broker) that owns this asset, e.g. issuer
 	Status          AssetStatus            `protobuf:"varint,3,opt,name=Status,proto3,enum=asset.AssetStatus" json:"Status,omitempty"`
@@ -461,7 +461,7 @@ type UserAssetList struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Key combination: Currency-OrganizationID-Version-AccountID
+	// Key combination: Currency-OrganizationID-Version-AccountID-Wallet (AssetKey-AccountID-Wallet)
 	AccountID string                 `protobuf:"bytes,1,opt,name=AccountID,proto3" json:"AccountID,omitempty"`
 	Wallet    string                 `protobuf:"bytes,2,opt,name=Wallet,proto3" json:"Wallet,omitempty"`
 	AssetKey  string                 `protobuf:"bytes,3,opt,name=AssetKey,proto3" json:"AssetKey,omitempty"` // Stable Key: "Currency-OrganizationID-Version"

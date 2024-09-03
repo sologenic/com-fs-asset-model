@@ -7,7 +7,7 @@ import "google/protobuf/timestamp.proto";
 option go_package = "github.com/sologenic/com-fs-asset-model;asset";
 
 message Asset {
-    // Key combination: Currency-OrganizationID-Version
+    // Key combination: Currency-OrganizationID-Version (Symbol-Version)
     string ID = 1; // Key string to prevent composing the key all the time and reduce errors
     string OrganizationID = 2; // External entity (broker) that owns this asset, e.g. issuer
     AssetStatus Status = 3;
@@ -34,7 +34,7 @@ message Assets {
 }
 
 message UserAssetList {
-    // Key combination: Currency-OrganizationID-Version-AccountID
+    // Key combination: Currency-OrganizationID-Version-AccountID-Wallet (AssetKey-AccountID-Wallet)
     string AccountID = 1;
     string Wallet = 2;
     string AssetKey = 3; // Stable Key: "Currency-OrganizationID-Version"
