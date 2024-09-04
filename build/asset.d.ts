@@ -63,6 +63,13 @@ export interface Asset {
     ExchangeTickerSymbol: string;
     Exchange: string;
     Description: string;
+    /**
+     * Denomination in the Smart Contract
+     * {Symbol}_v{Version}-{SmartContract addr} where Symbol is the symbol in the smart contract, not Symbol in the Asset object
+     * - is not allwed in symbol in the coreum smart contract: https://github.com/CoreumFoundation/coreum/blob/e5f74cfa51e3a83d101c0a307af18378c18d4748/x/asset/ft/types/token.go#L21
+     * e.g. "btc_v1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
+     */
+    DENOM: string;
 }
 export interface Assets {
     Assets: Asset[];
@@ -105,6 +112,7 @@ export declare const Asset: {
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: string | undefined;
         Description?: string | undefined;
+        DENOM?: string | undefined;
     } & {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -123,6 +131,7 @@ export declare const Asset: {
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: string | undefined;
         Description?: string | undefined;
+        DENOM?: string | undefined;
     } & { [K_1 in Exclude<keyof I, keyof Asset>]: never; }>(base?: I | undefined): Asset;
     fromPartial<I_1 extends {
         ID?: string | undefined;
@@ -142,6 +151,7 @@ export declare const Asset: {
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: string | undefined;
         Description?: string | undefined;
+        DENOM?: string | undefined;
     } & {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -160,6 +170,7 @@ export declare const Asset: {
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: string | undefined;
         Description?: string | undefined;
+        DENOM?: string | undefined;
     } & { [K_3 in Exclude<keyof I_1, keyof Asset>]: never; }>(object: I_1): Asset;
 };
 export declare const Assets: {
@@ -186,6 +197,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            DENOM?: string | undefined;
         }[] | undefined;
     } & {
         Assets?: ({
@@ -206,6 +218,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            DENOM?: string | undefined;
         }[] & ({
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -224,6 +237,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            DENOM?: string | undefined;
         } & {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -242,6 +256,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            DENOM?: string | undefined;
         } & { [K_1 in Exclude<keyof I["Assets"][number], keyof Asset>]: never; })[] & { [K_2 in Exclude<keyof I["Assets"], keyof {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -260,6 +275,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            DENOM?: string | undefined;
         }[]>]: never; }) | undefined;
     } & { [K_3 in Exclude<keyof I, "Assets">]: never; }>(base?: I | undefined): Assets;
     fromPartial<I_1 extends {
@@ -281,6 +297,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            DENOM?: string | undefined;
         }[] | undefined;
     } & {
         Assets?: ({
@@ -301,6 +318,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            DENOM?: string | undefined;
         }[] & ({
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -319,6 +337,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            DENOM?: string | undefined;
         } & {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -337,6 +356,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            DENOM?: string | undefined;
         } & { [K_5 in Exclude<keyof I_1["Assets"][number], keyof Asset>]: never; })[] & { [K_6 in Exclude<keyof I_1["Assets"], keyof {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -355,6 +375,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            DENOM?: string | undefined;
         }[]>]: never; }) | undefined;
     } & { [K_7 in Exclude<keyof I_1, "Assets">]: never; }>(object: I_1): Assets;
 };

@@ -224,6 +224,13 @@ export interface Asset {
   ExchangeTickerSymbol: string;
   Exchange: string;
   Description: string;
+  /**
+   * Denomination in the Smart Contract
+   * {Symbol}_v{Version}-{SmartContract addr} where Symbol is the symbol in the smart contract, not Symbol in the Asset object
+   * - is not allwed in symbol in the coreum smart contract: https://github.com/CoreumFoundation/coreum/blob/e5f74cfa51e3a83d101c0a307af18378c18d4748/x/asset/ft/types/token.go#L21
+   * e.g. "btc_v1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
+   */
+  DENOM: string;
 }
 
 export interface Assets {
@@ -266,6 +273,7 @@ function createBaseAsset(): Asset {
     ExchangeTickerSymbol: "",
     Exchange: "",
     Description: "",
+    DENOM: "",
   };
 }
 
@@ -321,6 +329,9 @@ export const Asset = {
     }
     if (message.Description !== "") {
       writer.uint32(138).string(message.Description);
+    }
+    if (message.DENOM !== "") {
+      writer.uint32(146).string(message.DENOM);
     }
     return writer;
   },
@@ -451,6 +462,13 @@ export const Asset = {
 
           message.Description = reader.string();
           continue;
+        case 18:
+          if (tag !== 146) {
+            break;
+          }
+
+          message.DENOM = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -481,6 +499,7 @@ export const Asset = {
       ExchangeTickerSymbol: isSet(object.ExchangeTickerSymbol) ? globalThis.String(object.ExchangeTickerSymbol) : "",
       Exchange: isSet(object.Exchange) ? globalThis.String(object.Exchange) : "",
       Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
+      DENOM: isSet(object.DENOM) ? globalThis.String(object.DENOM) : "",
     };
   },
 
@@ -537,6 +556,9 @@ export const Asset = {
     if (message.Description !== "") {
       obj.Description = message.Description;
     }
+    if (message.DENOM !== "") {
+      obj.DENOM = message.DENOM;
+    }
     return obj;
   },
 
@@ -562,6 +584,7 @@ export const Asset = {
     message.ExchangeTickerSymbol = object.ExchangeTickerSymbol ?? "";
     message.Exchange = object.Exchange ?? "";
     message.Description = object.Description ?? "";
+    message.DENOM = object.DENOM ?? "";
     return message;
   },
 };

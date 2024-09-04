@@ -208,6 +208,7 @@ function createBaseAsset() {
         ExchangeTickerSymbol: "",
         Exchange: "",
         Description: "",
+        DENOM: "",
     };
 }
 export const Asset = {
@@ -262,6 +263,9 @@ export const Asset = {
         }
         if (message.Description !== "") {
             writer.uint32(138).string(message.Description);
+        }
+        if (message.DENOM !== "") {
+            writer.uint32(146).string(message.DENOM);
         }
         return writer;
     },
@@ -374,6 +378,12 @@ export const Asset = {
                     }
                     message.Description = reader.string();
                     continue;
+                case 18:
+                    if (tag !== 146) {
+                        break;
+                    }
+                    message.DENOM = reader.string();
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -403,6 +413,7 @@ export const Asset = {
             ExchangeTickerSymbol: isSet(object.ExchangeTickerSymbol) ? globalThis.String(object.ExchangeTickerSymbol) : "",
             Exchange: isSet(object.Exchange) ? globalThis.String(object.Exchange) : "",
             Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
+            DENOM: isSet(object.DENOM) ? globalThis.String(object.DENOM) : "",
         };
     },
     toJSON(message) {
@@ -459,13 +470,16 @@ export const Asset = {
         if (message.Description !== "") {
             obj.Description = message.Description;
         }
+        if (message.DENOM !== "") {
+            obj.DENOM = message.DENOM;
+        }
         return obj;
     },
     create(base) {
         return Asset.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
         const message = createBaseAsset();
         message.ID = (_a = object.ID) !== null && _a !== void 0 ? _a : "";
         message.OrganizationID = (_b = object.OrganizationID) !== null && _b !== void 0 ? _b : "";
@@ -484,6 +498,7 @@ export const Asset = {
         message.ExchangeTickerSymbol = (_q = object.ExchangeTickerSymbol) !== null && _q !== void 0 ? _q : "";
         message.Exchange = (_r = object.Exchange) !== null && _r !== void 0 ? _r : "";
         message.Description = (_s = object.Description) !== null && _s !== void 0 ? _s : "";
+        message.DENOM = (_t = object.DENOM) !== null && _t !== void 0 ? _t : "";
         return message;
     },
 };
