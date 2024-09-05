@@ -209,6 +209,7 @@ function createBaseAsset() {
         Exchange: "",
         Description: "",
         DENOM: "",
+        SmartContractAddress: "",
     };
 }
 export const Asset = {
@@ -266,6 +267,9 @@ export const Asset = {
         }
         if (message.DENOM !== "") {
             writer.uint32(146).string(message.DENOM);
+        }
+        if (message.SmartContractAddress !== "") {
+            writer.uint32(154).string(message.SmartContractAddress);
         }
         return writer;
     },
@@ -384,6 +388,12 @@ export const Asset = {
                     }
                     message.DENOM = reader.string();
                     continue;
+                case 19:
+                    if (tag !== 154) {
+                        break;
+                    }
+                    message.SmartContractAddress = reader.string();
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -414,6 +424,7 @@ export const Asset = {
             Exchange: isSet(object.Exchange) ? globalThis.String(object.Exchange) : "",
             Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
             DENOM: isSet(object.DENOM) ? globalThis.String(object.DENOM) : "",
+            SmartContractAddress: isSet(object.SmartContractAddress) ? globalThis.String(object.SmartContractAddress) : "",
         };
     },
     toJSON(message) {
@@ -473,13 +484,16 @@ export const Asset = {
         if (message.DENOM !== "") {
             obj.DENOM = message.DENOM;
         }
+        if (message.SmartContractAddress !== "") {
+            obj.SmartContractAddress = message.SmartContractAddress;
+        }
         return obj;
     },
     create(base) {
         return Asset.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u;
         const message = createBaseAsset();
         message.ID = (_a = object.ID) !== null && _a !== void 0 ? _a : "";
         message.OrganizationID = (_b = object.OrganizationID) !== null && _b !== void 0 ? _b : "";
@@ -499,6 +513,7 @@ export const Asset = {
         message.Exchange = (_r = object.Exchange) !== null && _r !== void 0 ? _r : "";
         message.Description = (_s = object.Description) !== null && _s !== void 0 ? _s : "";
         message.DENOM = (_t = object.DENOM) !== null && _t !== void 0 ? _t : "";
+        message.SmartContractAddress = (_u = object.SmartContractAddress) !== null && _u !== void 0 ? _u : "";
         return message;
     },
 };

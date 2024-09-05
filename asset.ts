@@ -231,6 +231,7 @@ export interface Asset {
    * e.g. "btc_v1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
    */
   DENOM: string;
+  SmartContractAddress: string;
 }
 
 export interface Assets {
@@ -274,6 +275,7 @@ function createBaseAsset(): Asset {
     Exchange: "",
     Description: "",
     DENOM: "",
+    SmartContractAddress: "",
   };
 }
 
@@ -332,6 +334,9 @@ export const Asset = {
     }
     if (message.DENOM !== "") {
       writer.uint32(146).string(message.DENOM);
+    }
+    if (message.SmartContractAddress !== "") {
+      writer.uint32(154).string(message.SmartContractAddress);
     }
     return writer;
   },
@@ -469,6 +474,13 @@ export const Asset = {
 
           message.DENOM = reader.string();
           continue;
+        case 19:
+          if (tag !== 154) {
+            break;
+          }
+
+          message.SmartContractAddress = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -500,6 +512,7 @@ export const Asset = {
       Exchange: isSet(object.Exchange) ? globalThis.String(object.Exchange) : "",
       Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
       DENOM: isSet(object.DENOM) ? globalThis.String(object.DENOM) : "",
+      SmartContractAddress: isSet(object.SmartContractAddress) ? globalThis.String(object.SmartContractAddress) : "",
     };
   },
 
@@ -559,6 +572,9 @@ export const Asset = {
     if (message.DENOM !== "") {
       obj.DENOM = message.DENOM;
     }
+    if (message.SmartContractAddress !== "") {
+      obj.SmartContractAddress = message.SmartContractAddress;
+    }
     return obj;
   },
 
@@ -585,6 +601,7 @@ export const Asset = {
     message.Exchange = object.Exchange ?? "";
     message.Description = object.Description ?? "";
     message.DENOM = object.DENOM ?? "";
+    message.SmartContractAddress = object.SmartContractAddress ?? "";
     return message;
   },
 };

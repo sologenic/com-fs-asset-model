@@ -33,6 +33,7 @@ message Asset {
     // - is not allwed in symbol in the coreum smart contract: https://github.com/CoreumFoundation/coreum/blob/e5f74cfa51e3a83d101c0a307af18378c18d4748/x/asset/ft/types/token.go#L21
     // e.g. "btc_v1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
     string DENOM = 18;
+    string SmartContractAddress = 19;
 }
 
 message Assets {

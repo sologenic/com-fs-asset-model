@@ -70,6 +70,7 @@ export interface Asset {
      * e.g. "btc_v1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
      */
     DENOM: string;
+    SmartContractAddress: string;
 }
 export interface Assets {
     Assets: Asset[];
@@ -113,6 +114,7 @@ export declare const Asset: {
         Exchange?: string | undefined;
         Description?: string | undefined;
         DENOM?: string | undefined;
+        SmartContractAddress?: string | undefined;
     } & {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -132,6 +134,7 @@ export declare const Asset: {
         Exchange?: string | undefined;
         Description?: string | undefined;
         DENOM?: string | undefined;
+        SmartContractAddress?: string | undefined;
     } & { [K_1 in Exclude<keyof I, keyof Asset>]: never; }>(base?: I | undefined): Asset;
     fromPartial<I_1 extends {
         ID?: string | undefined;
@@ -152,6 +155,7 @@ export declare const Asset: {
         Exchange?: string | undefined;
         Description?: string | undefined;
         DENOM?: string | undefined;
+        SmartContractAddress?: string | undefined;
     } & {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -171,6 +175,7 @@ export declare const Asset: {
         Exchange?: string | undefined;
         Description?: string | undefined;
         DENOM?: string | undefined;
+        SmartContractAddress?: string | undefined;
     } & { [K_3 in Exclude<keyof I_1, keyof Asset>]: never; }>(object: I_1): Asset;
 };
 export declare const Assets: {
@@ -198,6 +203,7 @@ export declare const Assets: {
             Exchange?: string | undefined;
             Description?: string | undefined;
             DENOM?: string | undefined;
+            SmartContractAddress?: string | undefined;
         }[] | undefined;
     } & {
         Assets?: ({
@@ -219,6 +225,7 @@ export declare const Assets: {
             Exchange?: string | undefined;
             Description?: string | undefined;
             DENOM?: string | undefined;
+            SmartContractAddress?: string | undefined;
         }[] & ({
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -238,6 +245,7 @@ export declare const Assets: {
             Exchange?: string | undefined;
             Description?: string | undefined;
             DENOM?: string | undefined;
+            SmartContractAddress?: string | undefined;
         } & {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -257,6 +265,7 @@ export declare const Assets: {
             Exchange?: string | undefined;
             Description?: string | undefined;
             DENOM?: string | undefined;
+            SmartContractAddress?: string | undefined;
         } & { [K_1 in Exclude<keyof I["Assets"][number], keyof Asset>]: never; })[] & { [K_2 in Exclude<keyof I["Assets"], keyof {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -276,6 +285,7 @@ export declare const Assets: {
             Exchange?: string | undefined;
             Description?: string | undefined;
             DENOM?: string | undefined;
+            SmartContractAddress?: string | undefined;
         }[]>]: never; }) | undefined;
     } & { [K_3 in Exclude<keyof I, "Assets">]: never; }>(base?: I | undefined): Assets;
     fromPartial<I_1 extends {
@@ -298,6 +308,7 @@ export declare const Assets: {
             Exchange?: string | undefined;
             Description?: string | undefined;
             DENOM?: string | undefined;
+            SmartContractAddress?: string | undefined;
         }[] | undefined;
     } & {
         Assets?: ({
@@ -319,6 +330,7 @@ export declare const Assets: {
             Exchange?: string | undefined;
             Description?: string | undefined;
             DENOM?: string | undefined;
+            SmartContractAddress?: string | undefined;
         }[] & ({
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -338,6 +350,7 @@ export declare const Assets: {
             Exchange?: string | undefined;
             Description?: string | undefined;
             DENOM?: string | undefined;
+            SmartContractAddress?: string | undefined;
         } & {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -357,6 +370,7 @@ export declare const Assets: {
             Exchange?: string | undefined;
             Description?: string | undefined;
             DENOM?: string | undefined;
+            SmartContractAddress?: string | undefined;
         } & { [K_5 in Exclude<keyof I_1["Assets"][number], keyof Asset>]: never; })[] & { [K_6 in Exclude<keyof I_1["Assets"], keyof {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -376,6 +390,7 @@ export declare const Assets: {
             Exchange?: string | undefined;
             Description?: string | undefined;
             DENOM?: string | undefined;
+            SmartContractAddress?: string | undefined;
         }[]>]: never; }) | undefined;
     } & { [K_7 in Exclude<keyof I_1, "Assets">]: never; }>(object: I_1): Assets;
 };
