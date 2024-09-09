@@ -71,6 +71,8 @@ export interface Asset {
      */
     DENOM: string;
     SmartContractAddress: string;
+    /** Flag to indicate if the asset is issued in the smart contract */
+    IsIssuedInSmartContract: boolean;
 }
 export interface Assets {
     Assets: Asset[];
@@ -115,6 +117,7 @@ export declare const Asset: {
         Description?: string | undefined;
         DENOM?: string | undefined;
         SmartContractAddress?: string | undefined;
+        IsIssuedInSmartContract?: boolean | undefined;
     } & {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -135,6 +138,7 @@ export declare const Asset: {
         Description?: string | undefined;
         DENOM?: string | undefined;
         SmartContractAddress?: string | undefined;
+        IsIssuedInSmartContract?: boolean | undefined;
     } & { [K_1 in Exclude<keyof I, keyof Asset>]: never; }>(base?: I | undefined): Asset;
     fromPartial<I_1 extends {
         ID?: string | undefined;
@@ -156,6 +160,7 @@ export declare const Asset: {
         Description?: string | undefined;
         DENOM?: string | undefined;
         SmartContractAddress?: string | undefined;
+        IsIssuedInSmartContract?: boolean | undefined;
     } & {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -176,6 +181,7 @@ export declare const Asset: {
         Description?: string | undefined;
         DENOM?: string | undefined;
         SmartContractAddress?: string | undefined;
+        IsIssuedInSmartContract?: boolean | undefined;
     } & { [K_3 in Exclude<keyof I_1, keyof Asset>]: never; }>(object: I_1): Asset;
 };
 export declare const Assets: {
@@ -204,6 +210,7 @@ export declare const Assets: {
             Description?: string | undefined;
             DENOM?: string | undefined;
             SmartContractAddress?: string | undefined;
+            IsIssuedInSmartContract?: boolean | undefined;
         }[] | undefined;
     } & {
         Assets?: ({
@@ -226,6 +233,7 @@ export declare const Assets: {
             Description?: string | undefined;
             DENOM?: string | undefined;
             SmartContractAddress?: string | undefined;
+            IsIssuedInSmartContract?: boolean | undefined;
         }[] & ({
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -246,6 +254,7 @@ export declare const Assets: {
             Description?: string | undefined;
             DENOM?: string | undefined;
             SmartContractAddress?: string | undefined;
+            IsIssuedInSmartContract?: boolean | undefined;
         } & {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -266,6 +275,7 @@ export declare const Assets: {
             Description?: string | undefined;
             DENOM?: string | undefined;
             SmartContractAddress?: string | undefined;
+            IsIssuedInSmartContract?: boolean | undefined;
         } & { [K_1 in Exclude<keyof I["Assets"][number], keyof Asset>]: never; })[] & { [K_2 in Exclude<keyof I["Assets"], keyof {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -286,6 +296,7 @@ export declare const Assets: {
             Description?: string | undefined;
             DENOM?: string | undefined;
             SmartContractAddress?: string | undefined;
+            IsIssuedInSmartContract?: boolean | undefined;
         }[]>]: never; }) | undefined;
     } & { [K_3 in Exclude<keyof I, "Assets">]: never; }>(base?: I | undefined): Assets;
     fromPartial<I_1 extends {
@@ -309,6 +320,7 @@ export declare const Assets: {
             Description?: string | undefined;
             DENOM?: string | undefined;
             SmartContractAddress?: string | undefined;
+            IsIssuedInSmartContract?: boolean | undefined;
         }[] | undefined;
     } & {
         Assets?: ({
@@ -331,6 +343,7 @@ export declare const Assets: {
             Description?: string | undefined;
             DENOM?: string | undefined;
             SmartContractAddress?: string | undefined;
+            IsIssuedInSmartContract?: boolean | undefined;
         }[] & ({
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -351,6 +364,7 @@ export declare const Assets: {
             Description?: string | undefined;
             DENOM?: string | undefined;
             SmartContractAddress?: string | undefined;
+            IsIssuedInSmartContract?: boolean | undefined;
         } & {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -371,6 +385,7 @@ export declare const Assets: {
             Description?: string | undefined;
             DENOM?: string | undefined;
             SmartContractAddress?: string | undefined;
+            IsIssuedInSmartContract?: boolean | undefined;
         } & { [K_5 in Exclude<keyof I_1["Assets"][number], keyof Asset>]: never; })[] & { [K_6 in Exclude<keyof I_1["Assets"], keyof {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -391,6 +406,7 @@ export declare const Assets: {
             Description?: string | undefined;
             DENOM?: string | undefined;
             SmartContractAddress?: string | undefined;
+            IsIssuedInSmartContract?: boolean | undefined;
         }[]>]: never; }) | undefined;
     } & { [K_7 in Exclude<keyof I_1, "Assets">]: never; }>(object: I_1): Assets;
 };

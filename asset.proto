@@ -34,6 +34,7 @@ message Asset {
     // e.g. "btc_v1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
     string DENOM = 18;
     string SmartContractAddress = 19;
+    bool IsIssuedInSmartContract = 20; // Flag to indicate if the asset is issued in the smart contract
 }
 
 message Assets {

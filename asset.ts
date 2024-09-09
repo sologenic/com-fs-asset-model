@@ -232,6 +232,8 @@ export interface Asset {
    */
   DENOM: string;
   SmartContractAddress: string;
+  /** Flag to indicate if the asset is issued in the smart contract */
+  IsIssuedInSmartContract: boolean;
 }
 
 export interface Assets {
@@ -276,6 +278,7 @@ function createBaseAsset(): Asset {
     Description: "",
     DENOM: "",
     SmartContractAddress: "",
+    IsIssuedInSmartContract: false,
   };
 }
 
@@ -337,6 +340,9 @@ export const Asset = {
     }
     if (message.SmartContractAddress !== "") {
       writer.uint32(154).string(message.SmartContractAddress);
+    }
+    if (message.IsIssuedInSmartContract !== false) {
+      writer.uint32(160).bool(message.IsIssuedInSmartContract);
     }
     return writer;
   },
@@ -481,6 +487,13 @@ export const Asset = {
 
           message.SmartContractAddress = reader.string();
           continue;
+        case 20:
+          if (tag !== 160) {
+            break;
+          }
+
+          message.IsIssuedInSmartContract = reader.bool();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -513,6 +526,9 @@ export const Asset = {
       Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
       DENOM: isSet(object.DENOM) ? globalThis.String(object.DENOM) : "",
       SmartContractAddress: isSet(object.SmartContractAddress) ? globalThis.String(object.SmartContractAddress) : "",
+      IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
+        ? globalThis.Boolean(object.IsIssuedInSmartContract)
+        : false,
     };
   },
 
@@ -575,6 +591,9 @@ export const Asset = {
     if (message.SmartContractAddress !== "") {
       obj.SmartContractAddress = message.SmartContractAddress;
     }
+    if (message.IsIssuedInSmartContract !== false) {
+      obj.IsIssuedInSmartContract = message.IsIssuedInSmartContract;
+    }
     return obj;
   },
 
@@ -602,6 +621,7 @@ export const Asset = {
     message.Description = object.Description ?? "";
     message.DENOM = object.DENOM ?? "";
     message.SmartContractAddress = object.SmartContractAddress ?? "";
+    message.IsIssuedInSmartContract = object.IsIssuedInSmartContract ?? false;
     return message;
   },
 };
