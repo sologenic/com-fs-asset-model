@@ -33,7 +33,7 @@ message Asset {
     // - is not allwed in symbol in the coreum smart contract: https://github.com/CoreumFoundation/coreum/blob/e5f74cfa51e3a83d101c0a307af18378c18d4748/x/asset/ft/types/token.go#L21
     // e.g. "btc_v1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
     // Alternatively, we can use Name field to build the subunit in the smart contract, {Name}_v{Version}, that is, `Name` (in the Asset) == `Symbol` (in the smart contract)
-    string DENOM = 18;
+    string Denom = 18;
     string SmartContractAddress = 19;
     bool IsIssuedInSmartContract = 20; // Flag to indicate if the asset is issued in the smart contract
 }

@@ -71,7 +71,7 @@ export interface Asset {
      * e.g. "btc_v1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
      * Alternatively, we can use Name field to build the subunit in the smart contract, {Name}_v{Version}, that is, `Name` (in the Asset) == `Symbol` (in the smart contract)
      */
-    DENOM: string;
+    Denom: string;
     SmartContractAddress: string;
     /** Flag to indicate if the asset is issued in the smart contract */
     IsIssuedInSmartContract: boolean;
@@ -117,7 +117,7 @@ export declare const Asset: {
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: string | undefined;
         Description?: string | undefined;
-        DENOM?: string | undefined;
+        Denom?: string | undefined;
         SmartContractAddress?: string | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
     } & {
@@ -138,7 +138,7 @@ export declare const Asset: {
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: string | undefined;
         Description?: string | undefined;
-        DENOM?: string | undefined;
+        Denom?: string | undefined;
         SmartContractAddress?: string | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
     } & { [K_1 in Exclude<keyof I, keyof Asset>]: never; }>(base?: I | undefined): Asset;
@@ -160,7 +160,7 @@ export declare const Asset: {
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: string | undefined;
         Description?: string | undefined;
-        DENOM?: string | undefined;
+        Denom?: string | undefined;
         SmartContractAddress?: string | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
     } & {
@@ -181,7 +181,7 @@ export declare const Asset: {
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: string | undefined;
         Description?: string | undefined;
-        DENOM?: string | undefined;
+        Denom?: string | undefined;
         SmartContractAddress?: string | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
     } & { [K_3 in Exclude<keyof I_1, keyof Asset>]: never; }>(object: I_1): Asset;
@@ -210,7 +210,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
-            DENOM?: string | undefined;
+            Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
         }[] | undefined;
@@ -233,7 +233,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
-            DENOM?: string | undefined;
+            Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
         }[] & ({
@@ -254,7 +254,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
-            DENOM?: string | undefined;
+            Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
         } & {
@@ -275,7 +275,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
-            DENOM?: string | undefined;
+            Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
         } & { [K_1 in Exclude<keyof I["Assets"][number], keyof Asset>]: never; })[] & { [K_2 in Exclude<keyof I["Assets"], keyof {
@@ -296,7 +296,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
-            DENOM?: string | undefined;
+            Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
         }[]>]: never; }) | undefined;
@@ -320,7 +320,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
-            DENOM?: string | undefined;
+            Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
         }[] | undefined;
@@ -343,7 +343,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
-            DENOM?: string | undefined;
+            Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
         }[] & ({
@@ -364,7 +364,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
-            DENOM?: string | undefined;
+            Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
         } & {
@@ -385,7 +385,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
-            DENOM?: string | undefined;
+            Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
         } & { [K_5 in Exclude<keyof I_1["Assets"][number], keyof Asset>]: never; })[] & { [K_6 in Exclude<keyof I_1["Assets"], keyof {
@@ -406,7 +406,7 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
-            DENOM?: string | undefined;
+            Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
         }[]>]: never; }) | undefined;

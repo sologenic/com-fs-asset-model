@@ -208,7 +208,7 @@ function createBaseAsset() {
         ExchangeTickerSymbol: "",
         Exchange: "",
         Description: "",
-        DENOM: "",
+        Denom: "",
         SmartContractAddress: "",
         IsIssuedInSmartContract: false,
     };
@@ -266,8 +266,8 @@ export const Asset = {
         if (message.Description !== "") {
             writer.uint32(138).string(message.Description);
         }
-        if (message.DENOM !== "") {
-            writer.uint32(146).string(message.DENOM);
+        if (message.Denom !== "") {
+            writer.uint32(146).string(message.Denom);
         }
         if (message.SmartContractAddress !== "") {
             writer.uint32(154).string(message.SmartContractAddress);
@@ -390,7 +390,7 @@ export const Asset = {
                     if (tag !== 146) {
                         break;
                     }
-                    message.DENOM = reader.string();
+                    message.Denom = reader.string();
                     continue;
                 case 19:
                     if (tag !== 154) {
@@ -433,7 +433,7 @@ export const Asset = {
             ExchangeTickerSymbol: isSet(object.ExchangeTickerSymbol) ? globalThis.String(object.ExchangeTickerSymbol) : "",
             Exchange: isSet(object.Exchange) ? globalThis.String(object.Exchange) : "",
             Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
-            DENOM: isSet(object.DENOM) ? globalThis.String(object.DENOM) : "",
+            Denom: isSet(object.Denom) ? globalThis.String(object.Denom) : "",
             SmartContractAddress: isSet(object.SmartContractAddress) ? globalThis.String(object.SmartContractAddress) : "",
             IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
                 ? globalThis.Boolean(object.IsIssuedInSmartContract)
@@ -494,8 +494,8 @@ export const Asset = {
         if (message.Description !== "") {
             obj.Description = message.Description;
         }
-        if (message.DENOM !== "") {
-            obj.DENOM = message.DENOM;
+        if (message.Denom !== "") {
+            obj.Denom = message.Denom;
         }
         if (message.SmartContractAddress !== "") {
             obj.SmartContractAddress = message.SmartContractAddress;
@@ -528,7 +528,7 @@ export const Asset = {
         message.ExchangeTickerSymbol = (_q = object.ExchangeTickerSymbol) !== null && _q !== void 0 ? _q : "";
         message.Exchange = (_r = object.Exchange) !== null && _r !== void 0 ? _r : "";
         message.Description = (_s = object.Description) !== null && _s !== void 0 ? _s : "";
-        message.DENOM = (_t = object.DENOM) !== null && _t !== void 0 ? _t : "";
+        message.Denom = (_t = object.Denom) !== null && _t !== void 0 ? _t : "";
         message.SmartContractAddress = (_u = object.SmartContractAddress) !== null && _u !== void 0 ? _u : "";
         message.IsIssuedInSmartContract = (_v = object.IsIssuedInSmartContract) !== null && _v !== void 0 ? _v : false;
         return message;

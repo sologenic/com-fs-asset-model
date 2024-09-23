@@ -232,7 +232,7 @@ export interface Asset {
    * e.g. "btc_v1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
    * Alternatively, we can use Name field to build the subunit in the smart contract, {Name}_v{Version}, that is, `Name` (in the Asset) == `Symbol` (in the smart contract)
    */
-  DENOM: string;
+  Denom: string;
   SmartContractAddress: string;
   /** Flag to indicate if the asset is issued in the smart contract */
   IsIssuedInSmartContract: boolean;
@@ -278,7 +278,7 @@ function createBaseAsset(): Asset {
     ExchangeTickerSymbol: "",
     Exchange: "",
     Description: "",
-    DENOM: "",
+    Denom: "",
     SmartContractAddress: "",
     IsIssuedInSmartContract: false,
   };
@@ -337,8 +337,8 @@ export const Asset = {
     if (message.Description !== "") {
       writer.uint32(138).string(message.Description);
     }
-    if (message.DENOM !== "") {
-      writer.uint32(146).string(message.DENOM);
+    if (message.Denom !== "") {
+      writer.uint32(146).string(message.Denom);
     }
     if (message.SmartContractAddress !== "") {
       writer.uint32(154).string(message.SmartContractAddress);
@@ -480,7 +480,7 @@ export const Asset = {
             break;
           }
 
-          message.DENOM = reader.string();
+          message.Denom = reader.string();
           continue;
         case 19:
           if (tag !== 154) {
@@ -526,7 +526,7 @@ export const Asset = {
       ExchangeTickerSymbol: isSet(object.ExchangeTickerSymbol) ? globalThis.String(object.ExchangeTickerSymbol) : "",
       Exchange: isSet(object.Exchange) ? globalThis.String(object.Exchange) : "",
       Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
-      DENOM: isSet(object.DENOM) ? globalThis.String(object.DENOM) : "",
+      Denom: isSet(object.Denom) ? globalThis.String(object.Denom) : "",
       SmartContractAddress: isSet(object.SmartContractAddress) ? globalThis.String(object.SmartContractAddress) : "",
       IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
         ? globalThis.Boolean(object.IsIssuedInSmartContract)
@@ -587,8 +587,8 @@ export const Asset = {
     if (message.Description !== "") {
       obj.Description = message.Description;
     }
-    if (message.DENOM !== "") {
-      obj.DENOM = message.DENOM;
+    if (message.Denom !== "") {
+      obj.Denom = message.Denom;
     }
     if (message.SmartContractAddress !== "") {
       obj.SmartContractAddress = message.SmartContractAddress;
@@ -621,7 +621,7 @@ export const Asset = {
     message.ExchangeTickerSymbol = object.ExchangeTickerSymbol ?? "";
     message.Exchange = object.Exchange ?? "";
     message.Description = object.Description ?? "";
-    message.DENOM = object.DENOM ?? "";
+    message.Denom = object.Denom ?? "";
     message.SmartContractAddress = object.SmartContractAddress ?? "";
     message.IsIssuedInSmartContract = object.IsIssuedInSmartContract ?? false;
     return message;
