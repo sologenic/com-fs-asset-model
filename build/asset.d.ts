@@ -59,6 +59,7 @@ export interface Asset {
     Currency: string;
     Version: string;
     Precision: number;
+    /** `Name` will be used to build the subunit as a Symbol in the smart contract, {Name}_v{Version} */
     Name: string;
     ExchangeTickerSymbol: string;
     Exchange: string;
@@ -68,6 +69,7 @@ export interface Asset {
      * {Symbol}_v{Version}-{SmartContract addr} where Symbol is the symbol in the smart contract, not Symbol in the Asset object
      * - is not allwed in symbol in the coreum smart contract: https://github.com/CoreumFoundation/coreum/blob/e5f74cfa51e3a83d101c0a307af18378c18d4748/x/asset/ft/types/token.go#L21
      * e.g. "btc_v1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
+     * Alternatively, we can use Name field to build the subunit in the smart contract, {Name}_v{Version}, that is, `Name` (in the Asset) == `Symbol` (in the smart contract)
      */
     DENOM: string;
     SmartContractAddress: string;

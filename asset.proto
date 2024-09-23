@@ -23,7 +23,7 @@ message Asset {
     string Currency = 11;
     string Version = 12;
     int32 Precision = 13;
-    string Name = 14;
+    string Name = 14; // `Name` will be used to build the subunit as a Symbol in the smart contract, {Name}_v{Version}
     string ExchangeTickerSymbol = 15;
     string Exchange = 16;
     string Description = 17;
@@ -32,6 +32,7 @@ message Asset {
     // {Symbol}_v{Version}-{SmartContract addr} where Symbol is the symbol in the smart contract, not Symbol in the Asset object
     // - is not allwed in symbol in the coreum smart contract: https://github.com/CoreumFoundation/coreum/blob/e5f74cfa51e3a83d101c0a307af18378c18d4748/x/asset/ft/types/token.go#L21
     // e.g. "btc_v1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
+    // Alternatively, we can use Name field to build the subunit in the smart contract, {Name}_v{Version}, that is, `Name` (in the Asset) == `Symbol` (in the smart contract)
     string DENOM = 18;
     string SmartContractAddress = 19;
     bool IsIssuedInSmartContract = 20; // Flag to indicate if the asset is issued in the smart contract

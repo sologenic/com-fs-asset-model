@@ -252,7 +252,7 @@ type Asset struct {
 	Currency             string `protobuf:"bytes,11,opt,name=Currency,proto3" json:"Currency,omitempty"`
 	Version              string `protobuf:"bytes,12,opt,name=Version,proto3" json:"Version,omitempty"`
 	Precision            int32  `protobuf:"varint,13,opt,name=Precision,proto3" json:"Precision,omitempty"`
-	Name                 string `protobuf:"bytes,14,opt,name=Name,proto3" json:"Name,omitempty"`
+	Name                 string `protobuf:"bytes,14,opt,name=Name,proto3" json:"Name,omitempty"` // `Name` will be used to build the subunit as a Symbol in the smart contract, {Name}_v{Version}
 	ExchangeTickerSymbol string `protobuf:"bytes,15,opt,name=ExchangeTickerSymbol,proto3" json:"ExchangeTickerSymbol,omitempty"`
 	Exchange             string `protobuf:"bytes,16,opt,name=Exchange,proto3" json:"Exchange,omitempty"`
 	Description          string `protobuf:"bytes,17,opt,name=Description,proto3" json:"Description,omitempty"`
@@ -260,6 +260,7 @@ type Asset struct {
 	// {Symbol}_v{Version}-{SmartContract addr} where Symbol is the symbol in the smart contract, not Symbol in the Asset object
 	// - is not allwed in symbol in the coreum smart contract: https://github.com/CoreumFoundation/coreum/blob/e5f74cfa51e3a83d101c0a307af18378c18d4748/x/asset/ft/types/token.go#L21
 	// e.g. "btc_v1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
+	// Alternatively, we can use Name field to build the subunit in the smart contract, {Name}_v{Version}, that is, `Name` (in the Asset) == `Symbol` (in the smart contract)
 	DENOM                   string `protobuf:"bytes,18,opt,name=DENOM,proto3" json:"DENOM,omitempty"`
 	SmartContractAddress    string `protobuf:"bytes,19,opt,name=SmartContractAddress,proto3" json:"SmartContractAddress,omitempty"`
 	IsIssuedInSmartContract bool   `protobuf:"varint,20,opt,name=IsIssuedInSmartContract,proto3" json:"IsIssuedInSmartContract,omitempty"` // Flag to indicate if the asset is issued in the smart contract
