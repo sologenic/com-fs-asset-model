@@ -208,6 +208,8 @@ function createBaseAsset() {
         ExchangeTickerSymbol: "",
         Exchange: "",
         Description: "",
+        MinTransactionAmount: "",
+        ExtraPercentage: "",
         Denom: "",
         SmartContractAddress: "",
         IsIssuedInSmartContract: false,
@@ -265,6 +267,12 @@ export const Asset = {
         }
         if (message.Description !== "") {
             writer.uint32(138).string(message.Description);
+        }
+        if (message.MinTransactionAmount !== "") {
+            writer.uint32(170).string(message.MinTransactionAmount);
+        }
+        if (message.ExtraPercentage !== "") {
+            writer.uint32(178).string(message.ExtraPercentage);
         }
         if (message.Denom !== "") {
             writer.uint32(146).string(message.Denom);
@@ -386,6 +394,18 @@ export const Asset = {
                     }
                     message.Description = reader.string();
                     continue;
+                case 21:
+                    if (tag !== 170) {
+                        break;
+                    }
+                    message.MinTransactionAmount = reader.string();
+                    continue;
+                case 22:
+                    if (tag !== 178) {
+                        break;
+                    }
+                    message.ExtraPercentage = reader.string();
+                    continue;
                 case 18:
                     if (tag !== 146) {
                         break;
@@ -433,6 +453,8 @@ export const Asset = {
             ExchangeTickerSymbol: isSet(object.ExchangeTickerSymbol) ? globalThis.String(object.ExchangeTickerSymbol) : "",
             Exchange: isSet(object.Exchange) ? globalThis.String(object.Exchange) : "",
             Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
+            MinTransactionAmount: isSet(object.MinTransactionAmount) ? globalThis.String(object.MinTransactionAmount) : "",
+            ExtraPercentage: isSet(object.ExtraPercentage) ? globalThis.String(object.ExtraPercentage) : "",
             Denom: isSet(object.Denom) ? globalThis.String(object.Denom) : "",
             SmartContractAddress: isSet(object.SmartContractAddress) ? globalThis.String(object.SmartContractAddress) : "",
             IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
@@ -494,6 +516,12 @@ export const Asset = {
         if (message.Description !== "") {
             obj.Description = message.Description;
         }
+        if (message.MinTransactionAmount !== "") {
+            obj.MinTransactionAmount = message.MinTransactionAmount;
+        }
+        if (message.ExtraPercentage !== "") {
+            obj.ExtraPercentage = message.ExtraPercentage;
+        }
         if (message.Denom !== "") {
             obj.Denom = message.Denom;
         }
@@ -509,7 +537,7 @@ export const Asset = {
         return Asset.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x;
         const message = createBaseAsset();
         message.ID = (_a = object.ID) !== null && _a !== void 0 ? _a : "";
         message.OrganizationID = (_b = object.OrganizationID) !== null && _b !== void 0 ? _b : "";
@@ -528,9 +556,11 @@ export const Asset = {
         message.ExchangeTickerSymbol = (_q = object.ExchangeTickerSymbol) !== null && _q !== void 0 ? _q : "";
         message.Exchange = (_r = object.Exchange) !== null && _r !== void 0 ? _r : "";
         message.Description = (_s = object.Description) !== null && _s !== void 0 ? _s : "";
-        message.Denom = (_t = object.Denom) !== null && _t !== void 0 ? _t : "";
-        message.SmartContractAddress = (_u = object.SmartContractAddress) !== null && _u !== void 0 ? _u : "";
-        message.IsIssuedInSmartContract = (_v = object.IsIssuedInSmartContract) !== null && _v !== void 0 ? _v : false;
+        message.MinTransactionAmount = (_t = object.MinTransactionAmount) !== null && _t !== void 0 ? _t : "";
+        message.ExtraPercentage = (_u = object.ExtraPercentage) !== null && _u !== void 0 ? _u : "";
+        message.Denom = (_v = object.Denom) !== null && _v !== void 0 ? _v : "";
+        message.SmartContractAddress = (_w = object.SmartContractAddress) !== null && _w !== void 0 ? _w : "";
+        message.IsIssuedInSmartContract = (_x = object.IsIssuedInSmartContract) !== null && _x !== void 0 ? _x : false;
         return message;
     },
 };

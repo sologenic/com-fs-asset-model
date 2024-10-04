@@ -64,6 +64,9 @@ export interface Asset {
     ExchangeTickerSymbol: string;
     Exchange: string;
     Description: string;
+    MinTransactionAmount: string;
+    /** extra % that the buyer must provide when buying an asset ( "1" = 100%, 0.1 = 10%, ...) */
+    ExtraPercentage: string;
     /**
      * Denomination in the Smart Contract
      * {Symbol}_v{Version}-{SmartContract addr} where Symbol is the symbol in the smart contract, not Symbol in the Asset object
@@ -117,6 +120,8 @@ export declare const Asset: {
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: string | undefined;
         Description?: string | undefined;
+        MinTransactionAmount?: string | undefined;
+        ExtraPercentage?: string | undefined;
         Denom?: string | undefined;
         SmartContractAddress?: string | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
@@ -138,6 +143,8 @@ export declare const Asset: {
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: string | undefined;
         Description?: string | undefined;
+        MinTransactionAmount?: string | undefined;
+        ExtraPercentage?: string | undefined;
         Denom?: string | undefined;
         SmartContractAddress?: string | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
@@ -160,6 +167,8 @@ export declare const Asset: {
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: string | undefined;
         Description?: string | undefined;
+        MinTransactionAmount?: string | undefined;
+        ExtraPercentage?: string | undefined;
         Denom?: string | undefined;
         SmartContractAddress?: string | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
@@ -181,6 +190,8 @@ export declare const Asset: {
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: string | undefined;
         Description?: string | undefined;
+        MinTransactionAmount?: string | undefined;
+        ExtraPercentage?: string | undefined;
         Denom?: string | undefined;
         SmartContractAddress?: string | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
@@ -210,6 +221,8 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            MinTransactionAmount?: string | undefined;
+            ExtraPercentage?: string | undefined;
             Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
@@ -233,6 +246,8 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            MinTransactionAmount?: string | undefined;
+            ExtraPercentage?: string | undefined;
             Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
@@ -254,6 +269,8 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            MinTransactionAmount?: string | undefined;
+            ExtraPercentage?: string | undefined;
             Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
@@ -275,6 +292,8 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            MinTransactionAmount?: string | undefined;
+            ExtraPercentage?: string | undefined;
             Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
@@ -296,6 +315,8 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            MinTransactionAmount?: string | undefined;
+            ExtraPercentage?: string | undefined;
             Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
@@ -320,6 +341,8 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            MinTransactionAmount?: string | undefined;
+            ExtraPercentage?: string | undefined;
             Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
@@ -343,6 +366,8 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            MinTransactionAmount?: string | undefined;
+            ExtraPercentage?: string | undefined;
             Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
@@ -364,6 +389,8 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            MinTransactionAmount?: string | undefined;
+            ExtraPercentage?: string | undefined;
             Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
@@ -385,6 +412,8 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            MinTransactionAmount?: string | undefined;
+            ExtraPercentage?: string | undefined;
             Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
@@ -406,6 +435,8 @@ export declare const Assets: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
             Description?: string | undefined;
+            MinTransactionAmount?: string | undefined;
+            ExtraPercentage?: string | undefined;
             Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;

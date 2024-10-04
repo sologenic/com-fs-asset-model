@@ -27,6 +27,8 @@ message Asset {
     string ExchangeTickerSymbol = 15;
     string Exchange = 16;
     string Description = 17;
+    string MinTransactionAmount = 21;
+    string ExtraPercentage = 22; // extra % that the buyer must provide when buying an asset ( "1" = 100%, 0.1 = 10%, ...)
 
     // Denomination in the Smart Contract
     // {Symbol}_v{Version}-{SmartContract addr} where Symbol is the symbol in the smart contract, not Symbol in the Asset object

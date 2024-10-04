@@ -225,6 +225,9 @@ export interface Asset {
   ExchangeTickerSymbol: string;
   Exchange: string;
   Description: string;
+  MinTransactionAmount: string;
+  /** extra % that the buyer must provide when buying an asset ( "1" = 100%, 0.1 = 10%, ...) */
+  ExtraPercentage: string;
   /**
    * Denomination in the Smart Contract
    * {Symbol}_v{Version}-{SmartContract addr} where Symbol is the symbol in the smart contract, not Symbol in the Asset object
@@ -278,6 +281,8 @@ function createBaseAsset(): Asset {
     ExchangeTickerSymbol: "",
     Exchange: "",
     Description: "",
+    MinTransactionAmount: "",
+    ExtraPercentage: "",
     Denom: "",
     SmartContractAddress: "",
     IsIssuedInSmartContract: false,
@@ -336,6 +341,12 @@ export const Asset = {
     }
     if (message.Description !== "") {
       writer.uint32(138).string(message.Description);
+    }
+    if (message.MinTransactionAmount !== "") {
+      writer.uint32(170).string(message.MinTransactionAmount);
+    }
+    if (message.ExtraPercentage !== "") {
+      writer.uint32(178).string(message.ExtraPercentage);
     }
     if (message.Denom !== "") {
       writer.uint32(146).string(message.Denom);
@@ -475,6 +486,20 @@ export const Asset = {
 
           message.Description = reader.string();
           continue;
+        case 21:
+          if (tag !== 170) {
+            break;
+          }
+
+          message.MinTransactionAmount = reader.string();
+          continue;
+        case 22:
+          if (tag !== 178) {
+            break;
+          }
+
+          message.ExtraPercentage = reader.string();
+          continue;
         case 18:
           if (tag !== 146) {
             break;
@@ -526,6 +551,8 @@ export const Asset = {
       ExchangeTickerSymbol: isSet(object.ExchangeTickerSymbol) ? globalThis.String(object.ExchangeTickerSymbol) : "",
       Exchange: isSet(object.Exchange) ? globalThis.String(object.Exchange) : "",
       Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
+      MinTransactionAmount: isSet(object.MinTransactionAmount) ? globalThis.String(object.MinTransactionAmount) : "",
+      ExtraPercentage: isSet(object.ExtraPercentage) ? globalThis.String(object.ExtraPercentage) : "",
       Denom: isSet(object.Denom) ? globalThis.String(object.Denom) : "",
       SmartContractAddress: isSet(object.SmartContractAddress) ? globalThis.String(object.SmartContractAddress) : "",
       IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
@@ -587,6 +614,12 @@ export const Asset = {
     if (message.Description !== "") {
       obj.Description = message.Description;
     }
+    if (message.MinTransactionAmount !== "") {
+      obj.MinTransactionAmount = message.MinTransactionAmount;
+    }
+    if (message.ExtraPercentage !== "") {
+      obj.ExtraPercentage = message.ExtraPercentage;
+    }
     if (message.Denom !== "") {
       obj.Denom = message.Denom;
     }
@@ -621,6 +654,8 @@ export const Asset = {
     message.ExchangeTickerSymbol = object.ExchangeTickerSymbol ?? "";
     message.Exchange = object.Exchange ?? "";
     message.Description = object.Description ?? "";
+    message.MinTransactionAmount = object.MinTransactionAmount ?? "";
+    message.ExtraPercentage = object.ExtraPercentage ?? "";
     message.Denom = object.Denom ?? "";
     message.SmartContractAddress = object.SmartContractAddress ?? "";
     message.IsIssuedInSmartContract = object.IsIssuedInSmartContract ?? false;
