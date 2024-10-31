@@ -252,12 +252,12 @@ type Asset struct {
 	Currency             string `protobuf:"bytes,11,opt,name=Currency,proto3" json:"Currency,omitempty"`
 	Version              string `protobuf:"bytes,12,opt,name=Version,proto3" json:"Version,omitempty"`
 	Precision            int32  `protobuf:"varint,13,opt,name=Precision,proto3" json:"Precision,omitempty"`
-	Name                 string `protobuf:"bytes,14,opt,name=Name,proto3" json:"Name,omitempty"` // `Name` will be used to build the subunit as a Symbol in the smart contract, {Name}_v{Version}
+	Name                 string `protobuf:"bytes,14,opt,name=Name,proto3" json:"Name,omitempty"` // TODO: temp. solution: `Name` will be used to build the subunit as a Symbol in the smart contract, {Name}_v{Version}
 	ExchangeTickerSymbol string `protobuf:"bytes,15,opt,name=ExchangeTickerSymbol,proto3" json:"ExchangeTickerSymbol,omitempty"`
 	Exchange             string `protobuf:"bytes,16,opt,name=Exchange,proto3" json:"Exchange,omitempty"`
 	Description          string `protobuf:"bytes,17,opt,name=Description,proto3" json:"Description,omitempty"`
 	MinTransactionAmount string `protobuf:"bytes,21,opt,name=MinTransactionAmount,proto3" json:"MinTransactionAmount,omitempty"`
-	ExtraPercentage      string `protobuf:"bytes,22,opt,name=ExtraPercentage,proto3" json:"ExtraPercentage,omitempty"` // extra % that the buyer must provide when buying an asset ( "1" = 100%, 0.1 = 10%, ...)
+	ExtraPercentage      string `protobuf:"bytes,22,opt,name=ExtraPercentage,proto3" json:"ExtraPercentage,omitempty"` // extra margin % that the buyer must provide when buying an asset ( "1" = 100%, 0.1 = 10%, ...) and cost will be half of the extra margin
 	// Denomination in the Smart Contract
 	// {Symbol}_v{Version}-{SmartContract addr} where Symbol is the symbol in the smart contract, not Symbol in the Asset object
 	// - is not allwed in symbol in the coreum smart contract: https://github.com/CoreumFoundation/coreum/blob/e5f74cfa51e3a83d101c0a307af18378c18d4748/x/asset/ft/types/token.go#L21
