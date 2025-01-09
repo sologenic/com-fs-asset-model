@@ -3,6 +3,7 @@ syntax = "proto3";
 package asset;
 
 import "asset.proto";
+import "sologenic/com-fs-utils-lib/models/metadata/metadata.proto";
 
 option go_package = "github.com/sologenic/com-fs-asset-model;asset";
 
@@ -27,7 +28,7 @@ message AssetKey {
 }
 
 message AssetQuery {
-    string Network = 1;
+    metadata.Network Network = 1;
     optional int32 Offset = 2;
     repeated string JurisdictionIDs = 3;
     optional string OrganizationID = 4;
@@ -44,7 +45,7 @@ message UserAssetListKey {
 }
 
 message UserAssetListQuery {
-    string Network = 1;
+    metadata.Network Network = 1;
     optional int32 Offset = 2;
     optional string AccountID = 3;
     optional string Wallet = 4;

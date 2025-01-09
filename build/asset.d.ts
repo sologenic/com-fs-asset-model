@@ -1,4 +1,5 @@
 import _m0 from "protobufjs/minimal";
+import { Network } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 export declare const protobufPackage = "asset";
 export declare enum AssetStatus {
     ASSET_STATUS_DO_NOT_USE = 0,
@@ -50,7 +51,7 @@ export interface Asset {
     Reason?: Reason | undefined;
     /** list of jurisdictionIDs where this asset is allowed to be traded */
     JurisdictionIDs: string[];
-    Network: string;
+    Network: Network;
     CreatedAt: Date | undefined;
     UpdatedAt: Date | undefined;
     Type: AssetType;
@@ -89,7 +90,7 @@ export interface UserAssetList {
     /** Stable Key: "Currency-OrganizationID-Version" */
     AssetKey: string;
     Status: UserAssetStatus;
-    Network: string;
+    Network: Network;
     Visible: boolean;
     CreatedAt: Date | undefined;
     UpdatedAt: Date | undefined;
@@ -108,7 +109,7 @@ export declare const Asset: {
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
         JurisdictionIDs?: string[] | undefined;
-        Network?: string | undefined;
+        Network?: Network | undefined;
         CreatedAt?: Date | undefined;
         UpdatedAt?: Date | undefined;
         Type?: AssetType | undefined;
@@ -131,7 +132,7 @@ export declare const Asset: {
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
         JurisdictionIDs?: (string[] & string[] & { [K in Exclude<keyof I["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
-        Network?: string | undefined;
+        Network?: Network | undefined;
         CreatedAt?: Date | undefined;
         UpdatedAt?: Date | undefined;
         Type?: AssetType | undefined;
@@ -155,7 +156,7 @@ export declare const Asset: {
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
         JurisdictionIDs?: string[] | undefined;
-        Network?: string | undefined;
+        Network?: Network | undefined;
         CreatedAt?: Date | undefined;
         UpdatedAt?: Date | undefined;
         Type?: AssetType | undefined;
@@ -178,7 +179,7 @@ export declare const Asset: {
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
         JurisdictionIDs?: (string[] & string[] & { [K_2 in Exclude<keyof I_1["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
-        Network?: string | undefined;
+        Network?: Network | undefined;
         CreatedAt?: Date | undefined;
         UpdatedAt?: Date | undefined;
         Type?: AssetType | undefined;
@@ -209,7 +210,7 @@ export declare const Assets: {
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
             Type?: AssetType | undefined;
@@ -234,7 +235,7 @@ export declare const Assets: {
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
             Type?: AssetType | undefined;
@@ -257,7 +258,7 @@ export declare const Assets: {
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
             Type?: AssetType | undefined;
@@ -280,7 +281,7 @@ export declare const Assets: {
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: (string[] & string[] & { [K in Exclude<keyof I["Assets"][number]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
             Type?: AssetType | undefined;
@@ -303,7 +304,7 @@ export declare const Assets: {
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
             Type?: AssetType | undefined;
@@ -329,7 +330,7 @@ export declare const Assets: {
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
             Type?: AssetType | undefined;
@@ -354,7 +355,7 @@ export declare const Assets: {
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
             Type?: AssetType | undefined;
@@ -377,7 +378,7 @@ export declare const Assets: {
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
             Type?: AssetType | undefined;
@@ -400,7 +401,7 @@ export declare const Assets: {
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: (string[] & string[] & { [K_4 in Exclude<keyof I_1["Assets"][number]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
             Type?: AssetType | undefined;
@@ -423,7 +424,7 @@ export declare const Assets: {
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
             Type?: AssetType | undefined;
@@ -453,7 +454,7 @@ export declare const UserAssetList: {
         Wallet?: string | undefined;
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
-        Network?: string | undefined;
+        Network?: Network | undefined;
         Visible?: boolean | undefined;
         CreatedAt?: Date | undefined;
         UpdatedAt?: Date | undefined;
@@ -462,7 +463,7 @@ export declare const UserAssetList: {
         Wallet?: string | undefined;
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
-        Network?: string | undefined;
+        Network?: Network | undefined;
         Visible?: boolean | undefined;
         CreatedAt?: Date | undefined;
         UpdatedAt?: Date | undefined;
@@ -472,7 +473,7 @@ export declare const UserAssetList: {
         Wallet?: string | undefined;
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
-        Network?: string | undefined;
+        Network?: Network | undefined;
         Visible?: boolean | undefined;
         CreatedAt?: Date | undefined;
         UpdatedAt?: Date | undefined;
@@ -481,7 +482,7 @@ export declare const UserAssetList: {
         Wallet?: string | undefined;
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
-        Network?: string | undefined;
+        Network?: Network | undefined;
         Visible?: boolean | undefined;
         CreatedAt?: Date | undefined;
         UpdatedAt?: Date | undefined;
@@ -498,7 +499,7 @@ export declare const UserAssetLists: {
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             Visible?: boolean | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -509,7 +510,7 @@ export declare const UserAssetLists: {
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             Visible?: boolean | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -518,7 +519,7 @@ export declare const UserAssetLists: {
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             Visible?: boolean | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -527,7 +528,7 @@ export declare const UserAssetLists: {
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             Visible?: boolean | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -536,7 +537,7 @@ export declare const UserAssetLists: {
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             Visible?: boolean | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -548,7 +549,7 @@ export declare const UserAssetLists: {
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             Visible?: boolean | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -559,7 +560,7 @@ export declare const UserAssetLists: {
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             Visible?: boolean | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -568,7 +569,7 @@ export declare const UserAssetLists: {
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             Visible?: boolean | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -577,7 +578,7 @@ export declare const UserAssetLists: {
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             Visible?: boolean | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
@@ -586,7 +587,7 @@ export declare const UserAssetLists: {
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             Visible?: boolean | undefined;
             CreatedAt?: Date | undefined;
             UpdatedAt?: Date | undefined;
