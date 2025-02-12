@@ -1,6 +1,6 @@
 # Asset List
 
-The asset list proto provides all the functionality required to interact with the amm store.
+The asset list proto provides all the functionality required to interact with the asset store.
 
 ## Building the protos
 

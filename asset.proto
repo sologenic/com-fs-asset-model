@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package asset;
 
-import "google/protobuf/timestamp.proto";
 import "sologenic/com-fs-utils-lib/models/metadata/metadata.proto";
 
 option go_package = "github.com/sologenic/com-fs-asset-model;asset";
@@ -14,16 +13,14 @@ message Asset {
     AssetStatus Status = 3;
     optional Reason Reason = 4;
     repeated string JurisdictionIDs = 5; // list of jurisdictionIDs where this asset is allowed to be traded
-    metadata.Network Network = 6;
-    google.protobuf.Timestamp CreatedAt = 7;
-    google.protobuf.Timestamp UpdatedAt = 8;
+    metadata.MetaData MetaData = 6;
     AssetType Type = 9;
 
     // Flattened StockProperties
     string Symbol = 10; // Currency-OrganizationID(issuer) 
     string Currency = 11;
     string Version = 12;
-    int32 Precision = 13;
+    int32 Precision = 13; // Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares.
     string Name = 14; // TODO: temp. solution: `Name` will be used to build the subunit as a Symbol in the smart contract, {Name}_v{Version}
     string ExchangeTickerSymbol = 15;
     string Exchange = 16;
@@ -52,10 +49,8 @@ message UserAssetList {
     string Wallet = 2;
     string AssetKey = 3; // Stable Key: "Currency-OrganizationID-Version"
     UserAssetStatus Status = 4;
-    metadata.Network Network = 5;
+    metadata.MetaData MetaData = 5;
     bool Visible = 6;
-    google.protobuf.Timestamp CreatedAt = 7;
-    google.protobuf.Timestamp UpdatedAt = 8;
 }
 
 message UserAssetLists {

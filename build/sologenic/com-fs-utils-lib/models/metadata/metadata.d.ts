@@ -16,6 +16,7 @@ export interface MetaData {
     UpdatedAt: Date | undefined;
     /** Internal to listener */
     CreatedAt: Date | undefined;
+    UpdatedByAccount?: string | undefined;
 }
 export declare const MetaData: {
     encode(message: MetaData, writer?: _m0.Writer): _m0.Writer;
@@ -26,19 +27,23 @@ export declare const MetaData: {
         Network?: Network | undefined;
         UpdatedAt?: Date | undefined;
         CreatedAt?: Date | undefined;
+        UpdatedByAccount?: string | undefined;
     } & {
         Network?: Network | undefined;
         UpdatedAt?: Date | undefined;
         CreatedAt?: Date | undefined;
+        UpdatedByAccount?: string | undefined;
     } & { [K in Exclude<keyof I, keyof MetaData>]: never; }>(base?: I | undefined): MetaData;
     fromPartial<I_1 extends {
         Network?: Network | undefined;
         UpdatedAt?: Date | undefined;
         CreatedAt?: Date | undefined;
+        UpdatedByAccount?: string | undefined;
     } & {
         Network?: Network | undefined;
         UpdatedAt?: Date | undefined;
         CreatedAt?: Date | undefined;
+        UpdatedByAccount?: string | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof MetaData>]: never; }>(object: I_1): MetaData;
 };
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
