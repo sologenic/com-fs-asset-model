@@ -1,5 +1,5 @@
 import _m0 from "protobufjs/minimal";
-import { Network } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
+import { MetaData } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 export declare const protobufPackage = "asset";
 export declare enum AssetStatus {
     ASSET_STATUS_DO_NOT_USE = 0,
@@ -51,14 +51,13 @@ export interface Asset {
     Reason?: Reason | undefined;
     /** list of jurisdictionIDs where this asset is allowed to be traded */
     JurisdictionIDs: string[];
-    Network: Network;
-    CreatedAt: Date | undefined;
-    UpdatedAt: Date | undefined;
+    MetaData: MetaData | undefined;
     Type: AssetType;
     /** Flattened StockProperties */
     Symbol: string;
     Currency: string;
     Version: string;
+    /** Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares. */
     Precision: number;
     /** TODO: temp. solution: `Name` will be used to build the subunit as a Symbol in the smart contract, {Name}_v{Version} */
     Name: string;
@@ -90,10 +89,8 @@ export interface UserAssetList {
     /** Stable Key: "Currency-OrganizationID-Version" */
     AssetKey: string;
     Status: UserAssetStatus;
-    Network: Network;
+    MetaData: MetaData | undefined;
     Visible: boolean;
-    CreatedAt: Date | undefined;
-    UpdatedAt: Date | undefined;
 }
 export interface UserAssetLists {
     UserAssetLists: UserAssetList[];
@@ -109,9 +106,12 @@ export declare const Asset: {
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
         JurisdictionIDs?: string[] | undefined;
-        Network?: Network | undefined;
-        CreatedAt?: Date | undefined;
-        UpdatedAt?: Date | undefined;
+        MetaData?: {
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } | undefined;
         Type?: AssetType | undefined;
         Symbol?: string | undefined;
         Currency?: string | undefined;
@@ -132,9 +132,17 @@ export declare const Asset: {
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
         JurisdictionIDs?: (string[] & string[] & { [K in Exclude<keyof I["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
-        Network?: Network | undefined;
-        CreatedAt?: Date | undefined;
-        UpdatedAt?: Date | undefined;
+        MetaData?: ({
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } & {
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } & { [K_1 in Exclude<keyof I["MetaData"], keyof MetaData>]: never; }) | undefined;
         Type?: AssetType | undefined;
         Symbol?: string | undefined;
         Currency?: string | undefined;
@@ -149,16 +157,19 @@ export declare const Asset: {
         Denom?: string | undefined;
         SmartContractAddress?: string | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
-    } & { [K_1 in Exclude<keyof I, keyof Asset>]: never; }>(base?: I | undefined): Asset;
+    } & { [K_2 in Exclude<keyof I, keyof Asset>]: never; }>(base?: I | undefined): Asset;
     fromPartial<I_1 extends {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
         JurisdictionIDs?: string[] | undefined;
-        Network?: Network | undefined;
-        CreatedAt?: Date | undefined;
-        UpdatedAt?: Date | undefined;
+        MetaData?: {
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } | undefined;
         Type?: AssetType | undefined;
         Symbol?: string | undefined;
         Currency?: string | undefined;
@@ -178,10 +189,18 @@ export declare const Asset: {
         OrganizationID?: string | undefined;
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
-        JurisdictionIDs?: (string[] & string[] & { [K_2 in Exclude<keyof I_1["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
-        Network?: Network | undefined;
-        CreatedAt?: Date | undefined;
-        UpdatedAt?: Date | undefined;
+        JurisdictionIDs?: (string[] & string[] & { [K_3 in Exclude<keyof I_1["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+        MetaData?: ({
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } & {
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } & { [K_4 in Exclude<keyof I_1["MetaData"], keyof MetaData>]: never; }) | undefined;
         Type?: AssetType | undefined;
         Symbol?: string | undefined;
         Currency?: string | undefined;
@@ -196,7 +215,7 @@ export declare const Asset: {
         Denom?: string | undefined;
         SmartContractAddress?: string | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
-    } & { [K_3 in Exclude<keyof I_1, keyof Asset>]: never; }>(object: I_1): Asset;
+    } & { [K_5 in Exclude<keyof I_1, keyof Asset>]: never; }>(object: I_1): Asset;
 };
 export declare const Assets: {
     encode(message: Assets, writer?: _m0.Writer): _m0.Writer;
@@ -210,9 +229,12 @@ export declare const Assets: {
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
-            Network?: Network | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
+            MetaData?: {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
             Type?: AssetType | undefined;
             Symbol?: string | undefined;
             Currency?: string | undefined;
@@ -235,9 +257,12 @@ export declare const Assets: {
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
-            Network?: Network | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
+            MetaData?: {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
             Type?: AssetType | undefined;
             Symbol?: string | undefined;
             Currency?: string | undefined;
@@ -258,9 +283,12 @@ export declare const Assets: {
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
-            Network?: Network | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
+            MetaData?: {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
             Type?: AssetType | undefined;
             Symbol?: string | undefined;
             Currency?: string | undefined;
@@ -281,9 +309,17 @@ export declare const Assets: {
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: (string[] & string[] & { [K in Exclude<keyof I["Assets"][number]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
-            Network?: Network | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
+            MetaData?: ({
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } & {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } & { [K_1 in Exclude<keyof I["Assets"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
             Type?: AssetType | undefined;
             Symbol?: string | undefined;
             Currency?: string | undefined;
@@ -298,15 +334,18 @@ export declare const Assets: {
             Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
-        } & { [K_1 in Exclude<keyof I["Assets"][number], keyof Asset>]: never; })[] & { [K_2 in Exclude<keyof I["Assets"], keyof {
+        } & { [K_2 in Exclude<keyof I["Assets"][number], keyof Asset>]: never; })[] & { [K_3 in Exclude<keyof I["Assets"], keyof {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
-            Network?: Network | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
+            MetaData?: {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
             Type?: AssetType | undefined;
             Symbol?: string | undefined;
             Currency?: string | undefined;
@@ -322,7 +361,7 @@ export declare const Assets: {
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
         }[]>]: never; }) | undefined;
-    } & { [K_3 in Exclude<keyof I, "Assets">]: never; }>(base?: I | undefined): Assets;
+    } & { [K_4 in Exclude<keyof I, "Assets">]: never; }>(base?: I | undefined): Assets;
     fromPartial<I_1 extends {
         Assets?: {
             ID?: string | undefined;
@@ -330,9 +369,12 @@ export declare const Assets: {
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
-            Network?: Network | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
+            MetaData?: {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
             Type?: AssetType | undefined;
             Symbol?: string | undefined;
             Currency?: string | undefined;
@@ -355,9 +397,12 @@ export declare const Assets: {
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
-            Network?: Network | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
+            MetaData?: {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
             Type?: AssetType | undefined;
             Symbol?: string | undefined;
             Currency?: string | undefined;
@@ -378,9 +423,12 @@ export declare const Assets: {
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
-            Network?: Network | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
+            MetaData?: {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
             Type?: AssetType | undefined;
             Symbol?: string | undefined;
             Currency?: string | undefined;
@@ -400,10 +448,18 @@ export declare const Assets: {
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
-            JurisdictionIDs?: (string[] & string[] & { [K_4 in Exclude<keyof I_1["Assets"][number]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
-            Network?: Network | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
+            JurisdictionIDs?: (string[] & string[] & { [K_5 in Exclude<keyof I_1["Assets"][number]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+            MetaData?: ({
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } & {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } & { [K_6 in Exclude<keyof I_1["Assets"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
             Type?: AssetType | undefined;
             Symbol?: string | undefined;
             Currency?: string | undefined;
@@ -418,15 +474,18 @@ export declare const Assets: {
             Denom?: string | undefined;
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
-        } & { [K_5 in Exclude<keyof I_1["Assets"][number], keyof Asset>]: never; })[] & { [K_6 in Exclude<keyof I_1["Assets"], keyof {
+        } & { [K_7 in Exclude<keyof I_1["Assets"][number], keyof Asset>]: never; })[] & { [K_8 in Exclude<keyof I_1["Assets"], keyof {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
-            Network?: Network | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
+            MetaData?: {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
             Type?: AssetType | undefined;
             Symbol?: string | undefined;
             Currency?: string | undefined;
@@ -442,7 +501,7 @@ export declare const Assets: {
             SmartContractAddress?: string | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
         }[]>]: never; }) | undefined;
-    } & { [K_7 in Exclude<keyof I_1, "Assets">]: never; }>(object: I_1): Assets;
+    } & { [K_9 in Exclude<keyof I_1, "Assets">]: never; }>(object: I_1): Assets;
 };
 export declare const UserAssetList: {
     encode(message: UserAssetList, writer?: _m0.Writer): _m0.Writer;
@@ -454,39 +513,61 @@ export declare const UserAssetList: {
         Wallet?: string | undefined;
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
-        Network?: Network | undefined;
+        MetaData?: {
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } | undefined;
         Visible?: boolean | undefined;
-        CreatedAt?: Date | undefined;
-        UpdatedAt?: Date | undefined;
     } & {
         AccountID?: string | undefined;
         Wallet?: string | undefined;
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
-        Network?: Network | undefined;
+        MetaData?: ({
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } & {
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } & { [K in Exclude<keyof I["MetaData"], keyof MetaData>]: never; }) | undefined;
         Visible?: boolean | undefined;
-        CreatedAt?: Date | undefined;
-        UpdatedAt?: Date | undefined;
-    } & { [K in Exclude<keyof I, keyof UserAssetList>]: never; }>(base?: I | undefined): UserAssetList;
+    } & { [K_1 in Exclude<keyof I, keyof UserAssetList>]: never; }>(base?: I | undefined): UserAssetList;
     fromPartial<I_1 extends {
         AccountID?: string | undefined;
         Wallet?: string | undefined;
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
-        Network?: Network | undefined;
+        MetaData?: {
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } | undefined;
         Visible?: boolean | undefined;
-        CreatedAt?: Date | undefined;
-        UpdatedAt?: Date | undefined;
     } & {
         AccountID?: string | undefined;
         Wallet?: string | undefined;
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
-        Network?: Network | undefined;
+        MetaData?: ({
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } & {
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } & { [K_2 in Exclude<keyof I_1["MetaData"], keyof MetaData>]: never; }) | undefined;
         Visible?: boolean | undefined;
-        CreatedAt?: Date | undefined;
-        UpdatedAt?: Date | undefined;
-    } & { [K_1 in Exclude<keyof I_1, keyof UserAssetList>]: never; }>(object: I_1): UserAssetList;
+    } & { [K_3 in Exclude<keyof I_1, keyof UserAssetList>]: never; }>(object: I_1): UserAssetList;
 };
 export declare const UserAssetLists: {
     encode(message: UserAssetLists, writer?: _m0.Writer): _m0.Writer;
@@ -499,10 +580,13 @@ export declare const UserAssetLists: {
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: Network | undefined;
+            MetaData?: {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
             Visible?: boolean | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
         }[] | undefined;
     } & {
         UserAssetLists?: ({
@@ -510,49 +594,69 @@ export declare const UserAssetLists: {
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: Network | undefined;
+            MetaData?: {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
             Visible?: boolean | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
         }[] & ({
             AccountID?: string | undefined;
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: Network | undefined;
+            MetaData?: {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
             Visible?: boolean | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
         } & {
             AccountID?: string | undefined;
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: Network | undefined;
+            MetaData?: ({
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } & {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } & { [K in Exclude<keyof I["UserAssetLists"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
             Visible?: boolean | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-        } & { [K in Exclude<keyof I["UserAssetLists"][number], keyof UserAssetList>]: never; })[] & { [K_1 in Exclude<keyof I["UserAssetLists"], keyof {
+        } & { [K_1 in Exclude<keyof I["UserAssetLists"][number], keyof UserAssetList>]: never; })[] & { [K_2 in Exclude<keyof I["UserAssetLists"], keyof {
             AccountID?: string | undefined;
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: Network | undefined;
+            MetaData?: {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
             Visible?: boolean | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
         }[]>]: never; }) | undefined;
-    } & { [K_2 in Exclude<keyof I, "UserAssetLists">]: never; }>(base?: I | undefined): UserAssetLists;
+    } & { [K_3 in Exclude<keyof I, "UserAssetLists">]: never; }>(base?: I | undefined): UserAssetLists;
     fromPartial<I_1 extends {
         UserAssetLists?: {
             AccountID?: string | undefined;
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: Network | undefined;
+            MetaData?: {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
             Visible?: boolean | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
         }[] | undefined;
     } & {
         UserAssetLists?: ({
@@ -560,39 +664,56 @@ export declare const UserAssetLists: {
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: Network | undefined;
+            MetaData?: {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
             Visible?: boolean | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
         }[] & ({
             AccountID?: string | undefined;
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: Network | undefined;
+            MetaData?: {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
             Visible?: boolean | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
         } & {
             AccountID?: string | undefined;
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: Network | undefined;
+            MetaData?: ({
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } & {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } & { [K_4 in Exclude<keyof I_1["UserAssetLists"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
             Visible?: boolean | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
-        } & { [K_3 in Exclude<keyof I_1["UserAssetLists"][number], keyof UserAssetList>]: never; })[] & { [K_4 in Exclude<keyof I_1["UserAssetLists"], keyof {
+        } & { [K_5 in Exclude<keyof I_1["UserAssetLists"][number], keyof UserAssetList>]: never; })[] & { [K_6 in Exclude<keyof I_1["UserAssetLists"], keyof {
             AccountID?: string | undefined;
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
-            Network?: Network | undefined;
+            MetaData?: {
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
             Visible?: boolean | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedAt?: Date | undefined;
         }[]>]: never; }) | undefined;
-    } & { [K_5 in Exclude<keyof I_1, "UserAssetLists">]: never; }>(object: I_1): UserAssetLists;
+    } & { [K_7 in Exclude<keyof I_1, "UserAssetLists">]: never; }>(object: I_1): UserAssetLists;
 };
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 export type DeepPartial<T> = T extends Builtin ? T : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>> : T extends {} ? {
