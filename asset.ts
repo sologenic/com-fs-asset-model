@@ -247,7 +247,7 @@ export function exchangeToJSON(object: Exchange): string {
 }
 
 export interface AssetDetails {
-  /** Key combination: Currency-OrganizationID-Version (Symbol-Version) */
+  /** Key combination: Currency-OrganizationID */
   ID: string;
   /** External entity (broker) that owns this asset */
   OrganizationID: string;
@@ -260,7 +260,9 @@ export interface AssetDetails {
   Type: AssetType;
   /** Flattened StockProperties */
   Symbol: string;
+  /** {Symbol}_{Version}. e.g, appl_1, pltr_15, msft_205 */
   Currency: string;
+  /** Auto-incremented version (no leading zeros) with max length 3 characters (values 1 to 999) */
   Version: string;
   /** Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares. */
   Precision: number;
@@ -271,7 +273,7 @@ export interface AssetDetails {
   MinTransactionAmount: number;
   /** Extra margin percentage required when buying an asset. e.g ExtraPercentage = 0.1 the buyer must provide 10% extra margin—of which the cost is 5%, and the remaining 5% is returned to the buyer. */
   ExtraPercentage: number;
-  /** {Symbol}_v{Version}-{SmartContract addr(issuer)} */
+  /** Smart Contract properties */
   Denom: string;
   SmartContractAddress: string;
   /** Flag to indicate if the asset is issued in the smart contract */

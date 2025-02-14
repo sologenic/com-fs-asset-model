@@ -8,7 +8,7 @@ import "sologenic/com-fs-utils-lib/models/audit/audit.proto";
 option go_package = "github.com/sologenic/com-fs-asset-model;asset";
 
 message AssetDetails {
-    // Key combination: Currency-OrganizationID-Version (Symbol-Version)
+    // Key combination: Currency-OrganizationID
     string ID = 1; // Key string to prevent composing the key all the time and reduce errors
     string OrganizationID = 2; // External entity (broker) that owns this asset 
     AssetStatus Status = 3;
@@ -17,9 +17,9 @@ message AssetDetails {
     AssetType Type = 6;
 
     // Flattened StockProperties
-    string Symbol = 7; // Currency-Precision
-    string Currency = 8;
-    string Version = 9;
+    string Symbol = 7; // User-entered ticker with format:[a-zA-Z0-9]{1,47}. e.g., APPL, PLTR, MSFT
+    string Currency = 8; // {Symbol}_{Version}. e.g, appl_1, pltr_15, msft_205
+    string Version = 9; // Auto-incremented version (no leading zeros) with max length 3 characters (values 1 to 999)
     int32 Precision = 10; // Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares.
     string Name = 11;
     string ExchangeTickerSymbol = 12;
@@ -28,7 +28,8 @@ message AssetDetails {
     double MinTransactionAmount = 15;
     double ExtraPercentage = 16; // Extra margin percentage required when buying an asset. e.g ExtraPercentage = 0.1 the buyer must provide 10% extra margin—of which the cost is 5%, and the remaining 5% is returned to the buyer.
     
-    string Denom = 17; // {Symbol}_v{Version}-{SmartContract addr(issuer)}
+    // Smart Contract properties
+    string Denom = 17; // {Subunit}-{SmartContractAddress} where Subunit is u{Currency}-{SmartContractAddress(issuer)}. e.g., uappl_1-testcore1et29c...
     string SmartContractAddress = 18;
     bool IsIssuedInSmartContract = 19; // Flag to indicate if the asset is issued in the smart contract
 }

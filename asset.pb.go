@@ -290,7 +290,7 @@ type AssetDetails struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// Key combination: Currency-OrganizationID-Version (Symbol-Version)
+	// Key combination: Currency-OrganizationID
 	ID              string      `protobuf:"bytes,1,opt,name=ID,proto3" json:"ID,omitempty"`                         // Key string to prevent composing the key all the time and reduce errors
 	OrganizationID  string      `protobuf:"bytes,2,opt,name=OrganizationID,proto3" json:"OrganizationID,omitempty"` // External entity (broker) that owns this asset
 	Status          AssetStatus `protobuf:"varint,3,opt,name=Status,proto3,enum=asset.AssetStatus" json:"Status,omitempty"`
@@ -298,19 +298,20 @@ type AssetDetails struct {
 	JurisdictionIDs []string    `protobuf:"bytes,5,rep,name=JurisdictionIDs,proto3" json:"JurisdictionIDs,omitempty"` // list of jurisdictionIDs where this asset is allowed to be traded
 	Type            AssetType   `protobuf:"varint,6,opt,name=Type,proto3,enum=asset.AssetType" json:"Type,omitempty"`
 	// Flattened StockProperties
-	Symbol                  string   `protobuf:"bytes,7,opt,name=Symbol,proto3" json:"Symbol,omitempty"` // Currency-Precision
-	Currency                string   `protobuf:"bytes,8,opt,name=Currency,proto3" json:"Currency,omitempty"`
-	Version                 string   `protobuf:"bytes,9,opt,name=Version,proto3" json:"Version,omitempty"`
-	Precision               int32    `protobuf:"varint,10,opt,name=Precision,proto3" json:"Precision,omitempty"` // Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares.
-	Name                    string   `protobuf:"bytes,11,opt,name=Name,proto3" json:"Name,omitempty"`
-	ExchangeTickerSymbol    string   `protobuf:"bytes,12,opt,name=ExchangeTickerSymbol,proto3" json:"ExchangeTickerSymbol,omitempty"`
-	Exchange                Exchange `protobuf:"varint,13,opt,name=Exchange,proto3,enum=asset.Exchange" json:"Exchange,omitempty"`
-	Description             string   `protobuf:"bytes,14,opt,name=Description,proto3" json:"Description,omitempty"`
-	MinTransactionAmount    float64  `protobuf:"fixed64,15,opt,name=MinTransactionAmount,proto3" json:"MinTransactionAmount,omitempty"`
-	ExtraPercentage         float64  `protobuf:"fixed64,16,opt,name=ExtraPercentage,proto3" json:"ExtraPercentage,omitempty"` // Extra margin percentage required when buying an asset. e.g ExtraPercentage = 0.1 the buyer must provide 10% extra margin—of which the cost is 5%, and the remaining 5% is returned to the buyer.
-	Denom                   string   `protobuf:"bytes,17,opt,name=Denom,proto3" json:"Denom,omitempty"`                       // {Symbol}_v{Version}-{SmartContract addr(issuer)}
-	SmartContractAddress    string   `protobuf:"bytes,18,opt,name=SmartContractAddress,proto3" json:"SmartContractAddress,omitempty"`
-	IsIssuedInSmartContract bool     `protobuf:"varint,19,opt,name=IsIssuedInSmartContract,proto3" json:"IsIssuedInSmartContract,omitempty"` // Flag to indicate if the asset is issued in the smart contract
+	Symbol               string   `protobuf:"bytes,7,opt,name=Symbol,proto3" json:"Symbol,omitempty"`         // User-entered ticker with format:[a-zA-Z0-9]{1,47}. e.g., APPL, PLTR, MSFT
+	Currency             string   `protobuf:"bytes,8,opt,name=Currency,proto3" json:"Currency,omitempty"`     // {Symbol}_{Version}. e.g, appl_1, pltr_15, msft_205
+	Version              string   `protobuf:"bytes,9,opt,name=Version,proto3" json:"Version,omitempty"`       // Auto-incremented version (no leading zeros) with max length 3 characters (values 1 to 999)
+	Precision            int32    `protobuf:"varint,10,opt,name=Precision,proto3" json:"Precision,omitempty"` // Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares.
+	Name                 string   `protobuf:"bytes,11,opt,name=Name,proto3" json:"Name,omitempty"`
+	ExchangeTickerSymbol string   `protobuf:"bytes,12,opt,name=ExchangeTickerSymbol,proto3" json:"ExchangeTickerSymbol,omitempty"`
+	Exchange             Exchange `protobuf:"varint,13,opt,name=Exchange,proto3,enum=asset.Exchange" json:"Exchange,omitempty"`
+	Description          string   `protobuf:"bytes,14,opt,name=Description,proto3" json:"Description,omitempty"`
+	MinTransactionAmount float64  `protobuf:"fixed64,15,opt,name=MinTransactionAmount,proto3" json:"MinTransactionAmount,omitempty"`
+	ExtraPercentage      float64  `protobuf:"fixed64,16,opt,name=ExtraPercentage,proto3" json:"ExtraPercentage,omitempty"` // Extra margin percentage required when buying an asset. e.g ExtraPercentage = 0.1 the buyer must provide 10% extra margin—of which the cost is 5%, and the remaining 5% is returned to the buyer.
+	// Smart Contract properties
+	Denom                   string `protobuf:"bytes,17,opt,name=Denom,proto3" json:"Denom,omitempty"` // {Subunit}-{SmartContractAddress} where Subunit is u{Currency}-{SmartContractAddress(issuer)}. e.g., uappl_1-testcore1et29c...
+	SmartContractAddress    string `protobuf:"bytes,18,opt,name=SmartContractAddress,proto3" json:"SmartContractAddress,omitempty"`
+	IsIssuedInSmartContract bool   `protobuf:"varint,19,opt,name=IsIssuedInSmartContract,proto3" json:"IsIssuedInSmartContract,omitempty"` // Flag to indicate if the asset is issued in the smart contract
 }
 
 func (x *AssetDetails) Reset() {
