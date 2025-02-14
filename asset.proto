@@ -3,40 +3,40 @@ syntax = "proto3";
 package asset;
 
 import "sologenic/com-fs-utils-lib/models/metadata/metadata.proto";
+import "sologenic/com-fs-utils-lib/models/audit/audit.proto";
 
 option go_package = "github.com/sologenic/com-fs-asset-model;asset";
 
-message Asset {
+message AssetDetails {
     // Key combination: Currency-OrganizationID-Version (Symbol-Version)
     string ID = 1; // Key string to prevent composing the key all the time and reduce errors
-    string OrganizationID = 2; // External entity (broker) that owns this asset, e.g. issuer
+    string OrganizationID = 2; // External entity (broker) that owns this asset 
     AssetStatus Status = 3;
     optional Reason Reason = 4;
     repeated string JurisdictionIDs = 5; // list of jurisdictionIDs where this asset is allowed to be traded
-    metadata.MetaData MetaData = 6;
-    AssetType Type = 9;
+    AssetType Type = 6;
 
     // Flattened StockProperties
-    string Symbol = 10; // Currency-OrganizationID(issuer) 
-    string Currency = 11;
-    string Version = 12;
-    int32 Precision = 13; // Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares.
-    string Name = 14; // TODO: temp. solution: `Name` will be used to build the subunit as a Symbol in the smart contract, {Name}_v{Version}
-    string ExchangeTickerSymbol = 15;
-    string Exchange = 16;
-    string Description = 17;
-    string MinTransactionAmount = 21;
-    string ExtraPercentage = 22; // extra margin % that the buyer must provide when buying an asset ( "1" = 100%, 0.1 = 10%, ...) and cost will be half of the extra margin
-    // e.g ExtraPercentage = "0.1" means the buyer must provide 10% extra margin when buying an asset and the cost will be 5% of the extra margin, and rest 5% will be returned to the buyer
+    string Symbol = 7; // Currency-Precision
+    string Currency = 8;
+    string Version = 9;
+    int32 Precision = 10; // Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares.
+    string Name = 11;
+    string ExchangeTickerSymbol = 12;
+    Exchange Exchange = 13;
+    string Description = 14;
+    double MinTransactionAmount = 15;
+    double ExtraPercentage = 16; // Extra margin percentage required when buying an asset. e.g ExtraPercentage = 0.1 the buyer must provide 10% extra margin—of which the cost is 5%, and the remaining 5% is returned to the buyer.
+    
+    string Denom = 17; // {Symbol}_v{Version}-{SmartContract addr(issuer)}
+    string SmartContractAddress = 18;
+    bool IsIssuedInSmartContract = 19; // Flag to indicate if the asset is issued in the smart contract
+}
 
-    // Denomination in the Smart Contract
-    // {Symbol}_v{Version}-{SmartContract addr} where Symbol is the symbol in the smart contract, not Symbol in the Asset object
-    // - is not allwed in symbol in the coreum smart contract: https://github.com/CoreumFoundation/coreum/blob/e5f74cfa51e3a83d101c0a307af18378c18d4748/x/asset/ft/types/token.go#L21
-    // e.g. "btc_v1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
-    // Alternatively, we can use Name field to build the subunit in the smart contract, {Name}_v{Version}, that is, `Name` (in the Asset) == `Symbol` (in the smart contract)
-    string Denom = 18;
-    string SmartContractAddress = 19;
-    bool IsIssuedInSmartContract = 20; // Flag to indicate if the asset is issued in the smart contract
+message Asset {
+    AssetDetails AssetDetails = 1;
+    metadata.MetaData MetaData = 2;
+    audit.Audit Audit = 3;
 }
 
 message Assets {
@@ -76,6 +76,7 @@ enum Reason {
 enum AssetType {
     ASSET_TYPE_DO_NOT_USE = 0;
     STOCK = 1;
+    BOND = 2;
 }
 
 enum UserAssetStatus {
@@ -84,4 +85,10 @@ enum UserAssetStatus {
     WHITELISTING_REQUESTED = 2;
     WHITELISTED = 3;
     OUTDATED_VERSION = 4;
+}
+
+enum Exchange {
+    EXCHANGE_DO_NOT_USE = 0;
+    NASDAQ = 1;
+    NYSE = 2;
 }

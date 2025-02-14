@@ -6,6 +6,7 @@
 
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
+import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
 import { MetaData } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 
 export const protobufPackage = "asset";
@@ -119,6 +120,7 @@ export function reasonToJSON(object: Reason): string {
 export enum AssetType {
   ASSET_TYPE_DO_NOT_USE = 0,
   STOCK = 1,
+  BOND = 2,
   UNRECOGNIZED = -1,
 }
 
@@ -130,6 +132,9 @@ export function assetTypeFromJSON(object: any): AssetType {
     case 1:
     case "STOCK":
       return AssetType.STOCK;
+    case 2:
+    case "BOND":
+      return AssetType.BOND;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -143,6 +148,8 @@ export function assetTypeToJSON(object: AssetType): string {
       return "ASSET_TYPE_DO_NOT_USE";
     case AssetType.STOCK:
       return "STOCK";
+    case AssetType.BOND:
+      return "BOND";
     case AssetType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -200,10 +207,49 @@ export function userAssetStatusToJSON(object: UserAssetStatus): string {
   }
 }
 
-export interface Asset {
+export enum Exchange {
+  EXCHANGE_DO_NOT_USE = 0,
+  NASDAQ = 1,
+  NYSE = 2,
+  UNRECOGNIZED = -1,
+}
+
+export function exchangeFromJSON(object: any): Exchange {
+  switch (object) {
+    case 0:
+    case "EXCHANGE_DO_NOT_USE":
+      return Exchange.EXCHANGE_DO_NOT_USE;
+    case 1:
+    case "NASDAQ":
+      return Exchange.NASDAQ;
+    case 2:
+    case "NYSE":
+      return Exchange.NYSE;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return Exchange.UNRECOGNIZED;
+  }
+}
+
+export function exchangeToJSON(object: Exchange): string {
+  switch (object) {
+    case Exchange.EXCHANGE_DO_NOT_USE:
+      return "EXCHANGE_DO_NOT_USE";
+    case Exchange.NASDAQ:
+      return "NASDAQ";
+    case Exchange.NYSE:
+      return "NYSE";
+    case Exchange.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
+export interface AssetDetails {
   /** Key combination: Currency-OrganizationID-Version (Symbol-Version) */
   ID: string;
-  /** External entity (broker) that owns this asset, e.g. issuer */
+  /** External entity (broker) that owns this asset */
   OrganizationID: string;
   Status: AssetStatus;
   Reason?:
@@ -211,7 +257,6 @@ export interface Asset {
     | undefined;
   /** list of jurisdictionIDs where this asset is allowed to be traded */
   JurisdictionIDs: string[];
-  MetaData: MetaData | undefined;
   Type: AssetType;
   /** Flattened StockProperties */
   Symbol: string;
@@ -219,25 +264,24 @@ export interface Asset {
   Version: string;
   /** Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares. */
   Precision: number;
-  /** TODO: temp. solution: `Name` will be used to build the subunit as a Symbol in the smart contract, {Name}_v{Version} */
   Name: string;
   ExchangeTickerSymbol: string;
-  Exchange: string;
+  Exchange: Exchange;
   Description: string;
-  MinTransactionAmount: string;
-  /** extra margin % that the buyer must provide when buying an asset ( "1" = 100%, 0.1 = 10%, ...) and cost will be half of the extra margin */
-  ExtraPercentage: string;
-  /**
-   * Denomination in the Smart Contract
-   * {Symbol}_v{Version}-{SmartContract addr} where Symbol is the symbol in the smart contract, not Symbol in the Asset object
-   * - is not allwed in symbol in the coreum smart contract: https://github.com/CoreumFoundation/coreum/blob/e5f74cfa51e3a83d101c0a307af18378c18d4748/x/asset/ft/types/token.go#L21
-   * e.g. "btc_v1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
-   * Alternatively, we can use Name field to build the subunit in the smart contract, {Name}_v{Version}, that is, `Name` (in the Asset) == `Symbol` (in the smart contract)
-   */
+  MinTransactionAmount: number;
+  /** Extra margin percentage required when buying an asset. e.g ExtraPercentage = 0.1 the buyer must provide 10% extra margin—of which the cost is 5%, and the remaining 5% is returned to the buyer. */
+  ExtraPercentage: number;
+  /** {Symbol}_v{Version}-{SmartContract addr(issuer)} */
   Denom: string;
   SmartContractAddress: string;
   /** Flag to indicate if the asset is issued in the smart contract */
   IsIssuedInSmartContract: boolean;
+}
+
+export interface Asset {
+  AssetDetails: AssetDetails | undefined;
+  MetaData: MetaData | undefined;
+  Audit: Audit | undefined;
 }
 
 export interface Assets {
@@ -259,14 +303,13 @@ export interface UserAssetLists {
   UserAssetLists: UserAssetList[];
 }
 
-function createBaseAsset(): Asset {
+function createBaseAssetDetails(): AssetDetails {
   return {
     ID: "",
     OrganizationID: "",
     Status: 0,
     Reason: undefined,
     JurisdictionIDs: [],
-    MetaData: undefined,
     Type: 0,
     Symbol: "",
     Currency: "",
@@ -274,18 +317,18 @@ function createBaseAsset(): Asset {
     Precision: 0,
     Name: "",
     ExchangeTickerSymbol: "",
-    Exchange: "",
+    Exchange: 0,
     Description: "",
-    MinTransactionAmount: "",
-    ExtraPercentage: "",
+    MinTransactionAmount: 0,
+    ExtraPercentage: 0,
     Denom: "",
     SmartContractAddress: "",
     IsIssuedInSmartContract: false,
   };
 }
 
-export const Asset = {
-  encode(message: Asset, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const AssetDetails = {
+  encode(message: AssetDetails, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.ID !== "") {
       writer.uint32(10).string(message.ID);
     }
@@ -301,58 +344,55 @@ export const Asset = {
     for (const v of message.JurisdictionIDs) {
       writer.uint32(42).string(v!);
     }
-    if (message.MetaData !== undefined) {
-      MetaData.encode(message.MetaData, writer.uint32(50).fork()).ldelim();
-    }
     if (message.Type !== 0) {
-      writer.uint32(72).int32(message.Type);
+      writer.uint32(48).int32(message.Type);
     }
     if (message.Symbol !== "") {
-      writer.uint32(82).string(message.Symbol);
+      writer.uint32(58).string(message.Symbol);
     }
     if (message.Currency !== "") {
-      writer.uint32(90).string(message.Currency);
+      writer.uint32(66).string(message.Currency);
     }
     if (message.Version !== "") {
-      writer.uint32(98).string(message.Version);
+      writer.uint32(74).string(message.Version);
     }
     if (message.Precision !== 0) {
-      writer.uint32(104).int32(message.Precision);
+      writer.uint32(80).int32(message.Precision);
     }
     if (message.Name !== "") {
-      writer.uint32(114).string(message.Name);
+      writer.uint32(90).string(message.Name);
     }
     if (message.ExchangeTickerSymbol !== "") {
-      writer.uint32(122).string(message.ExchangeTickerSymbol);
+      writer.uint32(98).string(message.ExchangeTickerSymbol);
     }
-    if (message.Exchange !== "") {
-      writer.uint32(130).string(message.Exchange);
+    if (message.Exchange !== 0) {
+      writer.uint32(104).int32(message.Exchange);
     }
     if (message.Description !== "") {
-      writer.uint32(138).string(message.Description);
+      writer.uint32(114).string(message.Description);
     }
-    if (message.MinTransactionAmount !== "") {
-      writer.uint32(170).string(message.MinTransactionAmount);
+    if (message.MinTransactionAmount !== 0) {
+      writer.uint32(121).double(message.MinTransactionAmount);
     }
-    if (message.ExtraPercentage !== "") {
-      writer.uint32(178).string(message.ExtraPercentage);
+    if (message.ExtraPercentage !== 0) {
+      writer.uint32(129).double(message.ExtraPercentage);
     }
     if (message.Denom !== "") {
-      writer.uint32(146).string(message.Denom);
+      writer.uint32(138).string(message.Denom);
     }
     if (message.SmartContractAddress !== "") {
-      writer.uint32(154).string(message.SmartContractAddress);
+      writer.uint32(146).string(message.SmartContractAddress);
     }
     if (message.IsIssuedInSmartContract !== false) {
-      writer.uint32(160).bool(message.IsIssuedInSmartContract);
+      writer.uint32(152).bool(message.IsIssuedInSmartContract);
     }
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): Asset {
+  decode(input: _m0.Reader | Uint8Array, length?: number): AssetDetails {
     const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseAsset();
+    const message = createBaseAssetDetails();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -392,105 +432,98 @@ export const Asset = {
           message.JurisdictionIDs.push(reader.string());
           continue;
         case 6:
-          if (tag !== 50) {
-            break;
-          }
-
-          message.MetaData = MetaData.decode(reader, reader.uint32());
-          continue;
-        case 9:
-          if (tag !== 72) {
+          if (tag !== 48) {
             break;
           }
 
           message.Type = reader.int32() as any;
           continue;
-        case 10:
-          if (tag !== 82) {
+        case 7:
+          if (tag !== 58) {
             break;
           }
 
           message.Symbol = reader.string();
+          continue;
+        case 8:
+          if (tag !== 66) {
+            break;
+          }
+
+          message.Currency = reader.string();
+          continue;
+        case 9:
+          if (tag !== 74) {
+            break;
+          }
+
+          message.Version = reader.string();
+          continue;
+        case 10:
+          if (tag !== 80) {
+            break;
+          }
+
+          message.Precision = reader.int32();
           continue;
         case 11:
           if (tag !== 90) {
             break;
           }
 
-          message.Currency = reader.string();
+          message.Name = reader.string();
           continue;
         case 12:
           if (tag !== 98) {
             break;
           }
 
-          message.Version = reader.string();
+          message.ExchangeTickerSymbol = reader.string();
           continue;
         case 13:
           if (tag !== 104) {
             break;
           }
 
-          message.Precision = reader.int32();
+          message.Exchange = reader.int32() as any;
           continue;
         case 14:
           if (tag !== 114) {
             break;
           }
 
-          message.Name = reader.string();
+          message.Description = reader.string();
           continue;
         case 15:
-          if (tag !== 122) {
+          if (tag !== 121) {
             break;
           }
 
-          message.ExchangeTickerSymbol = reader.string();
+          message.MinTransactionAmount = reader.double();
           continue;
         case 16:
-          if (tag !== 130) {
+          if (tag !== 129) {
             break;
           }
 
-          message.Exchange = reader.string();
+          message.ExtraPercentage = reader.double();
           continue;
         case 17:
           if (tag !== 138) {
             break;
           }
 
-          message.Description = reader.string();
-          continue;
-        case 21:
-          if (tag !== 170) {
-            break;
-          }
-
-          message.MinTransactionAmount = reader.string();
-          continue;
-        case 22:
-          if (tag !== 178) {
-            break;
-          }
-
-          message.ExtraPercentage = reader.string();
+          message.Denom = reader.string();
           continue;
         case 18:
           if (tag !== 146) {
             break;
           }
 
-          message.Denom = reader.string();
-          continue;
-        case 19:
-          if (tag !== 154) {
-            break;
-          }
-
           message.SmartContractAddress = reader.string();
           continue;
-        case 20:
-          if (tag !== 160) {
+        case 19:
+          if (tag !== 152) {
             break;
           }
 
@@ -505,7 +538,7 @@ export const Asset = {
     return message;
   },
 
-  fromJSON(object: any): Asset {
+  fromJSON(object: any): AssetDetails {
     return {
       ID: isSet(object.ID) ? globalThis.String(object.ID) : "",
       OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
@@ -514,7 +547,6 @@ export const Asset = {
       JurisdictionIDs: globalThis.Array.isArray(object?.JurisdictionIDs)
         ? object.JurisdictionIDs.map((e: any) => globalThis.String(e))
         : [],
-      MetaData: isSet(object.MetaData) ? MetaData.fromJSON(object.MetaData) : undefined,
       Type: isSet(object.Type) ? assetTypeFromJSON(object.Type) : 0,
       Symbol: isSet(object.Symbol) ? globalThis.String(object.Symbol) : "",
       Currency: isSet(object.Currency) ? globalThis.String(object.Currency) : "",
@@ -522,10 +554,10 @@ export const Asset = {
       Precision: isSet(object.Precision) ? globalThis.Number(object.Precision) : 0,
       Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
       ExchangeTickerSymbol: isSet(object.ExchangeTickerSymbol) ? globalThis.String(object.ExchangeTickerSymbol) : "",
-      Exchange: isSet(object.Exchange) ? globalThis.String(object.Exchange) : "",
+      Exchange: isSet(object.Exchange) ? exchangeFromJSON(object.Exchange) : 0,
       Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
-      MinTransactionAmount: isSet(object.MinTransactionAmount) ? globalThis.String(object.MinTransactionAmount) : "",
-      ExtraPercentage: isSet(object.ExtraPercentage) ? globalThis.String(object.ExtraPercentage) : "",
+      MinTransactionAmount: isSet(object.MinTransactionAmount) ? globalThis.Number(object.MinTransactionAmount) : 0,
+      ExtraPercentage: isSet(object.ExtraPercentage) ? globalThis.Number(object.ExtraPercentage) : 0,
       Denom: isSet(object.Denom) ? globalThis.String(object.Denom) : "",
       SmartContractAddress: isSet(object.SmartContractAddress) ? globalThis.String(object.SmartContractAddress) : "",
       IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
@@ -534,7 +566,7 @@ export const Asset = {
     };
   },
 
-  toJSON(message: Asset): unknown {
+  toJSON(message: AssetDetails): unknown {
     const obj: any = {};
     if (message.ID !== "") {
       obj.ID = message.ID;
@@ -550,9 +582,6 @@ export const Asset = {
     }
     if (message.JurisdictionIDs?.length) {
       obj.JurisdictionIDs = message.JurisdictionIDs;
-    }
-    if (message.MetaData !== undefined) {
-      obj.MetaData = MetaData.toJSON(message.MetaData);
     }
     if (message.Type !== 0) {
       obj.Type = assetTypeToJSON(message.Type);
@@ -575,16 +604,16 @@ export const Asset = {
     if (message.ExchangeTickerSymbol !== "") {
       obj.ExchangeTickerSymbol = message.ExchangeTickerSymbol;
     }
-    if (message.Exchange !== "") {
-      obj.Exchange = message.Exchange;
+    if (message.Exchange !== 0) {
+      obj.Exchange = exchangeToJSON(message.Exchange);
     }
     if (message.Description !== "") {
       obj.Description = message.Description;
     }
-    if (message.MinTransactionAmount !== "") {
+    if (message.MinTransactionAmount !== 0) {
       obj.MinTransactionAmount = message.MinTransactionAmount;
     }
-    if (message.ExtraPercentage !== "") {
+    if (message.ExtraPercentage !== 0) {
       obj.ExtraPercentage = message.ExtraPercentage;
     }
     if (message.Denom !== "") {
@@ -599,19 +628,16 @@ export const Asset = {
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<Asset>, I>>(base?: I): Asset {
-    return Asset.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<AssetDetails>, I>>(base?: I): AssetDetails {
+    return AssetDetails.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<Asset>, I>>(object: I): Asset {
-    const message = createBaseAsset();
+  fromPartial<I extends Exact<DeepPartial<AssetDetails>, I>>(object: I): AssetDetails {
+    const message = createBaseAssetDetails();
     message.ID = object.ID ?? "";
     message.OrganizationID = object.OrganizationID ?? "";
     message.Status = object.Status ?? 0;
     message.Reason = object.Reason ?? undefined;
     message.JurisdictionIDs = object.JurisdictionIDs?.map((e) => e) || [];
-    message.MetaData = (object.MetaData !== undefined && object.MetaData !== null)
-      ? MetaData.fromPartial(object.MetaData)
-      : undefined;
     message.Type = object.Type ?? 0;
     message.Symbol = object.Symbol ?? "";
     message.Currency = object.Currency ?? "";
@@ -619,13 +645,106 @@ export const Asset = {
     message.Precision = object.Precision ?? 0;
     message.Name = object.Name ?? "";
     message.ExchangeTickerSymbol = object.ExchangeTickerSymbol ?? "";
-    message.Exchange = object.Exchange ?? "";
+    message.Exchange = object.Exchange ?? 0;
     message.Description = object.Description ?? "";
-    message.MinTransactionAmount = object.MinTransactionAmount ?? "";
-    message.ExtraPercentage = object.ExtraPercentage ?? "";
+    message.MinTransactionAmount = object.MinTransactionAmount ?? 0;
+    message.ExtraPercentage = object.ExtraPercentage ?? 0;
     message.Denom = object.Denom ?? "";
     message.SmartContractAddress = object.SmartContractAddress ?? "";
     message.IsIssuedInSmartContract = object.IsIssuedInSmartContract ?? false;
+    return message;
+  },
+};
+
+function createBaseAsset(): Asset {
+  return { AssetDetails: undefined, MetaData: undefined, Audit: undefined };
+}
+
+export const Asset = {
+  encode(message: Asset, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.AssetDetails !== undefined) {
+      AssetDetails.encode(message.AssetDetails, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.MetaData !== undefined) {
+      MetaData.encode(message.MetaData, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.Audit !== undefined) {
+      Audit.encode(message.Audit, writer.uint32(26).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Asset {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseAsset();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.AssetDetails = AssetDetails.decode(reader, reader.uint32());
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.MetaData = MetaData.decode(reader, reader.uint32());
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.Audit = Audit.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Asset {
+    return {
+      AssetDetails: isSet(object.AssetDetails) ? AssetDetails.fromJSON(object.AssetDetails) : undefined,
+      MetaData: isSet(object.MetaData) ? MetaData.fromJSON(object.MetaData) : undefined,
+      Audit: isSet(object.Audit) ? Audit.fromJSON(object.Audit) : undefined,
+    };
+  },
+
+  toJSON(message: Asset): unknown {
+    const obj: any = {};
+    if (message.AssetDetails !== undefined) {
+      obj.AssetDetails = AssetDetails.toJSON(message.AssetDetails);
+    }
+    if (message.MetaData !== undefined) {
+      obj.MetaData = MetaData.toJSON(message.MetaData);
+    }
+    if (message.Audit !== undefined) {
+      obj.Audit = Audit.toJSON(message.Audit);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Asset>, I>>(base?: I): Asset {
+    return Asset.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Asset>, I>>(object: I): Asset {
+    const message = createBaseAsset();
+    message.AssetDetails = (object.AssetDetails !== undefined && object.AssetDetails !== null)
+      ? AssetDetails.fromPartial(object.AssetDetails)
+      : undefined;
+    message.MetaData = (object.MetaData !== undefined && object.MetaData !== null)
+      ? MetaData.fromPartial(object.MetaData)
+      : undefined;
+    message.Audit = (object.Audit !== undefined && object.Audit !== null) ? Audit.fromPartial(object.Audit) : undefined;
     return message;
   },
 };
