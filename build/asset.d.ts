@@ -1,4 +1,5 @@
 import _m0 from "protobufjs/minimal";
+import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
 import { MetaData } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 export declare const protobufPackage = "asset";
 export declare enum AssetStatus {
@@ -28,6 +29,7 @@ export declare function reasonToJSON(object: Reason): string;
 export declare enum AssetType {
     ASSET_TYPE_DO_NOT_USE = 0,
     STOCK = 1,
+    BOND = 2,
     UNRECOGNIZED = -1
 }
 export declare function assetTypeFromJSON(object: any): AssetType;
@@ -42,42 +44,49 @@ export declare enum UserAssetStatus {
 }
 export declare function userAssetStatusFromJSON(object: any): UserAssetStatus;
 export declare function userAssetStatusToJSON(object: UserAssetStatus): string;
-export interface Asset {
-    /** Key combination: Currency-OrganizationID-Version (Symbol-Version) */
+export declare enum Exchange {
+    EXCHANGE_DO_NOT_USE = 0,
+    NASDAQ = 1,
+    NYSE = 2,
+    UNRECOGNIZED = -1
+}
+export declare function exchangeFromJSON(object: any): Exchange;
+export declare function exchangeToJSON(object: Exchange): string;
+export interface AssetDetails {
+    /** Key combination: Currency-OrganizationID */
     ID: string;
-    /** External entity (broker) that owns this asset, e.g. issuer */
+    /** External entity (broker) that owns this asset */
     OrganizationID: string;
     Status: AssetStatus;
     Reason?: Reason | undefined;
     /** list of jurisdictionIDs where this asset is allowed to be traded */
     JurisdictionIDs: string[];
-    MetaData: MetaData | undefined;
     Type: AssetType;
     /** Flattened StockProperties */
     Symbol: string;
+    /** {Symbol}_{Version}. e.g, appl_1, pltr_15, msft_205 */
     Currency: string;
+    /** Auto-incremented version (no leading zeros) with max length 3 characters (values 1 to 999) */
     Version: string;
     /** Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares. */
     Precision: number;
-    /** TODO: temp. solution: `Name` will be used to build the subunit as a Symbol in the smart contract, {Name}_v{Version} */
     Name: string;
     ExchangeTickerSymbol: string;
-    Exchange: string;
+    Exchange: Exchange;
     Description: string;
-    MinTransactionAmount: string;
-    /** extra margin % that the buyer must provide when buying an asset ( "1" = 100%, 0.1 = 10%, ...) and cost will be half of the extra margin */
-    ExtraPercentage: string;
-    /**
-     * Denomination in the Smart Contract
-     * {Symbol}_v{Version}-{SmartContract addr} where Symbol is the symbol in the smart contract, not Symbol in the Asset object
-     * - is not allwed in symbol in the coreum smart contract: https://github.com/CoreumFoundation/coreum/blob/e5f74cfa51e3a83d101c0a307af18378c18d4748/x/asset/ft/types/token.go#L21
-     * e.g. "btc_v1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
-     * Alternatively, we can use Name field to build the subunit in the smart contract, {Name}_v{Version}, that is, `Name` (in the Asset) == `Symbol` (in the smart contract)
-     */
+    MinTransactionAmount: number;
+    /** Extra margin percentage required when buying an asset. e.g ExtraPercentage = 0.1 the buyer must provide 10% extra margin—of which the cost is 5%, and the remaining 5% is returned to the buyer. */
+    ExtraPercentage: number;
+    /** Smart Contract properties */
     Denom: string;
     SmartContractAddress: string;
     /** Flag to indicate if the asset is issued in the smart contract */
     IsIssuedInSmartContract: boolean;
+}
+export interface Asset {
+    AssetDetails: AssetDetails | undefined;
+    MetaData: MetaData | undefined;
+    Audit: Audit | undefined;
 }
 export interface Assets {
     Assets: Asset[];
@@ -95,23 +104,17 @@ export interface UserAssetList {
 export interface UserAssetLists {
     UserAssetLists: UserAssetList[];
 }
-export declare const Asset: {
-    encode(message: Asset, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): Asset;
-    fromJSON(object: any): Asset;
-    toJSON(message: Asset): unknown;
+export declare const AssetDetails: {
+    encode(message: AssetDetails, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): AssetDetails;
+    fromJSON(object: any): AssetDetails;
+    toJSON(message: AssetDetails): unknown;
     create<I extends {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
         JurisdictionIDs?: string[] | undefined;
-        MetaData?: {
-            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-            UpdatedAt?: Date | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedByAccount?: string | undefined;
-        } | undefined;
         Type?: AssetType | undefined;
         Symbol?: string | undefined;
         Currency?: string | undefined;
@@ -119,10 +122,10 @@ export declare const Asset: {
         Precision?: number | undefined;
         Name?: string | undefined;
         ExchangeTickerSymbol?: string | undefined;
-        Exchange?: string | undefined;
+        Exchange?: Exchange | undefined;
         Description?: string | undefined;
-        MinTransactionAmount?: string | undefined;
-        ExtraPercentage?: string | undefined;
+        MinTransactionAmount?: number | undefined;
+        ExtraPercentage?: number | undefined;
         Denom?: string | undefined;
         SmartContractAddress?: string | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
@@ -132,17 +135,6 @@ export declare const Asset: {
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
         JurisdictionIDs?: (string[] & string[] & { [K in Exclude<keyof I["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
-        MetaData?: ({
-            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-            UpdatedAt?: Date | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedByAccount?: string | undefined;
-        } & {
-            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-            UpdatedAt?: Date | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedByAccount?: string | undefined;
-        } & { [K_1 in Exclude<keyof I["MetaData"], keyof MetaData>]: never; }) | undefined;
         Type?: AssetType | undefined;
         Symbol?: string | undefined;
         Currency?: string | undefined;
@@ -150,26 +142,20 @@ export declare const Asset: {
         Precision?: number | undefined;
         Name?: string | undefined;
         ExchangeTickerSymbol?: string | undefined;
-        Exchange?: string | undefined;
+        Exchange?: Exchange | undefined;
         Description?: string | undefined;
-        MinTransactionAmount?: string | undefined;
-        ExtraPercentage?: string | undefined;
+        MinTransactionAmount?: number | undefined;
+        ExtraPercentage?: number | undefined;
         Denom?: string | undefined;
         SmartContractAddress?: string | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
-    } & { [K_2 in Exclude<keyof I, keyof Asset>]: never; }>(base?: I | undefined): Asset;
+    } & { [K_1 in Exclude<keyof I, keyof AssetDetails>]: never; }>(base?: I | undefined): AssetDetails;
     fromPartial<I_1 extends {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
         JurisdictionIDs?: string[] | undefined;
-        MetaData?: {
-            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-            UpdatedAt?: Date | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedByAccount?: string | undefined;
-        } | undefined;
         Type?: AssetType | undefined;
         Symbol?: string | undefined;
         Currency?: string | undefined;
@@ -177,10 +163,10 @@ export declare const Asset: {
         Precision?: number | undefined;
         Name?: string | undefined;
         ExchangeTickerSymbol?: string | undefined;
-        Exchange?: string | undefined;
+        Exchange?: Exchange | undefined;
         Description?: string | undefined;
-        MinTransactionAmount?: string | undefined;
-        ExtraPercentage?: string | undefined;
+        MinTransactionAmount?: number | undefined;
+        ExtraPercentage?: number | undefined;
         Denom?: string | undefined;
         SmartContractAddress?: string | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
@@ -189,7 +175,103 @@ export declare const Asset: {
         OrganizationID?: string | undefined;
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
-        JurisdictionIDs?: (string[] & string[] & { [K_3 in Exclude<keyof I_1["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+        JurisdictionIDs?: (string[] & string[] & { [K_2 in Exclude<keyof I_1["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+        Type?: AssetType | undefined;
+        Symbol?: string | undefined;
+        Currency?: string | undefined;
+        Version?: string | undefined;
+        Precision?: number | undefined;
+        Name?: string | undefined;
+        ExchangeTickerSymbol?: string | undefined;
+        Exchange?: Exchange | undefined;
+        Description?: string | undefined;
+        MinTransactionAmount?: number | undefined;
+        ExtraPercentage?: number | undefined;
+        Denom?: string | undefined;
+        SmartContractAddress?: string | undefined;
+        IsIssuedInSmartContract?: boolean | undefined;
+    } & { [K_3 in Exclude<keyof I_1, keyof AssetDetails>]: never; }>(object: I_1): AssetDetails;
+};
+export declare const Asset: {
+    encode(message: Asset, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): Asset;
+    fromJSON(object: any): Asset;
+    toJSON(message: Asset): unknown;
+    create<I extends {
+        AssetDetails?: {
+            ID?: string | undefined;
+            OrganizationID?: string | undefined;
+            Status?: AssetStatus | undefined;
+            Reason?: Reason | undefined;
+            JurisdictionIDs?: string[] | undefined;
+            Type?: AssetType | undefined;
+            Symbol?: string | undefined;
+            Currency?: string | undefined;
+            Version?: string | undefined;
+            Precision?: number | undefined;
+            Name?: string | undefined;
+            ExchangeTickerSymbol?: string | undefined;
+            Exchange?: Exchange | undefined;
+            Description?: string | undefined;
+            MinTransactionAmount?: number | undefined;
+            ExtraPercentage?: number | undefined;
+            Denom?: string | undefined;
+            SmartContractAddress?: string | undefined;
+            IsIssuedInSmartContract?: boolean | undefined;
+        } | undefined;
+        MetaData?: {
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } | undefined;
+        Audit?: {
+            ChangedBy?: string | undefined;
+            ChangedAt?: Date | undefined;
+            Reason?: string | undefined;
+        } | undefined;
+    } & {
+        AssetDetails?: ({
+            ID?: string | undefined;
+            OrganizationID?: string | undefined;
+            Status?: AssetStatus | undefined;
+            Reason?: Reason | undefined;
+            JurisdictionIDs?: string[] | undefined;
+            Type?: AssetType | undefined;
+            Symbol?: string | undefined;
+            Currency?: string | undefined;
+            Version?: string | undefined;
+            Precision?: number | undefined;
+            Name?: string | undefined;
+            ExchangeTickerSymbol?: string | undefined;
+            Exchange?: Exchange | undefined;
+            Description?: string | undefined;
+            MinTransactionAmount?: number | undefined;
+            ExtraPercentage?: number | undefined;
+            Denom?: string | undefined;
+            SmartContractAddress?: string | undefined;
+            IsIssuedInSmartContract?: boolean | undefined;
+        } & {
+            ID?: string | undefined;
+            OrganizationID?: string | undefined;
+            Status?: AssetStatus | undefined;
+            Reason?: Reason | undefined;
+            JurisdictionIDs?: (string[] & string[] & { [K in Exclude<keyof I["AssetDetails"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+            Type?: AssetType | undefined;
+            Symbol?: string | undefined;
+            Currency?: string | undefined;
+            Version?: string | undefined;
+            Precision?: number | undefined;
+            Name?: string | undefined;
+            ExchangeTickerSymbol?: string | undefined;
+            Exchange?: Exchange | undefined;
+            Description?: string | undefined;
+            MinTransactionAmount?: number | undefined;
+            ExtraPercentage?: number | undefined;
+            Denom?: string | undefined;
+            SmartContractAddress?: string | undefined;
+            IsIssuedInSmartContract?: boolean | undefined;
+        } & { [K_1 in Exclude<keyof I["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
         MetaData?: ({
             Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
             UpdatedAt?: Date | undefined;
@@ -200,22 +282,113 @@ export declare const Asset: {
             UpdatedAt?: Date | undefined;
             CreatedAt?: Date | undefined;
             UpdatedByAccount?: string | undefined;
-        } & { [K_4 in Exclude<keyof I_1["MetaData"], keyof MetaData>]: never; }) | undefined;
-        Type?: AssetType | undefined;
-        Symbol?: string | undefined;
-        Currency?: string | undefined;
-        Version?: string | undefined;
-        Precision?: number | undefined;
-        Name?: string | undefined;
-        ExchangeTickerSymbol?: string | undefined;
-        Exchange?: string | undefined;
-        Description?: string | undefined;
-        MinTransactionAmount?: string | undefined;
-        ExtraPercentage?: string | undefined;
-        Denom?: string | undefined;
-        SmartContractAddress?: string | undefined;
-        IsIssuedInSmartContract?: boolean | undefined;
-    } & { [K_5 in Exclude<keyof I_1, keyof Asset>]: never; }>(object: I_1): Asset;
+        } & { [K_2 in Exclude<keyof I["MetaData"], keyof MetaData>]: never; }) | undefined;
+        Audit?: ({
+            ChangedBy?: string | undefined;
+            ChangedAt?: Date | undefined;
+            Reason?: string | undefined;
+        } & {
+            ChangedBy?: string | undefined;
+            ChangedAt?: Date | undefined;
+            Reason?: string | undefined;
+        } & { [K_3 in Exclude<keyof I["Audit"], keyof Audit>]: never; }) | undefined;
+    } & { [K_4 in Exclude<keyof I, keyof Asset>]: never; }>(base?: I | undefined): Asset;
+    fromPartial<I_1 extends {
+        AssetDetails?: {
+            ID?: string | undefined;
+            OrganizationID?: string | undefined;
+            Status?: AssetStatus | undefined;
+            Reason?: Reason | undefined;
+            JurisdictionIDs?: string[] | undefined;
+            Type?: AssetType | undefined;
+            Symbol?: string | undefined;
+            Currency?: string | undefined;
+            Version?: string | undefined;
+            Precision?: number | undefined;
+            Name?: string | undefined;
+            ExchangeTickerSymbol?: string | undefined;
+            Exchange?: Exchange | undefined;
+            Description?: string | undefined;
+            MinTransactionAmount?: number | undefined;
+            ExtraPercentage?: number | undefined;
+            Denom?: string | undefined;
+            SmartContractAddress?: string | undefined;
+            IsIssuedInSmartContract?: boolean | undefined;
+        } | undefined;
+        MetaData?: {
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } | undefined;
+        Audit?: {
+            ChangedBy?: string | undefined;
+            ChangedAt?: Date | undefined;
+            Reason?: string | undefined;
+        } | undefined;
+    } & {
+        AssetDetails?: ({
+            ID?: string | undefined;
+            OrganizationID?: string | undefined;
+            Status?: AssetStatus | undefined;
+            Reason?: Reason | undefined;
+            JurisdictionIDs?: string[] | undefined;
+            Type?: AssetType | undefined;
+            Symbol?: string | undefined;
+            Currency?: string | undefined;
+            Version?: string | undefined;
+            Precision?: number | undefined;
+            Name?: string | undefined;
+            ExchangeTickerSymbol?: string | undefined;
+            Exchange?: Exchange | undefined;
+            Description?: string | undefined;
+            MinTransactionAmount?: number | undefined;
+            ExtraPercentage?: number | undefined;
+            Denom?: string | undefined;
+            SmartContractAddress?: string | undefined;
+            IsIssuedInSmartContract?: boolean | undefined;
+        } & {
+            ID?: string | undefined;
+            OrganizationID?: string | undefined;
+            Status?: AssetStatus | undefined;
+            Reason?: Reason | undefined;
+            JurisdictionIDs?: (string[] & string[] & { [K_5 in Exclude<keyof I_1["AssetDetails"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+            Type?: AssetType | undefined;
+            Symbol?: string | undefined;
+            Currency?: string | undefined;
+            Version?: string | undefined;
+            Precision?: number | undefined;
+            Name?: string | undefined;
+            ExchangeTickerSymbol?: string | undefined;
+            Exchange?: Exchange | undefined;
+            Description?: string | undefined;
+            MinTransactionAmount?: number | undefined;
+            ExtraPercentage?: number | undefined;
+            Denom?: string | undefined;
+            SmartContractAddress?: string | undefined;
+            IsIssuedInSmartContract?: boolean | undefined;
+        } & { [K_6 in Exclude<keyof I_1["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+        MetaData?: ({
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } & {
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } & { [K_7 in Exclude<keyof I_1["MetaData"], keyof MetaData>]: never; }) | undefined;
+        Audit?: ({
+            ChangedBy?: string | undefined;
+            ChangedAt?: Date | undefined;
+            Reason?: string | undefined;
+        } & {
+            ChangedBy?: string | undefined;
+            ChangedAt?: Date | undefined;
+            Reason?: string | undefined;
+        } & { [K_8 in Exclude<keyof I_1["Audit"], keyof Audit>]: never; }) | undefined;
+    } & { [K_9 in Exclude<keyof I_1, keyof Asset>]: never; }>(object: I_1): Asset;
 };
 export declare const Assets: {
     encode(message: Assets, writer?: _m0.Writer): _m0.Writer;
@@ -224,91 +397,148 @@ export declare const Assets: {
     toJSON(message: Assets): unknown;
     create<I extends {
         Assets?: {
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Status?: AssetStatus | undefined;
-            Reason?: Reason | undefined;
-            JurisdictionIDs?: string[] | undefined;
+            AssetDetails?: {
+                ID?: string | undefined;
+                OrganizationID?: string | undefined;
+                Status?: AssetStatus | undefined;
+                Reason?: Reason | undefined;
+                JurisdictionIDs?: string[] | undefined;
+                Type?: AssetType | undefined;
+                Symbol?: string | undefined;
+                Currency?: string | undefined;
+                Version?: string | undefined;
+                Precision?: number | undefined;
+                Name?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
+                Exchange?: Exchange | undefined;
+                Description?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                ExtraPercentage?: number | undefined;
+                Denom?: string | undefined;
+                SmartContractAddress?: string | undefined;
+                IsIssuedInSmartContract?: boolean | undefined;
+            } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
             } | undefined;
-            Type?: AssetType | undefined;
-            Symbol?: string | undefined;
-            Currency?: string | undefined;
-            Version?: string | undefined;
-            Precision?: number | undefined;
-            Name?: string | undefined;
-            ExchangeTickerSymbol?: string | undefined;
-            Exchange?: string | undefined;
-            Description?: string | undefined;
-            MinTransactionAmount?: string | undefined;
-            ExtraPercentage?: string | undefined;
-            Denom?: string | undefined;
-            SmartContractAddress?: string | undefined;
-            IsIssuedInSmartContract?: boolean | undefined;
+            Audit?: {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } | undefined;
         }[] | undefined;
     } & {
         Assets?: ({
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Status?: AssetStatus | undefined;
-            Reason?: Reason | undefined;
-            JurisdictionIDs?: string[] | undefined;
+            AssetDetails?: {
+                ID?: string | undefined;
+                OrganizationID?: string | undefined;
+                Status?: AssetStatus | undefined;
+                Reason?: Reason | undefined;
+                JurisdictionIDs?: string[] | undefined;
+                Type?: AssetType | undefined;
+                Symbol?: string | undefined;
+                Currency?: string | undefined;
+                Version?: string | undefined;
+                Precision?: number | undefined;
+                Name?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
+                Exchange?: Exchange | undefined;
+                Description?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                ExtraPercentage?: number | undefined;
+                Denom?: string | undefined;
+                SmartContractAddress?: string | undefined;
+                IsIssuedInSmartContract?: boolean | undefined;
+            } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
             } | undefined;
-            Type?: AssetType | undefined;
-            Symbol?: string | undefined;
-            Currency?: string | undefined;
-            Version?: string | undefined;
-            Precision?: number | undefined;
-            Name?: string | undefined;
-            ExchangeTickerSymbol?: string | undefined;
-            Exchange?: string | undefined;
-            Description?: string | undefined;
-            MinTransactionAmount?: string | undefined;
-            ExtraPercentage?: string | undefined;
-            Denom?: string | undefined;
-            SmartContractAddress?: string | undefined;
-            IsIssuedInSmartContract?: boolean | undefined;
+            Audit?: {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } | undefined;
         }[] & ({
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Status?: AssetStatus | undefined;
-            Reason?: Reason | undefined;
-            JurisdictionIDs?: string[] | undefined;
+            AssetDetails?: {
+                ID?: string | undefined;
+                OrganizationID?: string | undefined;
+                Status?: AssetStatus | undefined;
+                Reason?: Reason | undefined;
+                JurisdictionIDs?: string[] | undefined;
+                Type?: AssetType | undefined;
+                Symbol?: string | undefined;
+                Currency?: string | undefined;
+                Version?: string | undefined;
+                Precision?: number | undefined;
+                Name?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
+                Exchange?: Exchange | undefined;
+                Description?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                ExtraPercentage?: number | undefined;
+                Denom?: string | undefined;
+                SmartContractAddress?: string | undefined;
+                IsIssuedInSmartContract?: boolean | undefined;
+            } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
             } | undefined;
-            Type?: AssetType | undefined;
-            Symbol?: string | undefined;
-            Currency?: string | undefined;
-            Version?: string | undefined;
-            Precision?: number | undefined;
-            Name?: string | undefined;
-            ExchangeTickerSymbol?: string | undefined;
-            Exchange?: string | undefined;
-            Description?: string | undefined;
-            MinTransactionAmount?: string | undefined;
-            ExtraPercentage?: string | undefined;
-            Denom?: string | undefined;
-            SmartContractAddress?: string | undefined;
-            IsIssuedInSmartContract?: boolean | undefined;
+            Audit?: {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } | undefined;
         } & {
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Status?: AssetStatus | undefined;
-            Reason?: Reason | undefined;
-            JurisdictionIDs?: (string[] & string[] & { [K in Exclude<keyof I["Assets"][number]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+            AssetDetails?: ({
+                ID?: string | undefined;
+                OrganizationID?: string | undefined;
+                Status?: AssetStatus | undefined;
+                Reason?: Reason | undefined;
+                JurisdictionIDs?: string[] | undefined;
+                Type?: AssetType | undefined;
+                Symbol?: string | undefined;
+                Currency?: string | undefined;
+                Version?: string | undefined;
+                Precision?: number | undefined;
+                Name?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
+                Exchange?: Exchange | undefined;
+                Description?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                ExtraPercentage?: number | undefined;
+                Denom?: string | undefined;
+                SmartContractAddress?: string | undefined;
+                IsIssuedInSmartContract?: boolean | undefined;
+            } & {
+                ID?: string | undefined;
+                OrganizationID?: string | undefined;
+                Status?: AssetStatus | undefined;
+                Reason?: Reason | undefined;
+                JurisdictionIDs?: (string[] & string[] & { [K in Exclude<keyof I["Assets"][number]["AssetDetails"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+                Type?: AssetType | undefined;
+                Symbol?: string | undefined;
+                Currency?: string | undefined;
+                Version?: string | undefined;
+                Precision?: number | undefined;
+                Name?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
+                Exchange?: Exchange | undefined;
+                Description?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                ExtraPercentage?: number | undefined;
+                Denom?: string | undefined;
+                SmartContractAddress?: string | undefined;
+                IsIssuedInSmartContract?: boolean | undefined;
+            } & { [K_1 in Exclude<keyof I["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
             MetaData?: ({
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
@@ -319,136 +549,195 @@ export declare const Assets: {
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
-            } & { [K_1 in Exclude<keyof I["Assets"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
-            Type?: AssetType | undefined;
-            Symbol?: string | undefined;
-            Currency?: string | undefined;
-            Version?: string | undefined;
-            Precision?: number | undefined;
-            Name?: string | undefined;
-            ExchangeTickerSymbol?: string | undefined;
-            Exchange?: string | undefined;
-            Description?: string | undefined;
-            MinTransactionAmount?: string | undefined;
-            ExtraPercentage?: string | undefined;
-            Denom?: string | undefined;
-            SmartContractAddress?: string | undefined;
-            IsIssuedInSmartContract?: boolean | undefined;
-        } & { [K_2 in Exclude<keyof I["Assets"][number], keyof Asset>]: never; })[] & { [K_3 in Exclude<keyof I["Assets"], keyof {
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Status?: AssetStatus | undefined;
-            Reason?: Reason | undefined;
-            JurisdictionIDs?: string[] | undefined;
+            } & { [K_2 in Exclude<keyof I["Assets"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
+            Audit?: ({
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } & {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } & { [K_3 in Exclude<keyof I["Assets"][number]["Audit"], keyof Audit>]: never; }) | undefined;
+        } & { [K_4 in Exclude<keyof I["Assets"][number], keyof Asset>]: never; })[] & { [K_5 in Exclude<keyof I["Assets"], keyof {
+            AssetDetails?: {
+                ID?: string | undefined;
+                OrganizationID?: string | undefined;
+                Status?: AssetStatus | undefined;
+                Reason?: Reason | undefined;
+                JurisdictionIDs?: string[] | undefined;
+                Type?: AssetType | undefined;
+                Symbol?: string | undefined;
+                Currency?: string | undefined;
+                Version?: string | undefined;
+                Precision?: number | undefined;
+                Name?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
+                Exchange?: Exchange | undefined;
+                Description?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                ExtraPercentage?: number | undefined;
+                Denom?: string | undefined;
+                SmartContractAddress?: string | undefined;
+                IsIssuedInSmartContract?: boolean | undefined;
+            } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
             } | undefined;
-            Type?: AssetType | undefined;
-            Symbol?: string | undefined;
-            Currency?: string | undefined;
-            Version?: string | undefined;
-            Precision?: number | undefined;
-            Name?: string | undefined;
-            ExchangeTickerSymbol?: string | undefined;
-            Exchange?: string | undefined;
-            Description?: string | undefined;
-            MinTransactionAmount?: string | undefined;
-            ExtraPercentage?: string | undefined;
-            Denom?: string | undefined;
-            SmartContractAddress?: string | undefined;
-            IsIssuedInSmartContract?: boolean | undefined;
+            Audit?: {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } | undefined;
         }[]>]: never; }) | undefined;
-    } & { [K_4 in Exclude<keyof I, "Assets">]: never; }>(base?: I | undefined): Assets;
+    } & { [K_6 in Exclude<keyof I, "Assets">]: never; }>(base?: I | undefined): Assets;
     fromPartial<I_1 extends {
         Assets?: {
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Status?: AssetStatus | undefined;
-            Reason?: Reason | undefined;
-            JurisdictionIDs?: string[] | undefined;
+            AssetDetails?: {
+                ID?: string | undefined;
+                OrganizationID?: string | undefined;
+                Status?: AssetStatus | undefined;
+                Reason?: Reason | undefined;
+                JurisdictionIDs?: string[] | undefined;
+                Type?: AssetType | undefined;
+                Symbol?: string | undefined;
+                Currency?: string | undefined;
+                Version?: string | undefined;
+                Precision?: number | undefined;
+                Name?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
+                Exchange?: Exchange | undefined;
+                Description?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                ExtraPercentage?: number | undefined;
+                Denom?: string | undefined;
+                SmartContractAddress?: string | undefined;
+                IsIssuedInSmartContract?: boolean | undefined;
+            } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
             } | undefined;
-            Type?: AssetType | undefined;
-            Symbol?: string | undefined;
-            Currency?: string | undefined;
-            Version?: string | undefined;
-            Precision?: number | undefined;
-            Name?: string | undefined;
-            ExchangeTickerSymbol?: string | undefined;
-            Exchange?: string | undefined;
-            Description?: string | undefined;
-            MinTransactionAmount?: string | undefined;
-            ExtraPercentage?: string | undefined;
-            Denom?: string | undefined;
-            SmartContractAddress?: string | undefined;
-            IsIssuedInSmartContract?: boolean | undefined;
+            Audit?: {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } | undefined;
         }[] | undefined;
     } & {
         Assets?: ({
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Status?: AssetStatus | undefined;
-            Reason?: Reason | undefined;
-            JurisdictionIDs?: string[] | undefined;
+            AssetDetails?: {
+                ID?: string | undefined;
+                OrganizationID?: string | undefined;
+                Status?: AssetStatus | undefined;
+                Reason?: Reason | undefined;
+                JurisdictionIDs?: string[] | undefined;
+                Type?: AssetType | undefined;
+                Symbol?: string | undefined;
+                Currency?: string | undefined;
+                Version?: string | undefined;
+                Precision?: number | undefined;
+                Name?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
+                Exchange?: Exchange | undefined;
+                Description?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                ExtraPercentage?: number | undefined;
+                Denom?: string | undefined;
+                SmartContractAddress?: string | undefined;
+                IsIssuedInSmartContract?: boolean | undefined;
+            } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
             } | undefined;
-            Type?: AssetType | undefined;
-            Symbol?: string | undefined;
-            Currency?: string | undefined;
-            Version?: string | undefined;
-            Precision?: number | undefined;
-            Name?: string | undefined;
-            ExchangeTickerSymbol?: string | undefined;
-            Exchange?: string | undefined;
-            Description?: string | undefined;
-            MinTransactionAmount?: string | undefined;
-            ExtraPercentage?: string | undefined;
-            Denom?: string | undefined;
-            SmartContractAddress?: string | undefined;
-            IsIssuedInSmartContract?: boolean | undefined;
+            Audit?: {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } | undefined;
         }[] & ({
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Status?: AssetStatus | undefined;
-            Reason?: Reason | undefined;
-            JurisdictionIDs?: string[] | undefined;
+            AssetDetails?: {
+                ID?: string | undefined;
+                OrganizationID?: string | undefined;
+                Status?: AssetStatus | undefined;
+                Reason?: Reason | undefined;
+                JurisdictionIDs?: string[] | undefined;
+                Type?: AssetType | undefined;
+                Symbol?: string | undefined;
+                Currency?: string | undefined;
+                Version?: string | undefined;
+                Precision?: number | undefined;
+                Name?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
+                Exchange?: Exchange | undefined;
+                Description?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                ExtraPercentage?: number | undefined;
+                Denom?: string | undefined;
+                SmartContractAddress?: string | undefined;
+                IsIssuedInSmartContract?: boolean | undefined;
+            } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
             } | undefined;
-            Type?: AssetType | undefined;
-            Symbol?: string | undefined;
-            Currency?: string | undefined;
-            Version?: string | undefined;
-            Precision?: number | undefined;
-            Name?: string | undefined;
-            ExchangeTickerSymbol?: string | undefined;
-            Exchange?: string | undefined;
-            Description?: string | undefined;
-            MinTransactionAmount?: string | undefined;
-            ExtraPercentage?: string | undefined;
-            Denom?: string | undefined;
-            SmartContractAddress?: string | undefined;
-            IsIssuedInSmartContract?: boolean | undefined;
+            Audit?: {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } | undefined;
         } & {
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Status?: AssetStatus | undefined;
-            Reason?: Reason | undefined;
-            JurisdictionIDs?: (string[] & string[] & { [K_5 in Exclude<keyof I_1["Assets"][number]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+            AssetDetails?: ({
+                ID?: string | undefined;
+                OrganizationID?: string | undefined;
+                Status?: AssetStatus | undefined;
+                Reason?: Reason | undefined;
+                JurisdictionIDs?: string[] | undefined;
+                Type?: AssetType | undefined;
+                Symbol?: string | undefined;
+                Currency?: string | undefined;
+                Version?: string | undefined;
+                Precision?: number | undefined;
+                Name?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
+                Exchange?: Exchange | undefined;
+                Description?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                ExtraPercentage?: number | undefined;
+                Denom?: string | undefined;
+                SmartContractAddress?: string | undefined;
+                IsIssuedInSmartContract?: boolean | undefined;
+            } & {
+                ID?: string | undefined;
+                OrganizationID?: string | undefined;
+                Status?: AssetStatus | undefined;
+                Reason?: Reason | undefined;
+                JurisdictionIDs?: (string[] & string[] & { [K_7 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+                Type?: AssetType | undefined;
+                Symbol?: string | undefined;
+                Currency?: string | undefined;
+                Version?: string | undefined;
+                Precision?: number | undefined;
+                Name?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
+                Exchange?: Exchange | undefined;
+                Description?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                ExtraPercentage?: number | undefined;
+                Denom?: string | undefined;
+                SmartContractAddress?: string | undefined;
+                IsIssuedInSmartContract?: boolean | undefined;
+            } & { [K_8 in Exclude<keyof I_1["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
             MetaData?: ({
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
@@ -459,49 +748,51 @@ export declare const Assets: {
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
-            } & { [K_6 in Exclude<keyof I_1["Assets"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
-            Type?: AssetType | undefined;
-            Symbol?: string | undefined;
-            Currency?: string | undefined;
-            Version?: string | undefined;
-            Precision?: number | undefined;
-            Name?: string | undefined;
-            ExchangeTickerSymbol?: string | undefined;
-            Exchange?: string | undefined;
-            Description?: string | undefined;
-            MinTransactionAmount?: string | undefined;
-            ExtraPercentage?: string | undefined;
-            Denom?: string | undefined;
-            SmartContractAddress?: string | undefined;
-            IsIssuedInSmartContract?: boolean | undefined;
-        } & { [K_7 in Exclude<keyof I_1["Assets"][number], keyof Asset>]: never; })[] & { [K_8 in Exclude<keyof I_1["Assets"], keyof {
-            ID?: string | undefined;
-            OrganizationID?: string | undefined;
-            Status?: AssetStatus | undefined;
-            Reason?: Reason | undefined;
-            JurisdictionIDs?: string[] | undefined;
+            } & { [K_9 in Exclude<keyof I_1["Assets"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
+            Audit?: ({
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } & {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } & { [K_10 in Exclude<keyof I_1["Assets"][number]["Audit"], keyof Audit>]: never; }) | undefined;
+        } & { [K_11 in Exclude<keyof I_1["Assets"][number], keyof Asset>]: never; })[] & { [K_12 in Exclude<keyof I_1["Assets"], keyof {
+            AssetDetails?: {
+                ID?: string | undefined;
+                OrganizationID?: string | undefined;
+                Status?: AssetStatus | undefined;
+                Reason?: Reason | undefined;
+                JurisdictionIDs?: string[] | undefined;
+                Type?: AssetType | undefined;
+                Symbol?: string | undefined;
+                Currency?: string | undefined;
+                Version?: string | undefined;
+                Precision?: number | undefined;
+                Name?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
+                Exchange?: Exchange | undefined;
+                Description?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                ExtraPercentage?: number | undefined;
+                Denom?: string | undefined;
+                SmartContractAddress?: string | undefined;
+                IsIssuedInSmartContract?: boolean | undefined;
+            } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
             } | undefined;
-            Type?: AssetType | undefined;
-            Symbol?: string | undefined;
-            Currency?: string | undefined;
-            Version?: string | undefined;
-            Precision?: number | undefined;
-            Name?: string | undefined;
-            ExchangeTickerSymbol?: string | undefined;
-            Exchange?: string | undefined;
-            Description?: string | undefined;
-            MinTransactionAmount?: string | undefined;
-            ExtraPercentage?: string | undefined;
-            Denom?: string | undefined;
-            SmartContractAddress?: string | undefined;
-            IsIssuedInSmartContract?: boolean | undefined;
+            Audit?: {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } | undefined;
         }[]>]: never; }) | undefined;
-    } & { [K_9 in Exclude<keyof I_1, "Assets">]: never; }>(object: I_1): Assets;
+    } & { [K_13 in Exclude<keyof I_1, "Assets">]: never; }>(object: I_1): Assets;
 };
 export declare const UserAssetList: {
     encode(message: UserAssetList, writer?: _m0.Writer): _m0.Writer;

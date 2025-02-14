@@ -5,6 +5,7 @@
 // source: asset.proto
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
+import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
 import { MetaData } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 export const protobufPackage = "asset";
 export var AssetStatus;
@@ -113,6 +114,7 @@ export var AssetType;
 (function (AssetType) {
     AssetType[AssetType["ASSET_TYPE_DO_NOT_USE"] = 0] = "ASSET_TYPE_DO_NOT_USE";
     AssetType[AssetType["STOCK"] = 1] = "STOCK";
+    AssetType[AssetType["BOND"] = 2] = "BOND";
     AssetType[AssetType["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
 })(AssetType || (AssetType = {}));
 export function assetTypeFromJSON(object) {
@@ -123,6 +125,9 @@ export function assetTypeFromJSON(object) {
         case 1:
         case "STOCK":
             return AssetType.STOCK;
+        case 2:
+        case "BOND":
+            return AssetType.BOND;
         case -1:
         case "UNRECOGNIZED":
         default:
@@ -135,6 +140,8 @@ export function assetTypeToJSON(object) {
             return "ASSET_TYPE_DO_NOT_USE";
         case AssetType.STOCK:
             return "STOCK";
+        case AssetType.BOND:
+            return "BOND";
         case AssetType.UNRECOGNIZED:
         default:
             return "UNRECOGNIZED";
@@ -189,14 +196,50 @@ export function userAssetStatusToJSON(object) {
             return "UNRECOGNIZED";
     }
 }
-function createBaseAsset() {
+export var Exchange;
+(function (Exchange) {
+    Exchange[Exchange["EXCHANGE_DO_NOT_USE"] = 0] = "EXCHANGE_DO_NOT_USE";
+    Exchange[Exchange["NASDAQ"] = 1] = "NASDAQ";
+    Exchange[Exchange["NYSE"] = 2] = "NYSE";
+    Exchange[Exchange["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
+})(Exchange || (Exchange = {}));
+export function exchangeFromJSON(object) {
+    switch (object) {
+        case 0:
+        case "EXCHANGE_DO_NOT_USE":
+            return Exchange.EXCHANGE_DO_NOT_USE;
+        case 1:
+        case "NASDAQ":
+            return Exchange.NASDAQ;
+        case 2:
+        case "NYSE":
+            return Exchange.NYSE;
+        case -1:
+        case "UNRECOGNIZED":
+        default:
+            return Exchange.UNRECOGNIZED;
+    }
+}
+export function exchangeToJSON(object) {
+    switch (object) {
+        case Exchange.EXCHANGE_DO_NOT_USE:
+            return "EXCHANGE_DO_NOT_USE";
+        case Exchange.NASDAQ:
+            return "NASDAQ";
+        case Exchange.NYSE:
+            return "NYSE";
+        case Exchange.UNRECOGNIZED:
+        default:
+            return "UNRECOGNIZED";
+    }
+}
+function createBaseAssetDetails() {
     return {
         ID: "",
         OrganizationID: "",
         Status: 0,
         Reason: undefined,
         JurisdictionIDs: [],
-        MetaData: undefined,
         Type: 0,
         Symbol: "",
         Currency: "",
@@ -204,16 +247,16 @@ function createBaseAsset() {
         Precision: 0,
         Name: "",
         ExchangeTickerSymbol: "",
-        Exchange: "",
+        Exchange: 0,
         Description: "",
-        MinTransactionAmount: "",
-        ExtraPercentage: "",
+        MinTransactionAmount: 0,
+        ExtraPercentage: 0,
         Denom: "",
         SmartContractAddress: "",
         IsIssuedInSmartContract: false,
     };
 }
-export const Asset = {
+export const AssetDetails = {
     encode(message, writer = _m0.Writer.create()) {
         if (message.ID !== "") {
             writer.uint32(10).string(message.ID);
@@ -230,57 +273,54 @@ export const Asset = {
         for (const v of message.JurisdictionIDs) {
             writer.uint32(42).string(v);
         }
-        if (message.MetaData !== undefined) {
-            MetaData.encode(message.MetaData, writer.uint32(50).fork()).ldelim();
-        }
         if (message.Type !== 0) {
-            writer.uint32(72).int32(message.Type);
+            writer.uint32(48).int32(message.Type);
         }
         if (message.Symbol !== "") {
-            writer.uint32(82).string(message.Symbol);
+            writer.uint32(58).string(message.Symbol);
         }
         if (message.Currency !== "") {
-            writer.uint32(90).string(message.Currency);
+            writer.uint32(66).string(message.Currency);
         }
         if (message.Version !== "") {
-            writer.uint32(98).string(message.Version);
+            writer.uint32(74).string(message.Version);
         }
         if (message.Precision !== 0) {
-            writer.uint32(104).int32(message.Precision);
+            writer.uint32(80).int32(message.Precision);
         }
         if (message.Name !== "") {
-            writer.uint32(114).string(message.Name);
+            writer.uint32(90).string(message.Name);
         }
         if (message.ExchangeTickerSymbol !== "") {
-            writer.uint32(122).string(message.ExchangeTickerSymbol);
+            writer.uint32(98).string(message.ExchangeTickerSymbol);
         }
-        if (message.Exchange !== "") {
-            writer.uint32(130).string(message.Exchange);
+        if (message.Exchange !== 0) {
+            writer.uint32(104).int32(message.Exchange);
         }
         if (message.Description !== "") {
-            writer.uint32(138).string(message.Description);
+            writer.uint32(114).string(message.Description);
         }
-        if (message.MinTransactionAmount !== "") {
-            writer.uint32(170).string(message.MinTransactionAmount);
+        if (message.MinTransactionAmount !== 0) {
+            writer.uint32(121).double(message.MinTransactionAmount);
         }
-        if (message.ExtraPercentage !== "") {
-            writer.uint32(178).string(message.ExtraPercentage);
+        if (message.ExtraPercentage !== 0) {
+            writer.uint32(129).double(message.ExtraPercentage);
         }
         if (message.Denom !== "") {
-            writer.uint32(146).string(message.Denom);
+            writer.uint32(138).string(message.Denom);
         }
         if (message.SmartContractAddress !== "") {
-            writer.uint32(154).string(message.SmartContractAddress);
+            writer.uint32(146).string(message.SmartContractAddress);
         }
         if (message.IsIssuedInSmartContract !== false) {
-            writer.uint32(160).bool(message.IsIssuedInSmartContract);
+            writer.uint32(152).bool(message.IsIssuedInSmartContract);
         }
         return writer;
     },
     decode(input, length) {
         const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
         let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseAsset();
+        const message = createBaseAssetDetails();
         while (reader.pos < end) {
             const tag = reader.uint32();
             switch (tag >>> 3) {
@@ -315,91 +355,85 @@ export const Asset = {
                     message.JurisdictionIDs.push(reader.string());
                     continue;
                 case 6:
-                    if (tag !== 50) {
-                        break;
-                    }
-                    message.MetaData = MetaData.decode(reader, reader.uint32());
-                    continue;
-                case 9:
-                    if (tag !== 72) {
+                    if (tag !== 48) {
                         break;
                     }
                     message.Type = reader.int32();
                     continue;
-                case 10:
-                    if (tag !== 82) {
+                case 7:
+                    if (tag !== 58) {
                         break;
                     }
                     message.Symbol = reader.string();
+                    continue;
+                case 8:
+                    if (tag !== 66) {
+                        break;
+                    }
+                    message.Currency = reader.string();
+                    continue;
+                case 9:
+                    if (tag !== 74) {
+                        break;
+                    }
+                    message.Version = reader.string();
+                    continue;
+                case 10:
+                    if (tag !== 80) {
+                        break;
+                    }
+                    message.Precision = reader.int32();
                     continue;
                 case 11:
                     if (tag !== 90) {
                         break;
                     }
-                    message.Currency = reader.string();
+                    message.Name = reader.string();
                     continue;
                 case 12:
                     if (tag !== 98) {
                         break;
                     }
-                    message.Version = reader.string();
+                    message.ExchangeTickerSymbol = reader.string();
                     continue;
                 case 13:
                     if (tag !== 104) {
                         break;
                     }
-                    message.Precision = reader.int32();
+                    message.Exchange = reader.int32();
                     continue;
                 case 14:
                     if (tag !== 114) {
                         break;
                     }
-                    message.Name = reader.string();
+                    message.Description = reader.string();
                     continue;
                 case 15:
-                    if (tag !== 122) {
+                    if (tag !== 121) {
                         break;
                     }
-                    message.ExchangeTickerSymbol = reader.string();
+                    message.MinTransactionAmount = reader.double();
                     continue;
                 case 16:
-                    if (tag !== 130) {
+                    if (tag !== 129) {
                         break;
                     }
-                    message.Exchange = reader.string();
+                    message.ExtraPercentage = reader.double();
                     continue;
                 case 17:
                     if (tag !== 138) {
                         break;
                     }
-                    message.Description = reader.string();
-                    continue;
-                case 21:
-                    if (tag !== 170) {
-                        break;
-                    }
-                    message.MinTransactionAmount = reader.string();
-                    continue;
-                case 22:
-                    if (tag !== 178) {
-                        break;
-                    }
-                    message.ExtraPercentage = reader.string();
+                    message.Denom = reader.string();
                     continue;
                 case 18:
                     if (tag !== 146) {
                         break;
                     }
-                    message.Denom = reader.string();
-                    continue;
-                case 19:
-                    if (tag !== 154) {
-                        break;
-                    }
                     message.SmartContractAddress = reader.string();
                     continue;
-                case 20:
-                    if (tag !== 160) {
+                case 19:
+                    if (tag !== 152) {
                         break;
                     }
                     message.IsIssuedInSmartContract = reader.bool();
@@ -421,7 +455,6 @@ export const Asset = {
             JurisdictionIDs: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.JurisdictionIDs)
                 ? object.JurisdictionIDs.map((e) => globalThis.String(e))
                 : [],
-            MetaData: isSet(object.MetaData) ? MetaData.fromJSON(object.MetaData) : undefined,
             Type: isSet(object.Type) ? assetTypeFromJSON(object.Type) : 0,
             Symbol: isSet(object.Symbol) ? globalThis.String(object.Symbol) : "",
             Currency: isSet(object.Currency) ? globalThis.String(object.Currency) : "",
@@ -429,10 +462,10 @@ export const Asset = {
             Precision: isSet(object.Precision) ? globalThis.Number(object.Precision) : 0,
             Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
             ExchangeTickerSymbol: isSet(object.ExchangeTickerSymbol) ? globalThis.String(object.ExchangeTickerSymbol) : "",
-            Exchange: isSet(object.Exchange) ? globalThis.String(object.Exchange) : "",
+            Exchange: isSet(object.Exchange) ? exchangeFromJSON(object.Exchange) : 0,
             Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
-            MinTransactionAmount: isSet(object.MinTransactionAmount) ? globalThis.String(object.MinTransactionAmount) : "",
-            ExtraPercentage: isSet(object.ExtraPercentage) ? globalThis.String(object.ExtraPercentage) : "",
+            MinTransactionAmount: isSet(object.MinTransactionAmount) ? globalThis.Number(object.MinTransactionAmount) : 0,
+            ExtraPercentage: isSet(object.ExtraPercentage) ? globalThis.Number(object.ExtraPercentage) : 0,
             Denom: isSet(object.Denom) ? globalThis.String(object.Denom) : "",
             SmartContractAddress: isSet(object.SmartContractAddress) ? globalThis.String(object.SmartContractAddress) : "",
             IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
@@ -458,9 +491,6 @@ export const Asset = {
         if ((_a = message.JurisdictionIDs) === null || _a === void 0 ? void 0 : _a.length) {
             obj.JurisdictionIDs = message.JurisdictionIDs;
         }
-        if (message.MetaData !== undefined) {
-            obj.MetaData = MetaData.toJSON(message.MetaData);
-        }
         if (message.Type !== 0) {
             obj.Type = assetTypeToJSON(message.Type);
         }
@@ -482,16 +512,16 @@ export const Asset = {
         if (message.ExchangeTickerSymbol !== "") {
             obj.ExchangeTickerSymbol = message.ExchangeTickerSymbol;
         }
-        if (message.Exchange !== "") {
-            obj.Exchange = message.Exchange;
+        if (message.Exchange !== 0) {
+            obj.Exchange = exchangeToJSON(message.Exchange);
         }
         if (message.Description !== "") {
             obj.Description = message.Description;
         }
-        if (message.MinTransactionAmount !== "") {
+        if (message.MinTransactionAmount !== 0) {
             obj.MinTransactionAmount = message.MinTransactionAmount;
         }
-        if (message.ExtraPercentage !== "") {
+        if (message.ExtraPercentage !== 0) {
             obj.ExtraPercentage = message.ExtraPercentage;
         }
         if (message.Denom !== "") {
@@ -506,19 +536,16 @@ export const Asset = {
         return obj;
     },
     create(base) {
-        return Asset.fromPartial(base !== null && base !== void 0 ? base : {});
+        return AssetDetails.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u;
-        const message = createBaseAsset();
+        const message = createBaseAssetDetails();
         message.ID = (_a = object.ID) !== null && _a !== void 0 ? _a : "";
         message.OrganizationID = (_b = object.OrganizationID) !== null && _b !== void 0 ? _b : "";
         message.Status = (_c = object.Status) !== null && _c !== void 0 ? _c : 0;
         message.Reason = (_d = object.Reason) !== null && _d !== void 0 ? _d : undefined;
         message.JurisdictionIDs = ((_e = object.JurisdictionIDs) === null || _e === void 0 ? void 0 : _e.map((e) => e)) || [];
-        message.MetaData = (object.MetaData !== undefined && object.MetaData !== null)
-            ? MetaData.fromPartial(object.MetaData)
-            : undefined;
         message.Type = (_f = object.Type) !== null && _f !== void 0 ? _f : 0;
         message.Symbol = (_g = object.Symbol) !== null && _g !== void 0 ? _g : "";
         message.Currency = (_h = object.Currency) !== null && _h !== void 0 ? _h : "";
@@ -526,13 +553,97 @@ export const Asset = {
         message.Precision = (_k = object.Precision) !== null && _k !== void 0 ? _k : 0;
         message.Name = (_l = object.Name) !== null && _l !== void 0 ? _l : "";
         message.ExchangeTickerSymbol = (_m = object.ExchangeTickerSymbol) !== null && _m !== void 0 ? _m : "";
-        message.Exchange = (_o = object.Exchange) !== null && _o !== void 0 ? _o : "";
+        message.Exchange = (_o = object.Exchange) !== null && _o !== void 0 ? _o : 0;
         message.Description = (_p = object.Description) !== null && _p !== void 0 ? _p : "";
-        message.MinTransactionAmount = (_q = object.MinTransactionAmount) !== null && _q !== void 0 ? _q : "";
-        message.ExtraPercentage = (_r = object.ExtraPercentage) !== null && _r !== void 0 ? _r : "";
+        message.MinTransactionAmount = (_q = object.MinTransactionAmount) !== null && _q !== void 0 ? _q : 0;
+        message.ExtraPercentage = (_r = object.ExtraPercentage) !== null && _r !== void 0 ? _r : 0;
         message.Denom = (_s = object.Denom) !== null && _s !== void 0 ? _s : "";
         message.SmartContractAddress = (_t = object.SmartContractAddress) !== null && _t !== void 0 ? _t : "";
         message.IsIssuedInSmartContract = (_u = object.IsIssuedInSmartContract) !== null && _u !== void 0 ? _u : false;
+        return message;
+    },
+};
+function createBaseAsset() {
+    return { AssetDetails: undefined, MetaData: undefined, Audit: undefined };
+}
+export const Asset = {
+    encode(message, writer = _m0.Writer.create()) {
+        if (message.AssetDetails !== undefined) {
+            AssetDetails.encode(message.AssetDetails, writer.uint32(10).fork()).ldelim();
+        }
+        if (message.MetaData !== undefined) {
+            MetaData.encode(message.MetaData, writer.uint32(18).fork()).ldelim();
+        }
+        if (message.Audit !== undefined) {
+            Audit.encode(message.Audit, writer.uint32(26).fork()).ldelim();
+        }
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseAsset();
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    if (tag !== 10) {
+                        break;
+                    }
+                    message.AssetDetails = AssetDetails.decode(reader, reader.uint32());
+                    continue;
+                case 2:
+                    if (tag !== 18) {
+                        break;
+                    }
+                    message.MetaData = MetaData.decode(reader, reader.uint32());
+                    continue;
+                case 3:
+                    if (tag !== 26) {
+                        break;
+                    }
+                    message.Audit = Audit.decode(reader, reader.uint32());
+                    continue;
+            }
+            if ((tag & 7) === 4 || tag === 0) {
+                break;
+            }
+            reader.skipType(tag & 7);
+        }
+        return message;
+    },
+    fromJSON(object) {
+        return {
+            AssetDetails: isSet(object.AssetDetails) ? AssetDetails.fromJSON(object.AssetDetails) : undefined,
+            MetaData: isSet(object.MetaData) ? MetaData.fromJSON(object.MetaData) : undefined,
+            Audit: isSet(object.Audit) ? Audit.fromJSON(object.Audit) : undefined,
+        };
+    },
+    toJSON(message) {
+        const obj = {};
+        if (message.AssetDetails !== undefined) {
+            obj.AssetDetails = AssetDetails.toJSON(message.AssetDetails);
+        }
+        if (message.MetaData !== undefined) {
+            obj.MetaData = MetaData.toJSON(message.MetaData);
+        }
+        if (message.Audit !== undefined) {
+            obj.Audit = Audit.toJSON(message.Audit);
+        }
+        return obj;
+    },
+    create(base) {
+        return Asset.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial(object) {
+        const message = createBaseAsset();
+        message.AssetDetails = (object.AssetDetails !== undefined && object.AssetDetails !== null)
+            ? AssetDetails.fromPartial(object.AssetDetails)
+            : undefined;
+        message.MetaData = (object.MetaData !== undefined && object.MetaData !== null)
+            ? MetaData.fromPartial(object.MetaData)
+            : undefined;
+        message.Audit = (object.Audit !== undefined && object.Audit !== null) ? Audit.fromPartial(object.Audit) : undefined;
         return message;
     },
 };
