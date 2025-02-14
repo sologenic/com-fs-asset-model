@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package asset;
 
+import "domain/currency/currency.proto";
+import "domain/denom/denom.proto";
 import "sologenic/com-fs-utils-lib/models/metadata/metadata.proto";
 import "sologenic/com-fs-utils-lib/models/audit/audit.proto";
 
@@ -16,10 +18,7 @@ message AssetDetails {
     repeated string JurisdictionIDs = 5; // list of jurisdictionIDs where this asset is allowed to be traded
     AssetType Type = 6;
 
-    // Flattened StockProperties
-    string Symbol = 7; // User-entered ticker with format:[a-zA-Z0-9]{1,47}. e.g., APPL, PLTR, MSFT
-    string Currency = 8; // {Symbol}_{Version}. e.g, appl_1, pltr_15, msft_205
-    string Version = 9; // Auto-incremented version (no leading zeros) with max length 3 characters (values 1 to 999)
+    // Asset specific properties
     int32 Precision = 10; // Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares.
     string Name = 11;
     string ExchangeTickerSymbol = 12;
@@ -28,9 +27,9 @@ message AssetDetails {
     double MinTransactionAmount = 15;
     double ExtraPercentage = 16; // Extra margin percentage required when buying an asset. e.g ExtraPercentage = 0.1 the buyer must provide 10% extra margin—of which the cost is 5%, and the remaining 5% is returned to the buyer.
     
-    // Smart Contract properties
-    string Denom = 17; // {Subunit}-{SmartContractAddress} where Subunit is u{Currency}. e.g., uappl_1-testcore1et29c...
-    string SmartContractAddress = 18;
+    // On-chain and Smart Contract related properties
+    currency.Currency Currency = 17; // {Symbol}_{Version}. e.g., appl_1, pltr_999
+    denom.Denom Denom = 18; // {Subunit}-{SmartContractAddress} where Subunit is u{Currency}. e.g., uappl_1-testcore1et29c...
     bool IsIssuedInSmartContract = 19; // Flag to indicate if the asset is issued in the smart contract
 }
 
@@ -45,10 +44,10 @@ message Assets {
 }
 
 message UserAssetList {
-    // Key combination: Currency-OrganizationID-Version-AccountID-Wallet (AssetKey-AccountID-Wallet)
+    // Key combination: Currency-OrganizationID-AccountID-Wallet (AssetKey-AccountID-Wallet)
     string AccountID = 1;
     string Wallet = 2;
-    string AssetKey = 3; // Stable Key: "Currency-OrganizationID-Version"
+    string AssetKey = 3; // Currency-OrganizationID
     UserAssetStatus Status = 4;
     metadata.MetaData MetaData = 5;
     bool Visible = 6;

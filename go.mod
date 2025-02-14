@@ -1,12 +1,16 @@
 module github.com/sologenic/com-fs-asset-model
 
-go 1.22.4
+go 1.23.6
 
 require (
+	github.com/google/go-cmp v0.6.0
+	github.com/sologenic/com-fs-utils-lib/go/unittest v0.0.0-20250131210530-7306ae3e5762
+	github.com/sologenic/com-fs-utils-lib/models/audit v0.0.0-20250131210530-7306ae3e5762
+	github.com/sologenic/com-fs-utils-lib/models/metadata v0.0.0-20250131210530-7306ae3e5762
 	github.com/sologenic/fs-utils-lib/go/grpc-client v0.0.0-20240813185122-7e698e51f72f
 	github.com/stretchr/testify v1.8.1
 	google.golang.org/grpc v1.62.1
-	google.golang.org/protobuf v1.33.0
+	google.golang.org/protobuf v1.35.2
 )
 
 require (
