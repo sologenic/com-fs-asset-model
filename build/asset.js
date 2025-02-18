@@ -5,6 +5,7 @@
 // source: asset.proto
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
+import { Denom } from "./domain/denom/denom";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
 import { MetaData } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 export const protobufPackage = "asset";
@@ -241,18 +242,13 @@ function createBaseAssetDetails() {
         Reason: undefined,
         JurisdictionIDs: [],
         Type: 0,
-        Symbol: "",
-        Currency: "",
-        Version: "",
-        Precision: 0,
         Name: "",
         ExchangeTickerSymbol: "",
         Exchange: 0,
-        Description: "",
+        InternalDescription: "",
         MinTransactionAmount: 0,
         ExtraPercentage: 0,
-        Denom: "",
-        SmartContractAddress: "",
+        Denom: undefined,
         IsIssuedInSmartContract: false,
     };
 }
@@ -276,44 +272,29 @@ export const AssetDetails = {
         if (message.Type !== 0) {
             writer.uint32(48).int32(message.Type);
         }
-        if (message.Symbol !== "") {
-            writer.uint32(58).string(message.Symbol);
-        }
-        if (message.Currency !== "") {
-            writer.uint32(66).string(message.Currency);
-        }
-        if (message.Version !== "") {
-            writer.uint32(74).string(message.Version);
-        }
-        if (message.Precision !== 0) {
-            writer.uint32(80).int32(message.Precision);
-        }
         if (message.Name !== "") {
-            writer.uint32(90).string(message.Name);
+            writer.uint32(58).string(message.Name);
         }
         if (message.ExchangeTickerSymbol !== "") {
-            writer.uint32(98).string(message.ExchangeTickerSymbol);
+            writer.uint32(66).string(message.ExchangeTickerSymbol);
         }
         if (message.Exchange !== 0) {
-            writer.uint32(104).int32(message.Exchange);
+            writer.uint32(72).int32(message.Exchange);
         }
-        if (message.Description !== "") {
-            writer.uint32(114).string(message.Description);
+        if (message.InternalDescription !== "") {
+            writer.uint32(82).string(message.InternalDescription);
         }
         if (message.MinTransactionAmount !== 0) {
-            writer.uint32(121).double(message.MinTransactionAmount);
+            writer.uint32(89).double(message.MinTransactionAmount);
         }
         if (message.ExtraPercentage !== 0) {
-            writer.uint32(129).double(message.ExtraPercentage);
+            writer.uint32(97).double(message.ExtraPercentage);
         }
-        if (message.Denom !== "") {
-            writer.uint32(138).string(message.Denom);
-        }
-        if (message.SmartContractAddress !== "") {
-            writer.uint32(146).string(message.SmartContractAddress);
+        if (message.Denom !== undefined) {
+            Denom.encode(message.Denom, writer.uint32(138).fork()).ldelim();
         }
         if (message.IsIssuedInSmartContract !== false) {
-            writer.uint32(152).bool(message.IsIssuedInSmartContract);
+            writer.uint32(144).bool(message.IsIssuedInSmartContract);
         }
         return writer;
     },
@@ -364,58 +345,34 @@ export const AssetDetails = {
                     if (tag !== 58) {
                         break;
                     }
-                    message.Symbol = reader.string();
+                    message.Name = reader.string();
                     continue;
                 case 8:
                     if (tag !== 66) {
                         break;
                     }
-                    message.Currency = reader.string();
-                    continue;
-                case 9:
-                    if (tag !== 74) {
-                        break;
-                    }
-                    message.Version = reader.string();
-                    continue;
-                case 10:
-                    if (tag !== 80) {
-                        break;
-                    }
-                    message.Precision = reader.int32();
-                    continue;
-                case 11:
-                    if (tag !== 90) {
-                        break;
-                    }
-                    message.Name = reader.string();
-                    continue;
-                case 12:
-                    if (tag !== 98) {
-                        break;
-                    }
                     message.ExchangeTickerSymbol = reader.string();
                     continue;
-                case 13:
-                    if (tag !== 104) {
+                case 9:
+                    if (tag !== 72) {
                         break;
                     }
                     message.Exchange = reader.int32();
                     continue;
-                case 14:
-                    if (tag !== 114) {
+                case 10:
+                    if (tag !== 82) {
                         break;
                     }
-                    message.Description = reader.string();
+                    message.InternalDescription = reader.string();
                     continue;
-                case 15:
-                    if (tag !== 121) {
+                case 11:
+                    if (tag !== 89) {
                         break;
                     }
                     message.MinTransactionAmount = reader.double();
                     continue;
-                case 16:
-                    if (tag !== 129) {
+                case 12:
+                    if (tag !== 97) {
                         break;
                     }
                     message.ExtraPercentage = reader.double();
@@ -424,16 +381,10 @@ export const AssetDetails = {
                     if (tag !== 138) {
                         break;
                     }
-                    message.Denom = reader.string();
+                    message.Denom = Denom.decode(reader, reader.uint32());
                     continue;
                 case 18:
-                    if (tag !== 146) {
-                        break;
-                    }
-                    message.SmartContractAddress = reader.string();
-                    continue;
-                case 19:
-                    if (tag !== 152) {
+                    if (tag !== 144) {
                         break;
                     }
                     message.IsIssuedInSmartContract = reader.bool();
@@ -456,18 +407,13 @@ export const AssetDetails = {
                 ? object.JurisdictionIDs.map((e) => globalThis.String(e))
                 : [],
             Type: isSet(object.Type) ? assetTypeFromJSON(object.Type) : 0,
-            Symbol: isSet(object.Symbol) ? globalThis.String(object.Symbol) : "",
-            Currency: isSet(object.Currency) ? globalThis.String(object.Currency) : "",
-            Version: isSet(object.Version) ? globalThis.String(object.Version) : "",
-            Precision: isSet(object.Precision) ? globalThis.Number(object.Precision) : 0,
             Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
             ExchangeTickerSymbol: isSet(object.ExchangeTickerSymbol) ? globalThis.String(object.ExchangeTickerSymbol) : "",
             Exchange: isSet(object.Exchange) ? exchangeFromJSON(object.Exchange) : 0,
-            Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
+            InternalDescription: isSet(object.InternalDescription) ? globalThis.String(object.InternalDescription) : "",
             MinTransactionAmount: isSet(object.MinTransactionAmount) ? globalThis.Number(object.MinTransactionAmount) : 0,
             ExtraPercentage: isSet(object.ExtraPercentage) ? globalThis.Number(object.ExtraPercentage) : 0,
-            Denom: isSet(object.Denom) ? globalThis.String(object.Denom) : "",
-            SmartContractAddress: isSet(object.SmartContractAddress) ? globalThis.String(object.SmartContractAddress) : "",
+            Denom: isSet(object.Denom) ? Denom.fromJSON(object.Denom) : undefined,
             IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
                 ? globalThis.Boolean(object.IsIssuedInSmartContract)
                 : false,
@@ -494,18 +440,6 @@ export const AssetDetails = {
         if (message.Type !== 0) {
             obj.Type = assetTypeToJSON(message.Type);
         }
-        if (message.Symbol !== "") {
-            obj.Symbol = message.Symbol;
-        }
-        if (message.Currency !== "") {
-            obj.Currency = message.Currency;
-        }
-        if (message.Version !== "") {
-            obj.Version = message.Version;
-        }
-        if (message.Precision !== 0) {
-            obj.Precision = Math.round(message.Precision);
-        }
         if (message.Name !== "") {
             obj.Name = message.Name;
         }
@@ -515,8 +449,8 @@ export const AssetDetails = {
         if (message.Exchange !== 0) {
             obj.Exchange = exchangeToJSON(message.Exchange);
         }
-        if (message.Description !== "") {
-            obj.Description = message.Description;
+        if (message.InternalDescription !== "") {
+            obj.InternalDescription = message.InternalDescription;
         }
         if (message.MinTransactionAmount !== 0) {
             obj.MinTransactionAmount = message.MinTransactionAmount;
@@ -524,11 +458,8 @@ export const AssetDetails = {
         if (message.ExtraPercentage !== 0) {
             obj.ExtraPercentage = message.ExtraPercentage;
         }
-        if (message.Denom !== "") {
-            obj.Denom = message.Denom;
-        }
-        if (message.SmartContractAddress !== "") {
-            obj.SmartContractAddress = message.SmartContractAddress;
+        if (message.Denom !== undefined) {
+            obj.Denom = Denom.toJSON(message.Denom);
         }
         if (message.IsIssuedInSmartContract !== false) {
             obj.IsIssuedInSmartContract = message.IsIssuedInSmartContract;
@@ -539,7 +470,7 @@ export const AssetDetails = {
         return AssetDetails.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
         const message = createBaseAssetDetails();
         message.ID = (_a = object.ID) !== null && _a !== void 0 ? _a : "";
         message.OrganizationID = (_b = object.OrganizationID) !== null && _b !== void 0 ? _b : "";
@@ -547,19 +478,14 @@ export const AssetDetails = {
         message.Reason = (_d = object.Reason) !== null && _d !== void 0 ? _d : undefined;
         message.JurisdictionIDs = ((_e = object.JurisdictionIDs) === null || _e === void 0 ? void 0 : _e.map((e) => e)) || [];
         message.Type = (_f = object.Type) !== null && _f !== void 0 ? _f : 0;
-        message.Symbol = (_g = object.Symbol) !== null && _g !== void 0 ? _g : "";
-        message.Currency = (_h = object.Currency) !== null && _h !== void 0 ? _h : "";
-        message.Version = (_j = object.Version) !== null && _j !== void 0 ? _j : "";
-        message.Precision = (_k = object.Precision) !== null && _k !== void 0 ? _k : 0;
-        message.Name = (_l = object.Name) !== null && _l !== void 0 ? _l : "";
-        message.ExchangeTickerSymbol = (_m = object.ExchangeTickerSymbol) !== null && _m !== void 0 ? _m : "";
-        message.Exchange = (_o = object.Exchange) !== null && _o !== void 0 ? _o : 0;
-        message.Description = (_p = object.Description) !== null && _p !== void 0 ? _p : "";
-        message.MinTransactionAmount = (_q = object.MinTransactionAmount) !== null && _q !== void 0 ? _q : 0;
-        message.ExtraPercentage = (_r = object.ExtraPercentage) !== null && _r !== void 0 ? _r : 0;
-        message.Denom = (_s = object.Denom) !== null && _s !== void 0 ? _s : "";
-        message.SmartContractAddress = (_t = object.SmartContractAddress) !== null && _t !== void 0 ? _t : "";
-        message.IsIssuedInSmartContract = (_u = object.IsIssuedInSmartContract) !== null && _u !== void 0 ? _u : false;
+        message.Name = (_g = object.Name) !== null && _g !== void 0 ? _g : "";
+        message.ExchangeTickerSymbol = (_h = object.ExchangeTickerSymbol) !== null && _h !== void 0 ? _h : "";
+        message.Exchange = (_j = object.Exchange) !== null && _j !== void 0 ? _j : 0;
+        message.InternalDescription = (_k = object.InternalDescription) !== null && _k !== void 0 ? _k : "";
+        message.MinTransactionAmount = (_l = object.MinTransactionAmount) !== null && _l !== void 0 ? _l : 0;
+        message.ExtraPercentage = (_m = object.ExtraPercentage) !== null && _m !== void 0 ? _m : 0;
+        message.Denom = (object.Denom !== undefined && object.Denom !== null) ? Denom.fromPartial(object.Denom) : undefined;
+        message.IsIssuedInSmartContract = (_o = object.IsIssuedInSmartContract) !== null && _o !== void 0 ? _o : false;
         return message;
     },
 };

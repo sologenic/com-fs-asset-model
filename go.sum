@@ -64,6 +64,12 @@ github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:
 github.com/rs/xid v1.4.0/go.mod h1:trrq9SKmegXys3aeAKXMUTdJsYXVwGY3RLcfgqegfbg=
 github.com/rs/zerolog v1.28.0 h1:MirSo27VyNi7RJYP3078AA1+Cyzd2GB66qy3aUHvsWY=
 github.com/rs/zerolog v1.28.0/go.mod h1:NILgTygv/Uej1ra5XxGf82ZFSLk58MFGAUS2o6usyD0=
+github.com/sologenic/com-fs-utils-lib/go/unittest v0.0.0-20250131210530-7306ae3e5762 h1:qAJMAxLCILcE18l/A+TVuVRUo1ucE1wxHnWqELOs9QQ=
+github.com/sologenic/com-fs-utils-lib/go/unittest v0.0.0-20250131210530-7306ae3e5762/go.mod h1:pWVR4sfDb4e+pj5DH26uV3EyDJVTRPzytbTmIUnV06E=
+github.com/sologenic/com-fs-utils-lib/models/audit v0.0.0-20250131210530-7306ae3e5762 h1:LLdvtSruQg8oMNZiDa17pPKQ5jmOsGrc3/+C1g8p2YY=
+github.com/sologenic/com-fs-utils-lib/models/audit v0.0.0-20250131210530-7306ae3e5762/go.mod h1:aesYC9CUzVQ4JUHZwpLYx0yeNK1Sl37vzLKmDKQiyoY=
+github.com/sologenic/com-fs-utils-lib/models/metadata v0.0.0-20250131210530-7306ae3e5762 h1:dyuyT9aUHEy9wMONeSJELIuA8VnMkWlGIOJQQO3guak=
+github.com/sologenic/com-fs-utils-lib/models/metadata v0.0.0-20250131210530-7306ae3e5762/go.mod h1:ftOGlExX3C/AN24/N3j3+rHo4C7ehxfHNGpimuWv7IQ=
 github.com/sologenic/fs-utils-lib/go/grpc-client v0.0.0-20240813185122-7e698e51f72f h1:vXgC7KwYgGe7f0sQB2xiQR9kBsHAFPUGxioRbWle1UY=
 github.com/sologenic/fs-utils-lib/go/grpc-client v0.0.0-20240813185122-7e698e51f72f/go.mod h1:ao/6BhDbkWf1sWAd8pZBVDkjeZmv42QKGOR7Dd03iG8=
 github.com/sologenic/fs-utils-lib/go/logger v0.0.0-20240228225607-8ae2735b9ab4 h1:Sd1WNlrtHXZ9Lf8ciNWxec2qwESHo9j5X+i0zwYuDfw=
@@ -166,8 +172,8 @@ google.golang.org/protobuf v1.23.1-0.20200526195155-81db48ad09cc/go.mod h1:EGpAD
 google.golang.org/protobuf v1.25.0/go.mod h1:9JNX74DMeImyA3h4bdi1ymwjUzf21/xIlbajtzgsN7c=
 google.golang.org/protobuf v1.26.0-rc.1/go.mod h1:jlhhOSvTdKEhbULTjvd4ARK9grFBp09yW+WbY/TyQbw=
 google.golang.org/protobuf v1.26.0/go.mod h1:9q0QmTI4eRPtz6boOQmLYwt+qCgq0jsYwAQnmE0givc=
-google.golang.org/protobuf v1.33.0 h1:uNO2rsAINq/JlFpSdYEKIZ0uKD/R9cpdv0T+yoGwGmI=
-google.golang.org/protobuf v1.33.0/go.mod h1:c6P6GXX6sHbq/GpV6MGZEdwhWPcYBgnhAHhKbcUYpos=
+google.golang.org/protobuf v1.35.2 h1:8Ar7bF+apOIoThw1EdZl0p1oWvMqTHmpA2fRTyZO8io=
+google.golang.org/protobuf v1.35.2/go.mod h1:9fA7Ob0pmnwhb644+1+CVWFRbNajQ6iRojtC/QF5bRE=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
