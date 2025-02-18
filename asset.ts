@@ -260,11 +260,11 @@ export interface AssetDetails {
   JurisdictionIDs: string[];
   Type: AssetType;
   /** Asset specific properties */
-  Precision: number;
   Name: string;
   ExchangeTickerSymbol: string;
   Exchange: Exchange;
-  Description: string;
+  /** Description for internal use, not for on-chain */
+  InternalDescription: string;
   MinTransactionAmount: number;
   /** Extra margin percentage required when buying an asset. e.g ExtraPercentage = 0.1 the buyer must provide 10% extra margin—of which the cost is 5%, and the remaining 5% is returned to the buyer. */
   ExtraPercentage: number;
@@ -309,11 +309,10 @@ function createBaseAssetDetails(): AssetDetails {
     Reason: undefined,
     JurisdictionIDs: [],
     Type: 0,
-    Precision: 0,
     Name: "",
     ExchangeTickerSymbol: "",
     Exchange: 0,
-    Description: "",
+    InternalDescription: "",
     MinTransactionAmount: 0,
     ExtraPercentage: 0,
     Denom: undefined,
@@ -341,26 +340,23 @@ export const AssetDetails = {
     if (message.Type !== 0) {
       writer.uint32(48).int32(message.Type);
     }
-    if (message.Precision !== 0) {
-      writer.uint32(80).int32(message.Precision);
-    }
     if (message.Name !== "") {
-      writer.uint32(90).string(message.Name);
+      writer.uint32(58).string(message.Name);
     }
     if (message.ExchangeTickerSymbol !== "") {
-      writer.uint32(98).string(message.ExchangeTickerSymbol);
+      writer.uint32(66).string(message.ExchangeTickerSymbol);
     }
     if (message.Exchange !== 0) {
-      writer.uint32(104).int32(message.Exchange);
+      writer.uint32(72).int32(message.Exchange);
     }
-    if (message.Description !== "") {
-      writer.uint32(114).string(message.Description);
+    if (message.InternalDescription !== "") {
+      writer.uint32(82).string(message.InternalDescription);
     }
     if (message.MinTransactionAmount !== 0) {
-      writer.uint32(121).double(message.MinTransactionAmount);
+      writer.uint32(89).double(message.MinTransactionAmount);
     }
     if (message.ExtraPercentage !== 0) {
-      writer.uint32(129).double(message.ExtraPercentage);
+      writer.uint32(97).double(message.ExtraPercentage);
     }
     if (message.Denom !== undefined) {
       Denom.encode(message.Denom, writer.uint32(138).fork()).ldelim();
@@ -420,50 +416,43 @@ export const AssetDetails = {
 
           message.Type = reader.int32() as any;
           continue;
-        case 10:
-          if (tag !== 80) {
-            break;
-          }
-
-          message.Precision = reader.int32();
-          continue;
-        case 11:
-          if (tag !== 90) {
+        case 7:
+          if (tag !== 58) {
             break;
           }
 
           message.Name = reader.string();
           continue;
-        case 12:
-          if (tag !== 98) {
+        case 8:
+          if (tag !== 66) {
             break;
           }
 
           message.ExchangeTickerSymbol = reader.string();
           continue;
-        case 13:
-          if (tag !== 104) {
+        case 9:
+          if (tag !== 72) {
             break;
           }
 
           message.Exchange = reader.int32() as any;
           continue;
-        case 14:
-          if (tag !== 114) {
+        case 10:
+          if (tag !== 82) {
             break;
           }
 
-          message.Description = reader.string();
+          message.InternalDescription = reader.string();
           continue;
-        case 15:
-          if (tag !== 121) {
+        case 11:
+          if (tag !== 89) {
             break;
           }
 
           message.MinTransactionAmount = reader.double();
           continue;
-        case 16:
-          if (tag !== 129) {
+        case 12:
+          if (tag !== 97) {
             break;
           }
 
@@ -502,11 +491,10 @@ export const AssetDetails = {
         ? object.JurisdictionIDs.map((e: any) => globalThis.String(e))
         : [],
       Type: isSet(object.Type) ? assetTypeFromJSON(object.Type) : 0,
-      Precision: isSet(object.Precision) ? globalThis.Number(object.Precision) : 0,
       Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
       ExchangeTickerSymbol: isSet(object.ExchangeTickerSymbol) ? globalThis.String(object.ExchangeTickerSymbol) : "",
       Exchange: isSet(object.Exchange) ? exchangeFromJSON(object.Exchange) : 0,
-      Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
+      InternalDescription: isSet(object.InternalDescription) ? globalThis.String(object.InternalDescription) : "",
       MinTransactionAmount: isSet(object.MinTransactionAmount) ? globalThis.Number(object.MinTransactionAmount) : 0,
       ExtraPercentage: isSet(object.ExtraPercentage) ? globalThis.Number(object.ExtraPercentage) : 0,
       Denom: isSet(object.Denom) ? Denom.fromJSON(object.Denom) : undefined,
@@ -536,9 +524,6 @@ export const AssetDetails = {
     if (message.Type !== 0) {
       obj.Type = assetTypeToJSON(message.Type);
     }
-    if (message.Precision !== 0) {
-      obj.Precision = Math.round(message.Precision);
-    }
     if (message.Name !== "") {
       obj.Name = message.Name;
     }
@@ -548,8 +533,8 @@ export const AssetDetails = {
     if (message.Exchange !== 0) {
       obj.Exchange = exchangeToJSON(message.Exchange);
     }
-    if (message.Description !== "") {
-      obj.Description = message.Description;
+    if (message.InternalDescription !== "") {
+      obj.InternalDescription = message.InternalDescription;
     }
     if (message.MinTransactionAmount !== 0) {
       obj.MinTransactionAmount = message.MinTransactionAmount;
@@ -577,11 +562,10 @@ export const AssetDetails = {
     message.Reason = object.Reason ?? undefined;
     message.JurisdictionIDs = object.JurisdictionIDs?.map((e) => e) || [];
     message.Type = object.Type ?? 0;
-    message.Precision = object.Precision ?? 0;
     message.Name = object.Name ?? "";
     message.ExchangeTickerSymbol = object.ExchangeTickerSymbol ?? "";
     message.Exchange = object.Exchange ?? 0;
-    message.Description = object.Description ?? "";
+    message.InternalDescription = object.InternalDescription ?? "";
     message.MinTransactionAmount = object.MinTransactionAmount ?? 0;
     message.ExtraPercentage = object.ExtraPercentage ?? 0;
     message.Denom = (object.Denom !== undefined && object.Denom !== null) ? Denom.fromPartial(object.Denom) : undefined;

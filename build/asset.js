@@ -242,11 +242,10 @@ function createBaseAssetDetails() {
         Reason: undefined,
         JurisdictionIDs: [],
         Type: 0,
-        Precision: 0,
         Name: "",
         ExchangeTickerSymbol: "",
         Exchange: 0,
-        Description: "",
+        InternalDescription: "",
         MinTransactionAmount: 0,
         ExtraPercentage: 0,
         Denom: undefined,
@@ -273,26 +272,23 @@ export const AssetDetails = {
         if (message.Type !== 0) {
             writer.uint32(48).int32(message.Type);
         }
-        if (message.Precision !== 0) {
-            writer.uint32(80).int32(message.Precision);
-        }
         if (message.Name !== "") {
-            writer.uint32(90).string(message.Name);
+            writer.uint32(58).string(message.Name);
         }
         if (message.ExchangeTickerSymbol !== "") {
-            writer.uint32(98).string(message.ExchangeTickerSymbol);
+            writer.uint32(66).string(message.ExchangeTickerSymbol);
         }
         if (message.Exchange !== 0) {
-            writer.uint32(104).int32(message.Exchange);
+            writer.uint32(72).int32(message.Exchange);
         }
-        if (message.Description !== "") {
-            writer.uint32(114).string(message.Description);
+        if (message.InternalDescription !== "") {
+            writer.uint32(82).string(message.InternalDescription);
         }
         if (message.MinTransactionAmount !== 0) {
-            writer.uint32(121).double(message.MinTransactionAmount);
+            writer.uint32(89).double(message.MinTransactionAmount);
         }
         if (message.ExtraPercentage !== 0) {
-            writer.uint32(129).double(message.ExtraPercentage);
+            writer.uint32(97).double(message.ExtraPercentage);
         }
         if (message.Denom !== undefined) {
             Denom.encode(message.Denom, writer.uint32(138).fork()).ldelim();
@@ -345,44 +341,38 @@ export const AssetDetails = {
                     }
                     message.Type = reader.int32();
                     continue;
-                case 10:
-                    if (tag !== 80) {
-                        break;
-                    }
-                    message.Precision = reader.int32();
-                    continue;
-                case 11:
-                    if (tag !== 90) {
+                case 7:
+                    if (tag !== 58) {
                         break;
                     }
                     message.Name = reader.string();
                     continue;
-                case 12:
-                    if (tag !== 98) {
+                case 8:
+                    if (tag !== 66) {
                         break;
                     }
                     message.ExchangeTickerSymbol = reader.string();
                     continue;
-                case 13:
-                    if (tag !== 104) {
+                case 9:
+                    if (tag !== 72) {
                         break;
                     }
                     message.Exchange = reader.int32();
                     continue;
-                case 14:
-                    if (tag !== 114) {
+                case 10:
+                    if (tag !== 82) {
                         break;
                     }
-                    message.Description = reader.string();
+                    message.InternalDescription = reader.string();
                     continue;
-                case 15:
-                    if (tag !== 121) {
+                case 11:
+                    if (tag !== 89) {
                         break;
                     }
                     message.MinTransactionAmount = reader.double();
                     continue;
-                case 16:
-                    if (tag !== 129) {
+                case 12:
+                    if (tag !== 97) {
                         break;
                     }
                     message.ExtraPercentage = reader.double();
@@ -417,11 +407,10 @@ export const AssetDetails = {
                 ? object.JurisdictionIDs.map((e) => globalThis.String(e))
                 : [],
             Type: isSet(object.Type) ? assetTypeFromJSON(object.Type) : 0,
-            Precision: isSet(object.Precision) ? globalThis.Number(object.Precision) : 0,
             Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
             ExchangeTickerSymbol: isSet(object.ExchangeTickerSymbol) ? globalThis.String(object.ExchangeTickerSymbol) : "",
             Exchange: isSet(object.Exchange) ? exchangeFromJSON(object.Exchange) : 0,
-            Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
+            InternalDescription: isSet(object.InternalDescription) ? globalThis.String(object.InternalDescription) : "",
             MinTransactionAmount: isSet(object.MinTransactionAmount) ? globalThis.Number(object.MinTransactionAmount) : 0,
             ExtraPercentage: isSet(object.ExtraPercentage) ? globalThis.Number(object.ExtraPercentage) : 0,
             Denom: isSet(object.Denom) ? Denom.fromJSON(object.Denom) : undefined,
@@ -451,9 +440,6 @@ export const AssetDetails = {
         if (message.Type !== 0) {
             obj.Type = assetTypeToJSON(message.Type);
         }
-        if (message.Precision !== 0) {
-            obj.Precision = Math.round(message.Precision);
-        }
         if (message.Name !== "") {
             obj.Name = message.Name;
         }
@@ -463,8 +449,8 @@ export const AssetDetails = {
         if (message.Exchange !== 0) {
             obj.Exchange = exchangeToJSON(message.Exchange);
         }
-        if (message.Description !== "") {
-            obj.Description = message.Description;
+        if (message.InternalDescription !== "") {
+            obj.InternalDescription = message.InternalDescription;
         }
         if (message.MinTransactionAmount !== 0) {
             obj.MinTransactionAmount = message.MinTransactionAmount;
@@ -484,7 +470,7 @@ export const AssetDetails = {
         return AssetDetails.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
         const message = createBaseAssetDetails();
         message.ID = (_a = object.ID) !== null && _a !== void 0 ? _a : "";
         message.OrganizationID = (_b = object.OrganizationID) !== null && _b !== void 0 ? _b : "";
@@ -492,15 +478,14 @@ export const AssetDetails = {
         message.Reason = (_d = object.Reason) !== null && _d !== void 0 ? _d : undefined;
         message.JurisdictionIDs = ((_e = object.JurisdictionIDs) === null || _e === void 0 ? void 0 : _e.map((e) => e)) || [];
         message.Type = (_f = object.Type) !== null && _f !== void 0 ? _f : 0;
-        message.Precision = (_g = object.Precision) !== null && _g !== void 0 ? _g : 0;
-        message.Name = (_h = object.Name) !== null && _h !== void 0 ? _h : "";
-        message.ExchangeTickerSymbol = (_j = object.ExchangeTickerSymbol) !== null && _j !== void 0 ? _j : "";
-        message.Exchange = (_k = object.Exchange) !== null && _k !== void 0 ? _k : 0;
-        message.Description = (_l = object.Description) !== null && _l !== void 0 ? _l : "";
-        message.MinTransactionAmount = (_m = object.MinTransactionAmount) !== null && _m !== void 0 ? _m : 0;
-        message.ExtraPercentage = (_o = object.ExtraPercentage) !== null && _o !== void 0 ? _o : 0;
+        message.Name = (_g = object.Name) !== null && _g !== void 0 ? _g : "";
+        message.ExchangeTickerSymbol = (_h = object.ExchangeTickerSymbol) !== null && _h !== void 0 ? _h : "";
+        message.Exchange = (_j = object.Exchange) !== null && _j !== void 0 ? _j : 0;
+        message.InternalDescription = (_k = object.InternalDescription) !== null && _k !== void 0 ? _k : "";
+        message.MinTransactionAmount = (_l = object.MinTransactionAmount) !== null && _l !== void 0 ? _l : 0;
+        message.ExtraPercentage = (_m = object.ExtraPercentage) !== null && _m !== void 0 ? _m : 0;
         message.Denom = (object.Denom !== undefined && object.Denom !== null) ? Denom.fromPartial(object.Denom) : undefined;
-        message.IsIssuedInSmartContract = (_p = object.IsIssuedInSmartContract) !== null && _p !== void 0 ? _p : false;
+        message.IsIssuedInSmartContract = (_o = object.IsIssuedInSmartContract) !== null && _o !== void 0 ? _o : false;
         return message;
     },
 };

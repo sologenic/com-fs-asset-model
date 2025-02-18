@@ -64,11 +64,11 @@ export interface AssetDetails {
     JurisdictionIDs: string[];
     Type: AssetType;
     /** Asset specific properties */
-    Precision: number;
     Name: string;
     ExchangeTickerSymbol: string;
     Exchange: Exchange;
-    Description: string;
+    /** Description for internal use, not for on-chain */
+    InternalDescription: string;
     MinTransactionAmount: number;
     /** Extra margin percentage required when buying an asset. e.g ExtraPercentage = 0.1 the buyer must provide 10% extra margin—of which the cost is 5%, and the remaining 5% is returned to the buyer. */
     ExtraPercentage: number;
@@ -110,11 +110,10 @@ export declare const AssetDetails: {
         Reason?: Reason | undefined;
         JurisdictionIDs?: string[] | undefined;
         Type?: AssetType | undefined;
-        Precision?: number | undefined;
         Name?: string | undefined;
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: Exchange | undefined;
-        Description?: string | undefined;
+        InternalDescription?: string | undefined;
         MinTransactionAmount?: number | undefined;
         ExtraPercentage?: number | undefined;
         Denom?: {
@@ -123,7 +122,9 @@ export declare const AssetDetails: {
                 Version?: string | undefined;
             } | undefined;
             Subunit?: string | undefined;
-            SmartContractAddress?: string | undefined;
+            Issuer?: string | undefined;
+            Precision?: number | undefined;
+            Description?: string | undefined;
         } | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
     } & {
@@ -133,11 +134,10 @@ export declare const AssetDetails: {
         Reason?: Reason | undefined;
         JurisdictionIDs?: (string[] & string[] & { [K in Exclude<keyof I["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
         Type?: AssetType | undefined;
-        Precision?: number | undefined;
         Name?: string | undefined;
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: Exchange | undefined;
-        Description?: string | undefined;
+        InternalDescription?: string | undefined;
         MinTransactionAmount?: number | undefined;
         ExtraPercentage?: number | undefined;
         Denom?: ({
@@ -146,7 +146,9 @@ export declare const AssetDetails: {
                 Version?: string | undefined;
             } | undefined;
             Subunit?: string | undefined;
-            SmartContractAddress?: string | undefined;
+            Issuer?: string | undefined;
+            Precision?: number | undefined;
+            Description?: string | undefined;
         } & {
             Currency?: ({
                 Symbol?: string | undefined;
@@ -156,7 +158,9 @@ export declare const AssetDetails: {
                 Version?: string | undefined;
             } & { [K_1 in Exclude<keyof I["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
             Subunit?: string | undefined;
-            SmartContractAddress?: string | undefined;
+            Issuer?: string | undefined;
+            Precision?: number | undefined;
+            Description?: string | undefined;
         } & { [K_2 in Exclude<keyof I["Denom"], keyof Denom>]: never; }) | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
     } & { [K_3 in Exclude<keyof I, keyof AssetDetails>]: never; }>(base?: I | undefined): AssetDetails;
@@ -167,11 +171,10 @@ export declare const AssetDetails: {
         Reason?: Reason | undefined;
         JurisdictionIDs?: string[] | undefined;
         Type?: AssetType | undefined;
-        Precision?: number | undefined;
         Name?: string | undefined;
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: Exchange | undefined;
-        Description?: string | undefined;
+        InternalDescription?: string | undefined;
         MinTransactionAmount?: number | undefined;
         ExtraPercentage?: number | undefined;
         Denom?: {
@@ -180,7 +183,9 @@ export declare const AssetDetails: {
                 Version?: string | undefined;
             } | undefined;
             Subunit?: string | undefined;
-            SmartContractAddress?: string | undefined;
+            Issuer?: string | undefined;
+            Precision?: number | undefined;
+            Description?: string | undefined;
         } | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
     } & {
@@ -190,11 +195,10 @@ export declare const AssetDetails: {
         Reason?: Reason | undefined;
         JurisdictionIDs?: (string[] & string[] & { [K_4 in Exclude<keyof I_1["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
         Type?: AssetType | undefined;
-        Precision?: number | undefined;
         Name?: string | undefined;
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: Exchange | undefined;
-        Description?: string | undefined;
+        InternalDescription?: string | undefined;
         MinTransactionAmount?: number | undefined;
         ExtraPercentage?: number | undefined;
         Denom?: ({
@@ -203,7 +207,9 @@ export declare const AssetDetails: {
                 Version?: string | undefined;
             } | undefined;
             Subunit?: string | undefined;
-            SmartContractAddress?: string | undefined;
+            Issuer?: string | undefined;
+            Precision?: number | undefined;
+            Description?: string | undefined;
         } & {
             Currency?: ({
                 Symbol?: string | undefined;
@@ -213,7 +219,9 @@ export declare const AssetDetails: {
                 Version?: string | undefined;
             } & { [K_5 in Exclude<keyof I_1["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
             Subunit?: string | undefined;
-            SmartContractAddress?: string | undefined;
+            Issuer?: string | undefined;
+            Precision?: number | undefined;
+            Description?: string | undefined;
         } & { [K_6 in Exclude<keyof I_1["Denom"], keyof Denom>]: never; }) | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
     } & { [K_7 in Exclude<keyof I_1, keyof AssetDetails>]: never; }>(object: I_1): AssetDetails;
@@ -231,11 +239,10 @@ export declare const Asset: {
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
             Type?: AssetType | undefined;
-            Precision?: number | undefined;
             Name?: string | undefined;
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: Exchange | undefined;
-            Description?: string | undefined;
+            InternalDescription?: string | undefined;
             MinTransactionAmount?: number | undefined;
             ExtraPercentage?: number | undefined;
             Denom?: {
@@ -244,7 +251,9 @@ export declare const Asset: {
                     Version?: string | undefined;
                 } | undefined;
                 Subunit?: string | undefined;
-                SmartContractAddress?: string | undefined;
+                Issuer?: string | undefined;
+                Precision?: number | undefined;
+                Description?: string | undefined;
             } | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
         } | undefined;
@@ -267,11 +276,10 @@ export declare const Asset: {
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
             Type?: AssetType | undefined;
-            Precision?: number | undefined;
             Name?: string | undefined;
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: Exchange | undefined;
-            Description?: string | undefined;
+            InternalDescription?: string | undefined;
             MinTransactionAmount?: number | undefined;
             ExtraPercentage?: number | undefined;
             Denom?: {
@@ -280,7 +288,9 @@ export declare const Asset: {
                     Version?: string | undefined;
                 } | undefined;
                 Subunit?: string | undefined;
-                SmartContractAddress?: string | undefined;
+                Issuer?: string | undefined;
+                Precision?: number | undefined;
+                Description?: string | undefined;
             } | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
         } & {
@@ -290,11 +300,10 @@ export declare const Asset: {
             Reason?: Reason | undefined;
             JurisdictionIDs?: (string[] & string[] & { [K in Exclude<keyof I["AssetDetails"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
             Type?: AssetType | undefined;
-            Precision?: number | undefined;
             Name?: string | undefined;
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: Exchange | undefined;
-            Description?: string | undefined;
+            InternalDescription?: string | undefined;
             MinTransactionAmount?: number | undefined;
             ExtraPercentage?: number | undefined;
             Denom?: ({
@@ -303,7 +312,9 @@ export declare const Asset: {
                     Version?: string | undefined;
                 } | undefined;
                 Subunit?: string | undefined;
-                SmartContractAddress?: string | undefined;
+                Issuer?: string | undefined;
+                Precision?: number | undefined;
+                Description?: string | undefined;
             } & {
                 Currency?: ({
                     Symbol?: string | undefined;
@@ -313,7 +324,9 @@ export declare const Asset: {
                     Version?: string | undefined;
                 } & { [K_1 in Exclude<keyof I["AssetDetails"]["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
                 Subunit?: string | undefined;
-                SmartContractAddress?: string | undefined;
+                Issuer?: string | undefined;
+                Precision?: number | undefined;
+                Description?: string | undefined;
             } & { [K_2 in Exclude<keyof I["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
         } & { [K_3 in Exclude<keyof I["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
@@ -346,11 +359,10 @@ export declare const Asset: {
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
             Type?: AssetType | undefined;
-            Precision?: number | undefined;
             Name?: string | undefined;
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: Exchange | undefined;
-            Description?: string | undefined;
+            InternalDescription?: string | undefined;
             MinTransactionAmount?: number | undefined;
             ExtraPercentage?: number | undefined;
             Denom?: {
@@ -359,7 +371,9 @@ export declare const Asset: {
                     Version?: string | undefined;
                 } | undefined;
                 Subunit?: string | undefined;
-                SmartContractAddress?: string | undefined;
+                Issuer?: string | undefined;
+                Precision?: number | undefined;
+                Description?: string | undefined;
             } | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
         } | undefined;
@@ -382,11 +396,10 @@ export declare const Asset: {
             Reason?: Reason | undefined;
             JurisdictionIDs?: string[] | undefined;
             Type?: AssetType | undefined;
-            Precision?: number | undefined;
             Name?: string | undefined;
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: Exchange | undefined;
-            Description?: string | undefined;
+            InternalDescription?: string | undefined;
             MinTransactionAmount?: number | undefined;
             ExtraPercentage?: number | undefined;
             Denom?: {
@@ -395,7 +408,9 @@ export declare const Asset: {
                     Version?: string | undefined;
                 } | undefined;
                 Subunit?: string | undefined;
-                SmartContractAddress?: string | undefined;
+                Issuer?: string | undefined;
+                Precision?: number | undefined;
+                Description?: string | undefined;
             } | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
         } & {
@@ -405,11 +420,10 @@ export declare const Asset: {
             Reason?: Reason | undefined;
             JurisdictionIDs?: (string[] & string[] & { [K_7 in Exclude<keyof I_1["AssetDetails"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
             Type?: AssetType | undefined;
-            Precision?: number | undefined;
             Name?: string | undefined;
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: Exchange | undefined;
-            Description?: string | undefined;
+            InternalDescription?: string | undefined;
             MinTransactionAmount?: number | undefined;
             ExtraPercentage?: number | undefined;
             Denom?: ({
@@ -418,7 +432,9 @@ export declare const Asset: {
                     Version?: string | undefined;
                 } | undefined;
                 Subunit?: string | undefined;
-                SmartContractAddress?: string | undefined;
+                Issuer?: string | undefined;
+                Precision?: number | undefined;
+                Description?: string | undefined;
             } & {
                 Currency?: ({
                     Symbol?: string | undefined;
@@ -428,7 +444,9 @@ export declare const Asset: {
                     Version?: string | undefined;
                 } & { [K_8 in Exclude<keyof I_1["AssetDetails"]["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
                 Subunit?: string | undefined;
-                SmartContractAddress?: string | undefined;
+                Issuer?: string | undefined;
+                Precision?: number | undefined;
+                Description?: string | undefined;
             } & { [K_9 in Exclude<keyof I_1["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
         } & { [K_10 in Exclude<keyof I_1["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
@@ -468,11 +486,10 @@ export declare const Assets: {
                 Reason?: Reason | undefined;
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
-                Precision?: number | undefined;
                 Name?: string | undefined;
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: Exchange | undefined;
-                Description?: string | undefined;
+                InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 ExtraPercentage?: number | undefined;
                 Denom?: {
@@ -481,7 +498,9 @@ export declare const Assets: {
                         Version?: string | undefined;
                     } | undefined;
                     Subunit?: string | undefined;
-                    SmartContractAddress?: string | undefined;
+                    Issuer?: string | undefined;
+                    Precision?: number | undefined;
+                    Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
             } | undefined;
@@ -506,11 +525,10 @@ export declare const Assets: {
                 Reason?: Reason | undefined;
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
-                Precision?: number | undefined;
                 Name?: string | undefined;
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: Exchange | undefined;
-                Description?: string | undefined;
+                InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 ExtraPercentage?: number | undefined;
                 Denom?: {
@@ -519,7 +537,9 @@ export declare const Assets: {
                         Version?: string | undefined;
                     } | undefined;
                     Subunit?: string | undefined;
-                    SmartContractAddress?: string | undefined;
+                    Issuer?: string | undefined;
+                    Precision?: number | undefined;
+                    Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
             } | undefined;
@@ -542,11 +562,10 @@ export declare const Assets: {
                 Reason?: Reason | undefined;
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
-                Precision?: number | undefined;
                 Name?: string | undefined;
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: Exchange | undefined;
-                Description?: string | undefined;
+                InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 ExtraPercentage?: number | undefined;
                 Denom?: {
@@ -555,7 +574,9 @@ export declare const Assets: {
                         Version?: string | undefined;
                     } | undefined;
                     Subunit?: string | undefined;
-                    SmartContractAddress?: string | undefined;
+                    Issuer?: string | undefined;
+                    Precision?: number | undefined;
+                    Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
             } | undefined;
@@ -578,11 +599,10 @@ export declare const Assets: {
                 Reason?: Reason | undefined;
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
-                Precision?: number | undefined;
                 Name?: string | undefined;
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: Exchange | undefined;
-                Description?: string | undefined;
+                InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 ExtraPercentage?: number | undefined;
                 Denom?: {
@@ -591,7 +611,9 @@ export declare const Assets: {
                         Version?: string | undefined;
                     } | undefined;
                     Subunit?: string | undefined;
-                    SmartContractAddress?: string | undefined;
+                    Issuer?: string | undefined;
+                    Precision?: number | undefined;
+                    Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
             } & {
@@ -601,11 +623,10 @@ export declare const Assets: {
                 Reason?: Reason | undefined;
                 JurisdictionIDs?: (string[] & string[] & { [K in Exclude<keyof I["Assets"][number]["AssetDetails"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
                 Type?: AssetType | undefined;
-                Precision?: number | undefined;
                 Name?: string | undefined;
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: Exchange | undefined;
-                Description?: string | undefined;
+                InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 ExtraPercentage?: number | undefined;
                 Denom?: ({
@@ -614,7 +635,9 @@ export declare const Assets: {
                         Version?: string | undefined;
                     } | undefined;
                     Subunit?: string | undefined;
-                    SmartContractAddress?: string | undefined;
+                    Issuer?: string | undefined;
+                    Precision?: number | undefined;
+                    Description?: string | undefined;
                 } & {
                     Currency?: ({
                         Symbol?: string | undefined;
@@ -624,7 +647,9 @@ export declare const Assets: {
                         Version?: string | undefined;
                     } & { [K_1 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
                     Subunit?: string | undefined;
-                    SmartContractAddress?: string | undefined;
+                    Issuer?: string | undefined;
+                    Precision?: number | undefined;
+                    Description?: string | undefined;
                 } & { [K_2 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
             } & { [K_3 in Exclude<keyof I["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
@@ -656,11 +681,10 @@ export declare const Assets: {
                 Reason?: Reason | undefined;
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
-                Precision?: number | undefined;
                 Name?: string | undefined;
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: Exchange | undefined;
-                Description?: string | undefined;
+                InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 ExtraPercentage?: number | undefined;
                 Denom?: {
@@ -669,7 +693,9 @@ export declare const Assets: {
                         Version?: string | undefined;
                     } | undefined;
                     Subunit?: string | undefined;
-                    SmartContractAddress?: string | undefined;
+                    Issuer?: string | undefined;
+                    Precision?: number | undefined;
+                    Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
             } | undefined;
@@ -695,11 +721,10 @@ export declare const Assets: {
                 Reason?: Reason | undefined;
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
-                Precision?: number | undefined;
                 Name?: string | undefined;
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: Exchange | undefined;
-                Description?: string | undefined;
+                InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 ExtraPercentage?: number | undefined;
                 Denom?: {
@@ -708,7 +733,9 @@ export declare const Assets: {
                         Version?: string | undefined;
                     } | undefined;
                     Subunit?: string | undefined;
-                    SmartContractAddress?: string | undefined;
+                    Issuer?: string | undefined;
+                    Precision?: number | undefined;
+                    Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
             } | undefined;
@@ -733,11 +760,10 @@ export declare const Assets: {
                 Reason?: Reason | undefined;
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
-                Precision?: number | undefined;
                 Name?: string | undefined;
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: Exchange | undefined;
-                Description?: string | undefined;
+                InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 ExtraPercentage?: number | undefined;
                 Denom?: {
@@ -746,7 +772,9 @@ export declare const Assets: {
                         Version?: string | undefined;
                     } | undefined;
                     Subunit?: string | undefined;
-                    SmartContractAddress?: string | undefined;
+                    Issuer?: string | undefined;
+                    Precision?: number | undefined;
+                    Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
             } | undefined;
@@ -769,11 +797,10 @@ export declare const Assets: {
                 Reason?: Reason | undefined;
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
-                Precision?: number | undefined;
                 Name?: string | undefined;
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: Exchange | undefined;
-                Description?: string | undefined;
+                InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 ExtraPercentage?: number | undefined;
                 Denom?: {
@@ -782,7 +809,9 @@ export declare const Assets: {
                         Version?: string | undefined;
                     } | undefined;
                     Subunit?: string | undefined;
-                    SmartContractAddress?: string | undefined;
+                    Issuer?: string | undefined;
+                    Precision?: number | undefined;
+                    Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
             } | undefined;
@@ -805,11 +834,10 @@ export declare const Assets: {
                 Reason?: Reason | undefined;
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
-                Precision?: number | undefined;
                 Name?: string | undefined;
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: Exchange | undefined;
-                Description?: string | undefined;
+                InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 ExtraPercentage?: number | undefined;
                 Denom?: {
@@ -818,7 +846,9 @@ export declare const Assets: {
                         Version?: string | undefined;
                     } | undefined;
                     Subunit?: string | undefined;
-                    SmartContractAddress?: string | undefined;
+                    Issuer?: string | undefined;
+                    Precision?: number | undefined;
+                    Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
             } & {
@@ -828,11 +858,10 @@ export declare const Assets: {
                 Reason?: Reason | undefined;
                 JurisdictionIDs?: (string[] & string[] & { [K_9 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
                 Type?: AssetType | undefined;
-                Precision?: number | undefined;
                 Name?: string | undefined;
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: Exchange | undefined;
-                Description?: string | undefined;
+                InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 ExtraPercentage?: number | undefined;
                 Denom?: ({
@@ -841,7 +870,9 @@ export declare const Assets: {
                         Version?: string | undefined;
                     } | undefined;
                     Subunit?: string | undefined;
-                    SmartContractAddress?: string | undefined;
+                    Issuer?: string | undefined;
+                    Precision?: number | undefined;
+                    Description?: string | undefined;
                 } & {
                     Currency?: ({
                         Symbol?: string | undefined;
@@ -851,7 +882,9 @@ export declare const Assets: {
                         Version?: string | undefined;
                     } & { [K_10 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
                     Subunit?: string | undefined;
-                    SmartContractAddress?: string | undefined;
+                    Issuer?: string | undefined;
+                    Precision?: number | undefined;
+                    Description?: string | undefined;
                 } & { [K_11 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
             } & { [K_12 in Exclude<keyof I_1["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
@@ -883,11 +916,10 @@ export declare const Assets: {
                 Reason?: Reason | undefined;
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
-                Precision?: number | undefined;
                 Name?: string | undefined;
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: Exchange | undefined;
-                Description?: string | undefined;
+                InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 ExtraPercentage?: number | undefined;
                 Denom?: {
@@ -896,7 +928,9 @@ export declare const Assets: {
                         Version?: string | undefined;
                     } | undefined;
                     Subunit?: string | undefined;
-                    SmartContractAddress?: string | undefined;
+                    Issuer?: string | undefined;
+                    Precision?: number | undefined;
+                    Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
             } | undefined;
