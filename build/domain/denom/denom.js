@@ -4,6 +4,7 @@
 //   protoc               v5.26.1
 // source: domain/denom/denom.proto
 /* eslint-disable */
+import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { Currency } from "../currency/currency";
 export const protobufPackage = "denom";
@@ -22,7 +23,7 @@ export const Denom = {
             writer.uint32(26).string(message.Issuer);
         }
         if (message.Precision !== 0) {
-            writer.uint32(32).uint32(message.Precision);
+            writer.uint32(32).int64(message.Precision);
         }
         if (message.Description !== "") {
             writer.uint32(42).string(message.Description);
@@ -58,7 +59,7 @@ export const Denom = {
                     if (tag !== 32) {
                         break;
                     }
-                    message.Precision = reader.uint32();
+                    message.Precision = longToNumber(reader.int64());
                     continue;
                 case 5:
                     if (tag !== 42) {
@@ -118,6 +119,19 @@ export const Denom = {
         return message;
     },
 };
+function longToNumber(long) {
+    if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
+        throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+    }
+    if (long.lt(globalThis.Number.MIN_SAFE_INTEGER)) {
+        throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
+    }
+    return long.toNumber();
+}
+if (_m0.util.Long !== Long) {
+    _m0.util.Long = Long;
+    _m0.configure();
+}
 function isSet(value) {
     return value !== null && value !== undefined;
 }

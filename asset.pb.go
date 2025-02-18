@@ -305,7 +305,7 @@ type AssetDetails struct {
 	InternalDescription  string   `protobuf:"bytes,10,opt,name=InternalDescription,proto3" json:"InternalDescription,omitempty"` // Description for internal use, not for on-chain
 	MinTransactionAmount float64  `protobuf:"fixed64,11,opt,name=MinTransactionAmount,proto3" json:"MinTransactionAmount,omitempty"`
 	ExtraPercentage      float64  `protobuf:"fixed64,12,opt,name=ExtraPercentage,proto3" json:"ExtraPercentage,omitempty"` // Extra margin percentage required when buying an asset. e.g ExtraPercentage = 0.1 the buyer must provide 10% extra margin—of which the cost is 5%, and the remaining 5% is returned to the buyer.
-	// On-chain and Smart Contract related properties
+	// On-chain properties
 	Denom                   *denom.Denom `protobuf:"bytes,17,opt,name=Denom,proto3" json:"Denom,omitempty"`                                      // {subunit}-{issuer} where Subunit is su{Currency}. e.g., suappl_1-testcore1et29c...
 	IsIssuedInSmartContract bool         `protobuf:"varint,18,opt,name=IsIssuedInSmartContract,proto3" json:"IsIssuedInSmartContract,omitempty"` // Flag to indicate if the asset is issued in the smart contract
 }

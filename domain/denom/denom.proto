@@ -18,6 +18,6 @@ message Denom {
     currency.Currency Currency = 1;  // Format: {symbol}_{version}
     string Subunit = 2; // Format: su{currency}
     string Issuer = 3;
-    uint32 Precision = 4; // Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares.
+    int64 Precision = 4; // Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares.
     string Description = 5; // On-chain description
 }

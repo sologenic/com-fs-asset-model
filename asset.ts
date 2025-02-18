@@ -268,7 +268,7 @@ export interface AssetDetails {
   MinTransactionAmount: number;
   /** Extra margin percentage required when buying an asset. e.g ExtraPercentage = 0.1 the buyer must provide 10% extra margin—of which the cost is 5%, and the remaining 5% is returned to the buyer. */
   ExtraPercentage: number;
-  /** On-chain and Smart Contract related properties */
+  /** On-chain properties */
   Denom:
     | Denom
     | undefined;
