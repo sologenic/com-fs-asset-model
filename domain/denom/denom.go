@@ -10,28 +10,28 @@ import (
 )
 
 var (
-	denomRegex = regexp.MustCompile(`^u([A-Za-z0-9]+)_([1-9][0-9]{0,2})-(.+)$`) // Format: u{symbol}_{version}-{smartContractAddr}
+	denomRegex = regexp.MustCompile(`^su([A-Za-z0-9]+)_([1-9][0-9]{0,2})-(.+)$`) // Format: su{symbol}_{version}-{issuer}
 )
 
 // BuildDenom creates a new Denom from components
-func BuildDenom(symbol, version, smartContractAddr string) (*Denom, error) {
-	if smartContractAddr == "" {
-		return nil, errors.New("smart contract address is required")
+func BuildDenom(symbol, version, issuer string) (*Denom, error) {
+	if issuer == "" {
+		return nil, errors.New("issuer is required")
 	}
 
 	currency, err := currency.NewCurrency(symbol, version)
 	if err != nil {
 		return nil, err
 	}
-	subunit := fmt.Sprintf("u%s", currency.ToString())
+	subunit := fmt.Sprintf("su%s", currency.ToString()) // format: su{currency}
 	return &Denom{
-		Currency:             currency,
-		Subunit:              subunit,
-		SmartContractAddress: smartContractAddr,
+		Currency: currency,
+		Subunit:  subunit,
+		Issuer:   issuer,
 	}, nil
 }
 
-// ParseDenom parses a Denom from a string in the format: u{symbol}_{version}-{smartContractAddr}
+// ParseDenom parses a Denom from a string in the format: su{symbol}_{version}-{issuer}, equivalent to {subunit}-{issuer}
 func ParseDenom(denomStr string) (*Denom, error) {
 	matches := denomRegex.FindStringSubmatch(denomStr)
 	if matches == nil || len(matches) != 4 {
@@ -40,11 +40,11 @@ func ParseDenom(denomStr string) (*Denom, error) {
 
 	symbol := strings.ToUpper(matches[1])
 	version := matches[2]
-	smartContractAddr := matches[3]
+	issuer := matches[3]
 
-	return BuildDenom(symbol, version, smartContractAddr)
+	return BuildDenom(symbol, version, issuer)
 }
 
 func (d *Denom) ToString() string {
-	return fmt.Sprintf("%s-%s", d.Subunit, d.SmartContractAddress)
+	return fmt.Sprintf("%s-%s", d.Subunit, d.Issuer)
 }

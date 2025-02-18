@@ -11,29 +11,31 @@ import { Currency } from "../currency/currency";
 export const protobufPackage = "denom";
 
 /**
- * Denom defines the on-chain denomination of a token.
+ * Denom defines the on-chain denomination of a token and include on-chain data such as the issuer, precision, and description.
  * It is constructed according to the following conventions:
  *   1. Currency:  {lowercase(symbol)}_{version}
  *      - Example: "aapl_1", "btc-usd_2"
- *   2. Subunit:   u{currency}
- *      - Example: "uaapl_1"
+ *   2. Subunit:   su{currency}
+ *      - Example: "suaapl_1"
  *   3. Denom:     {subunit}-{issuer}
- *      - Where issuer is the smart contract address.
- *      - Example: "uaapl_1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
+ *      - Example: "suaapl_1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
  */
 export interface Denom {
   /** Format: {symbol}_{version} */
   Currency:
     | Currency
     | undefined;
-  /** Format: u{currency} */
+  /** Format: su{currency} */
   Subunit: string;
-  /** Smart contract address that issues the token(issuer) */
-  SmartContractAddress: string;
+  Issuer: string;
+  /** Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares. */
+  Precision: number;
+  /** On-chain description */
+  Description: string;
 }
 
 function createBaseDenom(): Denom {
-  return { Currency: undefined, Subunit: "", SmartContractAddress: "" };
+  return { Currency: undefined, Subunit: "", Issuer: "", Precision: 0, Description: "" };
 }
 
 export const Denom = {
@@ -44,8 +46,14 @@ export const Denom = {
     if (message.Subunit !== "") {
       writer.uint32(18).string(message.Subunit);
     }
-    if (message.SmartContractAddress !== "") {
-      writer.uint32(26).string(message.SmartContractAddress);
+    if (message.Issuer !== "") {
+      writer.uint32(26).string(message.Issuer);
+    }
+    if (message.Precision !== 0) {
+      writer.uint32(32).uint32(message.Precision);
+    }
+    if (message.Description !== "") {
+      writer.uint32(42).string(message.Description);
     }
     return writer;
   },
@@ -76,7 +84,21 @@ export const Denom = {
             break;
           }
 
-          message.SmartContractAddress = reader.string();
+          message.Issuer = reader.string();
+          continue;
+        case 4:
+          if (tag !== 32) {
+            break;
+          }
+
+          message.Precision = reader.uint32();
+          continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          message.Description = reader.string();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -91,7 +113,9 @@ export const Denom = {
     return {
       Currency: isSet(object.Currency) ? Currency.fromJSON(object.Currency) : undefined,
       Subunit: isSet(object.Subunit) ? globalThis.String(object.Subunit) : "",
-      SmartContractAddress: isSet(object.SmartContractAddress) ? globalThis.String(object.SmartContractAddress) : "",
+      Issuer: isSet(object.Issuer) ? globalThis.String(object.Issuer) : "",
+      Precision: isSet(object.Precision) ? globalThis.Number(object.Precision) : 0,
+      Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
     };
   },
 
@@ -103,8 +127,14 @@ export const Denom = {
     if (message.Subunit !== "") {
       obj.Subunit = message.Subunit;
     }
-    if (message.SmartContractAddress !== "") {
-      obj.SmartContractAddress = message.SmartContractAddress;
+    if (message.Issuer !== "") {
+      obj.Issuer = message.Issuer;
+    }
+    if (message.Precision !== 0) {
+      obj.Precision = Math.round(message.Precision);
+    }
+    if (message.Description !== "") {
+      obj.Description = message.Description;
     }
     return obj;
   },
@@ -118,7 +148,9 @@ export const Denom = {
       ? Currency.fromPartial(object.Currency)
       : undefined;
     message.Subunit = object.Subunit ?? "";
-    message.SmartContractAddress = object.SmartContractAddress ?? "";
+    message.Issuer = object.Issuer ?? "";
+    message.Precision = object.Precision ?? 0;
+    message.Description = object.Description ?? "";
     return message;
   },
 };

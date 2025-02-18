@@ -8,7 +8,7 @@ import _m0 from "protobufjs/minimal";
 import { Currency } from "../currency/currency";
 export const protobufPackage = "denom";
 function createBaseDenom() {
-    return { Currency: undefined, Subunit: "", SmartContractAddress: "" };
+    return { Currency: undefined, Subunit: "", Issuer: "", Precision: 0, Description: "" };
 }
 export const Denom = {
     encode(message, writer = _m0.Writer.create()) {
@@ -18,8 +18,14 @@ export const Denom = {
         if (message.Subunit !== "") {
             writer.uint32(18).string(message.Subunit);
         }
-        if (message.SmartContractAddress !== "") {
-            writer.uint32(26).string(message.SmartContractAddress);
+        if (message.Issuer !== "") {
+            writer.uint32(26).string(message.Issuer);
+        }
+        if (message.Precision !== 0) {
+            writer.uint32(32).uint32(message.Precision);
+        }
+        if (message.Description !== "") {
+            writer.uint32(42).string(message.Description);
         }
         return writer;
     },
@@ -46,7 +52,19 @@ export const Denom = {
                     if (tag !== 26) {
                         break;
                     }
-                    message.SmartContractAddress = reader.string();
+                    message.Issuer = reader.string();
+                    continue;
+                case 4:
+                    if (tag !== 32) {
+                        break;
+                    }
+                    message.Precision = reader.uint32();
+                    continue;
+                case 5:
+                    if (tag !== 42) {
+                        break;
+                    }
+                    message.Description = reader.string();
                     continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
@@ -60,7 +78,9 @@ export const Denom = {
         return {
             Currency: isSet(object.Currency) ? Currency.fromJSON(object.Currency) : undefined,
             Subunit: isSet(object.Subunit) ? globalThis.String(object.Subunit) : "",
-            SmartContractAddress: isSet(object.SmartContractAddress) ? globalThis.String(object.SmartContractAddress) : "",
+            Issuer: isSet(object.Issuer) ? globalThis.String(object.Issuer) : "",
+            Precision: isSet(object.Precision) ? globalThis.Number(object.Precision) : 0,
+            Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
         };
     },
     toJSON(message) {
@@ -71,8 +91,14 @@ export const Denom = {
         if (message.Subunit !== "") {
             obj.Subunit = message.Subunit;
         }
-        if (message.SmartContractAddress !== "") {
-            obj.SmartContractAddress = message.SmartContractAddress;
+        if (message.Issuer !== "") {
+            obj.Issuer = message.Issuer;
+        }
+        if (message.Precision !== 0) {
+            obj.Precision = Math.round(message.Precision);
+        }
+        if (message.Description !== "") {
+            obj.Description = message.Description;
         }
         return obj;
     },
@@ -80,13 +106,15 @@ export const Denom = {
         return Denom.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b;
+        var _a, _b, _c, _d;
         const message = createBaseDenom();
         message.Currency = (object.Currency !== undefined && object.Currency !== null)
             ? Currency.fromPartial(object.Currency)
             : undefined;
         message.Subunit = (_a = object.Subunit) !== null && _a !== void 0 ? _a : "";
-        message.SmartContractAddress = (_b = object.SmartContractAddress) !== null && _b !== void 0 ? _b : "";
+        message.Issuer = (_b = object.Issuer) !== null && _b !== void 0 ? _b : "";
+        message.Precision = (_c = object.Precision) !== null && _c !== void 0 ? _c : 0;
+        message.Description = (_d = object.Description) !== null && _d !== void 0 ? _d : "";
         return message;
     },
 };

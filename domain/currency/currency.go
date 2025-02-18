@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	symbolRegex  = regexp.MustCompile(`^[a-zA-Z0-9]{1,46}$`) // Max length of 46 characters
+	symbolRegex  = regexp.MustCompile(`^[a-zA-Z0-9]{1,45}$`) // Max length of 45 characters
 	versionRegex = regexp.MustCompile(`^[1-9][0-9]{0,2}$`)   // No leading zeros with a max length of 3 characters
 )
 
@@ -48,7 +48,7 @@ func (c *Currency) ParseCurrency(currencyStr string) (*Currency, error) {
 
 func ValidateSymbol(symbol string) error {
 	if !symbolRegex.MatchString(symbol) {
-		return errors.New("invalid symbol format: must be [a-zA-Z0-9]{1,46}")
+		return errors.New("invalid symbol format: must be [a-zA-Z0-9]{1,45}")
 	}
 	return nil
 }

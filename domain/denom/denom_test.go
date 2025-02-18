@@ -21,8 +21,8 @@ func TestBuildDenom(t *testing.T) {
 						Symbol:  "AAPL",
 						Version: "1",
 					},
-					Subunit:              "uaapl_1",
-					SmartContractAddress: "testcore1et29c",
+					Subunit: "suaapl_1",
+					Issuer:  "testcore1et29c",
 				}
 
 				assert.NoError(t, err)
@@ -35,7 +35,7 @@ func TestBuildDenom(t *testing.T) {
 				got, err := BuildDenom("AAPL", "1", "")
 
 				assert.Error(t, err)
-				assert.Contains(t, err.Error(), "smart contract address is required")
+				assert.Contains(t, err.Error(), "issuer is required")
 				assert.Nil(t, got)
 			},
 		},
@@ -68,14 +68,14 @@ func TestParseDenom(t *testing.T) {
 		{
 			Name: "Valid denom",
 			Test: func(t *testing.T) {
-				got, err := ParseDenom("uaapl_1-testcore1et29c")
+				got, err := ParseDenom("suaapl_1-testcore1et29c")
 				want := &Denom{
 					Currency: &currency.Currency{
 						Symbol:  "AAPL",
 						Version: "1",
 					},
-					Subunit:              "uaapl_1",
-					SmartContractAddress: "testcore1et29c",
+					Subunit: "suaapl_1",
+					Issuer:  "testcore1et29c",
 				}
 
 				assert.NoError(t, err)
@@ -95,7 +95,7 @@ func TestParseDenom(t *testing.T) {
 		{
 			Name: "Missing smart contract address",
 			Test: func(t *testing.T) {
-				got, err := ParseDenom("uaapl_1-")
+				got, err := ParseDenom("suaapl_1-")
 
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), "smart contract address is required")

@@ -6,17 +6,18 @@ import "domain/currency/currency.proto";
 
 option go_package = "github.com/sologenic/com-fs-asset-model/domain/denom;denom";
 
-// Denom defines the on-chain denomination of a token.
+// Denom defines the on-chain denomination of a token and include on-chain data such as the issuer, precision, and description.
 // It is constructed according to the following conventions:
 //   1. Currency:  {lowercase(symbol)}_{version}  
 //      - Example: "aapl_1", "btc-usd_2"
-//   2. Subunit:   u{currency}  
-//      - Example: "uaapl_1"
+//   2. Subunit:   su{currency}  
+//      - Example: "suaapl_1"
 //   3. Denom:     {subunit}-{issuer}
-//      - Where issuer is the smart contract address.
-//      - Example: "uaapl_1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
+//      - Example: "suaapl_1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
 message Denom {
     currency.Currency Currency = 1;  // Format: {symbol}_{version}
-    string Subunit = 2; // Format: u{currency}
-    string SmartContractAddress = 3; // Smart contract address that issues the token(issuer)
+    string Subunit = 2; // Format: su{currency}
+    string Issuer = 3;
+    uint32 Precision = 4; // Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares.
+    string Description = 5; // On-chain description
 }
