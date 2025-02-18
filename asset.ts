@@ -6,7 +6,6 @@
 
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
-import { Currency } from "./domain/currency/currency";
 import { Denom } from "./domain/denom/denom";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
 import { MetaData } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
@@ -270,10 +269,6 @@ export interface AssetDetails {
   /** Extra margin percentage required when buying an asset. e.g ExtraPercentage = 0.1 the buyer must provide 10% extra margin—of which the cost is 5%, and the remaining 5% is returned to the buyer. */
   ExtraPercentage: number;
   /** On-chain and Smart Contract related properties */
-  Currency:
-    | Currency
-    | undefined;
-  /** {Subunit}-{SmartContractAddress} where Subunit is u{Currency}. e.g., uappl_1-testcore1et29c... */
   Denom:
     | Denom
     | undefined;
@@ -321,7 +316,6 @@ function createBaseAssetDetails(): AssetDetails {
     Description: "",
     MinTransactionAmount: 0,
     ExtraPercentage: 0,
-    Currency: undefined,
     Denom: undefined,
     IsIssuedInSmartContract: false,
   };
@@ -368,14 +362,11 @@ export const AssetDetails = {
     if (message.ExtraPercentage !== 0) {
       writer.uint32(129).double(message.ExtraPercentage);
     }
-    if (message.Currency !== undefined) {
-      Currency.encode(message.Currency, writer.uint32(138).fork()).ldelim();
-    }
     if (message.Denom !== undefined) {
-      Denom.encode(message.Denom, writer.uint32(146).fork()).ldelim();
+      Denom.encode(message.Denom, writer.uint32(138).fork()).ldelim();
     }
     if (message.IsIssuedInSmartContract !== false) {
-      writer.uint32(152).bool(message.IsIssuedInSmartContract);
+      writer.uint32(144).bool(message.IsIssuedInSmartContract);
     }
     return writer;
   },
@@ -483,17 +474,10 @@ export const AssetDetails = {
             break;
           }
 
-          message.Currency = Currency.decode(reader, reader.uint32());
-          continue;
-        case 18:
-          if (tag !== 146) {
-            break;
-          }
-
           message.Denom = Denom.decode(reader, reader.uint32());
           continue;
-        case 19:
-          if (tag !== 152) {
+        case 18:
+          if (tag !== 144) {
             break;
           }
 
@@ -525,7 +509,6 @@ export const AssetDetails = {
       Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
       MinTransactionAmount: isSet(object.MinTransactionAmount) ? globalThis.Number(object.MinTransactionAmount) : 0,
       ExtraPercentage: isSet(object.ExtraPercentage) ? globalThis.Number(object.ExtraPercentage) : 0,
-      Currency: isSet(object.Currency) ? Currency.fromJSON(object.Currency) : undefined,
       Denom: isSet(object.Denom) ? Denom.fromJSON(object.Denom) : undefined,
       IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
         ? globalThis.Boolean(object.IsIssuedInSmartContract)
@@ -574,9 +557,6 @@ export const AssetDetails = {
     if (message.ExtraPercentage !== 0) {
       obj.ExtraPercentage = message.ExtraPercentage;
     }
-    if (message.Currency !== undefined) {
-      obj.Currency = Currency.toJSON(message.Currency);
-    }
     if (message.Denom !== undefined) {
       obj.Denom = Denom.toJSON(message.Denom);
     }
@@ -604,9 +584,6 @@ export const AssetDetails = {
     message.Description = object.Description ?? "";
     message.MinTransactionAmount = object.MinTransactionAmount ?? 0;
     message.ExtraPercentage = object.ExtraPercentage ?? 0;
-    message.Currency = (object.Currency !== undefined && object.Currency !== null)
-      ? Currency.fromPartial(object.Currency)
-      : undefined;
     message.Denom = (object.Denom !== undefined && object.Denom !== null) ? Denom.fromPartial(object.Denom) : undefined;
     message.IsIssuedInSmartContract = object.IsIssuedInSmartContract ?? false;
     return message;

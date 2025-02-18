@@ -5,7 +5,6 @@
 // source: asset.proto
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
-import { Currency } from "./domain/currency/currency";
 import { Denom } from "./domain/denom/denom";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
 import { MetaData } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
@@ -250,7 +249,6 @@ function createBaseAssetDetails() {
         Description: "",
         MinTransactionAmount: 0,
         ExtraPercentage: 0,
-        Currency: undefined,
         Denom: undefined,
         IsIssuedInSmartContract: false,
     };
@@ -296,14 +294,11 @@ export const AssetDetails = {
         if (message.ExtraPercentage !== 0) {
             writer.uint32(129).double(message.ExtraPercentage);
         }
-        if (message.Currency !== undefined) {
-            Currency.encode(message.Currency, writer.uint32(138).fork()).ldelim();
-        }
         if (message.Denom !== undefined) {
-            Denom.encode(message.Denom, writer.uint32(146).fork()).ldelim();
+            Denom.encode(message.Denom, writer.uint32(138).fork()).ldelim();
         }
         if (message.IsIssuedInSmartContract !== false) {
-            writer.uint32(152).bool(message.IsIssuedInSmartContract);
+            writer.uint32(144).bool(message.IsIssuedInSmartContract);
         }
         return writer;
     },
@@ -396,16 +391,10 @@ export const AssetDetails = {
                     if (tag !== 138) {
                         break;
                     }
-                    message.Currency = Currency.decode(reader, reader.uint32());
-                    continue;
-                case 18:
-                    if (tag !== 146) {
-                        break;
-                    }
                     message.Denom = Denom.decode(reader, reader.uint32());
                     continue;
-                case 19:
-                    if (tag !== 152) {
+                case 18:
+                    if (tag !== 144) {
                         break;
                     }
                     message.IsIssuedInSmartContract = reader.bool();
@@ -435,7 +424,6 @@ export const AssetDetails = {
             Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
             MinTransactionAmount: isSet(object.MinTransactionAmount) ? globalThis.Number(object.MinTransactionAmount) : 0,
             ExtraPercentage: isSet(object.ExtraPercentage) ? globalThis.Number(object.ExtraPercentage) : 0,
-            Currency: isSet(object.Currency) ? Currency.fromJSON(object.Currency) : undefined,
             Denom: isSet(object.Denom) ? Denom.fromJSON(object.Denom) : undefined,
             IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
                 ? globalThis.Boolean(object.IsIssuedInSmartContract)
@@ -484,9 +472,6 @@ export const AssetDetails = {
         if (message.ExtraPercentage !== 0) {
             obj.ExtraPercentage = message.ExtraPercentage;
         }
-        if (message.Currency !== undefined) {
-            obj.Currency = Currency.toJSON(message.Currency);
-        }
         if (message.Denom !== undefined) {
             obj.Denom = Denom.toJSON(message.Denom);
         }
@@ -514,9 +499,6 @@ export const AssetDetails = {
         message.Description = (_l = object.Description) !== null && _l !== void 0 ? _l : "";
         message.MinTransactionAmount = (_m = object.MinTransactionAmount) !== null && _m !== void 0 ? _m : 0;
         message.ExtraPercentage = (_o = object.ExtraPercentage) !== null && _o !== void 0 ? _o : 0;
-        message.Currency = (object.Currency !== undefined && object.Currency !== null)
-            ? Currency.fromPartial(object.Currency)
-            : undefined;
         message.Denom = (object.Denom !== undefined && object.Denom !== null) ? Denom.fromPartial(object.Denom) : undefined;
         message.IsIssuedInSmartContract = (_p = object.IsIssuedInSmartContract) !== null && _p !== void 0 ? _p : false;
         return message;

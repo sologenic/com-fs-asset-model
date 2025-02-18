@@ -28,9 +28,8 @@ message AssetDetails {
     double ExtraPercentage = 16; // Extra margin percentage required when buying an asset. e.g ExtraPercentage = 0.1 the buyer must provide 10% extra margin—of which the cost is 5%, and the remaining 5% is returned to the buyer.
     
     // On-chain and Smart Contract related properties
-    currency.Currency Currency = 17; // {Symbol}_{Version}. e.g., appl_1, pltr_999
-    denom.Denom Denom = 18; // {Subunit}-{SmartContractAddress} where Subunit is u{Currency}. e.g., uappl_1-testcore1et29c...
-    bool IsIssuedInSmartContract = 19; // Flag to indicate if the asset is issued in the smart contract
+    denom.Denom Denom = 17; // {Subunit}-{SmartContractAddress} where Subunit is u{Currency}. e.g., uappl_1-testcore1et29c...
+    bool IsIssuedInSmartContract = 18; // Flag to indicate if the asset is issued in the smart contract
 }
 
 message Asset {
