@@ -31,12 +31,14 @@ message AssetQuery {
     metadata.Network Network = 1;
     optional int32 Offset = 2;
     repeated string JurisdictionIDs = 3;
-    optional string OrganizationID = 4; 
-    optional string ExchangeTickerSymbol = 5;
-    optional string Exchange = 6;
-    optional string Symbol = 7;
-    optional string Version = 8;
-    optional string Issuer = 9;
+    optional string OrganizationID = 4;
+    optional AssetStatus Status = 5;
+    optional AssetType AssetType = 6;
+    optional string ExchangeTickerSymbol = 7;
+    optional string Exchange = 8;
+    optional string Symbol = 9;
+    optional string Version = 10;
+    optional string Issuer = 11;
 }
 
 message UserAssetListKey {
