@@ -25,7 +25,7 @@ type Currency struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Symbol  string `protobuf:"bytes,1,opt,name=Symbol,proto3" json:"Symbol,omitempty"`   // User-entered ticker with format:[a-zA-Z0-9]{1,47}. e.g., APPL, PLTR, MSFT
+	Symbol  string `protobuf:"bytes,1,opt,name=Symbol,proto3" json:"Symbol,omitempty"`   // User-entered ticker with format:[a-zA-Z0-9]{1,45}. e.g., APPL, PLTR, MSFT
 	Version string `protobuf:"bytes,2,opt,name=Version,proto3" json:"Version,omitempty"` // Auto-incremented version (no leading zeros) with max length 3 characters (values 1 to 999)
 }
 

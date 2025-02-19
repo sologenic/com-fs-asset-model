@@ -19,13 +19,17 @@ func BuildDenom(symbol, version, issuer string) (*Denom, error) {
 		return nil, errors.New("issuer is required")
 	}
 
-	currency, err := currency.NewCurrency(symbol, version)
+	curr, err := currency.NewCurrency(symbol, version)
 	if err != nil {
 		return nil, err
 	}
-	subunit := fmt.Sprintf("su%s", currency.ToString()) // format: su{currency}
+	subunit, err := currency.BuildSubunit(curr)
+	if err != nil {
+		return nil, err
+	}
+
 	return &Denom{
-		Currency: currency,
+		Currency: curr,
 		Subunit:  subunit,
 		Issuer:   issuer,
 	}, nil

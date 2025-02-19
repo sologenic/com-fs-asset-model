@@ -1,7 +1,7 @@
 import _m0 from "protobufjs/minimal";
 export declare const protobufPackage = "currency";
 export interface Currency {
-    /** User-entered ticker with format:[a-zA-Z0-9]{1,47}. e.g., APPL, PLTR, MSFT */
+    /** User-entered ticker with format:[a-zA-Z0-9]{1,45}. e.g., APPL, PLTR, MSFT */
     Symbol: string;
     /** Auto-incremented version (no leading zeros) with max length 3 characters (values 1 to 999) */
     Version: string;

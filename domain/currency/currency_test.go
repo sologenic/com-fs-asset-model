@@ -72,6 +72,57 @@ func TestNewCurrency(t *testing.T) {
 	unittest.RunTests(t, tests)
 }
 
+func TestCurrency_ToSubunit(t *testing.T) {
+	tests := []unittest.TestBase{
+		{
+			Name: "Valid subunit",
+			Test: func(t *testing.T) {
+				curr := &Currency{
+					Symbol:  "AAPL",
+					Version: "1",
+				}
+				want := "suaapl_1"
+
+				got, err := BuildSubunit(curr)
+				assert.NoError(t, err)
+				assert.Equal(t, want, got)
+			},
+		},
+		{
+			Name: "Symbol too long",
+			Test: func(t *testing.T) {
+				curr := &Currency{
+					Symbol:  "A123456789012345678901234567890123456789012345678",
+					Version: "1",
+				}
+
+				got, err := BuildSubunit(curr)
+				assert.Error(t, err)
+				assert.Contains(t, err.Error(), "subunit length exceeds 51 characters")
+				assert.Empty(t, got)
+			},
+		},
+		{
+			Name: "Maximum length subunit",
+			Test: func(t *testing.T) {
+				curr := &Currency{
+					// 45 chars for symbol
+					Symbol:  "A12345678901234567890123456789012345678901234",
+					Version: "999", // 3 chars
+				}
+				// 2("su") + 45(symbol) + 1("_") + 3("999") = 51 chars
+				want := "sua12345678901234567890123456789012345678901234_999"
+
+				got, err := BuildSubunit(curr)
+				assert.NoError(t, err)
+				assert.Equal(t, want, got)
+				assert.Len(t, got, 51) // correct total length
+			},
+		},
+	}
+	unittest.RunTests(t, tests)
+}
+
 func TestCurrency_ToString(t *testing.T) {
 	tests := []unittest.TestBase{
 		{

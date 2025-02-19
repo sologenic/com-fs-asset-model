@@ -98,7 +98,7 @@ func TestParseDenom(t *testing.T) {
 				got, err := ParseDenom("suaapl_1-")
 
 				assert.Error(t, err)
-				assert.Contains(t, err.Error(), "smart contract address is required")
+				assert.Contains(t, err.Error(), "invalid denom format")
 				assert.Nil(t, got)
 			},
 		},
