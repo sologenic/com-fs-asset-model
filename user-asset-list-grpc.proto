@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package asset;
+
+import "user-asset-list.proto";
+import "sologenic/com-fs-utils-lib/models/metadata/metadata.proto";
+
+option go_package = "github.com/sologenic/com-fs-asset-model;asset";
+
+service UserAssetListService {
+    rpc Get(UserAssetListKey) returns (UserAssetList);
+    rpc List(UserAssetListQuery) returns (UserAssetLists);
+    rpc Upsert(UserAssetList) returns (UserAssetListKey);
+}   
+
+message UserAssetListKey {
+    string Key = 1;
+}
+
+message UserAssetListQuery {
+    metadata.Network Network = 1;
+    optional int32 Offset = 2;
+    optional string AccountID = 3;
+    optional string Wallet = 4;
+    optional string AssetKey = 5;
+    optional UserAssetStatus Status = 6;
+    optional bool Visible = 7;
+}
