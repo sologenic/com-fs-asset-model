@@ -10,16 +10,16 @@ import (
 const endpoint = "ASSET_STORE"
 
 var (
-	client     grpcdef.UserAssetListServiceClient
+	client     grpcdef.AssetListServiceClient
 	grpcClient *grpcclient.GRPCClient
 )
 
 func initClient() {
 	grpcClient = grpcclient.InitClient(endpoint)
-	client = grpcdef.NewUserAssetListServiceClient(grpcClient.Conn)
+	client = grpcdef.NewAssetListServiceClient(grpcClient.Conn)
 }
 
-func Client() grpcdef.UserAssetListServiceClient {
+func Client() grpcdef.AssetListServiceClient {
 	if client == nil {
 		initClient()
 	}

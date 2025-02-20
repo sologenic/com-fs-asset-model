@@ -14,156 +14,276 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// AssetServiceClient is the client API for AssetService service.
+// AssetListServiceClient is the client API for AssetListService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AssetServiceClient interface {
-	Get(ctx context.Context, in *AssetKey, opts ...grpc.CallOption) (*Asset, error)
-	List(ctx context.Context, in *AssetQuery, opts ...grpc.CallOption) (*Assets, error)
-	Upsert(ctx context.Context, in *Asset, opts ...grpc.CallOption) (*AssetKey, error)
+type AssetListServiceClient interface {
+	// Upsert on Asset
+	UpsertAsset(ctx context.Context, in *Asset, opts ...grpc.CallOption) (*AssetKey, error)
+	// Get Asset by Key
+	GetAsset(ctx context.Context, in *AssetKey, opts ...grpc.CallOption) (*Asset, error)
+	// Get all Assets for a given filter
+	GetAssets(ctx context.Context, in *AssetQuery, opts ...grpc.CallOption) (*Assets, error)
+	// Upsert on UserAssetList
+	UpsertUserAssetList(ctx context.Context, in *UserAssetList, opts ...grpc.CallOption) (*UserAssetListKey, error)
+	// Get UserAssetList by Key
+	GetUserAssetList(ctx context.Context, in *UserAssetListKey, opts ...grpc.CallOption) (*UserAssetList, error)
+	// Get all UserAssetList for a given filter
+	GetUserAssetLists(ctx context.Context, in *UserAssetListQuery, opts ...grpc.CallOption) (*UserAssetLists, error)
 }
 
-type assetServiceClient struct {
+type assetListServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAssetServiceClient(cc grpc.ClientConnInterface) AssetServiceClient {
-	return &assetServiceClient{cc}
+func NewAssetListServiceClient(cc grpc.ClientConnInterface) AssetListServiceClient {
+	return &assetListServiceClient{cc}
 }
 
-func (c *assetServiceClient) Get(ctx context.Context, in *AssetKey, opts ...grpc.CallOption) (*Asset, error) {
-	out := new(Asset)
-	err := c.cc.Invoke(ctx, "/asset.AssetService/Get", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *assetServiceClient) List(ctx context.Context, in *AssetQuery, opts ...grpc.CallOption) (*Assets, error) {
-	out := new(Assets)
-	err := c.cc.Invoke(ctx, "/asset.AssetService/List", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *assetServiceClient) Upsert(ctx context.Context, in *Asset, opts ...grpc.CallOption) (*AssetKey, error) {
+func (c *assetListServiceClient) UpsertAsset(ctx context.Context, in *Asset, opts ...grpc.CallOption) (*AssetKey, error) {
 	out := new(AssetKey)
-	err := c.cc.Invoke(ctx, "/asset.AssetService/Upsert", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/asset.AssetListService/UpsertAsset", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AssetServiceServer is the server API for AssetService service.
-// All implementations should embed UnimplementedAssetServiceServer
+func (c *assetListServiceClient) GetAsset(ctx context.Context, in *AssetKey, opts ...grpc.CallOption) (*Asset, error) {
+	out := new(Asset)
+	err := c.cc.Invoke(ctx, "/asset.AssetListService/GetAsset", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assetListServiceClient) GetAssets(ctx context.Context, in *AssetQuery, opts ...grpc.CallOption) (*Assets, error) {
+	out := new(Assets)
+	err := c.cc.Invoke(ctx, "/asset.AssetListService/GetAssets", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assetListServiceClient) UpsertUserAssetList(ctx context.Context, in *UserAssetList, opts ...grpc.CallOption) (*UserAssetListKey, error) {
+	out := new(UserAssetListKey)
+	err := c.cc.Invoke(ctx, "/asset.AssetListService/UpsertUserAssetList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assetListServiceClient) GetUserAssetList(ctx context.Context, in *UserAssetListKey, opts ...grpc.CallOption) (*UserAssetList, error) {
+	out := new(UserAssetList)
+	err := c.cc.Invoke(ctx, "/asset.AssetListService/GetUserAssetList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *assetListServiceClient) GetUserAssetLists(ctx context.Context, in *UserAssetListQuery, opts ...grpc.CallOption) (*UserAssetLists, error) {
+	out := new(UserAssetLists)
+	err := c.cc.Invoke(ctx, "/asset.AssetListService/GetUserAssetLists", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// AssetListServiceServer is the server API for AssetListService service.
+// All implementations should embed UnimplementedAssetListServiceServer
 // for forward compatibility
-type AssetServiceServer interface {
-	Get(context.Context, *AssetKey) (*Asset, error)
-	List(context.Context, *AssetQuery) (*Assets, error)
-	Upsert(context.Context, *Asset) (*AssetKey, error)
+type AssetListServiceServer interface {
+	// Upsert on Asset
+	UpsertAsset(context.Context, *Asset) (*AssetKey, error)
+	// Get Asset by Key
+	GetAsset(context.Context, *AssetKey) (*Asset, error)
+	// Get all Assets for a given filter
+	GetAssets(context.Context, *AssetQuery) (*Assets, error)
+	// Upsert on UserAssetList
+	UpsertUserAssetList(context.Context, *UserAssetList) (*UserAssetListKey, error)
+	// Get UserAssetList by Key
+	GetUserAssetList(context.Context, *UserAssetListKey) (*UserAssetList, error)
+	// Get all UserAssetList for a given filter
+	GetUserAssetLists(context.Context, *UserAssetListQuery) (*UserAssetLists, error)
 }
 
-// UnimplementedAssetServiceServer should be embedded to have forward compatible implementations.
-type UnimplementedAssetServiceServer struct {
+// UnimplementedAssetListServiceServer should be embedded to have forward compatible implementations.
+type UnimplementedAssetListServiceServer struct {
 }
 
-func (UnimplementedAssetServiceServer) Get(context.Context, *AssetKey) (*Asset, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
+func (UnimplementedAssetListServiceServer) UpsertAsset(context.Context, *Asset) (*AssetKey, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpsertAsset not implemented")
 }
-func (UnimplementedAssetServiceServer) List(context.Context, *AssetQuery) (*Assets, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
+func (UnimplementedAssetListServiceServer) GetAsset(context.Context, *AssetKey) (*Asset, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAsset not implemented")
 }
-func (UnimplementedAssetServiceServer) Upsert(context.Context, *Asset) (*AssetKey, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Upsert not implemented")
+func (UnimplementedAssetListServiceServer) GetAssets(context.Context, *AssetQuery) (*Assets, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAssets not implemented")
+}
+func (UnimplementedAssetListServiceServer) UpsertUserAssetList(context.Context, *UserAssetList) (*UserAssetListKey, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpsertUserAssetList not implemented")
+}
+func (UnimplementedAssetListServiceServer) GetUserAssetList(context.Context, *UserAssetListKey) (*UserAssetList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserAssetList not implemented")
+}
+func (UnimplementedAssetListServiceServer) GetUserAssetLists(context.Context, *UserAssetListQuery) (*UserAssetLists, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserAssetLists not implemented")
 }
 
-// UnsafeAssetServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AssetServiceServer will
+// UnsafeAssetListServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AssetListServiceServer will
 // result in compilation errors.
-type UnsafeAssetServiceServer interface {
-	mustEmbedUnimplementedAssetServiceServer()
+type UnsafeAssetListServiceServer interface {
+	mustEmbedUnimplementedAssetListServiceServer()
 }
 
-func RegisterAssetServiceServer(s grpc.ServiceRegistrar, srv AssetServiceServer) {
-	s.RegisterService(&AssetService_ServiceDesc, srv)
+func RegisterAssetListServiceServer(s grpc.ServiceRegistrar, srv AssetListServiceServer) {
+	s.RegisterService(&AssetListService_ServiceDesc, srv)
 }
 
-func _AssetService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AssetKey)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AssetServiceServer).Get(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/asset.AssetService/Get",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AssetServiceServer).Get(ctx, req.(*AssetKey))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AssetService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AssetQuery)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AssetServiceServer).List(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/asset.AssetService/List",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AssetServiceServer).List(ctx, req.(*AssetQuery))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AssetService_Upsert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AssetListService_UpsertAsset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(Asset)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AssetServiceServer).Upsert(ctx, in)
+		return srv.(AssetListServiceServer).UpsertAsset(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/asset.AssetService/Upsert",
+		FullMethod: "/asset.AssetListService/UpsertAsset",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AssetServiceServer).Upsert(ctx, req.(*Asset))
+		return srv.(AssetListServiceServer).UpsertAsset(ctx, req.(*Asset))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// AssetService_ServiceDesc is the grpc.ServiceDesc for AssetService service.
+func _AssetListService_GetAsset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AssetKey)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssetListServiceServer).GetAsset(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/asset.AssetListService/GetAsset",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssetListServiceServer).GetAsset(ctx, req.(*AssetKey))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssetListService_GetAssets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AssetQuery)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssetListServiceServer).GetAssets(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/asset.AssetListService/GetAssets",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssetListServiceServer).GetAssets(ctx, req.(*AssetQuery))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssetListService_UpsertUserAssetList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserAssetList)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssetListServiceServer).UpsertUserAssetList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/asset.AssetListService/UpsertUserAssetList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssetListServiceServer).UpsertUserAssetList(ctx, req.(*UserAssetList))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssetListService_GetUserAssetList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserAssetListKey)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssetListServiceServer).GetUserAssetList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/asset.AssetListService/GetUserAssetList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssetListServiceServer).GetUserAssetList(ctx, req.(*UserAssetListKey))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AssetListService_GetUserAssetLists_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserAssetListQuery)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AssetListServiceServer).GetUserAssetLists(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/asset.AssetListService/GetUserAssetLists",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AssetListServiceServer).GetUserAssetLists(ctx, req.(*UserAssetListQuery))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// AssetListService_ServiceDesc is the grpc.ServiceDesc for AssetListService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var AssetService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "asset.AssetService",
-	HandlerType: (*AssetServiceServer)(nil),
+var AssetListService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "asset.AssetListService",
+	HandlerType: (*AssetListServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Get",
-			Handler:    _AssetService_Get_Handler,
+			MethodName: "UpsertAsset",
+			Handler:    _AssetListService_UpsertAsset_Handler,
 		},
 		{
-			MethodName: "List",
-			Handler:    _AssetService_List_Handler,
+			MethodName: "GetAsset",
+			Handler:    _AssetListService_GetAsset_Handler,
 		},
 		{
-			MethodName: "Upsert",
-			Handler:    _AssetService_Upsert_Handler,
+			MethodName: "GetAssets",
+			Handler:    _AssetListService_GetAssets_Handler,
+		},
+		{
+			MethodName: "UpsertUserAssetList",
+			Handler:    _AssetListService_UpsertUserAssetList_Handler,
+		},
+		{
+			MethodName: "GetUserAssetList",
+			Handler:    _AssetListService_GetUserAssetList_Handler,
+		},
+		{
+			MethodName: "GetUserAssetLists",
+			Handler:    _AssetListService_GetUserAssetLists_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

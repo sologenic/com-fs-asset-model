@@ -40,6 +40,20 @@ message Assets {
     repeated Asset Assets = 1;
 }
 
+message UserAssetList {
+    // Key combination: Currency-OrganizationID-AccountID-Wallet (AssetKey-AccountID-Wallet)
+    string AccountID = 1;
+    string Wallet = 2;
+    string AssetKey = 3; // Currency-OrganizationID
+    UserAssetStatus Status = 4;
+    metadata.MetaData MetaData = 5;
+    bool Visible = 6;
+}
+
+message UserAssetLists {
+    repeated UserAssetList UserAssetLists = 1;
+}
+
 enum AssetStatus {
     ASSET_STATUS_DO_NOT_USE = 0;
     DO_NOT_LIST = 1; // BROKER_ASSET_ADMINISTRATOR only
@@ -60,6 +74,14 @@ enum AssetType {
     ASSET_TYPE_DO_NOT_USE = 0;
     STOCK = 1;
     BOND = 2;
+}
+
+enum UserAssetStatus {
+    USER_ASSET_STATUS_DO_NOT_USE = 0;
+    NOT_WHITELISTED = 1;
+    WHITELISTING_REQUESTED = 2;
+    WHITELISTED = 3;
+    OUTDATED_VERSION = 4;
 }
 
 enum Exchange {

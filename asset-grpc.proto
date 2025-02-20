@@ -7,10 +7,20 @@ import "sologenic/com-fs-utils-lib/models/metadata/metadata.proto";
 
 option go_package = "github.com/sologenic/com-fs-asset-model;asset";
 
-service AssetService {
-    rpc Get(AssetKey) returns (Asset);
-    rpc List(AssetQuery) returns (Assets);
-    rpc Upsert(Asset) returns (AssetKey);
+service AssetListService {
+    // Upsert on Asset
+    rpc UpsertAsset(Asset) returns (AssetKey);
+    // Get Asset by Key 
+    rpc GetAsset(AssetKey) returns (Asset);
+    // Get all Assets for a given filter
+    rpc GetAssets(AssetQuery) returns (Assets);
+
+    // Upsert on UserAssetList
+    rpc UpsertUserAssetList(UserAssetList) returns (UserAssetListKey);
+    // Get UserAssetList by Key
+    rpc GetUserAssetList(UserAssetListKey) returns (UserAssetList);
+    // Get all UserAssetList for a given filter
+    rpc GetUserAssetLists(UserAssetListQuery) returns (UserAssetLists);
 }   
 
 message AssetKey {
@@ -29,4 +39,18 @@ message AssetQuery {
     optional string Symbol = 9;
     optional string Version = 10;
     optional string Issuer = 11;
+}
+
+message UserAssetListKey {
+    string Key = 1;
+}
+
+message UserAssetListQuery {
+    metadata.Network Network = 1;
+    optional int32 Offset = 2;
+    optional string AccountID = 3;
+    optional string Wallet = 4;
+    optional string AssetKey = 5;
+    optional UserAssetStatus Status = 6;
+    optional bool Visible = 7;
 }

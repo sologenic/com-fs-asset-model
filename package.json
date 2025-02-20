@@ -2,7 +2,7 @@
   "name": "com-fs-asset-model",
   "version": "1.0.0",
   "description": "",
-  "main": "build/index.js",
+  "main": "build/amm.js",
   "scripts": {
     "build-ts": "rm -rf build/ && npx tsc"
   },
@@ -13,7 +13,6 @@
   "devDependencies": {
     "typescript": "^4.9.4",
     "protoc-gen-ts": "^0.8.5",
-    "ts-proto": "^1.138.0",
-    "@grpc/grpc-js": "^1.8.12"
+    "ts-proto": "^1.138.0"
   }
 }
