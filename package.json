@@ -2,7 +2,7 @@
   "name": "com-fs-asset-model",
   "version": "1.0.0",
   "description": "",
-  "main": "build/amm.js",
+  "main": "build/asset.js",
   "scripts": {
     "build-ts": "rm -rf build/ && npx tsc"
   },
