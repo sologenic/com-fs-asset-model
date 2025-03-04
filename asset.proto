@@ -23,7 +23,13 @@ message AssetDetails {
     Exchange Exchange = 9;
     string InternalDescription = 10; // Description for internal use, not for on-chain 
     double MinTransactionAmount = 11;
-    double ExtraPercentage = 12; // Extra margin percentage required when buying an asset. e.g ExtraPercentage = 0.1 the buyer must provide 10% extra margin—of which the cost is 5%, and the remaining 5% is returned to the buyer.
+    // TradingMarginPercentage is required additional margin as a percentage of the order value that buyers must provide.
+    // Value should be between 0.0 and 1.0 (0% to 100%)
+    // Example: If TradingMarginPercentage = 0.1 (10%) and order value is $100:
+    //  - Buyer must provide $110 total ($100 asset cost + $10 margin)
+    //  - $5 (5%, cost) is kept for transaction costs
+    //  - $5 (5%, refundable) is returned to the buyer after execution
+    double TradingMarginPercentage = 12;
     
     // On-chain properties
     denom.Denom Denom = 17; // {subunit}-{issuer} where Subunit is su{Currency}. e.g., suappl_1-testcore1et29c...

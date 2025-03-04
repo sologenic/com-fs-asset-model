@@ -266,8 +266,15 @@ export interface AssetDetails {
   /** Description for internal use, not for on-chain */
   InternalDescription: string;
   MinTransactionAmount: number;
-  /** Extra margin percentage required when buying an asset. e.g ExtraPercentage = 0.1 the buyer must provide 10% extra margin—of which the cost is 5%, and the remaining 5% is returned to the buyer. */
-  ExtraPercentage: number;
+  /**
+   * TradingMarginPercentage is required additional margin as a percentage of the order value that buyers must provide.
+   * Value should be between 0.0 and 1.0 (0% to 100%)
+   * Example: If TradingMarginPercentage = 0.1 (10%) and order value is $100:
+   *  - Buyer must provide $110 total ($100 asset cost + $10 margin)
+   *  - $5 (5%, cost) is kept for transaction costs
+   *  - $5 (5%, refundable) is returned to the buyer after execution
+   */
+  TradingMarginPercentage: number;
   /** On-chain properties */
   Denom:
     | Denom
@@ -314,7 +321,7 @@ function createBaseAssetDetails(): AssetDetails {
     Exchange: 0,
     InternalDescription: "",
     MinTransactionAmount: 0,
-    ExtraPercentage: 0,
+    TradingMarginPercentage: 0,
     Denom: undefined,
     IsIssuedInSmartContract: false,
   };
@@ -355,8 +362,8 @@ export const AssetDetails = {
     if (message.MinTransactionAmount !== 0) {
       writer.uint32(89).double(message.MinTransactionAmount);
     }
-    if (message.ExtraPercentage !== 0) {
-      writer.uint32(97).double(message.ExtraPercentage);
+    if (message.TradingMarginPercentage !== 0) {
+      writer.uint32(97).double(message.TradingMarginPercentage);
     }
     if (message.Denom !== undefined) {
       Denom.encode(message.Denom, writer.uint32(138).fork()).ldelim();
@@ -456,7 +463,7 @@ export const AssetDetails = {
             break;
           }
 
-          message.ExtraPercentage = reader.double();
+          message.TradingMarginPercentage = reader.double();
           continue;
         case 17:
           if (tag !== 138) {
@@ -496,7 +503,9 @@ export const AssetDetails = {
       Exchange: isSet(object.Exchange) ? exchangeFromJSON(object.Exchange) : 0,
       InternalDescription: isSet(object.InternalDescription) ? globalThis.String(object.InternalDescription) : "",
       MinTransactionAmount: isSet(object.MinTransactionAmount) ? globalThis.Number(object.MinTransactionAmount) : 0,
-      ExtraPercentage: isSet(object.ExtraPercentage) ? globalThis.Number(object.ExtraPercentage) : 0,
+      TradingMarginPercentage: isSet(object.TradingMarginPercentage)
+        ? globalThis.Number(object.TradingMarginPercentage)
+        : 0,
       Denom: isSet(object.Denom) ? Denom.fromJSON(object.Denom) : undefined,
       IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
         ? globalThis.Boolean(object.IsIssuedInSmartContract)
@@ -539,8 +548,8 @@ export const AssetDetails = {
     if (message.MinTransactionAmount !== 0) {
       obj.MinTransactionAmount = message.MinTransactionAmount;
     }
-    if (message.ExtraPercentage !== 0) {
-      obj.ExtraPercentage = message.ExtraPercentage;
+    if (message.TradingMarginPercentage !== 0) {
+      obj.TradingMarginPercentage = message.TradingMarginPercentage;
     }
     if (message.Denom !== undefined) {
       obj.Denom = Denom.toJSON(message.Denom);
@@ -567,7 +576,7 @@ export const AssetDetails = {
     message.Exchange = object.Exchange ?? 0;
     message.InternalDescription = object.InternalDescription ?? "";
     message.MinTransactionAmount = object.MinTransactionAmount ?? 0;
-    message.ExtraPercentage = object.ExtraPercentage ?? 0;
+    message.TradingMarginPercentage = object.TradingMarginPercentage ?? 0;
     message.Denom = (object.Denom !== undefined && object.Denom !== null) ? Denom.fromPartial(object.Denom) : undefined;
     message.IsIssuedInSmartContract = object.IsIssuedInSmartContract ?? false;
     return message;
