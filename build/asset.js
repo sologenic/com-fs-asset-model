@@ -247,7 +247,7 @@ function createBaseAssetDetails() {
         Exchange: 0,
         InternalDescription: "",
         MinTransactionAmount: 0,
-        ExtraPercentage: 0,
+        TradingMarginPercentage: 0,
         Denom: undefined,
         IsIssuedInSmartContract: false,
     };
@@ -287,8 +287,8 @@ export const AssetDetails = {
         if (message.MinTransactionAmount !== 0) {
             writer.uint32(89).double(message.MinTransactionAmount);
         }
-        if (message.ExtraPercentage !== 0) {
-            writer.uint32(97).double(message.ExtraPercentage);
+        if (message.TradingMarginPercentage !== 0) {
+            writer.uint32(97).double(message.TradingMarginPercentage);
         }
         if (message.Denom !== undefined) {
             Denom.encode(message.Denom, writer.uint32(138).fork()).ldelim();
@@ -375,7 +375,7 @@ export const AssetDetails = {
                     if (tag !== 97) {
                         break;
                     }
-                    message.ExtraPercentage = reader.double();
+                    message.TradingMarginPercentage = reader.double();
                     continue;
                 case 17:
                     if (tag !== 138) {
@@ -412,7 +412,9 @@ export const AssetDetails = {
             Exchange: isSet(object.Exchange) ? exchangeFromJSON(object.Exchange) : 0,
             InternalDescription: isSet(object.InternalDescription) ? globalThis.String(object.InternalDescription) : "",
             MinTransactionAmount: isSet(object.MinTransactionAmount) ? globalThis.Number(object.MinTransactionAmount) : 0,
-            ExtraPercentage: isSet(object.ExtraPercentage) ? globalThis.Number(object.ExtraPercentage) : 0,
+            TradingMarginPercentage: isSet(object.TradingMarginPercentage)
+                ? globalThis.Number(object.TradingMarginPercentage)
+                : 0,
             Denom: isSet(object.Denom) ? Denom.fromJSON(object.Denom) : undefined,
             IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
                 ? globalThis.Boolean(object.IsIssuedInSmartContract)
@@ -455,8 +457,8 @@ export const AssetDetails = {
         if (message.MinTransactionAmount !== 0) {
             obj.MinTransactionAmount = message.MinTransactionAmount;
         }
-        if (message.ExtraPercentage !== 0) {
-            obj.ExtraPercentage = message.ExtraPercentage;
+        if (message.TradingMarginPercentage !== 0) {
+            obj.TradingMarginPercentage = message.TradingMarginPercentage;
         }
         if (message.Denom !== undefined) {
             obj.Denom = Denom.toJSON(message.Denom);
@@ -483,7 +485,7 @@ export const AssetDetails = {
         message.Exchange = (_j = object.Exchange) !== null && _j !== void 0 ? _j : 0;
         message.InternalDescription = (_k = object.InternalDescription) !== null && _k !== void 0 ? _k : "";
         message.MinTransactionAmount = (_l = object.MinTransactionAmount) !== null && _l !== void 0 ? _l : 0;
-        message.ExtraPercentage = (_m = object.ExtraPercentage) !== null && _m !== void 0 ? _m : 0;
+        message.TradingMarginPercentage = (_m = object.TradingMarginPercentage) !== null && _m !== void 0 ? _m : 0;
         message.Denom = (object.Denom !== undefined && object.Denom !== null) ? Denom.fromPartial(object.Denom) : undefined;
         message.IsIssuedInSmartContract = (_o = object.IsIssuedInSmartContract) !== null && _o !== void 0 ? _o : false;
         return message;
