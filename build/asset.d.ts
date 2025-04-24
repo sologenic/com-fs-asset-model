@@ -31,6 +31,8 @@ export declare enum AssetType {
     ASSET_TYPE_DO_NOT_USE = 0,
     STOCK = 1,
     BOND = 2,
+    /** WRAPPED_STABLECOIN - Represents a stablecoin that is wrapped for internal use within the system, such as WUSDC. */
+    WRAPPED_STABLECOIN = 3,
     UNRECOGNIZED = -1
 }
 export declare function assetTypeFromJSON(object: any): AssetType;

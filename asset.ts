@@ -122,6 +122,8 @@ export enum AssetType {
   ASSET_TYPE_DO_NOT_USE = 0,
   STOCK = 1,
   BOND = 2,
+  /** WRAPPED_STABLECOIN - Represents a stablecoin that is wrapped for internal use within the system, such as WUSDC. */
+  WRAPPED_STABLECOIN = 3,
   UNRECOGNIZED = -1,
 }
 
@@ -136,6 +138,9 @@ export function assetTypeFromJSON(object: any): AssetType {
     case 2:
     case "BOND":
       return AssetType.BOND;
+    case 3:
+    case "WRAPPED_STABLECOIN":
+      return AssetType.WRAPPED_STABLECOIN;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -151,6 +156,8 @@ export function assetTypeToJSON(object: AssetType): string {
       return "STOCK";
     case AssetType.BOND:
       return "BOND";
+    case AssetType.WRAPPED_STABLECOIN:
+      return "WRAPPED_STABLECOIN";
     case AssetType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

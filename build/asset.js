@@ -116,6 +116,8 @@ export var AssetType;
     AssetType[AssetType["ASSET_TYPE_DO_NOT_USE"] = 0] = "ASSET_TYPE_DO_NOT_USE";
     AssetType[AssetType["STOCK"] = 1] = "STOCK";
     AssetType[AssetType["BOND"] = 2] = "BOND";
+    /** WRAPPED_STABLECOIN - Represents a stablecoin that is wrapped for internal use within the system, such as WUSDC. */
+    AssetType[AssetType["WRAPPED_STABLECOIN"] = 3] = "WRAPPED_STABLECOIN";
     AssetType[AssetType["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
 })(AssetType || (AssetType = {}));
 export function assetTypeFromJSON(object) {
@@ -129,6 +131,9 @@ export function assetTypeFromJSON(object) {
         case 2:
         case "BOND":
             return AssetType.BOND;
+        case 3:
+        case "WRAPPED_STABLECOIN":
+            return AssetType.WRAPPED_STABLECOIN;
         case -1:
         case "UNRECOGNIZED":
         default:
@@ -143,6 +148,8 @@ export function assetTypeToJSON(object) {
             return "STOCK";
         case AssetType.BOND:
             return "BOND";
+        case AssetType.WRAPPED_STABLECOIN:
+            return "WRAPPED_STABLECOIN";
         case AssetType.UNRECOGNIZED:
         default:
             return "UNRECOGNIZED";
