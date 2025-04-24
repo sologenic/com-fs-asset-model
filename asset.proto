@@ -9,7 +9,7 @@ import "sologenic/com-fs-utils-lib/models/audit/audit.proto";
 option go_package = "github.com/sologenic/com-fs-asset-model;asset";
 
 message AssetDetails {
-    // Key combination: Currency-OrganizationID
+    // Key combination: Currency_OrganizationID
     string ID = 1; // Key string to prevent composing the key all the time and reduce errors
     string OrganizationID = 2; // External entity (broker) that owns this asset 
     AssetStatus Status = 3;

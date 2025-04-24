@@ -54,7 +54,7 @@ export declare enum Exchange {
 export declare function exchangeFromJSON(object: any): Exchange;
 export declare function exchangeToJSON(object: Exchange): string;
 export interface AssetDetails {
-    /** Key combination: Currency-OrganizationID */
+    /** Key combination: Currency_OrganizationID */
     ID: string;
     /** External entity (broker) that owns this asset */
     OrganizationID: string;
