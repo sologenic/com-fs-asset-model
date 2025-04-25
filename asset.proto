@@ -95,4 +95,5 @@ enum Exchange {
     EXCHANGE_DO_NOT_USE = 0;
     NASDAQ = 1;
     NYSE = 2;
+    ONCHAIN = 3; // On‑chain token/cryptocurrency markets, e.g. wrapped USDC
 }

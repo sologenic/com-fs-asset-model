@@ -219,6 +219,8 @@ export enum Exchange {
   EXCHANGE_DO_NOT_USE = 0,
   NASDAQ = 1,
   NYSE = 2,
+  /** ONCHAIN - On‑chain token/cryptocurrency markets, e.g. wrapped USDC */
+  ONCHAIN = 3,
   UNRECOGNIZED = -1,
 }
 
@@ -233,6 +235,9 @@ export function exchangeFromJSON(object: any): Exchange {
     case 2:
     case "NYSE":
       return Exchange.NYSE;
+    case 3:
+    case "ONCHAIN":
+      return Exchange.ONCHAIN;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -248,6 +253,8 @@ export function exchangeToJSON(object: Exchange): string {
       return "NASDAQ";
     case Exchange.NYSE:
       return "NYSE";
+    case Exchange.ONCHAIN:
+      return "ONCHAIN";
     case Exchange.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

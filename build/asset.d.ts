@@ -51,6 +51,8 @@ export declare enum Exchange {
     EXCHANGE_DO_NOT_USE = 0,
     NASDAQ = 1,
     NYSE = 2,
+    /** ONCHAIN - On‑chain token/cryptocurrency markets, e.g. wrapped USDC */
+    ONCHAIN = 3,
     UNRECOGNIZED = -1
 }
 export declare function exchangeFromJSON(object: any): Exchange;

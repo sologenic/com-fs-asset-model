@@ -209,6 +209,8 @@ export var Exchange;
     Exchange[Exchange["EXCHANGE_DO_NOT_USE"] = 0] = "EXCHANGE_DO_NOT_USE";
     Exchange[Exchange["NASDAQ"] = 1] = "NASDAQ";
     Exchange[Exchange["NYSE"] = 2] = "NYSE";
+    /** ONCHAIN - On‑chain token/cryptocurrency markets, e.g. wrapped USDC */
+    Exchange[Exchange["ONCHAIN"] = 3] = "ONCHAIN";
     Exchange[Exchange["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
 })(Exchange || (Exchange = {}));
 export function exchangeFromJSON(object) {
@@ -222,6 +224,9 @@ export function exchangeFromJSON(object) {
         case 2:
         case "NYSE":
             return Exchange.NYSE;
+        case 3:
+        case "ONCHAIN":
+            return Exchange.ONCHAIN;
         case -1:
         case "UNRECOGNIZED":
         default:
@@ -236,6 +241,8 @@ export function exchangeToJSON(object) {
             return "NASDAQ";
         case Exchange.NYSE:
             return "NYSE";
+        case Exchange.ONCHAIN:
+            return "ONCHAIN";
         case Exchange.UNRECOGNIZED:
         default:
             return "UNRECOGNIZED";
