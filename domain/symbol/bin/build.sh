@@ -6,5 +6,5 @@ rd=$(git rev-parse --show-toplevel)
 cd $rd
 
 protoc \
-  --proto_path=. "domain/denom/denom.proto" \
+  --proto_path=. "domain/symbol/symbol.proto" \
   "--go_out=." --go_opt=paths=source_relative
