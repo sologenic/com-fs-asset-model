@@ -83,6 +83,8 @@ export interface AssetDetails {
      *  - $5 (5%, refundable) is returned to the buyer after execution
      */
     TradingMarginPercentage: number;
+    /** Official domain of the asset e.g. apple.com, google.com, etc. */
+    Domain: string;
     /** On-chain properties */
     Denom: Denom | undefined;
     /** Flag to indicate if the asset is issued in the smart contract */
@@ -127,6 +129,7 @@ export declare const AssetDetails: {
         InternalDescription?: string | undefined;
         MinTransactionAmount?: number | undefined;
         TradingMarginPercentage?: number | undefined;
+        Domain?: string | undefined;
         Denom?: {
             Currency?: {
                 Symbol?: string | undefined;
@@ -151,6 +154,7 @@ export declare const AssetDetails: {
         InternalDescription?: string | undefined;
         MinTransactionAmount?: number | undefined;
         TradingMarginPercentage?: number | undefined;
+        Domain?: string | undefined;
         Denom?: ({
             Currency?: {
                 Symbol?: string | undefined;
@@ -188,6 +192,7 @@ export declare const AssetDetails: {
         InternalDescription?: string | undefined;
         MinTransactionAmount?: number | undefined;
         TradingMarginPercentage?: number | undefined;
+        Domain?: string | undefined;
         Denom?: {
             Currency?: {
                 Symbol?: string | undefined;
@@ -212,6 +217,7 @@ export declare const AssetDetails: {
         InternalDescription?: string | undefined;
         MinTransactionAmount?: number | undefined;
         TradingMarginPercentage?: number | undefined;
+        Domain?: string | undefined;
         Denom?: ({
             Currency?: {
                 Symbol?: string | undefined;
@@ -256,6 +262,7 @@ export declare const Asset: {
             InternalDescription?: string | undefined;
             MinTransactionAmount?: number | undefined;
             TradingMarginPercentage?: number | undefined;
+            Domain?: string | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -293,6 +300,7 @@ export declare const Asset: {
             InternalDescription?: string | undefined;
             MinTransactionAmount?: number | undefined;
             TradingMarginPercentage?: number | undefined;
+            Domain?: string | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -317,6 +325,7 @@ export declare const Asset: {
             InternalDescription?: string | undefined;
             MinTransactionAmount?: number | undefined;
             TradingMarginPercentage?: number | undefined;
+            Domain?: string | undefined;
             Denom?: ({
                 Currency?: {
                     Symbol?: string | undefined;
@@ -376,6 +385,7 @@ export declare const Asset: {
             InternalDescription?: string | undefined;
             MinTransactionAmount?: number | undefined;
             TradingMarginPercentage?: number | undefined;
+            Domain?: string | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -413,6 +423,7 @@ export declare const Asset: {
             InternalDescription?: string | undefined;
             MinTransactionAmount?: number | undefined;
             TradingMarginPercentage?: number | undefined;
+            Domain?: string | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -437,6 +448,7 @@ export declare const Asset: {
             InternalDescription?: string | undefined;
             MinTransactionAmount?: number | undefined;
             TradingMarginPercentage?: number | undefined;
+            Domain?: string | undefined;
             Denom?: ({
                 Currency?: {
                     Symbol?: string | undefined;
@@ -503,6 +515,7 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
+                Domain?: string | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -542,6 +555,7 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
+                Domain?: string | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -579,6 +593,7 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
+                Domain?: string | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -616,6 +631,7 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
+                Domain?: string | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -640,6 +656,7 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
+                Domain?: string | undefined;
                 Denom?: ({
                     Currency?: {
                         Symbol?: string | undefined;
@@ -698,6 +715,7 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
+                Domain?: string | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -738,6 +756,7 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
+                Domain?: string | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -777,6 +796,7 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
+                Domain?: string | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -814,6 +834,7 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
+                Domain?: string | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -851,6 +872,7 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
+                Domain?: string | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -875,6 +897,7 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
+                Domain?: string | undefined;
                 Denom?: ({
                     Currency?: {
                         Symbol?: string | undefined;
@@ -933,6 +956,7 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
+                Domain?: string | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;

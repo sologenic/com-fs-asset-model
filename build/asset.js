@@ -262,6 +262,7 @@ function createBaseAssetDetails() {
         InternalDescription: "",
         MinTransactionAmount: 0,
         TradingMarginPercentage: 0,
+        Domain: "",
         Denom: undefined,
         IsIssuedInSmartContract: false,
     };
@@ -303,6 +304,9 @@ export const AssetDetails = {
         }
         if (message.TradingMarginPercentage !== 0) {
             writer.uint32(97).double(message.TradingMarginPercentage);
+        }
+        if (message.Domain !== "") {
+            writer.uint32(106).string(message.Domain);
         }
         if (message.Denom !== undefined) {
             Denom.encode(message.Denom, writer.uint32(138).fork()).ldelim();
@@ -391,6 +395,12 @@ export const AssetDetails = {
                     }
                     message.TradingMarginPercentage = reader.double();
                     continue;
+                case 13:
+                    if (tag !== 106) {
+                        break;
+                    }
+                    message.Domain = reader.string();
+                    continue;
                 case 17:
                     if (tag !== 138) {
                         break;
@@ -429,6 +439,7 @@ export const AssetDetails = {
             TradingMarginPercentage: isSet(object.TradingMarginPercentage)
                 ? globalThis.Number(object.TradingMarginPercentage)
                 : 0,
+            Domain: isSet(object.Domain) ? globalThis.String(object.Domain) : "",
             Denom: isSet(object.Denom) ? Denom.fromJSON(object.Denom) : undefined,
             IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
                 ? globalThis.Boolean(object.IsIssuedInSmartContract)
@@ -474,6 +485,9 @@ export const AssetDetails = {
         if (message.TradingMarginPercentage !== 0) {
             obj.TradingMarginPercentage = message.TradingMarginPercentage;
         }
+        if (message.Domain !== "") {
+            obj.Domain = message.Domain;
+        }
         if (message.Denom !== undefined) {
             obj.Denom = Denom.toJSON(message.Denom);
         }
@@ -486,7 +500,7 @@ export const AssetDetails = {
         return AssetDetails.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
         const message = createBaseAssetDetails();
         message.ID = (_a = object.ID) !== null && _a !== void 0 ? _a : "";
         message.OrganizationID = (_b = object.OrganizationID) !== null && _b !== void 0 ? _b : "";
@@ -500,8 +514,9 @@ export const AssetDetails = {
         message.InternalDescription = (_k = object.InternalDescription) !== null && _k !== void 0 ? _k : "";
         message.MinTransactionAmount = (_l = object.MinTransactionAmount) !== null && _l !== void 0 ? _l : 0;
         message.TradingMarginPercentage = (_m = object.TradingMarginPercentage) !== null && _m !== void 0 ? _m : 0;
+        message.Domain = (_o = object.Domain) !== null && _o !== void 0 ? _o : "";
         message.Denom = (object.Denom !== undefined && object.Denom !== null) ? Denom.fromPartial(object.Denom) : undefined;
-        message.IsIssuedInSmartContract = (_o = object.IsIssuedInSmartContract) !== null && _o !== void 0 ? _o : false;
+        message.IsIssuedInSmartContract = (_p = object.IsIssuedInSmartContract) !== null && _p !== void 0 ? _p : false;
         return message;
     },
 };

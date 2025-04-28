@@ -289,6 +289,8 @@ export interface AssetDetails {
    *  - $5 (5%, refundable) is returned to the buyer after execution
    */
   TradingMarginPercentage: number;
+  /** Official domain of the asset e.g. apple.com, google.com, etc. */
+  Domain: string;
   /** On-chain properties */
   Denom:
     | Denom
@@ -336,6 +338,7 @@ function createBaseAssetDetails(): AssetDetails {
     InternalDescription: "",
     MinTransactionAmount: 0,
     TradingMarginPercentage: 0,
+    Domain: "",
     Denom: undefined,
     IsIssuedInSmartContract: false,
   };
@@ -378,6 +381,9 @@ export const AssetDetails = {
     }
     if (message.TradingMarginPercentage !== 0) {
       writer.uint32(97).double(message.TradingMarginPercentage);
+    }
+    if (message.Domain !== "") {
+      writer.uint32(106).string(message.Domain);
     }
     if (message.Denom !== undefined) {
       Denom.encode(message.Denom, writer.uint32(138).fork()).ldelim();
@@ -479,6 +485,13 @@ export const AssetDetails = {
 
           message.TradingMarginPercentage = reader.double();
           continue;
+        case 13:
+          if (tag !== 106) {
+            break;
+          }
+
+          message.Domain = reader.string();
+          continue;
         case 17:
           if (tag !== 138) {
             break;
@@ -520,6 +533,7 @@ export const AssetDetails = {
       TradingMarginPercentage: isSet(object.TradingMarginPercentage)
         ? globalThis.Number(object.TradingMarginPercentage)
         : 0,
+      Domain: isSet(object.Domain) ? globalThis.String(object.Domain) : "",
       Denom: isSet(object.Denom) ? Denom.fromJSON(object.Denom) : undefined,
       IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
         ? globalThis.Boolean(object.IsIssuedInSmartContract)
@@ -565,6 +579,9 @@ export const AssetDetails = {
     if (message.TradingMarginPercentage !== 0) {
       obj.TradingMarginPercentage = message.TradingMarginPercentage;
     }
+    if (message.Domain !== "") {
+      obj.Domain = message.Domain;
+    }
     if (message.Denom !== undefined) {
       obj.Denom = Denom.toJSON(message.Denom);
     }
@@ -591,6 +608,7 @@ export const AssetDetails = {
     message.InternalDescription = object.InternalDescription ?? "";
     message.MinTransactionAmount = object.MinTransactionAmount ?? 0;
     message.TradingMarginPercentage = object.TradingMarginPercentage ?? 0;
+    message.Domain = object.Domain ?? "";
     message.Denom = (object.Denom !== undefined && object.Denom !== null) ? Denom.fromPartial(object.Denom) : undefined;
     message.IsIssuedInSmartContract = object.IsIssuedInSmartContract ?? false;
     return message;
