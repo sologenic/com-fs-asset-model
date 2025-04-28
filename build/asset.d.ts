@@ -83,8 +83,7 @@ export interface AssetDetails {
      *  - $5 (5%, refundable) is returned to the buyer after execution
      */
     TradingMarginPercentage: number;
-    /** Official domain of the asset e.g. apple.com, google.com, etc. */
-    Domain: string;
+    LogoFile: LogoFile | undefined;
     /** On-chain properties */
     Denom: Denom | undefined;
     /** Flag to indicate if the asset is issued in the smart contract */
@@ -97,6 +96,13 @@ export interface Asset {
 }
 export interface Assets {
     Assets: Asset[];
+}
+export interface LogoFile {
+    /** The reference to the file */
+    Reference: string;
+    Extension: string;
+    /** User defined name of the file, used as a "description" and not to reference the file */
+    Name?: string | undefined;
 }
 export interface UserAssetList {
     /** Key combination: Currency-OrganizationID-AccountID-Wallet (AssetKey-AccountID-Wallet) */
@@ -129,7 +135,11 @@ export declare const AssetDetails: {
         InternalDescription?: string | undefined;
         MinTransactionAmount?: number | undefined;
         TradingMarginPercentage?: number | undefined;
-        Domain?: string | undefined;
+        LogoFile?: {
+            Reference?: string | undefined;
+            Extension?: string | undefined;
+            Name?: string | undefined;
+        } | undefined;
         Denom?: {
             Currency?: {
                 Symbol?: string | undefined;
@@ -154,7 +164,15 @@ export declare const AssetDetails: {
         InternalDescription?: string | undefined;
         MinTransactionAmount?: number | undefined;
         TradingMarginPercentage?: number | undefined;
-        Domain?: string | undefined;
+        LogoFile?: ({
+            Reference?: string | undefined;
+            Extension?: string | undefined;
+            Name?: string | undefined;
+        } & {
+            Reference?: string | undefined;
+            Extension?: string | undefined;
+            Name?: string | undefined;
+        } & { [K_1 in Exclude<keyof I["LogoFile"], keyof LogoFile>]: never; }) | undefined;
         Denom?: ({
             Currency?: {
                 Symbol?: string | undefined;
@@ -171,14 +189,14 @@ export declare const AssetDetails: {
             } & {
                 Symbol?: string | undefined;
                 Version?: string | undefined;
-            } & { [K_1 in Exclude<keyof I["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
+            } & { [K_2 in Exclude<keyof I["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
             Subunit?: string | undefined;
             Issuer?: string | undefined;
             Precision?: number | undefined;
             Description?: string | undefined;
-        } & { [K_2 in Exclude<keyof I["Denom"], keyof Denom>]: never; }) | undefined;
+        } & { [K_3 in Exclude<keyof I["Denom"], keyof Denom>]: never; }) | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
-    } & { [K_3 in Exclude<keyof I, keyof AssetDetails>]: never; }>(base?: I | undefined): AssetDetails;
+    } & { [K_4 in Exclude<keyof I, keyof AssetDetails>]: never; }>(base?: I | undefined): AssetDetails;
     fromPartial<I_1 extends {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -192,7 +210,11 @@ export declare const AssetDetails: {
         InternalDescription?: string | undefined;
         MinTransactionAmount?: number | undefined;
         TradingMarginPercentage?: number | undefined;
-        Domain?: string | undefined;
+        LogoFile?: {
+            Reference?: string | undefined;
+            Extension?: string | undefined;
+            Name?: string | undefined;
+        } | undefined;
         Denom?: {
             Currency?: {
                 Symbol?: string | undefined;
@@ -209,7 +231,7 @@ export declare const AssetDetails: {
         OrganizationID?: string | undefined;
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
-        JurisdictionIDs?: (string[] & string[] & { [K_4 in Exclude<keyof I_1["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+        JurisdictionIDs?: (string[] & string[] & { [K_5 in Exclude<keyof I_1["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
         Type?: AssetType | undefined;
         Name?: string | undefined;
         ExchangeTickerSymbol?: string | undefined;
@@ -217,7 +239,15 @@ export declare const AssetDetails: {
         InternalDescription?: string | undefined;
         MinTransactionAmount?: number | undefined;
         TradingMarginPercentage?: number | undefined;
-        Domain?: string | undefined;
+        LogoFile?: ({
+            Reference?: string | undefined;
+            Extension?: string | undefined;
+            Name?: string | undefined;
+        } & {
+            Reference?: string | undefined;
+            Extension?: string | undefined;
+            Name?: string | undefined;
+        } & { [K_6 in Exclude<keyof I_1["LogoFile"], keyof LogoFile>]: never; }) | undefined;
         Denom?: ({
             Currency?: {
                 Symbol?: string | undefined;
@@ -234,14 +264,14 @@ export declare const AssetDetails: {
             } & {
                 Symbol?: string | undefined;
                 Version?: string | undefined;
-            } & { [K_5 in Exclude<keyof I_1["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
+            } & { [K_7 in Exclude<keyof I_1["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
             Subunit?: string | undefined;
             Issuer?: string | undefined;
             Precision?: number | undefined;
             Description?: string | undefined;
-        } & { [K_6 in Exclude<keyof I_1["Denom"], keyof Denom>]: never; }) | undefined;
+        } & { [K_8 in Exclude<keyof I_1["Denom"], keyof Denom>]: never; }) | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
-    } & { [K_7 in Exclude<keyof I_1, keyof AssetDetails>]: never; }>(object: I_1): AssetDetails;
+    } & { [K_9 in Exclude<keyof I_1, keyof AssetDetails>]: never; }>(object: I_1): AssetDetails;
 };
 export declare const Asset: {
     encode(message: Asset, writer?: _m0.Writer): _m0.Writer;
@@ -262,7 +292,11 @@ export declare const Asset: {
             InternalDescription?: string | undefined;
             MinTransactionAmount?: number | undefined;
             TradingMarginPercentage?: number | undefined;
-            Domain?: string | undefined;
+            LogoFile?: {
+                Reference?: string | undefined;
+                Extension?: string | undefined;
+                Name?: string | undefined;
+            } | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -300,7 +334,11 @@ export declare const Asset: {
             InternalDescription?: string | undefined;
             MinTransactionAmount?: number | undefined;
             TradingMarginPercentage?: number | undefined;
-            Domain?: string | undefined;
+            LogoFile?: {
+                Reference?: string | undefined;
+                Extension?: string | undefined;
+                Name?: string | undefined;
+            } | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -325,7 +363,15 @@ export declare const Asset: {
             InternalDescription?: string | undefined;
             MinTransactionAmount?: number | undefined;
             TradingMarginPercentage?: number | undefined;
-            Domain?: string | undefined;
+            LogoFile?: ({
+                Reference?: string | undefined;
+                Extension?: string | undefined;
+                Name?: string | undefined;
+            } & {
+                Reference?: string | undefined;
+                Extension?: string | undefined;
+                Name?: string | undefined;
+            } & { [K_1 in Exclude<keyof I["AssetDetails"]["LogoFile"], keyof LogoFile>]: never; }) | undefined;
             Denom?: ({
                 Currency?: {
                     Symbol?: string | undefined;
@@ -342,14 +388,14 @@ export declare const Asset: {
                 } & {
                     Symbol?: string | undefined;
                     Version?: string | undefined;
-                } & { [K_1 in Exclude<keyof I["AssetDetails"]["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
+                } & { [K_2 in Exclude<keyof I["AssetDetails"]["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
                 Precision?: number | undefined;
                 Description?: string | undefined;
-            } & { [K_2 in Exclude<keyof I["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
+            } & { [K_3 in Exclude<keyof I["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
-        } & { [K_3 in Exclude<keyof I["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+        } & { [K_4 in Exclude<keyof I["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
         MetaData?: ({
             Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
             UpdatedAt?: Date | undefined;
@@ -360,7 +406,7 @@ export declare const Asset: {
             UpdatedAt?: Date | undefined;
             CreatedAt?: Date | undefined;
             UpdatedByAccount?: string | undefined;
-        } & { [K_4 in Exclude<keyof I["MetaData"], keyof MetaData>]: never; }) | undefined;
+        } & { [K_5 in Exclude<keyof I["MetaData"], keyof MetaData>]: never; }) | undefined;
         Audit?: ({
             ChangedBy?: string | undefined;
             ChangedAt?: Date | undefined;
@@ -369,8 +415,8 @@ export declare const Asset: {
             ChangedBy?: string | undefined;
             ChangedAt?: Date | undefined;
             Reason?: string | undefined;
-        } & { [K_5 in Exclude<keyof I["Audit"], keyof Audit>]: never; }) | undefined;
-    } & { [K_6 in Exclude<keyof I, keyof Asset>]: never; }>(base?: I | undefined): Asset;
+        } & { [K_6 in Exclude<keyof I["Audit"], keyof Audit>]: never; }) | undefined;
+    } & { [K_7 in Exclude<keyof I, keyof Asset>]: never; }>(base?: I | undefined): Asset;
     fromPartial<I_1 extends {
         AssetDetails?: {
             ID?: string | undefined;
@@ -385,7 +431,11 @@ export declare const Asset: {
             InternalDescription?: string | undefined;
             MinTransactionAmount?: number | undefined;
             TradingMarginPercentage?: number | undefined;
-            Domain?: string | undefined;
+            LogoFile?: {
+                Reference?: string | undefined;
+                Extension?: string | undefined;
+                Name?: string | undefined;
+            } | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -423,7 +473,11 @@ export declare const Asset: {
             InternalDescription?: string | undefined;
             MinTransactionAmount?: number | undefined;
             TradingMarginPercentage?: number | undefined;
-            Domain?: string | undefined;
+            LogoFile?: {
+                Reference?: string | undefined;
+                Extension?: string | undefined;
+                Name?: string | undefined;
+            } | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -440,7 +494,7 @@ export declare const Asset: {
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
-            JurisdictionIDs?: (string[] & string[] & { [K_7 in Exclude<keyof I_1["AssetDetails"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+            JurisdictionIDs?: (string[] & string[] & { [K_8 in Exclude<keyof I_1["AssetDetails"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
             Type?: AssetType | undefined;
             Name?: string | undefined;
             ExchangeTickerSymbol?: string | undefined;
@@ -448,7 +502,15 @@ export declare const Asset: {
             InternalDescription?: string | undefined;
             MinTransactionAmount?: number | undefined;
             TradingMarginPercentage?: number | undefined;
-            Domain?: string | undefined;
+            LogoFile?: ({
+                Reference?: string | undefined;
+                Extension?: string | undefined;
+                Name?: string | undefined;
+            } & {
+                Reference?: string | undefined;
+                Extension?: string | undefined;
+                Name?: string | undefined;
+            } & { [K_9 in Exclude<keyof I_1["AssetDetails"]["LogoFile"], keyof LogoFile>]: never; }) | undefined;
             Denom?: ({
                 Currency?: {
                     Symbol?: string | undefined;
@@ -465,14 +527,14 @@ export declare const Asset: {
                 } & {
                     Symbol?: string | undefined;
                     Version?: string | undefined;
-                } & { [K_8 in Exclude<keyof I_1["AssetDetails"]["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
+                } & { [K_10 in Exclude<keyof I_1["AssetDetails"]["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
                 Precision?: number | undefined;
                 Description?: string | undefined;
-            } & { [K_9 in Exclude<keyof I_1["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
+            } & { [K_11 in Exclude<keyof I_1["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
-        } & { [K_10 in Exclude<keyof I_1["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+        } & { [K_12 in Exclude<keyof I_1["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
         MetaData?: ({
             Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
             UpdatedAt?: Date | undefined;
@@ -483,7 +545,7 @@ export declare const Asset: {
             UpdatedAt?: Date | undefined;
             CreatedAt?: Date | undefined;
             UpdatedByAccount?: string | undefined;
-        } & { [K_11 in Exclude<keyof I_1["MetaData"], keyof MetaData>]: never; }) | undefined;
+        } & { [K_13 in Exclude<keyof I_1["MetaData"], keyof MetaData>]: never; }) | undefined;
         Audit?: ({
             ChangedBy?: string | undefined;
             ChangedAt?: Date | undefined;
@@ -492,8 +554,8 @@ export declare const Asset: {
             ChangedBy?: string | undefined;
             ChangedAt?: Date | undefined;
             Reason?: string | undefined;
-        } & { [K_12 in Exclude<keyof I_1["Audit"], keyof Audit>]: never; }) | undefined;
-    } & { [K_13 in Exclude<keyof I_1, keyof Asset>]: never; }>(object: I_1): Asset;
+        } & { [K_14 in Exclude<keyof I_1["Audit"], keyof Audit>]: never; }) | undefined;
+    } & { [K_15 in Exclude<keyof I_1, keyof Asset>]: never; }>(object: I_1): Asset;
 };
 export declare const Assets: {
     encode(message: Assets, writer?: _m0.Writer): _m0.Writer;
@@ -515,7 +577,11 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
-                Domain?: string | undefined;
+                LogoFile?: {
+                    Reference?: string | undefined;
+                    Extension?: string | undefined;
+                    Name?: string | undefined;
+                } | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -555,7 +621,11 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
-                Domain?: string | undefined;
+                LogoFile?: {
+                    Reference?: string | undefined;
+                    Extension?: string | undefined;
+                    Name?: string | undefined;
+                } | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -593,7 +663,11 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
-                Domain?: string | undefined;
+                LogoFile?: {
+                    Reference?: string | undefined;
+                    Extension?: string | undefined;
+                    Name?: string | undefined;
+                } | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -631,7 +705,11 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
-                Domain?: string | undefined;
+                LogoFile?: {
+                    Reference?: string | undefined;
+                    Extension?: string | undefined;
+                    Name?: string | undefined;
+                } | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -656,7 +734,15 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
-                Domain?: string | undefined;
+                LogoFile?: ({
+                    Reference?: string | undefined;
+                    Extension?: string | undefined;
+                    Name?: string | undefined;
+                } & {
+                    Reference?: string | undefined;
+                    Extension?: string | undefined;
+                    Name?: string | undefined;
+                } & { [K_1 in Exclude<keyof I["Assets"][number]["AssetDetails"]["LogoFile"], keyof LogoFile>]: never; }) | undefined;
                 Denom?: ({
                     Currency?: {
                         Symbol?: string | undefined;
@@ -673,14 +759,14 @@ export declare const Assets: {
                     } & {
                         Symbol?: string | undefined;
                         Version?: string | undefined;
-                    } & { [K_1 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
+                    } & { [K_2 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
                     Subunit?: string | undefined;
                     Issuer?: string | undefined;
                     Precision?: number | undefined;
                     Description?: string | undefined;
-                } & { [K_2 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
+                } & { [K_3 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
-            } & { [K_3 in Exclude<keyof I["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+            } & { [K_4 in Exclude<keyof I["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
             MetaData?: ({
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
@@ -691,7 +777,7 @@ export declare const Assets: {
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
-            } & { [K_4 in Exclude<keyof I["Assets"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
+            } & { [K_5 in Exclude<keyof I["Assets"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
             Audit?: ({
                 ChangedBy?: string | undefined;
                 ChangedAt?: Date | undefined;
@@ -700,8 +786,8 @@ export declare const Assets: {
                 ChangedBy?: string | undefined;
                 ChangedAt?: Date | undefined;
                 Reason?: string | undefined;
-            } & { [K_5 in Exclude<keyof I["Assets"][number]["Audit"], keyof Audit>]: never; }) | undefined;
-        } & { [K_6 in Exclude<keyof I["Assets"][number], keyof Asset>]: never; })[] & { [K_7 in Exclude<keyof I["Assets"], keyof {
+            } & { [K_6 in Exclude<keyof I["Assets"][number]["Audit"], keyof Audit>]: never; }) | undefined;
+        } & { [K_7 in Exclude<keyof I["Assets"][number], keyof Asset>]: never; })[] & { [K_8 in Exclude<keyof I["Assets"], keyof {
             AssetDetails?: {
                 ID?: string | undefined;
                 OrganizationID?: string | undefined;
@@ -715,7 +801,11 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
-                Domain?: string | undefined;
+                LogoFile?: {
+                    Reference?: string | undefined;
+                    Extension?: string | undefined;
+                    Name?: string | undefined;
+                } | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -740,7 +830,7 @@ export declare const Assets: {
                 Reason?: string | undefined;
             } | undefined;
         }[]>]: never; }) | undefined;
-    } & { [K_8 in Exclude<keyof I, "Assets">]: never; }>(base?: I | undefined): Assets;
+    } & { [K_9 in Exclude<keyof I, "Assets">]: never; }>(base?: I | undefined): Assets;
     fromPartial<I_1 extends {
         Assets?: {
             AssetDetails?: {
@@ -756,7 +846,11 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
-                Domain?: string | undefined;
+                LogoFile?: {
+                    Reference?: string | undefined;
+                    Extension?: string | undefined;
+                    Name?: string | undefined;
+                } | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -796,7 +890,11 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
-                Domain?: string | undefined;
+                LogoFile?: {
+                    Reference?: string | undefined;
+                    Extension?: string | undefined;
+                    Name?: string | undefined;
+                } | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -834,7 +932,11 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
-                Domain?: string | undefined;
+                LogoFile?: {
+                    Reference?: string | undefined;
+                    Extension?: string | undefined;
+                    Name?: string | undefined;
+                } | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -872,7 +974,11 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
-                Domain?: string | undefined;
+                LogoFile?: {
+                    Reference?: string | undefined;
+                    Extension?: string | undefined;
+                    Name?: string | undefined;
+                } | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -889,7 +995,7 @@ export declare const Assets: {
                 OrganizationID?: string | undefined;
                 Status?: AssetStatus | undefined;
                 Reason?: Reason | undefined;
-                JurisdictionIDs?: (string[] & string[] & { [K_9 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+                JurisdictionIDs?: (string[] & string[] & { [K_10 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
                 Type?: AssetType | undefined;
                 Name?: string | undefined;
                 ExchangeTickerSymbol?: string | undefined;
@@ -897,7 +1003,15 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
-                Domain?: string | undefined;
+                LogoFile?: ({
+                    Reference?: string | undefined;
+                    Extension?: string | undefined;
+                    Name?: string | undefined;
+                } & {
+                    Reference?: string | undefined;
+                    Extension?: string | undefined;
+                    Name?: string | undefined;
+                } & { [K_11 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["LogoFile"], keyof LogoFile>]: never; }) | undefined;
                 Denom?: ({
                     Currency?: {
                         Symbol?: string | undefined;
@@ -914,14 +1028,14 @@ export declare const Assets: {
                     } & {
                         Symbol?: string | undefined;
                         Version?: string | undefined;
-                    } & { [K_10 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
+                    } & { [K_12 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
                     Subunit?: string | undefined;
                     Issuer?: string | undefined;
                     Precision?: number | undefined;
                     Description?: string | undefined;
-                } & { [K_11 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
+                } & { [K_13 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
-            } & { [K_12 in Exclude<keyof I_1["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+            } & { [K_14 in Exclude<keyof I_1["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
             MetaData?: ({
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
@@ -932,7 +1046,7 @@ export declare const Assets: {
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
-            } & { [K_13 in Exclude<keyof I_1["Assets"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
+            } & { [K_15 in Exclude<keyof I_1["Assets"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
             Audit?: ({
                 ChangedBy?: string | undefined;
                 ChangedAt?: Date | undefined;
@@ -941,8 +1055,8 @@ export declare const Assets: {
                 ChangedBy?: string | undefined;
                 ChangedAt?: Date | undefined;
                 Reason?: string | undefined;
-            } & { [K_14 in Exclude<keyof I_1["Assets"][number]["Audit"], keyof Audit>]: never; }) | undefined;
-        } & { [K_15 in Exclude<keyof I_1["Assets"][number], keyof Asset>]: never; })[] & { [K_16 in Exclude<keyof I_1["Assets"], keyof {
+            } & { [K_16 in Exclude<keyof I_1["Assets"][number]["Audit"], keyof Audit>]: never; }) | undefined;
+        } & { [K_17 in Exclude<keyof I_1["Assets"][number], keyof Asset>]: never; })[] & { [K_18 in Exclude<keyof I_1["Assets"], keyof {
             AssetDetails?: {
                 ID?: string | undefined;
                 OrganizationID?: string | undefined;
@@ -956,7 +1070,11 @@ export declare const Assets: {
                 InternalDescription?: string | undefined;
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
-                Domain?: string | undefined;
+                LogoFile?: {
+                    Reference?: string | undefined;
+                    Extension?: string | undefined;
+                    Name?: string | undefined;
+                } | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -981,7 +1099,31 @@ export declare const Assets: {
                 Reason?: string | undefined;
             } | undefined;
         }[]>]: never; }) | undefined;
-    } & { [K_17 in Exclude<keyof I_1, "Assets">]: never; }>(object: I_1): Assets;
+    } & { [K_19 in Exclude<keyof I_1, "Assets">]: never; }>(object: I_1): Assets;
+};
+export declare const LogoFile: {
+    encode(message: LogoFile, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): LogoFile;
+    fromJSON(object: any): LogoFile;
+    toJSON(message: LogoFile): unknown;
+    create<I extends {
+        Reference?: string | undefined;
+        Extension?: string | undefined;
+        Name?: string | undefined;
+    } & {
+        Reference?: string | undefined;
+        Extension?: string | undefined;
+        Name?: string | undefined;
+    } & { [K in Exclude<keyof I, keyof LogoFile>]: never; }>(base?: I | undefined): LogoFile;
+    fromPartial<I_1 extends {
+        Reference?: string | undefined;
+        Extension?: string | undefined;
+        Name?: string | undefined;
+    } & {
+        Reference?: string | undefined;
+        Extension?: string | undefined;
+        Name?: string | undefined;
+    } & { [K_1 in Exclude<keyof I_1, keyof LogoFile>]: never; }>(object: I_1): LogoFile;
 };
 export declare const UserAssetList: {
     encode(message: UserAssetList, writer?: _m0.Writer): _m0.Writer;
