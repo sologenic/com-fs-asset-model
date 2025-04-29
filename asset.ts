@@ -289,6 +289,9 @@ export interface AssetDetails {
    *  - $5 (5%, refundable) is returned to the buyer after execution
    */
   TradingMarginPercentage: number;
+  LogoFile:
+    | LogoFile
+    | undefined;
   /** On-chain properties */
   Denom:
     | Denom
@@ -305,6 +308,14 @@ export interface Asset {
 
 export interface Assets {
   Assets: Asset[];
+}
+
+export interface LogoFile {
+  /** The reference to the file */
+  Reference: string;
+  Extension: string;
+  /** User defined name of the file, used as a "description" and not to reference the file */
+  Name?: string | undefined;
 }
 
 export interface UserAssetList {
@@ -336,6 +347,7 @@ function createBaseAssetDetails(): AssetDetails {
     InternalDescription: "",
     MinTransactionAmount: 0,
     TradingMarginPercentage: 0,
+    LogoFile: undefined,
     Denom: undefined,
     IsIssuedInSmartContract: false,
   };
@@ -378,6 +390,9 @@ export const AssetDetails = {
     }
     if (message.TradingMarginPercentage !== 0) {
       writer.uint32(97).double(message.TradingMarginPercentage);
+    }
+    if (message.LogoFile !== undefined) {
+      LogoFile.encode(message.LogoFile, writer.uint32(106).fork()).ldelim();
     }
     if (message.Denom !== undefined) {
       Denom.encode(message.Denom, writer.uint32(138).fork()).ldelim();
@@ -479,6 +494,13 @@ export const AssetDetails = {
 
           message.TradingMarginPercentage = reader.double();
           continue;
+        case 13:
+          if (tag !== 106) {
+            break;
+          }
+
+          message.LogoFile = LogoFile.decode(reader, reader.uint32());
+          continue;
         case 17:
           if (tag !== 138) {
             break;
@@ -520,6 +542,7 @@ export const AssetDetails = {
       TradingMarginPercentage: isSet(object.TradingMarginPercentage)
         ? globalThis.Number(object.TradingMarginPercentage)
         : 0,
+      LogoFile: isSet(object.LogoFile) ? LogoFile.fromJSON(object.LogoFile) : undefined,
       Denom: isSet(object.Denom) ? Denom.fromJSON(object.Denom) : undefined,
       IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
         ? globalThis.Boolean(object.IsIssuedInSmartContract)
@@ -565,6 +588,9 @@ export const AssetDetails = {
     if (message.TradingMarginPercentage !== 0) {
       obj.TradingMarginPercentage = message.TradingMarginPercentage;
     }
+    if (message.LogoFile !== undefined) {
+      obj.LogoFile = LogoFile.toJSON(message.LogoFile);
+    }
     if (message.Denom !== undefined) {
       obj.Denom = Denom.toJSON(message.Denom);
     }
@@ -591,6 +617,9 @@ export const AssetDetails = {
     message.InternalDescription = object.InternalDescription ?? "";
     message.MinTransactionAmount = object.MinTransactionAmount ?? 0;
     message.TradingMarginPercentage = object.TradingMarginPercentage ?? 0;
+    message.LogoFile = (object.LogoFile !== undefined && object.LogoFile !== null)
+      ? LogoFile.fromPartial(object.LogoFile)
+      : undefined;
     message.Denom = (object.Denom !== undefined && object.Denom !== null) ? Denom.fromPartial(object.Denom) : undefined;
     message.IsIssuedInSmartContract = object.IsIssuedInSmartContract ?? false;
     return message;
@@ -743,6 +772,95 @@ export const Assets = {
   fromPartial<I extends Exact<DeepPartial<Assets>, I>>(object: I): Assets {
     const message = createBaseAssets();
     message.Assets = object.Assets?.map((e) => Asset.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseLogoFile(): LogoFile {
+  return { Reference: "", Extension: "", Name: undefined };
+}
+
+export const LogoFile = {
+  encode(message: LogoFile, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.Reference !== "") {
+      writer.uint32(10).string(message.Reference);
+    }
+    if (message.Extension !== "") {
+      writer.uint32(18).string(message.Extension);
+    }
+    if (message.Name !== undefined) {
+      writer.uint32(26).string(message.Name);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): LogoFile {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseLogoFile();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.Reference = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.Extension = reader.string();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.Name = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): LogoFile {
+    return {
+      Reference: isSet(object.Reference) ? globalThis.String(object.Reference) : "",
+      Extension: isSet(object.Extension) ? globalThis.String(object.Extension) : "",
+      Name: isSet(object.Name) ? globalThis.String(object.Name) : undefined,
+    };
+  },
+
+  toJSON(message: LogoFile): unknown {
+    const obj: any = {};
+    if (message.Reference !== "") {
+      obj.Reference = message.Reference;
+    }
+    if (message.Extension !== "") {
+      obj.Extension = message.Extension;
+    }
+    if (message.Name !== undefined) {
+      obj.Name = message.Name;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<LogoFile>, I>>(base?: I): LogoFile {
+    return LogoFile.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<LogoFile>, I>>(object: I): LogoFile {
+    const message = createBaseLogoFile();
+    message.Reference = object.Reference ?? "";
+    message.Extension = object.Extension ?? "";
+    message.Name = object.Name ?? undefined;
     return message;
   },
 };
