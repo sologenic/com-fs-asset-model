@@ -30,7 +30,8 @@ message AssetDetails {
     //  - $5 (5%, cost) is kept for transaction costs
     //  - $5 (5%, refundable) is returned to the buyer after execution
     double TradingMarginPercentage = 12;
-    
+    LogoFile LogoFile = 13;
+
     // On-chain properties
     denom.Denom Denom = 17; // {subunit}-{issuer} where Subunit is su{Currency}. e.g., suappl_1-testcore1et29c...
     bool IsIssuedInSmartContract = 18; // Flag to indicate if the asset is issued in the smart contract
@@ -44,6 +45,12 @@ message Asset {
 
 message Assets {
     repeated Asset Assets = 1;
+}
+
+message LogoFile {
+    string Reference = 1; // The reference to the file
+    string Extension = 2;
+    optional string Name = 3; // User defined name of the file, used as a "description" and not to reference the file
 }
 
 message UserAssetList {

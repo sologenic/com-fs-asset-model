@@ -262,6 +262,7 @@ function createBaseAssetDetails() {
         InternalDescription: "",
         MinTransactionAmount: 0,
         TradingMarginPercentage: 0,
+        LogoFile: undefined,
         Denom: undefined,
         IsIssuedInSmartContract: false,
     };
@@ -303,6 +304,9 @@ export const AssetDetails = {
         }
         if (message.TradingMarginPercentage !== 0) {
             writer.uint32(97).double(message.TradingMarginPercentage);
+        }
+        if (message.LogoFile !== undefined) {
+            LogoFile.encode(message.LogoFile, writer.uint32(106).fork()).ldelim();
         }
         if (message.Denom !== undefined) {
             Denom.encode(message.Denom, writer.uint32(138).fork()).ldelim();
@@ -391,6 +395,12 @@ export const AssetDetails = {
                     }
                     message.TradingMarginPercentage = reader.double();
                     continue;
+                case 13:
+                    if (tag !== 106) {
+                        break;
+                    }
+                    message.LogoFile = LogoFile.decode(reader, reader.uint32());
+                    continue;
                 case 17:
                     if (tag !== 138) {
                         break;
@@ -429,6 +439,7 @@ export const AssetDetails = {
             TradingMarginPercentage: isSet(object.TradingMarginPercentage)
                 ? globalThis.Number(object.TradingMarginPercentage)
                 : 0,
+            LogoFile: isSet(object.LogoFile) ? LogoFile.fromJSON(object.LogoFile) : undefined,
             Denom: isSet(object.Denom) ? Denom.fromJSON(object.Denom) : undefined,
             IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
                 ? globalThis.Boolean(object.IsIssuedInSmartContract)
@@ -474,6 +485,9 @@ export const AssetDetails = {
         if (message.TradingMarginPercentage !== 0) {
             obj.TradingMarginPercentage = message.TradingMarginPercentage;
         }
+        if (message.LogoFile !== undefined) {
+            obj.LogoFile = LogoFile.toJSON(message.LogoFile);
+        }
         if (message.Denom !== undefined) {
             obj.Denom = Denom.toJSON(message.Denom);
         }
@@ -500,6 +514,9 @@ export const AssetDetails = {
         message.InternalDescription = (_k = object.InternalDescription) !== null && _k !== void 0 ? _k : "";
         message.MinTransactionAmount = (_l = object.MinTransactionAmount) !== null && _l !== void 0 ? _l : 0;
         message.TradingMarginPercentage = (_m = object.TradingMarginPercentage) !== null && _m !== void 0 ? _m : 0;
+        message.LogoFile = (object.LogoFile !== undefined && object.LogoFile !== null)
+            ? LogoFile.fromPartial(object.LogoFile)
+            : undefined;
         message.Denom = (object.Denom !== undefined && object.Denom !== null) ? Denom.fromPartial(object.Denom) : undefined;
         message.IsIssuedInSmartContract = (_o = object.IsIssuedInSmartContract) !== null && _o !== void 0 ? _o : false;
         return message;
@@ -638,6 +655,87 @@ export const Assets = {
         var _a;
         const message = createBaseAssets();
         message.Assets = ((_a = object.Assets) === null || _a === void 0 ? void 0 : _a.map((e) => Asset.fromPartial(e))) || [];
+        return message;
+    },
+};
+function createBaseLogoFile() {
+    return { Reference: "", Extension: "", Name: undefined };
+}
+export const LogoFile = {
+    encode(message, writer = _m0.Writer.create()) {
+        if (message.Reference !== "") {
+            writer.uint32(10).string(message.Reference);
+        }
+        if (message.Extension !== "") {
+            writer.uint32(18).string(message.Extension);
+        }
+        if (message.Name !== undefined) {
+            writer.uint32(26).string(message.Name);
+        }
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseLogoFile();
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    if (tag !== 10) {
+                        break;
+                    }
+                    message.Reference = reader.string();
+                    continue;
+                case 2:
+                    if (tag !== 18) {
+                        break;
+                    }
+                    message.Extension = reader.string();
+                    continue;
+                case 3:
+                    if (tag !== 26) {
+                        break;
+                    }
+                    message.Name = reader.string();
+                    continue;
+            }
+            if ((tag & 7) === 4 || tag === 0) {
+                break;
+            }
+            reader.skipType(tag & 7);
+        }
+        return message;
+    },
+    fromJSON(object) {
+        return {
+            Reference: isSet(object.Reference) ? globalThis.String(object.Reference) : "",
+            Extension: isSet(object.Extension) ? globalThis.String(object.Extension) : "",
+            Name: isSet(object.Name) ? globalThis.String(object.Name) : undefined,
+        };
+    },
+    toJSON(message) {
+        const obj = {};
+        if (message.Reference !== "") {
+            obj.Reference = message.Reference;
+        }
+        if (message.Extension !== "") {
+            obj.Extension = message.Extension;
+        }
+        if (message.Name !== undefined) {
+            obj.Name = message.Name;
+        }
+        return obj;
+    },
+    create(base) {
+        return LogoFile.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial(object) {
+        var _a, _b, _c;
+        const message = createBaseLogoFile();
+        message.Reference = (_a = object.Reference) !== null && _a !== void 0 ? _a : "";
+        message.Extension = (_b = object.Extension) !== null && _b !== void 0 ? _b : "";
+        message.Name = (_c = object.Name) !== null && _c !== void 0 ? _c : undefined;
         return message;
     },
 };
