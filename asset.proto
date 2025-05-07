@@ -31,7 +31,7 @@ message AssetDetails {
     //  - $5 (5%, refundable) is returned to the buyer after execution
     double TradingMarginPercentage = 12;
     LogoFile LogoFile = 13;
-    GICSSector IndustrySector = 14; // Global Industry Classification Standard (GICS®) sector
+    Industry Industry = 14; // Global Industry Classification Standard (GICS®) sector
 
     // On-chain properties
     denom.Denom Denom = 17; // {subunit}-{issuer} where Subunit is su{Currency}. e.g., suappl_1-testcore1et29c...
@@ -108,7 +108,7 @@ enum Exchange {
 
 // Global Industry Classification Standard (GICS®) 11 sectors
 // Source: https://www.msci.com/our-solutions/indexes/gics
-enum GICSSector {
+enum Industry {
     GICS_SECTOR_DO_NOT_USE = 0;
     ENERGY = 1;
     MATERIALS = 2;

@@ -39,6 +39,7 @@ message AssetQuery {
     optional string Symbol = 9;
     optional string Version = 10;
     optional string Issuer = 11;
+    optional Industry Industry = 12;
 }
 
 message UserAssetListKey {

@@ -61,7 +61,7 @@ export declare function exchangeToJSON(object: Exchange): string;
  * Global Industry Classification Standard (GICS®) 11 sectors
  * Source: https://www.msci.com/our-solutions/indexes/gics
  */
-export declare enum GICSSector {
+export declare enum Industry {
     GICS_SECTOR_DO_NOT_USE = 0,
     ENERGY = 1,
     MATERIALS = 2,
@@ -76,8 +76,8 @@ export declare enum GICSSector {
     REAL_ESTATE = 11,
     UNRECOGNIZED = -1
 }
-export declare function gICSSectorFromJSON(object: any): GICSSector;
-export declare function gICSSectorToJSON(object: GICSSector): string;
+export declare function industryFromJSON(object: any): Industry;
+export declare function industryToJSON(object: Industry): string;
 export interface AssetDetails {
     /** Key combination: Currency_OrganizationID */
     ID: string;
@@ -106,7 +106,7 @@ export interface AssetDetails {
     TradingMarginPercentage: number;
     LogoFile: LogoFile | undefined;
     /** Global Industry Classification Standard (GICS®) sector */
-    IndustrySector: GICSSector;
+    Industry: Industry;
     /** On-chain properties */
     Denom: Denom | undefined;
     /** Flag to indicate if the asset is issued in the smart contract */
@@ -163,7 +163,7 @@ export declare const AssetDetails: {
             Extension?: string | undefined;
             Name?: string | undefined;
         } | undefined;
-        IndustrySector?: GICSSector | undefined;
+        Industry?: Industry | undefined;
         Denom?: {
             Currency?: {
                 Symbol?: string | undefined;
@@ -197,7 +197,7 @@ export declare const AssetDetails: {
             Extension?: string | undefined;
             Name?: string | undefined;
         } & { [K_1 in Exclude<keyof I["LogoFile"], keyof LogoFile>]: never; }) | undefined;
-        IndustrySector?: GICSSector | undefined;
+        Industry?: Industry | undefined;
         Denom?: ({
             Currency?: {
                 Symbol?: string | undefined;
@@ -240,7 +240,7 @@ export declare const AssetDetails: {
             Extension?: string | undefined;
             Name?: string | undefined;
         } | undefined;
-        IndustrySector?: GICSSector | undefined;
+        Industry?: Industry | undefined;
         Denom?: {
             Currency?: {
                 Symbol?: string | undefined;
@@ -274,7 +274,7 @@ export declare const AssetDetails: {
             Extension?: string | undefined;
             Name?: string | undefined;
         } & { [K_6 in Exclude<keyof I_1["LogoFile"], keyof LogoFile>]: never; }) | undefined;
-        IndustrySector?: GICSSector | undefined;
+        Industry?: Industry | undefined;
         Denom?: ({
             Currency?: {
                 Symbol?: string | undefined;
@@ -324,7 +324,7 @@ export declare const Asset: {
                 Extension?: string | undefined;
                 Name?: string | undefined;
             } | undefined;
-            IndustrySector?: GICSSector | undefined;
+            Industry?: Industry | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -367,7 +367,7 @@ export declare const Asset: {
                 Extension?: string | undefined;
                 Name?: string | undefined;
             } | undefined;
-            IndustrySector?: GICSSector | undefined;
+            Industry?: Industry | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -401,7 +401,7 @@ export declare const Asset: {
                 Extension?: string | undefined;
                 Name?: string | undefined;
             } & { [K_1 in Exclude<keyof I["AssetDetails"]["LogoFile"], keyof LogoFile>]: never; }) | undefined;
-            IndustrySector?: GICSSector | undefined;
+            Industry?: Industry | undefined;
             Denom?: ({
                 Currency?: {
                     Symbol?: string | undefined;
@@ -466,7 +466,7 @@ export declare const Asset: {
                 Extension?: string | undefined;
                 Name?: string | undefined;
             } | undefined;
-            IndustrySector?: GICSSector | undefined;
+            Industry?: Industry | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -509,7 +509,7 @@ export declare const Asset: {
                 Extension?: string | undefined;
                 Name?: string | undefined;
             } | undefined;
-            IndustrySector?: GICSSector | undefined;
+            Industry?: Industry | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -543,7 +543,7 @@ export declare const Asset: {
                 Extension?: string | undefined;
                 Name?: string | undefined;
             } & { [K_9 in Exclude<keyof I_1["AssetDetails"]["LogoFile"], keyof LogoFile>]: never; }) | undefined;
-            IndustrySector?: GICSSector | undefined;
+            Industry?: Industry | undefined;
             Denom?: ({
                 Currency?: {
                     Symbol?: string | undefined;
@@ -615,7 +615,7 @@ export declare const Assets: {
                     Extension?: string | undefined;
                     Name?: string | undefined;
                 } | undefined;
-                IndustrySector?: GICSSector | undefined;
+                Industry?: Industry | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -660,7 +660,7 @@ export declare const Assets: {
                     Extension?: string | undefined;
                     Name?: string | undefined;
                 } | undefined;
-                IndustrySector?: GICSSector | undefined;
+                Industry?: Industry | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -703,7 +703,7 @@ export declare const Assets: {
                     Extension?: string | undefined;
                     Name?: string | undefined;
                 } | undefined;
-                IndustrySector?: GICSSector | undefined;
+                Industry?: Industry | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -746,7 +746,7 @@ export declare const Assets: {
                     Extension?: string | undefined;
                     Name?: string | undefined;
                 } | undefined;
-                IndustrySector?: GICSSector | undefined;
+                Industry?: Industry | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -780,7 +780,7 @@ export declare const Assets: {
                     Extension?: string | undefined;
                     Name?: string | undefined;
                 } & { [K_1 in Exclude<keyof I["Assets"][number]["AssetDetails"]["LogoFile"], keyof LogoFile>]: never; }) | undefined;
-                IndustrySector?: GICSSector | undefined;
+                Industry?: Industry | undefined;
                 Denom?: ({
                     Currency?: {
                         Symbol?: string | undefined;
@@ -844,7 +844,7 @@ export declare const Assets: {
                     Extension?: string | undefined;
                     Name?: string | undefined;
                 } | undefined;
-                IndustrySector?: GICSSector | undefined;
+                Industry?: Industry | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -890,7 +890,7 @@ export declare const Assets: {
                     Extension?: string | undefined;
                     Name?: string | undefined;
                 } | undefined;
-                IndustrySector?: GICSSector | undefined;
+                Industry?: Industry | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -935,7 +935,7 @@ export declare const Assets: {
                     Extension?: string | undefined;
                     Name?: string | undefined;
                 } | undefined;
-                IndustrySector?: GICSSector | undefined;
+                Industry?: Industry | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -978,7 +978,7 @@ export declare const Assets: {
                     Extension?: string | undefined;
                     Name?: string | undefined;
                 } | undefined;
-                IndustrySector?: GICSSector | undefined;
+                Industry?: Industry | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -1021,7 +1021,7 @@ export declare const Assets: {
                     Extension?: string | undefined;
                     Name?: string | undefined;
                 } | undefined;
-                IndustrySector?: GICSSector | undefined;
+                Industry?: Industry | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -1055,7 +1055,7 @@ export declare const Assets: {
                     Extension?: string | undefined;
                     Name?: string | undefined;
                 } & { [K_11 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["LogoFile"], keyof LogoFile>]: never; }) | undefined;
-                IndustrySector?: GICSSector | undefined;
+                Industry?: Industry | undefined;
                 Denom?: ({
                     Currency?: {
                         Symbol?: string | undefined;
@@ -1119,7 +1119,7 @@ export declare const Assets: {
                     Extension?: string | undefined;
                     Name?: string | undefined;
                 } | undefined;
-                IndustrySector?: GICSSector | undefined;
+                Industry?: Industry | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;

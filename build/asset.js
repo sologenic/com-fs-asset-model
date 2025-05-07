@@ -252,93 +252,93 @@ export function exchangeToJSON(object) {
  * Global Industry Classification Standard (GICS®) 11 sectors
  * Source: https://www.msci.com/our-solutions/indexes/gics
  */
-export var GICSSector;
-(function (GICSSector) {
-    GICSSector[GICSSector["GICS_SECTOR_DO_NOT_USE"] = 0] = "GICS_SECTOR_DO_NOT_USE";
-    GICSSector[GICSSector["ENERGY"] = 1] = "ENERGY";
-    GICSSector[GICSSector["MATERIALS"] = 2] = "MATERIALS";
-    GICSSector[GICSSector["INDUSTRIALS"] = 3] = "INDUSTRIALS";
-    GICSSector[GICSSector["CONSUMER_DISCRETIONARY"] = 4] = "CONSUMER_DISCRETIONARY";
-    GICSSector[GICSSector["CONSUMER_STAPLES"] = 5] = "CONSUMER_STAPLES";
-    GICSSector[GICSSector["HEALTH_CARE"] = 6] = "HEALTH_CARE";
-    GICSSector[GICSSector["FINANCIALS"] = 7] = "FINANCIALS";
-    GICSSector[GICSSector["INFORMATION_TECHNOLOGY"] = 8] = "INFORMATION_TECHNOLOGY";
-    GICSSector[GICSSector["COMMUNICATION_SERVICES"] = 9] = "COMMUNICATION_SERVICES";
-    GICSSector[GICSSector["UTILITIES"] = 10] = "UTILITIES";
-    GICSSector[GICSSector["REAL_ESTATE"] = 11] = "REAL_ESTATE";
-    GICSSector[GICSSector["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
-})(GICSSector || (GICSSector = {}));
-export function gICSSectorFromJSON(object) {
+export var Industry;
+(function (Industry) {
+    Industry[Industry["GICS_SECTOR_DO_NOT_USE"] = 0] = "GICS_SECTOR_DO_NOT_USE";
+    Industry[Industry["ENERGY"] = 1] = "ENERGY";
+    Industry[Industry["MATERIALS"] = 2] = "MATERIALS";
+    Industry[Industry["INDUSTRIALS"] = 3] = "INDUSTRIALS";
+    Industry[Industry["CONSUMER_DISCRETIONARY"] = 4] = "CONSUMER_DISCRETIONARY";
+    Industry[Industry["CONSUMER_STAPLES"] = 5] = "CONSUMER_STAPLES";
+    Industry[Industry["HEALTH_CARE"] = 6] = "HEALTH_CARE";
+    Industry[Industry["FINANCIALS"] = 7] = "FINANCIALS";
+    Industry[Industry["INFORMATION_TECHNOLOGY"] = 8] = "INFORMATION_TECHNOLOGY";
+    Industry[Industry["COMMUNICATION_SERVICES"] = 9] = "COMMUNICATION_SERVICES";
+    Industry[Industry["UTILITIES"] = 10] = "UTILITIES";
+    Industry[Industry["REAL_ESTATE"] = 11] = "REAL_ESTATE";
+    Industry[Industry["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
+})(Industry || (Industry = {}));
+export function industryFromJSON(object) {
     switch (object) {
         case 0:
         case "GICS_SECTOR_DO_NOT_USE":
-            return GICSSector.GICS_SECTOR_DO_NOT_USE;
+            return Industry.GICS_SECTOR_DO_NOT_USE;
         case 1:
         case "ENERGY":
-            return GICSSector.ENERGY;
+            return Industry.ENERGY;
         case 2:
         case "MATERIALS":
-            return GICSSector.MATERIALS;
+            return Industry.MATERIALS;
         case 3:
         case "INDUSTRIALS":
-            return GICSSector.INDUSTRIALS;
+            return Industry.INDUSTRIALS;
         case 4:
         case "CONSUMER_DISCRETIONARY":
-            return GICSSector.CONSUMER_DISCRETIONARY;
+            return Industry.CONSUMER_DISCRETIONARY;
         case 5:
         case "CONSUMER_STAPLES":
-            return GICSSector.CONSUMER_STAPLES;
+            return Industry.CONSUMER_STAPLES;
         case 6:
         case "HEALTH_CARE":
-            return GICSSector.HEALTH_CARE;
+            return Industry.HEALTH_CARE;
         case 7:
         case "FINANCIALS":
-            return GICSSector.FINANCIALS;
+            return Industry.FINANCIALS;
         case 8:
         case "INFORMATION_TECHNOLOGY":
-            return GICSSector.INFORMATION_TECHNOLOGY;
+            return Industry.INFORMATION_TECHNOLOGY;
         case 9:
         case "COMMUNICATION_SERVICES":
-            return GICSSector.COMMUNICATION_SERVICES;
+            return Industry.COMMUNICATION_SERVICES;
         case 10:
         case "UTILITIES":
-            return GICSSector.UTILITIES;
+            return Industry.UTILITIES;
         case 11:
         case "REAL_ESTATE":
-            return GICSSector.REAL_ESTATE;
+            return Industry.REAL_ESTATE;
         case -1:
         case "UNRECOGNIZED":
         default:
-            return GICSSector.UNRECOGNIZED;
+            return Industry.UNRECOGNIZED;
     }
 }
-export function gICSSectorToJSON(object) {
+export function industryToJSON(object) {
     switch (object) {
-        case GICSSector.GICS_SECTOR_DO_NOT_USE:
+        case Industry.GICS_SECTOR_DO_NOT_USE:
             return "GICS_SECTOR_DO_NOT_USE";
-        case GICSSector.ENERGY:
+        case Industry.ENERGY:
             return "ENERGY";
-        case GICSSector.MATERIALS:
+        case Industry.MATERIALS:
             return "MATERIALS";
-        case GICSSector.INDUSTRIALS:
+        case Industry.INDUSTRIALS:
             return "INDUSTRIALS";
-        case GICSSector.CONSUMER_DISCRETIONARY:
+        case Industry.CONSUMER_DISCRETIONARY:
             return "CONSUMER_DISCRETIONARY";
-        case GICSSector.CONSUMER_STAPLES:
+        case Industry.CONSUMER_STAPLES:
             return "CONSUMER_STAPLES";
-        case GICSSector.HEALTH_CARE:
+        case Industry.HEALTH_CARE:
             return "HEALTH_CARE";
-        case GICSSector.FINANCIALS:
+        case Industry.FINANCIALS:
             return "FINANCIALS";
-        case GICSSector.INFORMATION_TECHNOLOGY:
+        case Industry.INFORMATION_TECHNOLOGY:
             return "INFORMATION_TECHNOLOGY";
-        case GICSSector.COMMUNICATION_SERVICES:
+        case Industry.COMMUNICATION_SERVICES:
             return "COMMUNICATION_SERVICES";
-        case GICSSector.UTILITIES:
+        case Industry.UTILITIES:
             return "UTILITIES";
-        case GICSSector.REAL_ESTATE:
+        case Industry.REAL_ESTATE:
             return "REAL_ESTATE";
-        case GICSSector.UNRECOGNIZED:
+        case Industry.UNRECOGNIZED:
         default:
             return "UNRECOGNIZED";
     }
@@ -358,7 +358,7 @@ function createBaseAssetDetails() {
         MinTransactionAmount: 0,
         TradingMarginPercentage: 0,
         LogoFile: undefined,
-        IndustrySector: 0,
+        Industry: 0,
         Denom: undefined,
         IsIssuedInSmartContract: false,
     };
@@ -404,8 +404,8 @@ export const AssetDetails = {
         if (message.LogoFile !== undefined) {
             LogoFile.encode(message.LogoFile, writer.uint32(106).fork()).ldelim();
         }
-        if (message.IndustrySector !== 0) {
-            writer.uint32(112).int32(message.IndustrySector);
+        if (message.Industry !== 0) {
+            writer.uint32(112).int32(message.Industry);
         }
         if (message.Denom !== undefined) {
             Denom.encode(message.Denom, writer.uint32(138).fork()).ldelim();
@@ -504,7 +504,7 @@ export const AssetDetails = {
                     if (tag !== 112) {
                         break;
                     }
-                    message.IndustrySector = reader.int32();
+                    message.Industry = reader.int32();
                     continue;
                 case 17:
                     if (tag !== 138) {
@@ -545,7 +545,7 @@ export const AssetDetails = {
                 ? globalThis.Number(object.TradingMarginPercentage)
                 : 0,
             LogoFile: isSet(object.LogoFile) ? LogoFile.fromJSON(object.LogoFile) : undefined,
-            IndustrySector: isSet(object.IndustrySector) ? gICSSectorFromJSON(object.IndustrySector) : 0,
+            Industry: isSet(object.Industry) ? industryFromJSON(object.Industry) : 0,
             Denom: isSet(object.Denom) ? Denom.fromJSON(object.Denom) : undefined,
             IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
                 ? globalThis.Boolean(object.IsIssuedInSmartContract)
@@ -594,8 +594,8 @@ export const AssetDetails = {
         if (message.LogoFile !== undefined) {
             obj.LogoFile = LogoFile.toJSON(message.LogoFile);
         }
-        if (message.IndustrySector !== 0) {
-            obj.IndustrySector = gICSSectorToJSON(message.IndustrySector);
+        if (message.Industry !== 0) {
+            obj.Industry = industryToJSON(message.Industry);
         }
         if (message.Denom !== undefined) {
             obj.Denom = Denom.toJSON(message.Denom);
@@ -626,7 +626,7 @@ export const AssetDetails = {
         message.LogoFile = (object.LogoFile !== undefined && object.LogoFile !== null)
             ? LogoFile.fromPartial(object.LogoFile)
             : undefined;
-        message.IndustrySector = (_o = object.IndustrySector) !== null && _o !== void 0 ? _o : 0;
+        message.Industry = (_o = object.Industry) !== null && _o !== void 0 ? _o : 0;
         message.Denom = (object.Denom !== undefined && object.Denom !== null) ? Denom.fromPartial(object.Denom) : undefined;
         message.IsIssuedInSmartContract = (_p = object.IsIssuedInSmartContract) !== null && _p !== void 0 ? _p : false;
         return message;
