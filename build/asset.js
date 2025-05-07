@@ -254,7 +254,7 @@ export function exchangeToJSON(object) {
  */
 export var Industry;
 (function (Industry) {
-    Industry[Industry["GICS_SECTOR_DO_NOT_USE"] = 0] = "GICS_SECTOR_DO_NOT_USE";
+    Industry[Industry["INDUSTRY_DO_NOT_USE"] = 0] = "INDUSTRY_DO_NOT_USE";
     Industry[Industry["ENERGY"] = 1] = "ENERGY";
     Industry[Industry["MATERIALS"] = 2] = "MATERIALS";
     Industry[Industry["INDUSTRIALS"] = 3] = "INDUSTRIALS";
@@ -271,8 +271,8 @@ export var Industry;
 export function industryFromJSON(object) {
     switch (object) {
         case 0:
-        case "GICS_SECTOR_DO_NOT_USE":
-            return Industry.GICS_SECTOR_DO_NOT_USE;
+        case "INDUSTRY_DO_NOT_USE":
+            return Industry.INDUSTRY_DO_NOT_USE;
         case 1:
         case "ENERGY":
             return Industry.ENERGY;
@@ -314,8 +314,8 @@ export function industryFromJSON(object) {
 }
 export function industryToJSON(object) {
     switch (object) {
-        case Industry.GICS_SECTOR_DO_NOT_USE:
-            return "GICS_SECTOR_DO_NOT_USE";
+        case Industry.INDUSTRY_DO_NOT_USE:
+            return "INDUSTRY_DO_NOT_USE";
         case Industry.ENERGY:
             return "ENERGY";
         case Industry.MATERIALS:

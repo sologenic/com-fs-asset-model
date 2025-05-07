@@ -266,7 +266,7 @@ export function exchangeToJSON(object: Exchange): string {
  * Source: https://www.msci.com/our-solutions/indexes/gics
  */
 export enum Industry {
-  GICS_SECTOR_DO_NOT_USE = 0,
+  INDUSTRY_DO_NOT_USE = 0,
   ENERGY = 1,
   MATERIALS = 2,
   INDUSTRIALS = 3,
@@ -284,8 +284,8 @@ export enum Industry {
 export function industryFromJSON(object: any): Industry {
   switch (object) {
     case 0:
-    case "GICS_SECTOR_DO_NOT_USE":
-      return Industry.GICS_SECTOR_DO_NOT_USE;
+    case "INDUSTRY_DO_NOT_USE":
+      return Industry.INDUSTRY_DO_NOT_USE;
     case 1:
     case "ENERGY":
       return Industry.ENERGY;
@@ -328,8 +328,8 @@ export function industryFromJSON(object: any): Industry {
 
 export function industryToJSON(object: Industry): string {
   switch (object) {
-    case Industry.GICS_SECTOR_DO_NOT_USE:
-      return "GICS_SECTOR_DO_NOT_USE";
+    case Industry.INDUSTRY_DO_NOT_USE:
+      return "INDUSTRY_DO_NOT_USE";
     case Industry.ENERGY:
       return "ENERGY";
     case Industry.MATERIALS:

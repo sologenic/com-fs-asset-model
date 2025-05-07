@@ -109,7 +109,7 @@ enum Exchange {
 // Global Industry Classification Standard (GICS®) 11 sectors
 // Source: https://www.msci.com/our-solutions/indexes/gics
 enum Industry {
-    GICS_SECTOR_DO_NOT_USE = 0;
+    INDUSTRY_DO_NOT_USE = 0;
     ENERGY = 1;
     MATERIALS = 2;
     INDUSTRIALS = 3;

@@ -62,7 +62,7 @@ export declare function exchangeToJSON(object: Exchange): string;
  * Source: https://www.msci.com/our-solutions/indexes/gics
  */
 export declare enum Industry {
-    GICS_SECTOR_DO_NOT_USE = 0,
+    INDUSTRY_DO_NOT_USE = 0,
     ENERGY = 1,
     MATERIALS = 2,
     INDUSTRIALS = 3,

@@ -200,7 +200,7 @@ func (x *AssetQuery) GetIndustry() Industry {
 	if x != nil && x.Industry != nil {
 		return *x.Industry
 	}
-	return Industry_GICS_SECTOR_DO_NOT_USE
+	return Industry_INDUSTRY_DO_NOT_USE
 }
 
 type UserAssetListKey struct {
