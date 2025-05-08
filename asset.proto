@@ -32,7 +32,7 @@ message AssetDetails {
     double TradingMarginPercentage = 12;
     LogoFile LogoFile = 13;
     Industry Industry = 14; // Global Industry Classification Standard (GICS®) sector
-
+    double AssetMarginPercentage = 15; // Margin percentage specific to the asset. This is the asset's individual margin percentage used to calculate the asset's margin requirement.
     // On-chain properties
     denom.Denom Denom = 17; // {subunit}-{issuer} where Subunit is su{Currency}. e.g., suappl_1-testcore1et29c...
     bool IsIssuedInSmartContract = 18; // Flag to indicate if the asset is issued in the smart contract
