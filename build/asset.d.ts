@@ -79,7 +79,7 @@ export declare enum Industry {
 export declare function industryFromJSON(object: any): Industry;
 export declare function industryToJSON(object: Industry): string;
 export interface AssetDetails {
-    /** Key combination: Currency_OrganizationID */
+    /** Key combination: Currency_OrganizationID_Issuer e.g "appl_1_72c4c072-2fe4-4f72-ae9d-d9d52a05fd71_testcore1et29c..." */
     ID: string;
     /** External entity (broker) that owns this asset */
     OrganizationID: string;
