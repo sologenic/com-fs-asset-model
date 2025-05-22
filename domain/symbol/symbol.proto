@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package symbol;
 
-import "domain/currency/currency.proto";
+import "domain/denom/denom.proto";
 
 option go_package = "github.com/sologenic/com-fs-asset-model/domain/symbol;symbol";
 
 message Symbol {
-    currency.Currency Base = 1;
-    currency.Currency Quote = 2;
+    denom.Denom Base = 1;
+    denom.Denom Quote = 2;
 }

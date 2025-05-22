@@ -2,48 +2,41 @@ package symbol
 
 import (
 	"errors"
-	"regexp"
+	"strconv"
 	"strings"
 
-	"github.com/sologenic/com-fs-asset-model/domain/currency"
+	"github.com/sologenic/com-fs-asset-model/domain/denom"
 )
 
 var (
-	symbolSeparator = "_"
-	symbolRegexp    = regexp.MustCompile(`^[a-zA-Z0-9]+$`)
+	symbolSeparator = ":"
 
 	ErrSymbolInvalid = errors.New("symbol is invalid")
 )
 
-func NewSymbol(base, quote *currency.Currency) *Symbol {
+func NewSymbol(base, quote *denom.Denom) *Symbol {
 	return &Symbol{
 		Base:  base,
 		Quote: quote,
 	}
 }
 
-// {wusdc_1}_{aapl_1}
+// Symbol represents a trading pair of denoms
+// e.g. suwusdc_1-testcore13s2mmgg4uu4fn8mue6s3lgn74jwdupndjtqah8uxufugtajkeq2qgznc28:suaapl_1-testcore13s2mmgg4uu4fn8mue6s3lgn74jwdupndjtqah8uxufugtajkeq2qgznc28
 func NewSymbolFromString(symbStr string) (*Symbol, error) {
 	symbolParts := strings.Split(symbStr, symbolSeparator)
 	// There are 4 parts in the symbol array:
-	if len(symbolParts) != 4 {
+	if len(symbolParts) != 2 {
 		return nil, ErrSymbolInvalid
 	}
-	for _, part := range symbolParts {
-		if !symbolRegexp.MatchString(part) && part != "" {
-			return nil, ErrSymbolInvalid
-		}
+	base, err := denom.ParseDenom(symbolParts[0])
+	if err != nil {
+		return nil, err
 	}
-
-	base := &currency.Currency{
-		Symbol:  symbolParts[0],
-		Version: symbolParts[1],
+	quote, err := denom.ParseDenom(symbolParts[1])
+	if err != nil {
+		return nil, err
 	}
-	quote := &currency.Currency{
-		Symbol:  symbolParts[2],
-		Version: symbolParts[3],
-	}
-
 	return &Symbol{
 		Base:  base,
 		Quote: quote,
@@ -51,32 +44,21 @@ func NewSymbolFromString(symbStr string) (*Symbol, error) {
 }
 
 func (s *Symbol) ToString() string {
-	return s.Base.ToString() + symbolSeparator + s.Quote.ToString() //{wusd_1}_{aapl_1}
+	return s.Base.ToString() + symbolSeparator + s.Quote.ToString() // {denom1}:{denom2}
 }
 
 // Trade data is stored stable by the symbol order.
 // By using this approach we do not have to scan for 2 different records since it will be unknown in which order the trade data is requested
 func (s *Symbol) IsInverted() bool {
-	if s.Base.Symbol == s.Quote.Symbol {
-		return s.Base.Version > s.Quote.Version
+	if s.Base.Currency.Symbol == s.Quote.Currency.Symbol {
+		// Convert version strings(1-999) to integers before comparison
+		baseVersion, _ := strconv.Atoi(s.Base.Currency.Version)
+		quoteVersion, _ := strconv.Atoi(s.Quote.Currency.Version)
+		return baseVersion > quoteVersion
 	}
-	return s.Base.Symbol > s.Quote.Symbol
+	return s.Base.Currency.Symbol > s.Quote.Currency.Symbol
 }
 
 func (s *Symbol) Invert() *Symbol {
 	return NewSymbol(s.Quote, s.Base)
-}
-
-func (s *Symbol) CurrencyFromString(cur string) *currency.Currency {
-	c := strings.Split(cur, symbolSeparator)
-	if len(c) != 2 {
-		return &currency.Currency{
-			Symbol:  cur,
-			Version: "",
-		}
-	}
-	return &currency.Currency{
-		Symbol:  c[0],
-		Version: c[1],
-	}
 }
