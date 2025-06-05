@@ -40,6 +40,7 @@ message AssetQuery {
     optional string Version = 10;
     optional string Issuer = 11;
     optional Industry Industry = 12;
+    optional string SmartContractIssuerAddr = 13;
 }
 
 message UserAssetListKey {
