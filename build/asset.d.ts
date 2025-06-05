@@ -79,7 +79,7 @@ export declare enum Industry {
 export declare function industryFromJSON(object: any): Industry;
 export declare function industryToJSON(object: Industry): string;
 export interface AssetDetails {
-    /** Key combination: Currency_OrganizationID_Issuer e.g "appl_1_72c4c072-2fe4-4f72-ae9d-d9d52a05fd71_testcore1et29c..." */
+    /** Key combination: Currency_OrganizationID_SmartContractIssuerAddr e.g "appl_1_72c4c072-2fe4-4f72-ae9d-d9d52a05fd71_testcore1et29c..." */
     ID: string;
     /** External entity (broker) that owns this asset */
     OrganizationID: string;
@@ -113,6 +113,8 @@ export interface AssetDetails {
     Denom: Denom | undefined;
     /** Flag to indicate if the asset is issued in the smart contract */
     IsIssuedInSmartContract: boolean;
+    /** Issuer address of the smart contract (distinct from Denom.Issuer which is the smart contract address that minted the token) */
+    SmartContractIssuerAddr: string;
 }
 export interface Asset {
     AssetDetails: AssetDetails | undefined;
@@ -178,6 +180,7 @@ export declare const AssetDetails: {
             Description?: string | undefined;
         } | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
+        SmartContractIssuerAddr?: string | undefined;
     } & {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -225,6 +228,7 @@ export declare const AssetDetails: {
             Description?: string | undefined;
         } & { [K_3 in Exclude<keyof I["Denom"], keyof Denom>]: never; }) | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
+        SmartContractIssuerAddr?: string | undefined;
     } & { [K_4 in Exclude<keyof I, keyof AssetDetails>]: never; }>(base?: I | undefined): AssetDetails;
     fromPartial<I_1 extends {
         ID?: string | undefined;
@@ -257,6 +261,7 @@ export declare const AssetDetails: {
             Description?: string | undefined;
         } | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
+        SmartContractIssuerAddr?: string | undefined;
     } & {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -304,6 +309,7 @@ export declare const AssetDetails: {
             Description?: string | undefined;
         } & { [K_8 in Exclude<keyof I_1["Denom"], keyof Denom>]: never; }) | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
+        SmartContractIssuerAddr?: string | undefined;
     } & { [K_9 in Exclude<keyof I_1, keyof AssetDetails>]: never; }>(object: I_1): AssetDetails;
 };
 export declare const Asset: {
@@ -343,6 +349,7 @@ export declare const Asset: {
                 Description?: string | undefined;
             } | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
+            SmartContractIssuerAddr?: string | undefined;
         } | undefined;
         MetaData?: {
             Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -387,6 +394,7 @@ export declare const Asset: {
                 Description?: string | undefined;
             } | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
+            SmartContractIssuerAddr?: string | undefined;
         } & {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -434,6 +442,7 @@ export declare const Asset: {
                 Description?: string | undefined;
             } & { [K_3 in Exclude<keyof I["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
+            SmartContractIssuerAddr?: string | undefined;
         } & { [K_4 in Exclude<keyof I["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
         MetaData?: ({
             Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -488,6 +497,7 @@ export declare const Asset: {
                 Description?: string | undefined;
             } | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
+            SmartContractIssuerAddr?: string | undefined;
         } | undefined;
         MetaData?: {
             Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -532,6 +542,7 @@ export declare const Asset: {
                 Description?: string | undefined;
             } | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
+            SmartContractIssuerAddr?: string | undefined;
         } & {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -579,6 +590,7 @@ export declare const Asset: {
                 Description?: string | undefined;
             } & { [K_11 in Exclude<keyof I_1["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
+            SmartContractIssuerAddr?: string | undefined;
         } & { [K_12 in Exclude<keyof I_1["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
         MetaData?: ({
             Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -640,6 +652,7 @@ export declare const Assets: {
                     Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
+                SmartContractIssuerAddr?: string | undefined;
             } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -686,6 +699,7 @@ export declare const Assets: {
                     Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
+                SmartContractIssuerAddr?: string | undefined;
             } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -730,6 +744,7 @@ export declare const Assets: {
                     Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
+                SmartContractIssuerAddr?: string | undefined;
             } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -774,6 +789,7 @@ export declare const Assets: {
                     Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
+                SmartContractIssuerAddr?: string | undefined;
             } & {
                 ID?: string | undefined;
                 OrganizationID?: string | undefined;
@@ -821,6 +837,7 @@ export declare const Assets: {
                     Description?: string | undefined;
                 } & { [K_3 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
+                SmartContractIssuerAddr?: string | undefined;
             } & { [K_4 in Exclude<keyof I["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
             MetaData?: ({
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -874,6 +891,7 @@ export declare const Assets: {
                     Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
+                SmartContractIssuerAddr?: string | undefined;
             } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -921,6 +939,7 @@ export declare const Assets: {
                     Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
+                SmartContractIssuerAddr?: string | undefined;
             } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -967,6 +986,7 @@ export declare const Assets: {
                     Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
+                SmartContractIssuerAddr?: string | undefined;
             } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -1011,6 +1031,7 @@ export declare const Assets: {
                     Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
+                SmartContractIssuerAddr?: string | undefined;
             } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -1055,6 +1076,7 @@ export declare const Assets: {
                     Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
+                SmartContractIssuerAddr?: string | undefined;
             } & {
                 ID?: string | undefined;
                 OrganizationID?: string | undefined;
@@ -1102,6 +1124,7 @@ export declare const Assets: {
                     Description?: string | undefined;
                 } & { [K_13 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
+                SmartContractIssuerAddr?: string | undefined;
             } & { [K_14 in Exclude<keyof I_1["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
             MetaData?: ({
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -1155,6 +1178,7 @@ export declare const Assets: {
                     Description?: string | undefined;
                 } | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
+                SmartContractIssuerAddr?: string | undefined;
             } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
