@@ -398,7 +398,7 @@ type AssetDetails struct {
 	LogoFile                *LogoFile `protobuf:"bytes,13,opt,name=LogoFile,proto3" json:"LogoFile,omitempty"`
 	Industry                Industry  `protobuf:"varint,14,opt,name=Industry,proto3,enum=asset.Industry" json:"Industry,omitempty"` // Global Industry Classification Standard (GICS®) sector
 	// Margin percentage specific to the asset. This is the asset's individual margin percentage used to calculate buying power.
-	// Buying Power = AvailableFunds(On-chain) + (Σ Assets(non-stablecoin) × AssetMarginPercentage)
+	// Buying Power = AvailableFunds(On-chain) + (Σ Assets(non-stablecoin)  × AssetMarginPercentage)
 	// Asset Margin Percentage: represents the collateral value of the asset (e.g., 50% → 10,000BTC → 10,000BTC → 5,000 buying power contribution)
 	AssetMarginPercentage float64 `protobuf:"fixed64,15,opt,name=AssetMarginPercentage,proto3" json:"AssetMarginPercentage,omitempty"`
 	// On-chain properties
