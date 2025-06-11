@@ -107,7 +107,11 @@ export interface AssetDetails {
     LogoFile: LogoFile | undefined;
     /** Global Industry Classification Standard (GICS®) sector */
     Industry: Industry;
-    /** Margin percentage specific to the asset. This is the asset's individual margin percentage used to calculate the asset's margin requirement. */
+    /**
+     * Margin percentage specific to the asset. This is the asset's individual margin percentage used to calculate buying power.
+     * Buying Power = AvailableFunds(On-chain) + (Σ Assets(non-stablecoin) × AssetMarginPercentage)
+     * Asset Margin Percentage: represents the collateral value of the asset (e.g., 50% → 10,000BTC → 10,000BTC → 5,000 buying power contribution)
+     */
     AssetMarginPercentage: number;
     /** On-chain properties */
     Denom: Denom | undefined;
