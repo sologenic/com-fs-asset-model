@@ -362,6 +362,7 @@ function createBaseAssetDetails() {
         AssetMarginPercentage: 0,
         Denom: undefined,
         IsIssuedInSmartContract: false,
+        SmartContractIssuerAddr: "",
     };
 }
 export const AssetDetails = {
@@ -416,6 +417,9 @@ export const AssetDetails = {
         }
         if (message.IsIssuedInSmartContract !== false) {
             writer.uint32(144).bool(message.IsIssuedInSmartContract);
+        }
+        if (message.SmartContractIssuerAddr !== "") {
+            writer.uint32(154).string(message.SmartContractIssuerAddr);
         }
         return writer;
     },
@@ -528,6 +532,12 @@ export const AssetDetails = {
                     }
                     message.IsIssuedInSmartContract = reader.bool();
                     continue;
+                case 19:
+                    if (tag !== 154) {
+                        break;
+                    }
+                    message.SmartContractIssuerAddr = reader.string();
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -561,6 +571,9 @@ export const AssetDetails = {
             IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
                 ? globalThis.Boolean(object.IsIssuedInSmartContract)
                 : false,
+            SmartContractIssuerAddr: isSet(object.SmartContractIssuerAddr)
+                ? globalThis.String(object.SmartContractIssuerAddr)
+                : "",
         };
     },
     toJSON(message) {
@@ -617,13 +630,16 @@ export const AssetDetails = {
         if (message.IsIssuedInSmartContract !== false) {
             obj.IsIssuedInSmartContract = message.IsIssuedInSmartContract;
         }
+        if (message.SmartContractIssuerAddr !== "") {
+            obj.SmartContractIssuerAddr = message.SmartContractIssuerAddr;
+        }
         return obj;
     },
     create(base) {
         return AssetDetails.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
         const message = createBaseAssetDetails();
         message.ID = (_a = object.ID) !== null && _a !== void 0 ? _a : "";
         message.OrganizationID = (_b = object.OrganizationID) !== null && _b !== void 0 ? _b : "";
@@ -644,6 +660,7 @@ export const AssetDetails = {
         message.AssetMarginPercentage = (_p = object.AssetMarginPercentage) !== null && _p !== void 0 ? _p : 0;
         message.Denom = (object.Denom !== undefined && object.Denom !== null) ? Denom.fromPartial(object.Denom) : undefined;
         message.IsIssuedInSmartContract = (_q = object.IsIssuedInSmartContract) !== null && _q !== void 0 ? _q : false;
+        message.SmartContractIssuerAddr = (_r = object.SmartContractIssuerAddr) !== null && _r !== void 0 ? _r : "";
         return message;
     },
 };
