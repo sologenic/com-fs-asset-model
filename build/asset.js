@@ -359,6 +359,7 @@ function createBaseAssetDetails() {
         TradingMarginPercentage: 0,
         LogoFile: undefined,
         Industry: 0,
+        AssetMarginPercentage: 0,
         Denom: undefined,
         IsIssuedInSmartContract: false,
     };
@@ -406,6 +407,9 @@ export const AssetDetails = {
         }
         if (message.Industry !== 0) {
             writer.uint32(112).int32(message.Industry);
+        }
+        if (message.AssetMarginPercentage !== 0) {
+            writer.uint32(121).double(message.AssetMarginPercentage);
         }
         if (message.Denom !== undefined) {
             Denom.encode(message.Denom, writer.uint32(138).fork()).ldelim();
@@ -506,6 +510,12 @@ export const AssetDetails = {
                     }
                     message.Industry = reader.int32();
                     continue;
+                case 15:
+                    if (tag !== 121) {
+                        break;
+                    }
+                    message.AssetMarginPercentage = reader.double();
+                    continue;
                 case 17:
                     if (tag !== 138) {
                         break;
@@ -546,6 +556,7 @@ export const AssetDetails = {
                 : 0,
             LogoFile: isSet(object.LogoFile) ? LogoFile.fromJSON(object.LogoFile) : undefined,
             Industry: isSet(object.Industry) ? industryFromJSON(object.Industry) : 0,
+            AssetMarginPercentage: isSet(object.AssetMarginPercentage) ? globalThis.Number(object.AssetMarginPercentage) : 0,
             Denom: isSet(object.Denom) ? Denom.fromJSON(object.Denom) : undefined,
             IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
                 ? globalThis.Boolean(object.IsIssuedInSmartContract)
@@ -597,6 +608,9 @@ export const AssetDetails = {
         if (message.Industry !== 0) {
             obj.Industry = industryToJSON(message.Industry);
         }
+        if (message.AssetMarginPercentage !== 0) {
+            obj.AssetMarginPercentage = message.AssetMarginPercentage;
+        }
         if (message.Denom !== undefined) {
             obj.Denom = Denom.toJSON(message.Denom);
         }
@@ -609,7 +623,7 @@ export const AssetDetails = {
         return AssetDetails.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
         const message = createBaseAssetDetails();
         message.ID = (_a = object.ID) !== null && _a !== void 0 ? _a : "";
         message.OrganizationID = (_b = object.OrganizationID) !== null && _b !== void 0 ? _b : "";
@@ -627,8 +641,9 @@ export const AssetDetails = {
             ? LogoFile.fromPartial(object.LogoFile)
             : undefined;
         message.Industry = (_o = object.Industry) !== null && _o !== void 0 ? _o : 0;
+        message.AssetMarginPercentage = (_p = object.AssetMarginPercentage) !== null && _p !== void 0 ? _p : 0;
         message.Denom = (object.Denom !== undefined && object.Denom !== null) ? Denom.fromPartial(object.Denom) : undefined;
-        message.IsIssuedInSmartContract = (_p = object.IsIssuedInSmartContract) !== null && _p !== void 0 ? _p : false;
+        message.IsIssuedInSmartContract = (_q = object.IsIssuedInSmartContract) !== null && _q !== void 0 ? _q : false;
         return message;
     },
 };

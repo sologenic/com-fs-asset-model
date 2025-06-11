@@ -391,6 +391,8 @@ export interface AssetDetails {
     | undefined;
   /** Global Industry Classification Standard (GICS®) sector */
   Industry: Industry;
+  /** Margin percentage specific to the asset. This is the asset's individual margin percentage used to calculate the asset's margin requirement. */
+  AssetMarginPercentage: number;
   /** On-chain properties */
   Denom:
     | Denom
@@ -448,6 +450,7 @@ function createBaseAssetDetails(): AssetDetails {
     TradingMarginPercentage: 0,
     LogoFile: undefined,
     Industry: 0,
+    AssetMarginPercentage: 0,
     Denom: undefined,
     IsIssuedInSmartContract: false,
   };
@@ -496,6 +499,9 @@ export const AssetDetails = {
     }
     if (message.Industry !== 0) {
       writer.uint32(112).int32(message.Industry);
+    }
+    if (message.AssetMarginPercentage !== 0) {
+      writer.uint32(121).double(message.AssetMarginPercentage);
     }
     if (message.Denom !== undefined) {
       Denom.encode(message.Denom, writer.uint32(138).fork()).ldelim();
@@ -611,6 +617,13 @@ export const AssetDetails = {
 
           message.Industry = reader.int32() as any;
           continue;
+        case 15:
+          if (tag !== 121) {
+            break;
+          }
+
+          message.AssetMarginPercentage = reader.double();
+          continue;
         case 17:
           if (tag !== 138) {
             break;
@@ -654,6 +667,7 @@ export const AssetDetails = {
         : 0,
       LogoFile: isSet(object.LogoFile) ? LogoFile.fromJSON(object.LogoFile) : undefined,
       Industry: isSet(object.Industry) ? industryFromJSON(object.Industry) : 0,
+      AssetMarginPercentage: isSet(object.AssetMarginPercentage) ? globalThis.Number(object.AssetMarginPercentage) : 0,
       Denom: isSet(object.Denom) ? Denom.fromJSON(object.Denom) : undefined,
       IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
         ? globalThis.Boolean(object.IsIssuedInSmartContract)
@@ -705,6 +719,9 @@ export const AssetDetails = {
     if (message.Industry !== 0) {
       obj.Industry = industryToJSON(message.Industry);
     }
+    if (message.AssetMarginPercentage !== 0) {
+      obj.AssetMarginPercentage = message.AssetMarginPercentage;
+    }
     if (message.Denom !== undefined) {
       obj.Denom = Denom.toJSON(message.Denom);
     }
@@ -735,6 +752,7 @@ export const AssetDetails = {
       ? LogoFile.fromPartial(object.LogoFile)
       : undefined;
     message.Industry = object.Industry ?? 0;
+    message.AssetMarginPercentage = object.AssetMarginPercentage ?? 0;
     message.Denom = (object.Denom !== undefined && object.Denom !== null) ? Denom.fromPartial(object.Denom) : undefined;
     message.IsIssuedInSmartContract = object.IsIssuedInSmartContract ?? false;
     return message;

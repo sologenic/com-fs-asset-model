@@ -107,6 +107,8 @@ export interface AssetDetails {
     LogoFile: LogoFile | undefined;
     /** Global Industry Classification Standard (GICS®) sector */
     Industry: Industry;
+    /** Margin percentage specific to the asset. This is the asset's individual margin percentage used to calculate the asset's margin requirement. */
+    AssetMarginPercentage: number;
     /** On-chain properties */
     Denom: Denom | undefined;
     /** Flag to indicate if the asset is issued in the smart contract */
@@ -164,6 +166,7 @@ export declare const AssetDetails: {
             Name?: string | undefined;
         } | undefined;
         Industry?: Industry | undefined;
+        AssetMarginPercentage?: number | undefined;
         Denom?: {
             Currency?: {
                 Symbol?: string | undefined;
@@ -198,6 +201,7 @@ export declare const AssetDetails: {
             Name?: string | undefined;
         } & { [K_1 in Exclude<keyof I["LogoFile"], keyof LogoFile>]: never; }) | undefined;
         Industry?: Industry | undefined;
+        AssetMarginPercentage?: number | undefined;
         Denom?: ({
             Currency?: {
                 Symbol?: string | undefined;
@@ -241,6 +245,7 @@ export declare const AssetDetails: {
             Name?: string | undefined;
         } | undefined;
         Industry?: Industry | undefined;
+        AssetMarginPercentage?: number | undefined;
         Denom?: {
             Currency?: {
                 Symbol?: string | undefined;
@@ -275,6 +280,7 @@ export declare const AssetDetails: {
             Name?: string | undefined;
         } & { [K_6 in Exclude<keyof I_1["LogoFile"], keyof LogoFile>]: never; }) | undefined;
         Industry?: Industry | undefined;
+        AssetMarginPercentage?: number | undefined;
         Denom?: ({
             Currency?: {
                 Symbol?: string | undefined;
@@ -325,6 +331,7 @@ export declare const Asset: {
                 Name?: string | undefined;
             } | undefined;
             Industry?: Industry | undefined;
+            AssetMarginPercentage?: number | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -368,6 +375,7 @@ export declare const Asset: {
                 Name?: string | undefined;
             } | undefined;
             Industry?: Industry | undefined;
+            AssetMarginPercentage?: number | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -402,6 +410,7 @@ export declare const Asset: {
                 Name?: string | undefined;
             } & { [K_1 in Exclude<keyof I["AssetDetails"]["LogoFile"], keyof LogoFile>]: never; }) | undefined;
             Industry?: Industry | undefined;
+            AssetMarginPercentage?: number | undefined;
             Denom?: ({
                 Currency?: {
                     Symbol?: string | undefined;
@@ -467,6 +476,7 @@ export declare const Asset: {
                 Name?: string | undefined;
             } | undefined;
             Industry?: Industry | undefined;
+            AssetMarginPercentage?: number | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -510,6 +520,7 @@ export declare const Asset: {
                 Name?: string | undefined;
             } | undefined;
             Industry?: Industry | undefined;
+            AssetMarginPercentage?: number | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -544,6 +555,7 @@ export declare const Asset: {
                 Name?: string | undefined;
             } & { [K_9 in Exclude<keyof I_1["AssetDetails"]["LogoFile"], keyof LogoFile>]: never; }) | undefined;
             Industry?: Industry | undefined;
+            AssetMarginPercentage?: number | undefined;
             Denom?: ({
                 Currency?: {
                     Symbol?: string | undefined;
@@ -616,6 +628,7 @@ export declare const Assets: {
                     Name?: string | undefined;
                 } | undefined;
                 Industry?: Industry | undefined;
+                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -661,6 +674,7 @@ export declare const Assets: {
                     Name?: string | undefined;
                 } | undefined;
                 Industry?: Industry | undefined;
+                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -704,6 +718,7 @@ export declare const Assets: {
                     Name?: string | undefined;
                 } | undefined;
                 Industry?: Industry | undefined;
+                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -747,6 +762,7 @@ export declare const Assets: {
                     Name?: string | undefined;
                 } | undefined;
                 Industry?: Industry | undefined;
+                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -781,6 +797,7 @@ export declare const Assets: {
                     Name?: string | undefined;
                 } & { [K_1 in Exclude<keyof I["Assets"][number]["AssetDetails"]["LogoFile"], keyof LogoFile>]: never; }) | undefined;
                 Industry?: Industry | undefined;
+                AssetMarginPercentage?: number | undefined;
                 Denom?: ({
                     Currency?: {
                         Symbol?: string | undefined;
@@ -845,6 +862,7 @@ export declare const Assets: {
                     Name?: string | undefined;
                 } | undefined;
                 Industry?: Industry | undefined;
+                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -891,6 +909,7 @@ export declare const Assets: {
                     Name?: string | undefined;
                 } | undefined;
                 Industry?: Industry | undefined;
+                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -936,6 +955,7 @@ export declare const Assets: {
                     Name?: string | undefined;
                 } | undefined;
                 Industry?: Industry | undefined;
+                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -979,6 +999,7 @@ export declare const Assets: {
                     Name?: string | undefined;
                 } | undefined;
                 Industry?: Industry | undefined;
+                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -1022,6 +1043,7 @@ export declare const Assets: {
                     Name?: string | undefined;
                 } | undefined;
                 Industry?: Industry | undefined;
+                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -1056,6 +1078,7 @@ export declare const Assets: {
                     Name?: string | undefined;
                 } & { [K_11 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["LogoFile"], keyof LogoFile>]: never; }) | undefined;
                 Industry?: Industry | undefined;
+                AssetMarginPercentage?: number | undefined;
                 Denom?: ({
                     Currency?: {
                         Symbol?: string | undefined;
@@ -1120,6 +1143,7 @@ export declare const Assets: {
                     Name?: string | undefined;
                 } | undefined;
                 Industry?: Industry | undefined;
+                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
