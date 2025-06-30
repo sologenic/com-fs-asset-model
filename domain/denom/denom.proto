@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package denom;
 
-import "domain/currency/currency.proto";
+import "sologenic/com-fs-asset-model/domain/currency/currency.proto";
 
 option go_package = "github.com/sologenic/com-fs-asset-model/domain/denom;denom";
 
