@@ -1,5 +1,5 @@
 import _m0 from "protobufjs/minimal";
-import { Currency } from "../currency/currency";
+import { Currency } from "../../sologenic/com-fs-asset-model/domain/currency/currency";
 export declare const protobufPackage = "denom";
 /**
  * Denom defines the on-chain denomination of a token and include on-chain data such as the issuer, precision, and description.

@@ -225,7 +225,7 @@ export declare const AssetDetails: {
             } & {
                 Symbol?: string | undefined;
                 Version?: string | undefined;
-            } & { [K_2 in Exclude<keyof I["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
+            } & { [K_2 in Exclude<keyof I["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
             Subunit?: string | undefined;
             Issuer?: string | undefined;
             Precision?: number | undefined;
@@ -306,7 +306,7 @@ export declare const AssetDetails: {
             } & {
                 Symbol?: string | undefined;
                 Version?: string | undefined;
-            } & { [K_7 in Exclude<keyof I_1["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
+            } & { [K_7 in Exclude<keyof I_1["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
             Subunit?: string | undefined;
             Issuer?: string | undefined;
             Precision?: number | undefined;
@@ -439,7 +439,7 @@ export declare const Asset: {
                 } & {
                     Symbol?: string | undefined;
                     Version?: string | undefined;
-                } & { [K_2 in Exclude<keyof I["AssetDetails"]["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
+                } & { [K_2 in Exclude<keyof I["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
                 Precision?: number | undefined;
@@ -587,7 +587,7 @@ export declare const Asset: {
                 } & {
                     Symbol?: string | undefined;
                     Version?: string | undefined;
-                } & { [K_10 in Exclude<keyof I_1["AssetDetails"]["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
+                } & { [K_10 in Exclude<keyof I_1["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
                 Precision?: number | undefined;
@@ -834,7 +834,7 @@ export declare const Assets: {
                     } & {
                         Symbol?: string | undefined;
                         Version?: string | undefined;
-                    } & { [K_2 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
+                    } & { [K_2 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
                     Subunit?: string | undefined;
                     Issuer?: string | undefined;
                     Precision?: number | undefined;
@@ -1121,7 +1121,7 @@ export declare const Assets: {
                     } & {
                         Symbol?: string | undefined;
                         Version?: string | undefined;
-                    } & { [K_12 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"]["Currency"], keyof import("./domain/currency/currency").Currency>]: never; }) | undefined;
+                    } & { [K_12 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
                     Subunit?: string | undefined;
                     Issuer?: string | undefined;
                     Precision?: number | undefined;

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package symbol;
 
-import "domain/denom/denom.proto";
+import "sologenic/com-fs-asset-model/domain/denom/denom.proto";
 
 option go_package = "github.com/sologenic/com-fs-asset-model/domain/symbol;symbol";
 
