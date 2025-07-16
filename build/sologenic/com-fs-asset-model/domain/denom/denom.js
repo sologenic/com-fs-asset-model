@@ -2,11 +2,11 @@
 // versions:
 //   protoc-gen-ts_proto  v1.181.2
 //   protoc               v5.29.1
-// source: domain/denom/denom.proto
+// source: sologenic/com-fs-asset-model/domain/denom/denom.proto
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
-import { Currency } from "../../sologenic/com-fs-asset-model/domain/currency/currency";
+import { Currency } from "../currency/currency";
 export const protobufPackage = "denom";
 function createBaseDenom() {
     return { Currency: undefined, Subunit: "", Issuer: "", Precision: 0, Description: "" };

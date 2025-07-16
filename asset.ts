@@ -6,7 +6,7 @@
 
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
-import { Denom } from "./domain/denom/denom";
+import { Denom } from "./sologenic/com-fs-asset-model/domain/denom/denom";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
 import { MetaData } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 
@@ -118,12 +118,17 @@ export function reasonToJSON(object: Reason): string {
   }
 }
 
+/** TODO: to have shared between order */
 export enum AssetType {
   ASSET_TYPE_DO_NOT_USE = 0,
-  STOCK = 1,
-  BOND = 2,
+  STOCKS = 1,
+  BONDS = 2,
   /** WRAPPED_STABLECOIN - Represents a stablecoin that is wrapped for internal use within the system, such as WUSDC. */
   WRAPPED_STABLECOIN = 3,
+  CRYPTO = 4,
+  FOREX = 5,
+  FUTURES = 6,
+  OPTIONS = 7,
   UNRECOGNIZED = -1,
 }
 
@@ -133,14 +138,26 @@ export function assetTypeFromJSON(object: any): AssetType {
     case "ASSET_TYPE_DO_NOT_USE":
       return AssetType.ASSET_TYPE_DO_NOT_USE;
     case 1:
-    case "STOCK":
-      return AssetType.STOCK;
+    case "STOCKS":
+      return AssetType.STOCKS;
     case 2:
-    case "BOND":
-      return AssetType.BOND;
+    case "BONDS":
+      return AssetType.BONDS;
     case 3:
     case "WRAPPED_STABLECOIN":
       return AssetType.WRAPPED_STABLECOIN;
+    case 4:
+    case "CRYPTO":
+      return AssetType.CRYPTO;
+    case 5:
+    case "FOREX":
+      return AssetType.FOREX;
+    case 6:
+    case "FUTURES":
+      return AssetType.FUTURES;
+    case 7:
+    case "OPTIONS":
+      return AssetType.OPTIONS;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -152,12 +169,20 @@ export function assetTypeToJSON(object: AssetType): string {
   switch (object) {
     case AssetType.ASSET_TYPE_DO_NOT_USE:
       return "ASSET_TYPE_DO_NOT_USE";
-    case AssetType.STOCK:
-      return "STOCK";
-    case AssetType.BOND:
-      return "BOND";
+    case AssetType.STOCKS:
+      return "STOCKS";
+    case AssetType.BONDS:
+      return "BONDS";
     case AssetType.WRAPPED_STABLECOIN:
       return "WRAPPED_STABLECOIN";
+    case AssetType.CRYPTO:
+      return "CRYPTO";
+    case AssetType.FOREX:
+      return "FOREX";
+    case AssetType.FUTURES:
+      return "FUTURES";
+    case AssetType.OPTIONS:
+      return "OPTIONS";
     case AssetType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";

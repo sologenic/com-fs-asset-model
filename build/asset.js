@@ -5,7 +5,7 @@
 // source: asset.proto
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
-import { Denom } from "./domain/denom/denom";
+import { Denom } from "./sologenic/com-fs-asset-model/domain/denom/denom";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
 import { MetaData } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 export const protobufPackage = "asset";
@@ -111,13 +111,18 @@ export function reasonToJSON(object) {
             return "UNRECOGNIZED";
     }
 }
+/** TODO: to have shared between order */
 export var AssetType;
 (function (AssetType) {
     AssetType[AssetType["ASSET_TYPE_DO_NOT_USE"] = 0] = "ASSET_TYPE_DO_NOT_USE";
-    AssetType[AssetType["STOCK"] = 1] = "STOCK";
-    AssetType[AssetType["BOND"] = 2] = "BOND";
+    AssetType[AssetType["STOCKS"] = 1] = "STOCKS";
+    AssetType[AssetType["BONDS"] = 2] = "BONDS";
     /** WRAPPED_STABLECOIN - Represents a stablecoin that is wrapped for internal use within the system, such as WUSDC. */
     AssetType[AssetType["WRAPPED_STABLECOIN"] = 3] = "WRAPPED_STABLECOIN";
+    AssetType[AssetType["CRYPTO"] = 4] = "CRYPTO";
+    AssetType[AssetType["FOREX"] = 5] = "FOREX";
+    AssetType[AssetType["FUTURES"] = 6] = "FUTURES";
+    AssetType[AssetType["OPTIONS"] = 7] = "OPTIONS";
     AssetType[AssetType["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
 })(AssetType || (AssetType = {}));
 export function assetTypeFromJSON(object) {
@@ -126,14 +131,26 @@ export function assetTypeFromJSON(object) {
         case "ASSET_TYPE_DO_NOT_USE":
             return AssetType.ASSET_TYPE_DO_NOT_USE;
         case 1:
-        case "STOCK":
-            return AssetType.STOCK;
+        case "STOCKS":
+            return AssetType.STOCKS;
         case 2:
-        case "BOND":
-            return AssetType.BOND;
+        case "BONDS":
+            return AssetType.BONDS;
         case 3:
         case "WRAPPED_STABLECOIN":
             return AssetType.WRAPPED_STABLECOIN;
+        case 4:
+        case "CRYPTO":
+            return AssetType.CRYPTO;
+        case 5:
+        case "FOREX":
+            return AssetType.FOREX;
+        case 6:
+        case "FUTURES":
+            return AssetType.FUTURES;
+        case 7:
+        case "OPTIONS":
+            return AssetType.OPTIONS;
         case -1:
         case "UNRECOGNIZED":
         default:
@@ -144,12 +161,20 @@ export function assetTypeToJSON(object) {
     switch (object) {
         case AssetType.ASSET_TYPE_DO_NOT_USE:
             return "ASSET_TYPE_DO_NOT_USE";
-        case AssetType.STOCK:
-            return "STOCK";
-        case AssetType.BOND:
-            return "BOND";
+        case AssetType.STOCKS:
+            return "STOCKS";
+        case AssetType.BONDS:
+            return "BONDS";
         case AssetType.WRAPPED_STABLECOIN:
             return "WRAPPED_STABLECOIN";
+        case AssetType.CRYPTO:
+            return "CRYPTO";
+        case AssetType.FOREX:
+            return "FOREX";
+        case AssetType.FUTURES:
+            return "FUTURES";
+        case AssetType.OPTIONS:
+            return "OPTIONS";
         case AssetType.UNRECOGNIZED:
         default:
             return "UNRECOGNIZED";

@@ -1,5 +1,5 @@
 import _m0 from "protobufjs/minimal";
-import { Denom } from "./domain/denom/denom";
+import { Denom } from "./sologenic/com-fs-asset-model/domain/denom/denom";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
 import { MetaData } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 export declare const protobufPackage = "asset";
@@ -27,12 +27,17 @@ export declare enum Reason {
 }
 export declare function reasonFromJSON(object: any): Reason;
 export declare function reasonToJSON(object: Reason): string;
+/** TODO: to have shared between order */
 export declare enum AssetType {
     ASSET_TYPE_DO_NOT_USE = 0,
-    STOCK = 1,
-    BOND = 2,
+    STOCKS = 1,
+    BONDS = 2,
     /** WRAPPED_STABLECOIN - Represents a stablecoin that is wrapped for internal use within the system, such as WUSDC. */
     WRAPPED_STABLECOIN = 3,
+    CRYPTO = 4,
+    FOREX = 5,
+    FUTURES = 6,
+    OPTIONS = 7,
     UNRECOGNIZED = -1
 }
 export declare function assetTypeFromJSON(object: any): AssetType;

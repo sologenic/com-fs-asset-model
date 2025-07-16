@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package asset;
 
-import "domain/denom/denom.proto";
+import "sologenic/com-fs-asset-model/domain/denom/denom.proto";
 import "sologenic/com-fs-utils-lib/models/metadata/metadata.proto";
 import "sologenic/com-fs-utils-lib/models/audit/audit.proto";
 
@@ -88,11 +88,16 @@ enum Reason {
     UNSTABLE_ASSET = 3;
 }
 
+// TODO: to have shared between order
 enum AssetType {
     ASSET_TYPE_DO_NOT_USE = 0;
-    STOCK = 1;
-    BOND = 2;
+    STOCKS = 1;
+    BONDS = 2;
     WRAPPED_STABLECOIN = 3; // Represents a stablecoin that is wrapped for internal use within the system, such as WUSDC.
+    CRYPTO = 4;
+    FOREX = 5;
+    FUTURES = 6;
+    OPTIONS = 7;
 }
 
 enum UserAssetStatus {
