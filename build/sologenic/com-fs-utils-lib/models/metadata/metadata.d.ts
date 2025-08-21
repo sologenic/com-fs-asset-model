@@ -17,6 +17,47 @@ export interface MetaData {
     /** Internal to listener */
     CreatedAt: Date | undefined;
     UpdatedByAccount?: string | undefined;
+    MetaDataDetails?: MetaDataDetails | undefined;
+}
+export interface MetaDataDetails {
+    /** required */
+    name: string;
+    /** required */
+    description: string;
+    /** required */
+    image: string;
+    /** required */
+    externalUrl: string;
+    /** required */
+    addressLine1: string;
+    /** optional */
+    addressLine2?: string | undefined;
+    /** required */
+    city: string;
+    /** optional */
+    region?: string | undefined;
+    /** optional */
+    postalCode?: string | undefined;
+    /** required */
+    country: string;
+    /** required */
+    yearFounded: number;
+    /** required */
+    licensed: boolean;
+    /** optional */
+    licenseCountry?: string | undefined;
+    /** optional */
+    licenseNumber?: string | undefined;
+    /** optional */
+    phone?: string | undefined;
+    /** optional */
+    email?: string | undefined;
+    /** optional (list of links) */
+    socialMediaLinks: string[];
+    /** JSON array string */
+    keyClients?: string | undefined;
+    /** JSON array string */
+    press?: string | undefined;
 }
 export declare const MetaData: {
     encode(message: MetaData, writer?: _m0.Writer): _m0.Writer;
@@ -28,23 +69,235 @@ export declare const MetaData: {
         UpdatedAt?: Date | undefined;
         CreatedAt?: Date | undefined;
         UpdatedByAccount?: string | undefined;
+        MetaDataDetails?: {
+            name?: string | undefined;
+            description?: string | undefined;
+            image?: string | undefined;
+            externalUrl?: string | undefined;
+            addressLine1?: string | undefined;
+            addressLine2?: string | undefined;
+            city?: string | undefined;
+            region?: string | undefined;
+            postalCode?: string | undefined;
+            country?: string | undefined;
+            yearFounded?: number | undefined;
+            licensed?: boolean | undefined;
+            licenseCountry?: string | undefined;
+            licenseNumber?: string | undefined;
+            phone?: string | undefined;
+            email?: string | undefined;
+            socialMediaLinks?: string[] | undefined;
+            keyClients?: string | undefined;
+            press?: string | undefined;
+        } | undefined;
     } & {
         Network?: Network | undefined;
         UpdatedAt?: Date | undefined;
         CreatedAt?: Date | undefined;
         UpdatedByAccount?: string | undefined;
-    } & { [K in Exclude<keyof I, keyof MetaData>]: never; }>(base?: I | undefined): MetaData;
+        MetaDataDetails?: ({
+            name?: string | undefined;
+            description?: string | undefined;
+            image?: string | undefined;
+            externalUrl?: string | undefined;
+            addressLine1?: string | undefined;
+            addressLine2?: string | undefined;
+            city?: string | undefined;
+            region?: string | undefined;
+            postalCode?: string | undefined;
+            country?: string | undefined;
+            yearFounded?: number | undefined;
+            licensed?: boolean | undefined;
+            licenseCountry?: string | undefined;
+            licenseNumber?: string | undefined;
+            phone?: string | undefined;
+            email?: string | undefined;
+            socialMediaLinks?: string[] | undefined;
+            keyClients?: string | undefined;
+            press?: string | undefined;
+        } & {
+            name?: string | undefined;
+            description?: string | undefined;
+            image?: string | undefined;
+            externalUrl?: string | undefined;
+            addressLine1?: string | undefined;
+            addressLine2?: string | undefined;
+            city?: string | undefined;
+            region?: string | undefined;
+            postalCode?: string | undefined;
+            country?: string | undefined;
+            yearFounded?: number | undefined;
+            licensed?: boolean | undefined;
+            licenseCountry?: string | undefined;
+            licenseNumber?: string | undefined;
+            phone?: string | undefined;
+            email?: string | undefined;
+            socialMediaLinks?: (string[] & string[] & { [K in Exclude<keyof I["MetaDataDetails"]["socialMediaLinks"], keyof string[]>]: never; }) | undefined;
+            keyClients?: string | undefined;
+            press?: string | undefined;
+        } & { [K_1 in Exclude<keyof I["MetaDataDetails"], keyof MetaDataDetails>]: never; }) | undefined;
+    } & { [K_2 in Exclude<keyof I, keyof MetaData>]: never; }>(base?: I | undefined): MetaData;
     fromPartial<I_1 extends {
         Network?: Network | undefined;
         UpdatedAt?: Date | undefined;
         CreatedAt?: Date | undefined;
         UpdatedByAccount?: string | undefined;
+        MetaDataDetails?: {
+            name?: string | undefined;
+            description?: string | undefined;
+            image?: string | undefined;
+            externalUrl?: string | undefined;
+            addressLine1?: string | undefined;
+            addressLine2?: string | undefined;
+            city?: string | undefined;
+            region?: string | undefined;
+            postalCode?: string | undefined;
+            country?: string | undefined;
+            yearFounded?: number | undefined;
+            licensed?: boolean | undefined;
+            licenseCountry?: string | undefined;
+            licenseNumber?: string | undefined;
+            phone?: string | undefined;
+            email?: string | undefined;
+            socialMediaLinks?: string[] | undefined;
+            keyClients?: string | undefined;
+            press?: string | undefined;
+        } | undefined;
     } & {
         Network?: Network | undefined;
         UpdatedAt?: Date | undefined;
         CreatedAt?: Date | undefined;
         UpdatedByAccount?: string | undefined;
-    } & { [K_1 in Exclude<keyof I_1, keyof MetaData>]: never; }>(object: I_1): MetaData;
+        MetaDataDetails?: ({
+            name?: string | undefined;
+            description?: string | undefined;
+            image?: string | undefined;
+            externalUrl?: string | undefined;
+            addressLine1?: string | undefined;
+            addressLine2?: string | undefined;
+            city?: string | undefined;
+            region?: string | undefined;
+            postalCode?: string | undefined;
+            country?: string | undefined;
+            yearFounded?: number | undefined;
+            licensed?: boolean | undefined;
+            licenseCountry?: string | undefined;
+            licenseNumber?: string | undefined;
+            phone?: string | undefined;
+            email?: string | undefined;
+            socialMediaLinks?: string[] | undefined;
+            keyClients?: string | undefined;
+            press?: string | undefined;
+        } & {
+            name?: string | undefined;
+            description?: string | undefined;
+            image?: string | undefined;
+            externalUrl?: string | undefined;
+            addressLine1?: string | undefined;
+            addressLine2?: string | undefined;
+            city?: string | undefined;
+            region?: string | undefined;
+            postalCode?: string | undefined;
+            country?: string | undefined;
+            yearFounded?: number | undefined;
+            licensed?: boolean | undefined;
+            licenseCountry?: string | undefined;
+            licenseNumber?: string | undefined;
+            phone?: string | undefined;
+            email?: string | undefined;
+            socialMediaLinks?: (string[] & string[] & { [K_3 in Exclude<keyof I_1["MetaDataDetails"]["socialMediaLinks"], keyof string[]>]: never; }) | undefined;
+            keyClients?: string | undefined;
+            press?: string | undefined;
+        } & { [K_4 in Exclude<keyof I_1["MetaDataDetails"], keyof MetaDataDetails>]: never; }) | undefined;
+    } & { [K_5 in Exclude<keyof I_1, keyof MetaData>]: never; }>(object: I_1): MetaData;
+};
+export declare const MetaDataDetails: {
+    encode(message: MetaDataDetails, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): MetaDataDetails;
+    fromJSON(object: any): MetaDataDetails;
+    toJSON(message: MetaDataDetails): unknown;
+    create<I extends {
+        name?: string | undefined;
+        description?: string | undefined;
+        image?: string | undefined;
+        externalUrl?: string | undefined;
+        addressLine1?: string | undefined;
+        addressLine2?: string | undefined;
+        city?: string | undefined;
+        region?: string | undefined;
+        postalCode?: string | undefined;
+        country?: string | undefined;
+        yearFounded?: number | undefined;
+        licensed?: boolean | undefined;
+        licenseCountry?: string | undefined;
+        licenseNumber?: string | undefined;
+        phone?: string | undefined;
+        email?: string | undefined;
+        socialMediaLinks?: string[] | undefined;
+        keyClients?: string | undefined;
+        press?: string | undefined;
+    } & {
+        name?: string | undefined;
+        description?: string | undefined;
+        image?: string | undefined;
+        externalUrl?: string | undefined;
+        addressLine1?: string | undefined;
+        addressLine2?: string | undefined;
+        city?: string | undefined;
+        region?: string | undefined;
+        postalCode?: string | undefined;
+        country?: string | undefined;
+        yearFounded?: number | undefined;
+        licensed?: boolean | undefined;
+        licenseCountry?: string | undefined;
+        licenseNumber?: string | undefined;
+        phone?: string | undefined;
+        email?: string | undefined;
+        socialMediaLinks?: (string[] & string[] & { [K in Exclude<keyof I["socialMediaLinks"], keyof string[]>]: never; }) | undefined;
+        keyClients?: string | undefined;
+        press?: string | undefined;
+    } & { [K_1 in Exclude<keyof I, keyof MetaDataDetails>]: never; }>(base?: I | undefined): MetaDataDetails;
+    fromPartial<I_1 extends {
+        name?: string | undefined;
+        description?: string | undefined;
+        image?: string | undefined;
+        externalUrl?: string | undefined;
+        addressLine1?: string | undefined;
+        addressLine2?: string | undefined;
+        city?: string | undefined;
+        region?: string | undefined;
+        postalCode?: string | undefined;
+        country?: string | undefined;
+        yearFounded?: number | undefined;
+        licensed?: boolean | undefined;
+        licenseCountry?: string | undefined;
+        licenseNumber?: string | undefined;
+        phone?: string | undefined;
+        email?: string | undefined;
+        socialMediaLinks?: string[] | undefined;
+        keyClients?: string | undefined;
+        press?: string | undefined;
+    } & {
+        name?: string | undefined;
+        description?: string | undefined;
+        image?: string | undefined;
+        externalUrl?: string | undefined;
+        addressLine1?: string | undefined;
+        addressLine2?: string | undefined;
+        city?: string | undefined;
+        region?: string | undefined;
+        postalCode?: string | undefined;
+        country?: string | undefined;
+        yearFounded?: number | undefined;
+        licensed?: boolean | undefined;
+        licenseCountry?: string | undefined;
+        licenseNumber?: string | undefined;
+        phone?: string | undefined;
+        email?: string | undefined;
+        socialMediaLinks?: (string[] & string[] & { [K_2 in Exclude<keyof I_1["socialMediaLinks"], keyof string[]>]: never; }) | undefined;
+        keyClients?: string | undefined;
+        press?: string | undefined;
+    } & { [K_3 in Exclude<keyof I_1, keyof MetaDataDetails>]: never; }>(object: I_1): MetaDataDetails;
 };
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 export type DeepPartial<T> = T extends Builtin ? T : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>> : T extends {} ? {

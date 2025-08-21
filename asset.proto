@@ -8,39 +8,71 @@ import "sologenic/com-fs-utils-lib/models/audit/audit.proto";
 
 option go_package = "github.com/sologenic/com-fs-asset-model;asset";
 
+// ---------------- Existing AssetDetails ----------------
+
 message AssetDetails {
-    // Key combination: Currency_OrganizationID_SmartContractIssuerAddr e.g "appl_1_72c4c072-2fe4-4f72-ae9d-d9d52a05fd71_testcore1et29c..."
+    // Key combination: Currency_OrganizationID_SmartContractIssuerAddr
+    // e.g., "appl_1_72c4c072-2fe4-4f72-ae9d-d9d52a05fd71_testcore1et29c..."
     string ID = 1; // Key string to prevent composing the key all the time and reduce errors
-    string OrganizationID = 2; // External entity (broker) that owns this asset 
+
+    // External entity (broker) that owns this asset 
+    string OrganizationID = 2; 
+
     AssetStatus Status = 3;
+
     optional Reason Reason = 4;
-    repeated string JurisdictionIDs = 5; // list of jurisdictionIDs where this asset is allowed to be traded
+
+    // list of jurisdictionIDs where this asset is allowed to be traded
+    repeated string JurisdictionIDs = 5; 
+
     AssetType Type = 6;
 
     // Asset specific properties
     string Name = 7;
+
     string ExchangeTickerSymbol = 8;
+
     Exchange Exchange = 9;
-    string InternalDescription = 10; // Description for internal use, not for on-chain 
+
+    // Description for internal use, not for on-chain 
+    string InternalDescription = 10;
+
     double MinTransactionAmount = 11;
-    // TradingMarginPercentage is required additional margin as a percentage of the order value that buyers must provide.
+
+    // Required additional margin as a percentage of the order value that buyers must provide.
     // Value should be between 0.0 and 1.0 (0% to 100%)
     // Example: If TradingMarginPercentage = 0.1 (10%) and order value is $100:
     //  - Buyer must provide $110 total ($100 asset cost + $10 margin)
     //  - $5 (5%, cost) is kept for transaction costs
     //  - $5 (5%, refundable) is returned to the buyer after execution
     double TradingMarginPercentage = 12;
+
     LogoFile LogoFile = 13;
-    Industry Industry = 14; // Global Industry Classification Standard (GICS®) sector
+
+    // Global Industry Classification Standard (GICS®) sector
+    Industry Industry = 14;
+
     // Margin percentage specific to the asset. This is the asset's individual margin percentage used to calculate buying power.
     // Buying Power = AvailableFunds(On-chain) + (Σ Assets(non-stablecoin)  × AssetMarginPercentage)
-    // Asset Margin Percentage: represents the collateral value of the asset (e.g., 50% → 10,000BTC → 10,000BTC → 5,000 buying power contribution)
-    double AssetMarginPercentage = 15; 
+    // Asset Margin Percentage: represents the collateral value of the asset (e.g., 50% → 10,000BTC → 5,000 buying power contribution)
+    double AssetMarginPercentage = 15;
+
     // On-chain properties
-    denom.Denom Denom = 17; // {subunit}-{issuer} where Subunit is su{Currency}. e.g., suappl_1-testcore1et29c...
+    denom.Denom Denom = 17; // {subunit}-{issuer} where Subunit is su{Currency}, e.g., suappl_1-testcore1et29c...
     bool IsIssuedInSmartContract = 18; // Flag to indicate if the asset is issued in the smart contract
-    string SmartContractIssuerAddr = 19; // Issuer address of the smart contract (distinct from Denom.Issuer which is the smart contract address that minted the token)
+    string SmartContractIssuerAddr = 19; // Issuer address of the smart contract (distinct from Denom.Issuer)
+
+    // -------- New category-specific optional fields --------
+    optional RealEstate RealEstateDetails = 20;
+    optional StableCoin StableCoinDetails = 21;
+    optional Commodity CommodityDetails = 22;
+    optional Collectible CollectibleDetails = 23;
+    optional Vehicle VehicleDetails = 24;
+    optional IntellectualProperty IntellectualPropertyDetails = 25;
+    optional InvestmentFund InvestmentFundDetails = 26;
 }
+
+// ---------------- Existing Messages ----------------
 
 message Asset {
     AssetDetails AssetDetails = 1;
@@ -55,7 +87,7 @@ message Assets {
 message LogoFile {
     string Reference = 1; // The reference to the file
     string Extension = 2;
-    optional string Name = 3; // User defined name of the file, used as a "description" and not to reference the file
+    optional string Name = 3; // User defined name of the file, used as a "description"
 }
 
 message UserAssetList {
@@ -72,12 +104,106 @@ message UserAssetLists {
     repeated UserAssetList UserAssetLists = 1;
 }
 
+// ---------------- New Category Messages ----------------
+
+message RealEstate {
+    string Address = 1;                 
+    optional int32 Bathrooms = 2;       
+    optional int32 Bedrooms = 3;        
+    float Latitude = 4;                 
+    float Longitude = 5;                
+    optional string OwnershipType = 6;  
+    string PropertyType = 7;            
+    optional string RiskRating = 8;     
+    optional float SquareFootage = 9;   
+    optional string TenancyStatus = 10; 
+    optional int32 YearBuilt = 11;      
+    repeated float YieldPercent = 12;   
+}
+
+message StableCoin {
+    optional string Version = 1;
+    optional string PegType = 2;
+    optional float PegRatio = 3;
+    optional string BackingAsset = 4;
+    optional string ExchangeTickerSymbol = 5;
+    optional string Exchange = 6;
+    optional float MinTransactionAmount = 7;
+    optional float TradingMarginPercentage = 8;
+    optional float AssetMarginPercentage = 9;
+}
+
+message Commodity {
+    string Category = 1;                       
+    optional string Quality = 2;               
+    string UnitOfMeasure = 3;                  
+    optional float Quantity = 4;               
+    optional string OriginCountry = 5;         
+    optional string ExchangeTickerSymbol = 6;  
+    optional string Exchange = 7;              
+    optional float MinTransactionAmount = 8;   
+    optional string StorageLocation = 9;       
+    optional string ContractType = 10;         
+    optional string DeliveryDate = 11;         
+}
+
+message Collectible {
+    string Category = 1;                          
+    optional string CollectionName = 2;           
+    optional string TokenStandard = 3;            
+    optional string TokenID = 4;                  
+    optional string MetadataURI = 5;              
+    optional string Creator = 6;                  
+    repeated string OwnershipHistory = 7;        
+    string CurrentOwner = 8;                      
+}
+
+message Vehicle {
+    string Category = 1;               
+    string Manufacturer = 2;           
+    string Model = 3;                  
+    string SerialNumber = 4;           
+    optional int32 Year = 5;           
+    optional string Specifications = 6;
+    optional string FuelType = 7;      
+    optional float UsageHours = 8;     
+    optional float Mileage = 9;        
+    string Condition = 10;             
+    string CurrentOwner = 11;          
+    optional string Location = 12;     
+}
+
+message IntellectualProperty {
+    string Category = 1;                        
+    string Owner = 2;                           
+    optional string RegistrationNumber = 3;     
+    optional string FilingDate = 4;             
+    optional string ExpirationDate = 5;         
+    repeated string IPJurisdictionIDs = 6;      
+    optional string LicenseType = 7;            
+    optional string LicenseTerms = 8;           
+    optional float Value = 9;                   
+}
+
+message InvestmentFund {
+    string FundType = 1;                
+    string Exchange = 2;                
+    optional string ISIN = 3;           
+    optional float NAV = 4;             
+    optional string InceptionDate = 5;  
+    optional string Manager = 6;        
+    optional float ExpenseRatio = 7;    
+    repeated string Holdings = 8;       
+}
+
+// ---------------- Enums ----------------
+
 enum AssetStatus {
     ASSET_STATUS_DO_NOT_USE = 0;
-    DO_NOT_LIST = 1; // BROKER_ASSET_ADMINISTRATOR only
-    REQUEST_LISTING = 2; // BROKER_ASSET_ADMINISTRATOR only
-    LISTED = 3; // ORGANIZATION_ASSET_ADMINISTRATOR only
-    ORGANIZATION_ADMIN_DO_NOT_LIST = 4; // ORGANIZATION_ASSET_ADMINISTRATOR only
+    DO_NOT_LIST = 1; 
+    REQUEST_LISTING = 2; 
+    LISTED = 3; 
+    ORGANIZATION_ADMIN_DO_NOT_LIST = 4; 
     OUTDATED_ASSET_VERSION = 5;
 }
 
@@ -88,12 +214,11 @@ enum Reason {
     UNSTABLE_ASSET = 3;
 }
 
-// TODO: to have shared between order
 enum AssetType {
     ASSET_TYPE_DO_NOT_USE = 0;
     STOCKS = 1;
     BONDS = 2;
-    WRAPPED_STABLECOIN = 3; // Represents a stablecoin that is wrapped for internal use within the system, such as WUSDC.
+    WRAPPED_STABLECOIN = 3;
     CRYPTO = 4;
     FOREX = 5;
     FUTURES = 6;
@@ -115,8 +240,6 @@ enum Exchange {
     ONCHAIN = 3; // On‑chain token/cryptocurrency markets, e.g. wrapped USDC
 }
 
-// Global Industry Classification Standard (GICS®) 11 sectors
-// Source: https://www.msci.com/our-solutions/indexes/gics
 enum Industry {
     INDUSTRY_DO_NOT_USE = 0;
     ENERGY = 1;
