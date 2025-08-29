@@ -30,17 +30,13 @@ message AssetKey {
 message AssetQuery {
     metadata.Network Network = 1;
     optional int32 Offset = 2;
+    // Compliance filter: list assets allowed in these jurisdictions
     repeated string JurisdictionIDs = 3;
     optional string OrganizationID = 4;
     optional AssetStatus Status = 5;
     optional AssetType AssetType = 6;
-    optional string ExchangeTickerSymbol = 7;
-    optional string Exchange = 8;
-    optional string Symbol = 9;
-    optional string Version = 10;
-    optional string Issuer = 11;
-    optional Industry Industry = 12;
-    optional string SmartContractIssuerAddr = 13;
+    // On-chain issuer address (distinct from Denom.Issuer)
+    optional string SmartContractIssuerAddr = 7;
 }
 
 message UserAssetListKey {
