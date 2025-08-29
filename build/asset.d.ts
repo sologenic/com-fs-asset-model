@@ -1,7 +1,6 @@
 import _m0 from "protobufjs/minimal";
 import { Denom } from "./sologenic/com-fs-asset-model/domain/denom/denom";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
-import { MetaData } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 export declare const protobufPackage = "asset";
 export declare enum AssetStatus {
     ASSET_STATUS_DO_NOT_USE = 0,
@@ -46,78 +45,18 @@ export declare enum UserAssetStatus {
 }
 export declare function userAssetStatusFromJSON(object: any): UserAssetStatus;
 export declare function userAssetStatusToJSON(object: UserAssetStatus): string;
-export declare enum Exchange {
-    EXCHANGE_DO_NOT_USE = 0,
-    NASDAQ = 1,
-    NYSE = 2,
-    /** ONCHAIN - On‑chain token/cryptocurrency markets, e.g. wrapped USDC */
-    ONCHAIN = 3,
-    UNRECOGNIZED = -1
-}
-export declare function exchangeFromJSON(object: any): Exchange;
-export declare function exchangeToJSON(object: Exchange): string;
-export declare enum Industry {
-    INDUSTRY_DO_NOT_USE = 0,
-    ENERGY = 1,
-    MATERIALS = 2,
-    INDUSTRIALS = 3,
-    CONSUMER_DISCRETIONARY = 4,
-    CONSUMER_STAPLES = 5,
-    HEALTH_CARE = 6,
-    FINANCIALS = 7,
-    INFORMATION_TECHNOLOGY = 8,
-    COMMUNICATION_SERVICES = 9,
-    UTILITIES = 10,
-    REAL_ESTATE = 11,
-    UNRECOGNIZED = -1
-}
-export declare function industryFromJSON(object: any): Industry;
-export declare function industryToJSON(object: Industry): string;
 export interface AssetDetails {
-    /**
-     * Key combination: Currency_OrganizationID_SmartContractIssuerAddr
-     * e.g., "appl_1_72c4c072-2fe4-4f72-ae9d-d9d52a05fd71_testcore1et29c..."
-     */
+    /** Key string to prevent composing the key all the time and reduce errors */
     ID: string;
-    /** External entity (broker) that owns this asset */
     OrganizationID: string;
     Status: AssetStatus;
     Reason?: Reason | undefined;
-    /** list of jurisdictionIDs where this asset is allowed to be traded */
     JurisdictionIDs: string[];
     Type: AssetType;
-    /** Asset specific properties */
     Name: string;
-    ExchangeTickerSymbol: string;
-    Exchange: Exchange;
-    /** Description for internal use, not for on-chain */
-    InternalDescription: string;
-    MinTransactionAmount: number;
-    /**
-     * Required additional margin as a percentage of the order value that buyers must provide.
-     * Value should be between 0.0 and 1.0 (0% to 100%)
-     * Example: If TradingMarginPercentage = 0.1 (10%) and order value is $100:
-     *  - Buyer must provide $110 total ($100 asset cost + $10 margin)
-     *  - $5 (5%, cost) is kept for transaction costs
-     *  - $5 (5%, refundable) is returned to the buyer after execution
-     */
-    TradingMarginPercentage: number;
-    LogoFile: LogoFile | undefined;
-    /** Global Industry Classification Standard (GICS®) sector */
-    Industry: Industry;
-    /**
-     * Margin percentage specific to the asset. This is the asset's individual margin percentage used to calculate buying power.
-     * Buying Power = AvailableFunds(On-chain) + (Σ Assets(non-stablecoin)  × AssetMarginPercentage)
-     * Asset Margin Percentage: represents the collateral value of the asset (e.g., 50% → 10,000BTC → 5,000 buying power contribution)
-     */
-    AssetMarginPercentage: number;
-    /** On-chain properties */
     Denom: Denom | undefined;
-    /** Flag to indicate if the asset is issued in the smart contract */
     IsIssuedInSmartContract: boolean;
-    /** Issuer address of the smart contract (distinct from Denom.Issuer) */
     SmartContractIssuerAddr: string;
-    /** -------- New category-specific optional fields -------- */
     RealEstateDetails?: RealEstate | undefined;
     StableCoinDetails?: StableCoin | undefined;
     CommodityDetails?: Commodity | undefined;
@@ -128,27 +67,18 @@ export interface AssetDetails {
 }
 export interface Asset {
     AssetDetails: AssetDetails | undefined;
-    MetaData: MetaData | undefined;
+    MetaData: MetadataDetails | undefined;
     Audit: Audit | undefined;
 }
 export interface Assets {
     Assets: Asset[];
 }
-export interface LogoFile {
-    /** The reference to the file */
-    Reference: string;
-    Extension: string;
-    /** User defined name of the file, used as a "description" */
-    Name?: string | undefined;
-}
 export interface UserAssetList {
-    /** Key combination: Currency-OrganizationID-AccountID-Wallet (AssetKey-AccountID-Wallet) */
     AccountID: string;
     Wallet: string;
-    /** Currency-OrganizationID */
     AssetKey: string;
     Status: UserAssetStatus;
-    MetaData: MetaData | undefined;
+    MetaData: MetadataDetails | undefined;
     Visible: boolean;
 }
 export interface UserAssetLists {
@@ -237,6 +167,27 @@ export interface InvestmentFund {
     ExpenseRatio?: number | undefined;
     Holdings: string[];
 }
+export interface MetadataDetails {
+    Name: string;
+    Description: string;
+    Image: string;
+    ExternalUrl: string;
+    AddressLine1: string;
+    AddressLine2?: string | undefined;
+    City: string;
+    Region?: string | undefined;
+    PostalCode?: string | undefined;
+    Country: string;
+    YearFounded: number;
+    Licensed: boolean;
+    LicenseCountry?: string | undefined;
+    LicenseNumber?: string | undefined;
+    Phone?: string | undefined;
+    Email?: string | undefined;
+    SocialMediaLinks: string[];
+    KeyClients?: string | undefined;
+    Press?: string | undefined;
+}
 export declare const AssetDetails: {
     encode(message: AssetDetails, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): AssetDetails;
@@ -250,18 +201,6 @@ export declare const AssetDetails: {
         JurisdictionIDs?: string[] | undefined;
         Type?: AssetType | undefined;
         Name?: string | undefined;
-        ExchangeTickerSymbol?: string | undefined;
-        Exchange?: Exchange | undefined;
-        InternalDescription?: string | undefined;
-        MinTransactionAmount?: number | undefined;
-        TradingMarginPercentage?: number | undefined;
-        LogoFile?: {
-            Reference?: string | undefined;
-            Extension?: string | undefined;
-            Name?: string | undefined;
-        } | undefined;
-        Industry?: Industry | undefined;
-        AssetMarginPercentage?: number | undefined;
         Denom?: {
             Currency?: {
                 Symbol?: string | undefined;
@@ -365,22 +304,6 @@ export declare const AssetDetails: {
         JurisdictionIDs?: (string[] & string[] & { [K in Exclude<keyof I["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
         Type?: AssetType | undefined;
         Name?: string | undefined;
-        ExchangeTickerSymbol?: string | undefined;
-        Exchange?: Exchange | undefined;
-        InternalDescription?: string | undefined;
-        MinTransactionAmount?: number | undefined;
-        TradingMarginPercentage?: number | undefined;
-        LogoFile?: ({
-            Reference?: string | undefined;
-            Extension?: string | undefined;
-            Name?: string | undefined;
-        } & {
-            Reference?: string | undefined;
-            Extension?: string | undefined;
-            Name?: string | undefined;
-        } & { [K_1 in Exclude<keyof I["LogoFile"], keyof LogoFile>]: never; }) | undefined;
-        Industry?: Industry | undefined;
-        AssetMarginPercentage?: number | undefined;
         Denom?: ({
             Currency?: {
                 Symbol?: string | undefined;
@@ -397,12 +320,12 @@ export declare const AssetDetails: {
             } & {
                 Symbol?: string | undefined;
                 Version?: string | undefined;
-            } & { [K_2 in Exclude<keyof I["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
+            } & { [K_1 in Exclude<keyof I["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
             Subunit?: string | undefined;
             Issuer?: string | undefined;
             Precision?: number | undefined;
             Description?: string | undefined;
-        } & { [K_3 in Exclude<keyof I["Denom"], keyof Denom>]: never; }) | undefined;
+        } & { [K_2 in Exclude<keyof I["Denom"], keyof Denom>]: never; }) | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
         SmartContractIssuerAddr?: string | undefined;
         RealEstateDetails?: ({
@@ -430,8 +353,8 @@ export declare const AssetDetails: {
             SquareFootage?: number | undefined;
             TenancyStatus?: string | undefined;
             YearBuilt?: number | undefined;
-            YieldPercent?: (number[] & number[] & { [K_4 in Exclude<keyof I["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
-        } & { [K_5 in Exclude<keyof I["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
+            YieldPercent?: (number[] & number[] & { [K_3 in Exclude<keyof I["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
+        } & { [K_4 in Exclude<keyof I["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
         StableCoinDetails?: ({
             Version?: string | undefined;
             PegType?: string | undefined;
@@ -452,7 +375,7 @@ export declare const AssetDetails: {
             MinTransactionAmount?: number | undefined;
             TradingMarginPercentage?: number | undefined;
             AssetMarginPercentage?: number | undefined;
-        } & { [K_6 in Exclude<keyof I["StableCoinDetails"], keyof StableCoin>]: never; }) | undefined;
+        } & { [K_5 in Exclude<keyof I["StableCoinDetails"], keyof StableCoin>]: never; }) | undefined;
         CommodityDetails?: ({
             Category?: string | undefined;
             Quality?: string | undefined;
@@ -477,7 +400,7 @@ export declare const AssetDetails: {
             StorageLocation?: string | undefined;
             ContractType?: string | undefined;
             DeliveryDate?: string | undefined;
-        } & { [K_7 in Exclude<keyof I["CommodityDetails"], keyof Commodity>]: never; }) | undefined;
+        } & { [K_6 in Exclude<keyof I["CommodityDetails"], keyof Commodity>]: never; }) | undefined;
         CollectibleDetails?: ({
             Category?: string | undefined;
             CollectionName?: string | undefined;
@@ -494,9 +417,9 @@ export declare const AssetDetails: {
             TokenID?: string | undefined;
             MetadataURI?: string | undefined;
             Creator?: string | undefined;
-            OwnershipHistory?: (string[] & string[] & { [K_8 in Exclude<keyof I["CollectibleDetails"]["OwnershipHistory"], keyof string[]>]: never; }) | undefined;
+            OwnershipHistory?: (string[] & string[] & { [K_7 in Exclude<keyof I["CollectibleDetails"]["OwnershipHistory"], keyof string[]>]: never; }) | undefined;
             CurrentOwner?: string | undefined;
-        } & { [K_9 in Exclude<keyof I["CollectibleDetails"], keyof Collectible>]: never; }) | undefined;
+        } & { [K_8 in Exclude<keyof I["CollectibleDetails"], keyof Collectible>]: never; }) | undefined;
         VehicleDetails?: ({
             Category?: string | undefined;
             Manufacturer?: string | undefined;
@@ -523,7 +446,7 @@ export declare const AssetDetails: {
             Condition?: string | undefined;
             CurrentOwner?: string | undefined;
             Location?: string | undefined;
-        } & { [K_10 in Exclude<keyof I["VehicleDetails"], keyof Vehicle>]: never; }) | undefined;
+        } & { [K_9 in Exclude<keyof I["VehicleDetails"], keyof Vehicle>]: never; }) | undefined;
         IntellectualPropertyDetails?: ({
             Category?: string | undefined;
             Owner?: string | undefined;
@@ -540,11 +463,11 @@ export declare const AssetDetails: {
             RegistrationNumber?: string | undefined;
             FilingDate?: string | undefined;
             ExpirationDate?: string | undefined;
-            IPJurisdictionIDs?: (string[] & string[] & { [K_11 in Exclude<keyof I["IntellectualPropertyDetails"]["IPJurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+            IPJurisdictionIDs?: (string[] & string[] & { [K_10 in Exclude<keyof I["IntellectualPropertyDetails"]["IPJurisdictionIDs"], keyof string[]>]: never; }) | undefined;
             LicenseType?: string | undefined;
             LicenseTerms?: string | undefined;
             Value?: number | undefined;
-        } & { [K_12 in Exclude<keyof I["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
+        } & { [K_11 in Exclude<keyof I["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
         InvestmentFundDetails?: ({
             FundType?: string | undefined;
             Exchange?: string | undefined;
@@ -562,9 +485,9 @@ export declare const AssetDetails: {
             InceptionDate?: string | undefined;
             Manager?: string | undefined;
             ExpenseRatio?: number | undefined;
-            Holdings?: (string[] & string[] & { [K_13 in Exclude<keyof I["InvestmentFundDetails"]["Holdings"], keyof string[]>]: never; }) | undefined;
-        } & { [K_14 in Exclude<keyof I["InvestmentFundDetails"], keyof InvestmentFund>]: never; }) | undefined;
-    } & { [K_15 in Exclude<keyof I, keyof AssetDetails>]: never; }>(base?: I | undefined): AssetDetails;
+            Holdings?: (string[] & string[] & { [K_12 in Exclude<keyof I["InvestmentFundDetails"]["Holdings"], keyof string[]>]: never; }) | undefined;
+        } & { [K_13 in Exclude<keyof I["InvestmentFundDetails"], keyof InvestmentFund>]: never; }) | undefined;
+    } & { [K_14 in Exclude<keyof I, keyof AssetDetails>]: never; }>(base?: I | undefined): AssetDetails;
     fromPartial<I_1 extends {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -573,18 +496,6 @@ export declare const AssetDetails: {
         JurisdictionIDs?: string[] | undefined;
         Type?: AssetType | undefined;
         Name?: string | undefined;
-        ExchangeTickerSymbol?: string | undefined;
-        Exchange?: Exchange | undefined;
-        InternalDescription?: string | undefined;
-        MinTransactionAmount?: number | undefined;
-        TradingMarginPercentage?: number | undefined;
-        LogoFile?: {
-            Reference?: string | undefined;
-            Extension?: string | undefined;
-            Name?: string | undefined;
-        } | undefined;
-        Industry?: Industry | undefined;
-        AssetMarginPercentage?: number | undefined;
         Denom?: {
             Currency?: {
                 Symbol?: string | undefined;
@@ -685,25 +596,9 @@ export declare const AssetDetails: {
         OrganizationID?: string | undefined;
         Status?: AssetStatus | undefined;
         Reason?: Reason | undefined;
-        JurisdictionIDs?: (string[] & string[] & { [K_16 in Exclude<keyof I_1["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+        JurisdictionIDs?: (string[] & string[] & { [K_15 in Exclude<keyof I_1["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
         Type?: AssetType | undefined;
         Name?: string | undefined;
-        ExchangeTickerSymbol?: string | undefined;
-        Exchange?: Exchange | undefined;
-        InternalDescription?: string | undefined;
-        MinTransactionAmount?: number | undefined;
-        TradingMarginPercentage?: number | undefined;
-        LogoFile?: ({
-            Reference?: string | undefined;
-            Extension?: string | undefined;
-            Name?: string | undefined;
-        } & {
-            Reference?: string | undefined;
-            Extension?: string | undefined;
-            Name?: string | undefined;
-        } & { [K_17 in Exclude<keyof I_1["LogoFile"], keyof LogoFile>]: never; }) | undefined;
-        Industry?: Industry | undefined;
-        AssetMarginPercentage?: number | undefined;
         Denom?: ({
             Currency?: {
                 Symbol?: string | undefined;
@@ -720,12 +615,12 @@ export declare const AssetDetails: {
             } & {
                 Symbol?: string | undefined;
                 Version?: string | undefined;
-            } & { [K_18 in Exclude<keyof I_1["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
+            } & { [K_16 in Exclude<keyof I_1["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
             Subunit?: string | undefined;
             Issuer?: string | undefined;
             Precision?: number | undefined;
             Description?: string | undefined;
-        } & { [K_19 in Exclude<keyof I_1["Denom"], keyof Denom>]: never; }) | undefined;
+        } & { [K_17 in Exclude<keyof I_1["Denom"], keyof Denom>]: never; }) | undefined;
         IsIssuedInSmartContract?: boolean | undefined;
         SmartContractIssuerAddr?: string | undefined;
         RealEstateDetails?: ({
@@ -753,8 +648,8 @@ export declare const AssetDetails: {
             SquareFootage?: number | undefined;
             TenancyStatus?: string | undefined;
             YearBuilt?: number | undefined;
-            YieldPercent?: (number[] & number[] & { [K_20 in Exclude<keyof I_1["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
-        } & { [K_21 in Exclude<keyof I_1["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
+            YieldPercent?: (number[] & number[] & { [K_18 in Exclude<keyof I_1["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
+        } & { [K_19 in Exclude<keyof I_1["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
         StableCoinDetails?: ({
             Version?: string | undefined;
             PegType?: string | undefined;
@@ -775,7 +670,7 @@ export declare const AssetDetails: {
             MinTransactionAmount?: number | undefined;
             TradingMarginPercentage?: number | undefined;
             AssetMarginPercentage?: number | undefined;
-        } & { [K_22 in Exclude<keyof I_1["StableCoinDetails"], keyof StableCoin>]: never; }) | undefined;
+        } & { [K_20 in Exclude<keyof I_1["StableCoinDetails"], keyof StableCoin>]: never; }) | undefined;
         CommodityDetails?: ({
             Category?: string | undefined;
             Quality?: string | undefined;
@@ -800,7 +695,7 @@ export declare const AssetDetails: {
             StorageLocation?: string | undefined;
             ContractType?: string | undefined;
             DeliveryDate?: string | undefined;
-        } & { [K_23 in Exclude<keyof I_1["CommodityDetails"], keyof Commodity>]: never; }) | undefined;
+        } & { [K_21 in Exclude<keyof I_1["CommodityDetails"], keyof Commodity>]: never; }) | undefined;
         CollectibleDetails?: ({
             Category?: string | undefined;
             CollectionName?: string | undefined;
@@ -817,9 +712,9 @@ export declare const AssetDetails: {
             TokenID?: string | undefined;
             MetadataURI?: string | undefined;
             Creator?: string | undefined;
-            OwnershipHistory?: (string[] & string[] & { [K_24 in Exclude<keyof I_1["CollectibleDetails"]["OwnershipHistory"], keyof string[]>]: never; }) | undefined;
+            OwnershipHistory?: (string[] & string[] & { [K_22 in Exclude<keyof I_1["CollectibleDetails"]["OwnershipHistory"], keyof string[]>]: never; }) | undefined;
             CurrentOwner?: string | undefined;
-        } & { [K_25 in Exclude<keyof I_1["CollectibleDetails"], keyof Collectible>]: never; }) | undefined;
+        } & { [K_23 in Exclude<keyof I_1["CollectibleDetails"], keyof Collectible>]: never; }) | undefined;
         VehicleDetails?: ({
             Category?: string | undefined;
             Manufacturer?: string | undefined;
@@ -846,7 +741,7 @@ export declare const AssetDetails: {
             Condition?: string | undefined;
             CurrentOwner?: string | undefined;
             Location?: string | undefined;
-        } & { [K_26 in Exclude<keyof I_1["VehicleDetails"], keyof Vehicle>]: never; }) | undefined;
+        } & { [K_24 in Exclude<keyof I_1["VehicleDetails"], keyof Vehicle>]: never; }) | undefined;
         IntellectualPropertyDetails?: ({
             Category?: string | undefined;
             Owner?: string | undefined;
@@ -863,11 +758,11 @@ export declare const AssetDetails: {
             RegistrationNumber?: string | undefined;
             FilingDate?: string | undefined;
             ExpirationDate?: string | undefined;
-            IPJurisdictionIDs?: (string[] & string[] & { [K_27 in Exclude<keyof I_1["IntellectualPropertyDetails"]["IPJurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+            IPJurisdictionIDs?: (string[] & string[] & { [K_25 in Exclude<keyof I_1["IntellectualPropertyDetails"]["IPJurisdictionIDs"], keyof string[]>]: never; }) | undefined;
             LicenseType?: string | undefined;
             LicenseTerms?: string | undefined;
             Value?: number | undefined;
-        } & { [K_28 in Exclude<keyof I_1["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
+        } & { [K_26 in Exclude<keyof I_1["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
         InvestmentFundDetails?: ({
             FundType?: string | undefined;
             Exchange?: string | undefined;
@@ -885,9 +780,9 @@ export declare const AssetDetails: {
             InceptionDate?: string | undefined;
             Manager?: string | undefined;
             ExpenseRatio?: number | undefined;
-            Holdings?: (string[] & string[] & { [K_29 in Exclude<keyof I_1["InvestmentFundDetails"]["Holdings"], keyof string[]>]: never; }) | undefined;
-        } & { [K_30 in Exclude<keyof I_1["InvestmentFundDetails"], keyof InvestmentFund>]: never; }) | undefined;
-    } & { [K_31 in Exclude<keyof I_1, keyof AssetDetails>]: never; }>(object: I_1): AssetDetails;
+            Holdings?: (string[] & string[] & { [K_27 in Exclude<keyof I_1["InvestmentFundDetails"]["Holdings"], keyof string[]>]: never; }) | undefined;
+        } & { [K_28 in Exclude<keyof I_1["InvestmentFundDetails"], keyof InvestmentFund>]: never; }) | undefined;
+    } & { [K_29 in Exclude<keyof I_1, keyof AssetDetails>]: never; }>(object: I_1): AssetDetails;
 };
 export declare const Asset: {
     encode(message: Asset, writer?: _m0.Writer): _m0.Writer;
@@ -903,18 +798,6 @@ export declare const Asset: {
             JurisdictionIDs?: string[] | undefined;
             Type?: AssetType | undefined;
             Name?: string | undefined;
-            ExchangeTickerSymbol?: string | undefined;
-            Exchange?: Exchange | undefined;
-            InternalDescription?: string | undefined;
-            MinTransactionAmount?: number | undefined;
-            TradingMarginPercentage?: number | undefined;
-            LogoFile?: {
-                Reference?: string | undefined;
-                Extension?: string | undefined;
-                Name?: string | undefined;
-            } | undefined;
-            Industry?: Industry | undefined;
-            AssetMarginPercentage?: number | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -1012,31 +895,25 @@ export declare const Asset: {
             } | undefined;
         } | undefined;
         MetaData?: {
-            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-            UpdatedAt?: Date | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedByAccount?: string | undefined;
-            MetaDataDetails?: {
-                name?: string | undefined;
-                description?: string | undefined;
-                image?: string | undefined;
-                externalUrl?: string | undefined;
-                addressLine1?: string | undefined;
-                addressLine2?: string | undefined;
-                city?: string | undefined;
-                region?: string | undefined;
-                postalCode?: string | undefined;
-                country?: string | undefined;
-                yearFounded?: number | undefined;
-                licensed?: boolean | undefined;
-                licenseCountry?: string | undefined;
-                licenseNumber?: string | undefined;
-                phone?: string | undefined;
-                email?: string | undefined;
-                socialMediaLinks?: string[] | undefined;
-                keyClients?: string | undefined;
-                press?: string | undefined;
-            } | undefined;
+            Name?: string | undefined;
+            Description?: string | undefined;
+            Image?: string | undefined;
+            ExternalUrl?: string | undefined;
+            AddressLine1?: string | undefined;
+            AddressLine2?: string | undefined;
+            City?: string | undefined;
+            Region?: string | undefined;
+            PostalCode?: string | undefined;
+            Country?: string | undefined;
+            YearFounded?: number | undefined;
+            Licensed?: boolean | undefined;
+            LicenseCountry?: string | undefined;
+            LicenseNumber?: string | undefined;
+            Phone?: string | undefined;
+            Email?: string | undefined;
+            SocialMediaLinks?: string[] | undefined;
+            KeyClients?: string | undefined;
+            Press?: string | undefined;
         } | undefined;
         Audit?: {
             ChangedBy?: string | undefined;
@@ -1052,18 +929,6 @@ export declare const Asset: {
             JurisdictionIDs?: string[] | undefined;
             Type?: AssetType | undefined;
             Name?: string | undefined;
-            ExchangeTickerSymbol?: string | undefined;
-            Exchange?: Exchange | undefined;
-            InternalDescription?: string | undefined;
-            MinTransactionAmount?: number | undefined;
-            TradingMarginPercentage?: number | undefined;
-            LogoFile?: {
-                Reference?: string | undefined;
-                Extension?: string | undefined;
-                Name?: string | undefined;
-            } | undefined;
-            Industry?: Industry | undefined;
-            AssetMarginPercentage?: number | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -1167,22 +1032,6 @@ export declare const Asset: {
             JurisdictionIDs?: (string[] & string[] & { [K in Exclude<keyof I["AssetDetails"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
             Type?: AssetType | undefined;
             Name?: string | undefined;
-            ExchangeTickerSymbol?: string | undefined;
-            Exchange?: Exchange | undefined;
-            InternalDescription?: string | undefined;
-            MinTransactionAmount?: number | undefined;
-            TradingMarginPercentage?: number | undefined;
-            LogoFile?: ({
-                Reference?: string | undefined;
-                Extension?: string | undefined;
-                Name?: string | undefined;
-            } & {
-                Reference?: string | undefined;
-                Extension?: string | undefined;
-                Name?: string | undefined;
-            } & { [K_1 in Exclude<keyof I["AssetDetails"]["LogoFile"], keyof LogoFile>]: never; }) | undefined;
-            Industry?: Industry | undefined;
-            AssetMarginPercentage?: number | undefined;
             Denom?: ({
                 Currency?: {
                     Symbol?: string | undefined;
@@ -1199,12 +1048,12 @@ export declare const Asset: {
                 } & {
                     Symbol?: string | undefined;
                     Version?: string | undefined;
-                } & { [K_2 in Exclude<keyof I["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
+                } & { [K_1 in Exclude<keyof I["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
                 Precision?: number | undefined;
                 Description?: string | undefined;
-            } & { [K_3 in Exclude<keyof I["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
+            } & { [K_2 in Exclude<keyof I["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
             SmartContractIssuerAddr?: string | undefined;
             RealEstateDetails?: ({
@@ -1232,8 +1081,8 @@ export declare const Asset: {
                 SquareFootage?: number | undefined;
                 TenancyStatus?: string | undefined;
                 YearBuilt?: number | undefined;
-                YieldPercent?: (number[] & number[] & { [K_4 in Exclude<keyof I["AssetDetails"]["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
-            } & { [K_5 in Exclude<keyof I["AssetDetails"]["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
+                YieldPercent?: (number[] & number[] & { [K_3 in Exclude<keyof I["AssetDetails"]["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
+            } & { [K_4 in Exclude<keyof I["AssetDetails"]["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
             StableCoinDetails?: ({
                 Version?: string | undefined;
                 PegType?: string | undefined;
@@ -1254,7 +1103,7 @@ export declare const Asset: {
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
                 AssetMarginPercentage?: number | undefined;
-            } & { [K_6 in Exclude<keyof I["AssetDetails"]["StableCoinDetails"], keyof StableCoin>]: never; }) | undefined;
+            } & { [K_5 in Exclude<keyof I["AssetDetails"]["StableCoinDetails"], keyof StableCoin>]: never; }) | undefined;
             CommodityDetails?: ({
                 Category?: string | undefined;
                 Quality?: string | undefined;
@@ -1279,7 +1128,7 @@ export declare const Asset: {
                 StorageLocation?: string | undefined;
                 ContractType?: string | undefined;
                 DeliveryDate?: string | undefined;
-            } & { [K_7 in Exclude<keyof I["AssetDetails"]["CommodityDetails"], keyof Commodity>]: never; }) | undefined;
+            } & { [K_6 in Exclude<keyof I["AssetDetails"]["CommodityDetails"], keyof Commodity>]: never; }) | undefined;
             CollectibleDetails?: ({
                 Category?: string | undefined;
                 CollectionName?: string | undefined;
@@ -1296,9 +1145,9 @@ export declare const Asset: {
                 TokenID?: string | undefined;
                 MetadataURI?: string | undefined;
                 Creator?: string | undefined;
-                OwnershipHistory?: (string[] & string[] & { [K_8 in Exclude<keyof I["AssetDetails"]["CollectibleDetails"]["OwnershipHistory"], keyof string[]>]: never; }) | undefined;
+                OwnershipHistory?: (string[] & string[] & { [K_7 in Exclude<keyof I["AssetDetails"]["CollectibleDetails"]["OwnershipHistory"], keyof string[]>]: never; }) | undefined;
                 CurrentOwner?: string | undefined;
-            } & { [K_9 in Exclude<keyof I["AssetDetails"]["CollectibleDetails"], keyof Collectible>]: never; }) | undefined;
+            } & { [K_8 in Exclude<keyof I["AssetDetails"]["CollectibleDetails"], keyof Collectible>]: never; }) | undefined;
             VehicleDetails?: ({
                 Category?: string | undefined;
                 Manufacturer?: string | undefined;
@@ -1325,7 +1174,7 @@ export declare const Asset: {
                 Condition?: string | undefined;
                 CurrentOwner?: string | undefined;
                 Location?: string | undefined;
-            } & { [K_10 in Exclude<keyof I["AssetDetails"]["VehicleDetails"], keyof Vehicle>]: never; }) | undefined;
+            } & { [K_9 in Exclude<keyof I["AssetDetails"]["VehicleDetails"], keyof Vehicle>]: never; }) | undefined;
             IntellectualPropertyDetails?: ({
                 Category?: string | undefined;
                 Owner?: string | undefined;
@@ -1342,11 +1191,11 @@ export declare const Asset: {
                 RegistrationNumber?: string | undefined;
                 FilingDate?: string | undefined;
                 ExpirationDate?: string | undefined;
-                IPJurisdictionIDs?: (string[] & string[] & { [K_11 in Exclude<keyof I["AssetDetails"]["IntellectualPropertyDetails"]["IPJurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+                IPJurisdictionIDs?: (string[] & string[] & { [K_10 in Exclude<keyof I["AssetDetails"]["IntellectualPropertyDetails"]["IPJurisdictionIDs"], keyof string[]>]: never; }) | undefined;
                 LicenseType?: string | undefined;
                 LicenseTerms?: string | undefined;
                 Value?: number | undefined;
-            } & { [K_12 in Exclude<keyof I["AssetDetails"]["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
+            } & { [K_11 in Exclude<keyof I["AssetDetails"]["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
             InvestmentFundDetails?: ({
                 FundType?: string | undefined;
                 Exchange?: string | undefined;
@@ -1364,82 +1213,50 @@ export declare const Asset: {
                 InceptionDate?: string | undefined;
                 Manager?: string | undefined;
                 ExpenseRatio?: number | undefined;
-                Holdings?: (string[] & string[] & { [K_13 in Exclude<keyof I["AssetDetails"]["InvestmentFundDetails"]["Holdings"], keyof string[]>]: never; }) | undefined;
-            } & { [K_14 in Exclude<keyof I["AssetDetails"]["InvestmentFundDetails"], keyof InvestmentFund>]: never; }) | undefined;
-        } & { [K_15 in Exclude<keyof I["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+                Holdings?: (string[] & string[] & { [K_12 in Exclude<keyof I["AssetDetails"]["InvestmentFundDetails"]["Holdings"], keyof string[]>]: never; }) | undefined;
+            } & { [K_13 in Exclude<keyof I["AssetDetails"]["InvestmentFundDetails"], keyof InvestmentFund>]: never; }) | undefined;
+        } & { [K_14 in Exclude<keyof I["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
         MetaData?: ({
-            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-            UpdatedAt?: Date | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedByAccount?: string | undefined;
-            MetaDataDetails?: {
-                name?: string | undefined;
-                description?: string | undefined;
-                image?: string | undefined;
-                externalUrl?: string | undefined;
-                addressLine1?: string | undefined;
-                addressLine2?: string | undefined;
-                city?: string | undefined;
-                region?: string | undefined;
-                postalCode?: string | undefined;
-                country?: string | undefined;
-                yearFounded?: number | undefined;
-                licensed?: boolean | undefined;
-                licenseCountry?: string | undefined;
-                licenseNumber?: string | undefined;
-                phone?: string | undefined;
-                email?: string | undefined;
-                socialMediaLinks?: string[] | undefined;
-                keyClients?: string | undefined;
-                press?: string | undefined;
-            } | undefined;
+            Name?: string | undefined;
+            Description?: string | undefined;
+            Image?: string | undefined;
+            ExternalUrl?: string | undefined;
+            AddressLine1?: string | undefined;
+            AddressLine2?: string | undefined;
+            City?: string | undefined;
+            Region?: string | undefined;
+            PostalCode?: string | undefined;
+            Country?: string | undefined;
+            YearFounded?: number | undefined;
+            Licensed?: boolean | undefined;
+            LicenseCountry?: string | undefined;
+            LicenseNumber?: string | undefined;
+            Phone?: string | undefined;
+            Email?: string | undefined;
+            SocialMediaLinks?: string[] | undefined;
+            KeyClients?: string | undefined;
+            Press?: string | undefined;
         } & {
-            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-            UpdatedAt?: Date | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedByAccount?: string | undefined;
-            MetaDataDetails?: ({
-                name?: string | undefined;
-                description?: string | undefined;
-                image?: string | undefined;
-                externalUrl?: string | undefined;
-                addressLine1?: string | undefined;
-                addressLine2?: string | undefined;
-                city?: string | undefined;
-                region?: string | undefined;
-                postalCode?: string | undefined;
-                country?: string | undefined;
-                yearFounded?: number | undefined;
-                licensed?: boolean | undefined;
-                licenseCountry?: string | undefined;
-                licenseNumber?: string | undefined;
-                phone?: string | undefined;
-                email?: string | undefined;
-                socialMediaLinks?: string[] | undefined;
-                keyClients?: string | undefined;
-                press?: string | undefined;
-            } & {
-                name?: string | undefined;
-                description?: string | undefined;
-                image?: string | undefined;
-                externalUrl?: string | undefined;
-                addressLine1?: string | undefined;
-                addressLine2?: string | undefined;
-                city?: string | undefined;
-                region?: string | undefined;
-                postalCode?: string | undefined;
-                country?: string | undefined;
-                yearFounded?: number | undefined;
-                licensed?: boolean | undefined;
-                licenseCountry?: string | undefined;
-                licenseNumber?: string | undefined;
-                phone?: string | undefined;
-                email?: string | undefined;
-                socialMediaLinks?: (string[] & string[] & { [K_16 in Exclude<keyof I["MetaData"]["MetaDataDetails"]["socialMediaLinks"], keyof string[]>]: never; }) | undefined;
-                keyClients?: string | undefined;
-                press?: string | undefined;
-            } & { [K_17 in Exclude<keyof I["MetaData"]["MetaDataDetails"], keyof import("./sologenic/com-fs-utils-lib/models/metadata/metadata").MetaDataDetails>]: never; }) | undefined;
-        } & { [K_18 in Exclude<keyof I["MetaData"], keyof MetaData>]: never; }) | undefined;
+            Name?: string | undefined;
+            Description?: string | undefined;
+            Image?: string | undefined;
+            ExternalUrl?: string | undefined;
+            AddressLine1?: string | undefined;
+            AddressLine2?: string | undefined;
+            City?: string | undefined;
+            Region?: string | undefined;
+            PostalCode?: string | undefined;
+            Country?: string | undefined;
+            YearFounded?: number | undefined;
+            Licensed?: boolean | undefined;
+            LicenseCountry?: string | undefined;
+            LicenseNumber?: string | undefined;
+            Phone?: string | undefined;
+            Email?: string | undefined;
+            SocialMediaLinks?: (string[] & string[] & { [K_15 in Exclude<keyof I["MetaData"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
+            KeyClients?: string | undefined;
+            Press?: string | undefined;
+        } & { [K_16 in Exclude<keyof I["MetaData"], keyof MetadataDetails>]: never; }) | undefined;
         Audit?: ({
             ChangedBy?: string | undefined;
             ChangedAt?: Date | undefined;
@@ -1448,8 +1265,8 @@ export declare const Asset: {
             ChangedBy?: string | undefined;
             ChangedAt?: Date | undefined;
             Reason?: string | undefined;
-        } & { [K_19 in Exclude<keyof I["Audit"], keyof Audit>]: never; }) | undefined;
-    } & { [K_20 in Exclude<keyof I, keyof Asset>]: never; }>(base?: I | undefined): Asset;
+        } & { [K_17 in Exclude<keyof I["Audit"], keyof Audit>]: never; }) | undefined;
+    } & { [K_18 in Exclude<keyof I, keyof Asset>]: never; }>(base?: I | undefined): Asset;
     fromPartial<I_1 extends {
         AssetDetails?: {
             ID?: string | undefined;
@@ -1459,18 +1276,6 @@ export declare const Asset: {
             JurisdictionIDs?: string[] | undefined;
             Type?: AssetType | undefined;
             Name?: string | undefined;
-            ExchangeTickerSymbol?: string | undefined;
-            Exchange?: Exchange | undefined;
-            InternalDescription?: string | undefined;
-            MinTransactionAmount?: number | undefined;
-            TradingMarginPercentage?: number | undefined;
-            LogoFile?: {
-                Reference?: string | undefined;
-                Extension?: string | undefined;
-                Name?: string | undefined;
-            } | undefined;
-            Industry?: Industry | undefined;
-            AssetMarginPercentage?: number | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -1568,31 +1373,25 @@ export declare const Asset: {
             } | undefined;
         } | undefined;
         MetaData?: {
-            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-            UpdatedAt?: Date | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedByAccount?: string | undefined;
-            MetaDataDetails?: {
-                name?: string | undefined;
-                description?: string | undefined;
-                image?: string | undefined;
-                externalUrl?: string | undefined;
-                addressLine1?: string | undefined;
-                addressLine2?: string | undefined;
-                city?: string | undefined;
-                region?: string | undefined;
-                postalCode?: string | undefined;
-                country?: string | undefined;
-                yearFounded?: number | undefined;
-                licensed?: boolean | undefined;
-                licenseCountry?: string | undefined;
-                licenseNumber?: string | undefined;
-                phone?: string | undefined;
-                email?: string | undefined;
-                socialMediaLinks?: string[] | undefined;
-                keyClients?: string | undefined;
-                press?: string | undefined;
-            } | undefined;
+            Name?: string | undefined;
+            Description?: string | undefined;
+            Image?: string | undefined;
+            ExternalUrl?: string | undefined;
+            AddressLine1?: string | undefined;
+            AddressLine2?: string | undefined;
+            City?: string | undefined;
+            Region?: string | undefined;
+            PostalCode?: string | undefined;
+            Country?: string | undefined;
+            YearFounded?: number | undefined;
+            Licensed?: boolean | undefined;
+            LicenseCountry?: string | undefined;
+            LicenseNumber?: string | undefined;
+            Phone?: string | undefined;
+            Email?: string | undefined;
+            SocialMediaLinks?: string[] | undefined;
+            KeyClients?: string | undefined;
+            Press?: string | undefined;
         } | undefined;
         Audit?: {
             ChangedBy?: string | undefined;
@@ -1608,18 +1407,6 @@ export declare const Asset: {
             JurisdictionIDs?: string[] | undefined;
             Type?: AssetType | undefined;
             Name?: string | undefined;
-            ExchangeTickerSymbol?: string | undefined;
-            Exchange?: Exchange | undefined;
-            InternalDescription?: string | undefined;
-            MinTransactionAmount?: number | undefined;
-            TradingMarginPercentage?: number | undefined;
-            LogoFile?: {
-                Reference?: string | undefined;
-                Extension?: string | undefined;
-                Name?: string | undefined;
-            } | undefined;
-            Industry?: Industry | undefined;
-            AssetMarginPercentage?: number | undefined;
             Denom?: {
                 Currency?: {
                     Symbol?: string | undefined;
@@ -1720,25 +1507,9 @@ export declare const Asset: {
             OrganizationID?: string | undefined;
             Status?: AssetStatus | undefined;
             Reason?: Reason | undefined;
-            JurisdictionIDs?: (string[] & string[] & { [K_21 in Exclude<keyof I_1["AssetDetails"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+            JurisdictionIDs?: (string[] & string[] & { [K_19 in Exclude<keyof I_1["AssetDetails"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
             Type?: AssetType | undefined;
             Name?: string | undefined;
-            ExchangeTickerSymbol?: string | undefined;
-            Exchange?: Exchange | undefined;
-            InternalDescription?: string | undefined;
-            MinTransactionAmount?: number | undefined;
-            TradingMarginPercentage?: number | undefined;
-            LogoFile?: ({
-                Reference?: string | undefined;
-                Extension?: string | undefined;
-                Name?: string | undefined;
-            } & {
-                Reference?: string | undefined;
-                Extension?: string | undefined;
-                Name?: string | undefined;
-            } & { [K_22 in Exclude<keyof I_1["AssetDetails"]["LogoFile"], keyof LogoFile>]: never; }) | undefined;
-            Industry?: Industry | undefined;
-            AssetMarginPercentage?: number | undefined;
             Denom?: ({
                 Currency?: {
                     Symbol?: string | undefined;
@@ -1755,12 +1526,12 @@ export declare const Asset: {
                 } & {
                     Symbol?: string | undefined;
                     Version?: string | undefined;
-                } & { [K_23 in Exclude<keyof I_1["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
+                } & { [K_20 in Exclude<keyof I_1["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
                 Precision?: number | undefined;
                 Description?: string | undefined;
-            } & { [K_24 in Exclude<keyof I_1["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
+            } & { [K_21 in Exclude<keyof I_1["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
             SmartContractIssuerAddr?: string | undefined;
             RealEstateDetails?: ({
@@ -1788,8 +1559,8 @@ export declare const Asset: {
                 SquareFootage?: number | undefined;
                 TenancyStatus?: string | undefined;
                 YearBuilt?: number | undefined;
-                YieldPercent?: (number[] & number[] & { [K_25 in Exclude<keyof I_1["AssetDetails"]["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
-            } & { [K_26 in Exclude<keyof I_1["AssetDetails"]["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
+                YieldPercent?: (number[] & number[] & { [K_22 in Exclude<keyof I_1["AssetDetails"]["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
+            } & { [K_23 in Exclude<keyof I_1["AssetDetails"]["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
             StableCoinDetails?: ({
                 Version?: string | undefined;
                 PegType?: string | undefined;
@@ -1810,7 +1581,7 @@ export declare const Asset: {
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
                 AssetMarginPercentage?: number | undefined;
-            } & { [K_27 in Exclude<keyof I_1["AssetDetails"]["StableCoinDetails"], keyof StableCoin>]: never; }) | undefined;
+            } & { [K_24 in Exclude<keyof I_1["AssetDetails"]["StableCoinDetails"], keyof StableCoin>]: never; }) | undefined;
             CommodityDetails?: ({
                 Category?: string | undefined;
                 Quality?: string | undefined;
@@ -1835,7 +1606,7 @@ export declare const Asset: {
                 StorageLocation?: string | undefined;
                 ContractType?: string | undefined;
                 DeliveryDate?: string | undefined;
-            } & { [K_28 in Exclude<keyof I_1["AssetDetails"]["CommodityDetails"], keyof Commodity>]: never; }) | undefined;
+            } & { [K_25 in Exclude<keyof I_1["AssetDetails"]["CommodityDetails"], keyof Commodity>]: never; }) | undefined;
             CollectibleDetails?: ({
                 Category?: string | undefined;
                 CollectionName?: string | undefined;
@@ -1852,9 +1623,9 @@ export declare const Asset: {
                 TokenID?: string | undefined;
                 MetadataURI?: string | undefined;
                 Creator?: string | undefined;
-                OwnershipHistory?: (string[] & string[] & { [K_29 in Exclude<keyof I_1["AssetDetails"]["CollectibleDetails"]["OwnershipHistory"], keyof string[]>]: never; }) | undefined;
+                OwnershipHistory?: (string[] & string[] & { [K_26 in Exclude<keyof I_1["AssetDetails"]["CollectibleDetails"]["OwnershipHistory"], keyof string[]>]: never; }) | undefined;
                 CurrentOwner?: string | undefined;
-            } & { [K_30 in Exclude<keyof I_1["AssetDetails"]["CollectibleDetails"], keyof Collectible>]: never; }) | undefined;
+            } & { [K_27 in Exclude<keyof I_1["AssetDetails"]["CollectibleDetails"], keyof Collectible>]: never; }) | undefined;
             VehicleDetails?: ({
                 Category?: string | undefined;
                 Manufacturer?: string | undefined;
@@ -1881,7 +1652,7 @@ export declare const Asset: {
                 Condition?: string | undefined;
                 CurrentOwner?: string | undefined;
                 Location?: string | undefined;
-            } & { [K_31 in Exclude<keyof I_1["AssetDetails"]["VehicleDetails"], keyof Vehicle>]: never; }) | undefined;
+            } & { [K_28 in Exclude<keyof I_1["AssetDetails"]["VehicleDetails"], keyof Vehicle>]: never; }) | undefined;
             IntellectualPropertyDetails?: ({
                 Category?: string | undefined;
                 Owner?: string | undefined;
@@ -1898,11 +1669,11 @@ export declare const Asset: {
                 RegistrationNumber?: string | undefined;
                 FilingDate?: string | undefined;
                 ExpirationDate?: string | undefined;
-                IPJurisdictionIDs?: (string[] & string[] & { [K_32 in Exclude<keyof I_1["AssetDetails"]["IntellectualPropertyDetails"]["IPJurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+                IPJurisdictionIDs?: (string[] & string[] & { [K_29 in Exclude<keyof I_1["AssetDetails"]["IntellectualPropertyDetails"]["IPJurisdictionIDs"], keyof string[]>]: never; }) | undefined;
                 LicenseType?: string | undefined;
                 LicenseTerms?: string | undefined;
                 Value?: number | undefined;
-            } & { [K_33 in Exclude<keyof I_1["AssetDetails"]["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
+            } & { [K_30 in Exclude<keyof I_1["AssetDetails"]["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
             InvestmentFundDetails?: ({
                 FundType?: string | undefined;
                 Exchange?: string | undefined;
@@ -1920,82 +1691,50 @@ export declare const Asset: {
                 InceptionDate?: string | undefined;
                 Manager?: string | undefined;
                 ExpenseRatio?: number | undefined;
-                Holdings?: (string[] & string[] & { [K_34 in Exclude<keyof I_1["AssetDetails"]["InvestmentFundDetails"]["Holdings"], keyof string[]>]: never; }) | undefined;
-            } & { [K_35 in Exclude<keyof I_1["AssetDetails"]["InvestmentFundDetails"], keyof InvestmentFund>]: never; }) | undefined;
-        } & { [K_36 in Exclude<keyof I_1["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+                Holdings?: (string[] & string[] & { [K_31 in Exclude<keyof I_1["AssetDetails"]["InvestmentFundDetails"]["Holdings"], keyof string[]>]: never; }) | undefined;
+            } & { [K_32 in Exclude<keyof I_1["AssetDetails"]["InvestmentFundDetails"], keyof InvestmentFund>]: never; }) | undefined;
+        } & { [K_33 in Exclude<keyof I_1["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
         MetaData?: ({
-            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-            UpdatedAt?: Date | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedByAccount?: string | undefined;
-            MetaDataDetails?: {
-                name?: string | undefined;
-                description?: string | undefined;
-                image?: string | undefined;
-                externalUrl?: string | undefined;
-                addressLine1?: string | undefined;
-                addressLine2?: string | undefined;
-                city?: string | undefined;
-                region?: string | undefined;
-                postalCode?: string | undefined;
-                country?: string | undefined;
-                yearFounded?: number | undefined;
-                licensed?: boolean | undefined;
-                licenseCountry?: string | undefined;
-                licenseNumber?: string | undefined;
-                phone?: string | undefined;
-                email?: string | undefined;
-                socialMediaLinks?: string[] | undefined;
-                keyClients?: string | undefined;
-                press?: string | undefined;
-            } | undefined;
+            Name?: string | undefined;
+            Description?: string | undefined;
+            Image?: string | undefined;
+            ExternalUrl?: string | undefined;
+            AddressLine1?: string | undefined;
+            AddressLine2?: string | undefined;
+            City?: string | undefined;
+            Region?: string | undefined;
+            PostalCode?: string | undefined;
+            Country?: string | undefined;
+            YearFounded?: number | undefined;
+            Licensed?: boolean | undefined;
+            LicenseCountry?: string | undefined;
+            LicenseNumber?: string | undefined;
+            Phone?: string | undefined;
+            Email?: string | undefined;
+            SocialMediaLinks?: string[] | undefined;
+            KeyClients?: string | undefined;
+            Press?: string | undefined;
         } & {
-            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-            UpdatedAt?: Date | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedByAccount?: string | undefined;
-            MetaDataDetails?: ({
-                name?: string | undefined;
-                description?: string | undefined;
-                image?: string | undefined;
-                externalUrl?: string | undefined;
-                addressLine1?: string | undefined;
-                addressLine2?: string | undefined;
-                city?: string | undefined;
-                region?: string | undefined;
-                postalCode?: string | undefined;
-                country?: string | undefined;
-                yearFounded?: number | undefined;
-                licensed?: boolean | undefined;
-                licenseCountry?: string | undefined;
-                licenseNumber?: string | undefined;
-                phone?: string | undefined;
-                email?: string | undefined;
-                socialMediaLinks?: string[] | undefined;
-                keyClients?: string | undefined;
-                press?: string | undefined;
-            } & {
-                name?: string | undefined;
-                description?: string | undefined;
-                image?: string | undefined;
-                externalUrl?: string | undefined;
-                addressLine1?: string | undefined;
-                addressLine2?: string | undefined;
-                city?: string | undefined;
-                region?: string | undefined;
-                postalCode?: string | undefined;
-                country?: string | undefined;
-                yearFounded?: number | undefined;
-                licensed?: boolean | undefined;
-                licenseCountry?: string | undefined;
-                licenseNumber?: string | undefined;
-                phone?: string | undefined;
-                email?: string | undefined;
-                socialMediaLinks?: (string[] & string[] & { [K_37 in Exclude<keyof I_1["MetaData"]["MetaDataDetails"]["socialMediaLinks"], keyof string[]>]: never; }) | undefined;
-                keyClients?: string | undefined;
-                press?: string | undefined;
-            } & { [K_38 in Exclude<keyof I_1["MetaData"]["MetaDataDetails"], keyof import("./sologenic/com-fs-utils-lib/models/metadata/metadata").MetaDataDetails>]: never; }) | undefined;
-        } & { [K_39 in Exclude<keyof I_1["MetaData"], keyof MetaData>]: never; }) | undefined;
+            Name?: string | undefined;
+            Description?: string | undefined;
+            Image?: string | undefined;
+            ExternalUrl?: string | undefined;
+            AddressLine1?: string | undefined;
+            AddressLine2?: string | undefined;
+            City?: string | undefined;
+            Region?: string | undefined;
+            PostalCode?: string | undefined;
+            Country?: string | undefined;
+            YearFounded?: number | undefined;
+            Licensed?: boolean | undefined;
+            LicenseCountry?: string | undefined;
+            LicenseNumber?: string | undefined;
+            Phone?: string | undefined;
+            Email?: string | undefined;
+            SocialMediaLinks?: (string[] & string[] & { [K_34 in Exclude<keyof I_1["MetaData"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
+            KeyClients?: string | undefined;
+            Press?: string | undefined;
+        } & { [K_35 in Exclude<keyof I_1["MetaData"], keyof MetadataDetails>]: never; }) | undefined;
         Audit?: ({
             ChangedBy?: string | undefined;
             ChangedAt?: Date | undefined;
@@ -2004,8 +1743,8 @@ export declare const Asset: {
             ChangedBy?: string | undefined;
             ChangedAt?: Date | undefined;
             Reason?: string | undefined;
-        } & { [K_40 in Exclude<keyof I_1["Audit"], keyof Audit>]: never; }) | undefined;
-    } & { [K_41 in Exclude<keyof I_1, keyof Asset>]: never; }>(object: I_1): Asset;
+        } & { [K_36 in Exclude<keyof I_1["Audit"], keyof Audit>]: never; }) | undefined;
+    } & { [K_37 in Exclude<keyof I_1, keyof Asset>]: never; }>(object: I_1): Asset;
 };
 export declare const Assets: {
     encode(message: Assets, writer?: _m0.Writer): _m0.Writer;
@@ -2022,18 +1761,6 @@ export declare const Assets: {
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
                 Name?: string | undefined;
-                ExchangeTickerSymbol?: string | undefined;
-                Exchange?: Exchange | undefined;
-                InternalDescription?: string | undefined;
-                MinTransactionAmount?: number | undefined;
-                TradingMarginPercentage?: number | undefined;
-                LogoFile?: {
-                    Reference?: string | undefined;
-                    Extension?: string | undefined;
-                    Name?: string | undefined;
-                } | undefined;
-                Industry?: Industry | undefined;
-                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -2131,31 +1858,25 @@ export declare const Assets: {
                 } | undefined;
             } | undefined;
             MetaData?: {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } | undefined;
             Audit?: {
                 ChangedBy?: string | undefined;
@@ -2173,18 +1894,6 @@ export declare const Assets: {
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
                 Name?: string | undefined;
-                ExchangeTickerSymbol?: string | undefined;
-                Exchange?: Exchange | undefined;
-                InternalDescription?: string | undefined;
-                MinTransactionAmount?: number | undefined;
-                TradingMarginPercentage?: number | undefined;
-                LogoFile?: {
-                    Reference?: string | undefined;
-                    Extension?: string | undefined;
-                    Name?: string | undefined;
-                } | undefined;
-                Industry?: Industry | undefined;
-                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -2282,31 +1991,25 @@ export declare const Assets: {
                 } | undefined;
             } | undefined;
             MetaData?: {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } | undefined;
             Audit?: {
                 ChangedBy?: string | undefined;
@@ -2322,18 +2025,6 @@ export declare const Assets: {
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
                 Name?: string | undefined;
-                ExchangeTickerSymbol?: string | undefined;
-                Exchange?: Exchange | undefined;
-                InternalDescription?: string | undefined;
-                MinTransactionAmount?: number | undefined;
-                TradingMarginPercentage?: number | undefined;
-                LogoFile?: {
-                    Reference?: string | undefined;
-                    Extension?: string | undefined;
-                    Name?: string | undefined;
-                } | undefined;
-                Industry?: Industry | undefined;
-                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -2431,31 +2122,25 @@ export declare const Assets: {
                 } | undefined;
             } | undefined;
             MetaData?: {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } | undefined;
             Audit?: {
                 ChangedBy?: string | undefined;
@@ -2471,18 +2156,6 @@ export declare const Assets: {
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
                 Name?: string | undefined;
-                ExchangeTickerSymbol?: string | undefined;
-                Exchange?: Exchange | undefined;
-                InternalDescription?: string | undefined;
-                MinTransactionAmount?: number | undefined;
-                TradingMarginPercentage?: number | undefined;
-                LogoFile?: {
-                    Reference?: string | undefined;
-                    Extension?: string | undefined;
-                    Name?: string | undefined;
-                } | undefined;
-                Industry?: Industry | undefined;
-                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -2586,22 +2259,6 @@ export declare const Assets: {
                 JurisdictionIDs?: (string[] & string[] & { [K in Exclude<keyof I["Assets"][number]["AssetDetails"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
                 Type?: AssetType | undefined;
                 Name?: string | undefined;
-                ExchangeTickerSymbol?: string | undefined;
-                Exchange?: Exchange | undefined;
-                InternalDescription?: string | undefined;
-                MinTransactionAmount?: number | undefined;
-                TradingMarginPercentage?: number | undefined;
-                LogoFile?: ({
-                    Reference?: string | undefined;
-                    Extension?: string | undefined;
-                    Name?: string | undefined;
-                } & {
-                    Reference?: string | undefined;
-                    Extension?: string | undefined;
-                    Name?: string | undefined;
-                } & { [K_1 in Exclude<keyof I["Assets"][number]["AssetDetails"]["LogoFile"], keyof LogoFile>]: never; }) | undefined;
-                Industry?: Industry | undefined;
-                AssetMarginPercentage?: number | undefined;
                 Denom?: ({
                     Currency?: {
                         Symbol?: string | undefined;
@@ -2618,12 +2275,12 @@ export declare const Assets: {
                     } & {
                         Symbol?: string | undefined;
                         Version?: string | undefined;
-                    } & { [K_2 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
+                    } & { [K_1 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
                     Subunit?: string | undefined;
                     Issuer?: string | undefined;
                     Precision?: number | undefined;
                     Description?: string | undefined;
-                } & { [K_3 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
+                } & { [K_2 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
                 SmartContractIssuerAddr?: string | undefined;
                 RealEstateDetails?: ({
@@ -2651,8 +2308,8 @@ export declare const Assets: {
                     SquareFootage?: number | undefined;
                     TenancyStatus?: string | undefined;
                     YearBuilt?: number | undefined;
-                    YieldPercent?: (number[] & number[] & { [K_4 in Exclude<keyof I["Assets"][number]["AssetDetails"]["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
-                } & { [K_5 in Exclude<keyof I["Assets"][number]["AssetDetails"]["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
+                    YieldPercent?: (number[] & number[] & { [K_3 in Exclude<keyof I["Assets"][number]["AssetDetails"]["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
+                } & { [K_4 in Exclude<keyof I["Assets"][number]["AssetDetails"]["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
                 StableCoinDetails?: ({
                     Version?: string | undefined;
                     PegType?: string | undefined;
@@ -2673,7 +2330,7 @@ export declare const Assets: {
                     MinTransactionAmount?: number | undefined;
                     TradingMarginPercentage?: number | undefined;
                     AssetMarginPercentage?: number | undefined;
-                } & { [K_6 in Exclude<keyof I["Assets"][number]["AssetDetails"]["StableCoinDetails"], keyof StableCoin>]: never; }) | undefined;
+                } & { [K_5 in Exclude<keyof I["Assets"][number]["AssetDetails"]["StableCoinDetails"], keyof StableCoin>]: never; }) | undefined;
                 CommodityDetails?: ({
                     Category?: string | undefined;
                     Quality?: string | undefined;
@@ -2698,7 +2355,7 @@ export declare const Assets: {
                     StorageLocation?: string | undefined;
                     ContractType?: string | undefined;
                     DeliveryDate?: string | undefined;
-                } & { [K_7 in Exclude<keyof I["Assets"][number]["AssetDetails"]["CommodityDetails"], keyof Commodity>]: never; }) | undefined;
+                } & { [K_6 in Exclude<keyof I["Assets"][number]["AssetDetails"]["CommodityDetails"], keyof Commodity>]: never; }) | undefined;
                 CollectibleDetails?: ({
                     Category?: string | undefined;
                     CollectionName?: string | undefined;
@@ -2715,9 +2372,9 @@ export declare const Assets: {
                     TokenID?: string | undefined;
                     MetadataURI?: string | undefined;
                     Creator?: string | undefined;
-                    OwnershipHistory?: (string[] & string[] & { [K_8 in Exclude<keyof I["Assets"][number]["AssetDetails"]["CollectibleDetails"]["OwnershipHistory"], keyof string[]>]: never; }) | undefined;
+                    OwnershipHistory?: (string[] & string[] & { [K_7 in Exclude<keyof I["Assets"][number]["AssetDetails"]["CollectibleDetails"]["OwnershipHistory"], keyof string[]>]: never; }) | undefined;
                     CurrentOwner?: string | undefined;
-                } & { [K_9 in Exclude<keyof I["Assets"][number]["AssetDetails"]["CollectibleDetails"], keyof Collectible>]: never; }) | undefined;
+                } & { [K_8 in Exclude<keyof I["Assets"][number]["AssetDetails"]["CollectibleDetails"], keyof Collectible>]: never; }) | undefined;
                 VehicleDetails?: ({
                     Category?: string | undefined;
                     Manufacturer?: string | undefined;
@@ -2744,7 +2401,7 @@ export declare const Assets: {
                     Condition?: string | undefined;
                     CurrentOwner?: string | undefined;
                     Location?: string | undefined;
-                } & { [K_10 in Exclude<keyof I["Assets"][number]["AssetDetails"]["VehicleDetails"], keyof Vehicle>]: never; }) | undefined;
+                } & { [K_9 in Exclude<keyof I["Assets"][number]["AssetDetails"]["VehicleDetails"], keyof Vehicle>]: never; }) | undefined;
                 IntellectualPropertyDetails?: ({
                     Category?: string | undefined;
                     Owner?: string | undefined;
@@ -2761,11 +2418,11 @@ export declare const Assets: {
                     RegistrationNumber?: string | undefined;
                     FilingDate?: string | undefined;
                     ExpirationDate?: string | undefined;
-                    IPJurisdictionIDs?: (string[] & string[] & { [K_11 in Exclude<keyof I["Assets"][number]["AssetDetails"]["IntellectualPropertyDetails"]["IPJurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+                    IPJurisdictionIDs?: (string[] & string[] & { [K_10 in Exclude<keyof I["Assets"][number]["AssetDetails"]["IntellectualPropertyDetails"]["IPJurisdictionIDs"], keyof string[]>]: never; }) | undefined;
                     LicenseType?: string | undefined;
                     LicenseTerms?: string | undefined;
                     Value?: number | undefined;
-                } & { [K_12 in Exclude<keyof I["Assets"][number]["AssetDetails"]["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
+                } & { [K_11 in Exclude<keyof I["Assets"][number]["AssetDetails"]["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
                 InvestmentFundDetails?: ({
                     FundType?: string | undefined;
                     Exchange?: string | undefined;
@@ -2783,82 +2440,50 @@ export declare const Assets: {
                     InceptionDate?: string | undefined;
                     Manager?: string | undefined;
                     ExpenseRatio?: number | undefined;
-                    Holdings?: (string[] & string[] & { [K_13 in Exclude<keyof I["Assets"][number]["AssetDetails"]["InvestmentFundDetails"]["Holdings"], keyof string[]>]: never; }) | undefined;
-                } & { [K_14 in Exclude<keyof I["Assets"][number]["AssetDetails"]["InvestmentFundDetails"], keyof InvestmentFund>]: never; }) | undefined;
-            } & { [K_15 in Exclude<keyof I["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+                    Holdings?: (string[] & string[] & { [K_12 in Exclude<keyof I["Assets"][number]["AssetDetails"]["InvestmentFundDetails"]["Holdings"], keyof string[]>]: never; }) | undefined;
+                } & { [K_13 in Exclude<keyof I["Assets"][number]["AssetDetails"]["InvestmentFundDetails"], keyof InvestmentFund>]: never; }) | undefined;
+            } & { [K_14 in Exclude<keyof I["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
             MetaData?: ({
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } & {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: ({
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } & {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: (string[] & string[] & { [K_16 in Exclude<keyof I["Assets"][number]["MetaData"]["MetaDataDetails"]["socialMediaLinks"], keyof string[]>]: never; }) | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } & { [K_17 in Exclude<keyof I["Assets"][number]["MetaData"]["MetaDataDetails"], keyof import("./sologenic/com-fs-utils-lib/models/metadata/metadata").MetaDataDetails>]: never; }) | undefined;
-            } & { [K_18 in Exclude<keyof I["Assets"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: (string[] & string[] & { [K_15 in Exclude<keyof I["Assets"][number]["MetaData"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
+            } & { [K_16 in Exclude<keyof I["Assets"][number]["MetaData"], keyof MetadataDetails>]: never; }) | undefined;
             Audit?: ({
                 ChangedBy?: string | undefined;
                 ChangedAt?: Date | undefined;
@@ -2867,8 +2492,8 @@ export declare const Assets: {
                 ChangedBy?: string | undefined;
                 ChangedAt?: Date | undefined;
                 Reason?: string | undefined;
-            } & { [K_19 in Exclude<keyof I["Assets"][number]["Audit"], keyof Audit>]: never; }) | undefined;
-        } & { [K_20 in Exclude<keyof I["Assets"][number], keyof Asset>]: never; })[] & { [K_21 in Exclude<keyof I["Assets"], keyof {
+            } & { [K_17 in Exclude<keyof I["Assets"][number]["Audit"], keyof Audit>]: never; }) | undefined;
+        } & { [K_18 in Exclude<keyof I["Assets"][number], keyof Asset>]: never; })[] & { [K_19 in Exclude<keyof I["Assets"], keyof {
             AssetDetails?: {
                 ID?: string | undefined;
                 OrganizationID?: string | undefined;
@@ -2877,18 +2502,6 @@ export declare const Assets: {
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
                 Name?: string | undefined;
-                ExchangeTickerSymbol?: string | undefined;
-                Exchange?: Exchange | undefined;
-                InternalDescription?: string | undefined;
-                MinTransactionAmount?: number | undefined;
-                TradingMarginPercentage?: number | undefined;
-                LogoFile?: {
-                    Reference?: string | undefined;
-                    Extension?: string | undefined;
-                    Name?: string | undefined;
-                } | undefined;
-                Industry?: Industry | undefined;
-                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -2986,31 +2599,25 @@ export declare const Assets: {
                 } | undefined;
             } | undefined;
             MetaData?: {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } | undefined;
             Audit?: {
                 ChangedBy?: string | undefined;
@@ -3018,7 +2625,7 @@ export declare const Assets: {
                 Reason?: string | undefined;
             } | undefined;
         }[]>]: never; }) | undefined;
-    } & { [K_22 in Exclude<keyof I, "Assets">]: never; }>(base?: I | undefined): Assets;
+    } & { [K_20 in Exclude<keyof I, "Assets">]: never; }>(base?: I | undefined): Assets;
     fromPartial<I_1 extends {
         Assets?: {
             AssetDetails?: {
@@ -3029,18 +2636,6 @@ export declare const Assets: {
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
                 Name?: string | undefined;
-                ExchangeTickerSymbol?: string | undefined;
-                Exchange?: Exchange | undefined;
-                InternalDescription?: string | undefined;
-                MinTransactionAmount?: number | undefined;
-                TradingMarginPercentage?: number | undefined;
-                LogoFile?: {
-                    Reference?: string | undefined;
-                    Extension?: string | undefined;
-                    Name?: string | undefined;
-                } | undefined;
-                Industry?: Industry | undefined;
-                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -3138,31 +2733,25 @@ export declare const Assets: {
                 } | undefined;
             } | undefined;
             MetaData?: {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } | undefined;
             Audit?: {
                 ChangedBy?: string | undefined;
@@ -3180,18 +2769,6 @@ export declare const Assets: {
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
                 Name?: string | undefined;
-                ExchangeTickerSymbol?: string | undefined;
-                Exchange?: Exchange | undefined;
-                InternalDescription?: string | undefined;
-                MinTransactionAmount?: number | undefined;
-                TradingMarginPercentage?: number | undefined;
-                LogoFile?: {
-                    Reference?: string | undefined;
-                    Extension?: string | undefined;
-                    Name?: string | undefined;
-                } | undefined;
-                Industry?: Industry | undefined;
-                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -3289,31 +2866,25 @@ export declare const Assets: {
                 } | undefined;
             } | undefined;
             MetaData?: {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } | undefined;
             Audit?: {
                 ChangedBy?: string | undefined;
@@ -3329,18 +2900,6 @@ export declare const Assets: {
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
                 Name?: string | undefined;
-                ExchangeTickerSymbol?: string | undefined;
-                Exchange?: Exchange | undefined;
-                InternalDescription?: string | undefined;
-                MinTransactionAmount?: number | undefined;
-                TradingMarginPercentage?: number | undefined;
-                LogoFile?: {
-                    Reference?: string | undefined;
-                    Extension?: string | undefined;
-                    Name?: string | undefined;
-                } | undefined;
-                Industry?: Industry | undefined;
-                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -3438,31 +2997,25 @@ export declare const Assets: {
                 } | undefined;
             } | undefined;
             MetaData?: {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } | undefined;
             Audit?: {
                 ChangedBy?: string | undefined;
@@ -3478,18 +3031,6 @@ export declare const Assets: {
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
                 Name?: string | undefined;
-                ExchangeTickerSymbol?: string | undefined;
-                Exchange?: Exchange | undefined;
-                InternalDescription?: string | undefined;
-                MinTransactionAmount?: number | undefined;
-                TradingMarginPercentage?: number | undefined;
-                LogoFile?: {
-                    Reference?: string | undefined;
-                    Extension?: string | undefined;
-                    Name?: string | undefined;
-                } | undefined;
-                Industry?: Industry | undefined;
-                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -3590,25 +3131,9 @@ export declare const Assets: {
                 OrganizationID?: string | undefined;
                 Status?: AssetStatus | undefined;
                 Reason?: Reason | undefined;
-                JurisdictionIDs?: (string[] & string[] & { [K_23 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+                JurisdictionIDs?: (string[] & string[] & { [K_21 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
                 Type?: AssetType | undefined;
                 Name?: string | undefined;
-                ExchangeTickerSymbol?: string | undefined;
-                Exchange?: Exchange | undefined;
-                InternalDescription?: string | undefined;
-                MinTransactionAmount?: number | undefined;
-                TradingMarginPercentage?: number | undefined;
-                LogoFile?: ({
-                    Reference?: string | undefined;
-                    Extension?: string | undefined;
-                    Name?: string | undefined;
-                } & {
-                    Reference?: string | undefined;
-                    Extension?: string | undefined;
-                    Name?: string | undefined;
-                } & { [K_24 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["LogoFile"], keyof LogoFile>]: never; }) | undefined;
-                Industry?: Industry | undefined;
-                AssetMarginPercentage?: number | undefined;
                 Denom?: ({
                     Currency?: {
                         Symbol?: string | undefined;
@@ -3625,12 +3150,12 @@ export declare const Assets: {
                     } & {
                         Symbol?: string | undefined;
                         Version?: string | undefined;
-                    } & { [K_25 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
+                    } & { [K_22 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
                     Subunit?: string | undefined;
                     Issuer?: string | undefined;
                     Precision?: number | undefined;
                     Description?: string | undefined;
-                } & { [K_26 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
+                } & { [K_23 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
                 SmartContractIssuerAddr?: string | undefined;
                 RealEstateDetails?: ({
@@ -3658,8 +3183,8 @@ export declare const Assets: {
                     SquareFootage?: number | undefined;
                     TenancyStatus?: string | undefined;
                     YearBuilt?: number | undefined;
-                    YieldPercent?: (number[] & number[] & { [K_27 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
-                } & { [K_28 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
+                    YieldPercent?: (number[] & number[] & { [K_24 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
+                } & { [K_25 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
                 StableCoinDetails?: ({
                     Version?: string | undefined;
                     PegType?: string | undefined;
@@ -3680,7 +3205,7 @@ export declare const Assets: {
                     MinTransactionAmount?: number | undefined;
                     TradingMarginPercentage?: number | undefined;
                     AssetMarginPercentage?: number | undefined;
-                } & { [K_29 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["StableCoinDetails"], keyof StableCoin>]: never; }) | undefined;
+                } & { [K_26 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["StableCoinDetails"], keyof StableCoin>]: never; }) | undefined;
                 CommodityDetails?: ({
                     Category?: string | undefined;
                     Quality?: string | undefined;
@@ -3705,7 +3230,7 @@ export declare const Assets: {
                     StorageLocation?: string | undefined;
                     ContractType?: string | undefined;
                     DeliveryDate?: string | undefined;
-                } & { [K_30 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["CommodityDetails"], keyof Commodity>]: never; }) | undefined;
+                } & { [K_27 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["CommodityDetails"], keyof Commodity>]: never; }) | undefined;
                 CollectibleDetails?: ({
                     Category?: string | undefined;
                     CollectionName?: string | undefined;
@@ -3722,9 +3247,9 @@ export declare const Assets: {
                     TokenID?: string | undefined;
                     MetadataURI?: string | undefined;
                     Creator?: string | undefined;
-                    OwnershipHistory?: (string[] & string[] & { [K_31 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["CollectibleDetails"]["OwnershipHistory"], keyof string[]>]: never; }) | undefined;
+                    OwnershipHistory?: (string[] & string[] & { [K_28 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["CollectibleDetails"]["OwnershipHistory"], keyof string[]>]: never; }) | undefined;
                     CurrentOwner?: string | undefined;
-                } & { [K_32 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["CollectibleDetails"], keyof Collectible>]: never; }) | undefined;
+                } & { [K_29 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["CollectibleDetails"], keyof Collectible>]: never; }) | undefined;
                 VehicleDetails?: ({
                     Category?: string | undefined;
                     Manufacturer?: string | undefined;
@@ -3751,7 +3276,7 @@ export declare const Assets: {
                     Condition?: string | undefined;
                     CurrentOwner?: string | undefined;
                     Location?: string | undefined;
-                } & { [K_33 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["VehicleDetails"], keyof Vehicle>]: never; }) | undefined;
+                } & { [K_30 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["VehicleDetails"], keyof Vehicle>]: never; }) | undefined;
                 IntellectualPropertyDetails?: ({
                     Category?: string | undefined;
                     Owner?: string | undefined;
@@ -3768,11 +3293,11 @@ export declare const Assets: {
                     RegistrationNumber?: string | undefined;
                     FilingDate?: string | undefined;
                     ExpirationDate?: string | undefined;
-                    IPJurisdictionIDs?: (string[] & string[] & { [K_34 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["IntellectualPropertyDetails"]["IPJurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+                    IPJurisdictionIDs?: (string[] & string[] & { [K_31 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["IntellectualPropertyDetails"]["IPJurisdictionIDs"], keyof string[]>]: never; }) | undefined;
                     LicenseType?: string | undefined;
                     LicenseTerms?: string | undefined;
                     Value?: number | undefined;
-                } & { [K_35 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
+                } & { [K_32 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
                 InvestmentFundDetails?: ({
                     FundType?: string | undefined;
                     Exchange?: string | undefined;
@@ -3790,82 +3315,50 @@ export declare const Assets: {
                     InceptionDate?: string | undefined;
                     Manager?: string | undefined;
                     ExpenseRatio?: number | undefined;
-                    Holdings?: (string[] & string[] & { [K_36 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["InvestmentFundDetails"]["Holdings"], keyof string[]>]: never; }) | undefined;
-                } & { [K_37 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["InvestmentFundDetails"], keyof InvestmentFund>]: never; }) | undefined;
-            } & { [K_38 in Exclude<keyof I_1["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+                    Holdings?: (string[] & string[] & { [K_33 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["InvestmentFundDetails"]["Holdings"], keyof string[]>]: never; }) | undefined;
+                } & { [K_34 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["InvestmentFundDetails"], keyof InvestmentFund>]: never; }) | undefined;
+            } & { [K_35 in Exclude<keyof I_1["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
             MetaData?: ({
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } & {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: ({
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } & {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: (string[] & string[] & { [K_39 in Exclude<keyof I_1["Assets"][number]["MetaData"]["MetaDataDetails"]["socialMediaLinks"], keyof string[]>]: never; }) | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } & { [K_40 in Exclude<keyof I_1["Assets"][number]["MetaData"]["MetaDataDetails"], keyof import("./sologenic/com-fs-utils-lib/models/metadata/metadata").MetaDataDetails>]: never; }) | undefined;
-            } & { [K_41 in Exclude<keyof I_1["Assets"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: (string[] & string[] & { [K_36 in Exclude<keyof I_1["Assets"][number]["MetaData"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
+            } & { [K_37 in Exclude<keyof I_1["Assets"][number]["MetaData"], keyof MetadataDetails>]: never; }) | undefined;
             Audit?: ({
                 ChangedBy?: string | undefined;
                 ChangedAt?: Date | undefined;
@@ -3874,8 +3367,8 @@ export declare const Assets: {
                 ChangedBy?: string | undefined;
                 ChangedAt?: Date | undefined;
                 Reason?: string | undefined;
-            } & { [K_42 in Exclude<keyof I_1["Assets"][number]["Audit"], keyof Audit>]: never; }) | undefined;
-        } & { [K_43 in Exclude<keyof I_1["Assets"][number], keyof Asset>]: never; })[] & { [K_44 in Exclude<keyof I_1["Assets"], keyof {
+            } & { [K_38 in Exclude<keyof I_1["Assets"][number]["Audit"], keyof Audit>]: never; }) | undefined;
+        } & { [K_39 in Exclude<keyof I_1["Assets"][number], keyof Asset>]: never; })[] & { [K_40 in Exclude<keyof I_1["Assets"], keyof {
             AssetDetails?: {
                 ID?: string | undefined;
                 OrganizationID?: string | undefined;
@@ -3884,18 +3377,6 @@ export declare const Assets: {
                 JurisdictionIDs?: string[] | undefined;
                 Type?: AssetType | undefined;
                 Name?: string | undefined;
-                ExchangeTickerSymbol?: string | undefined;
-                Exchange?: Exchange | undefined;
-                InternalDescription?: string | undefined;
-                MinTransactionAmount?: number | undefined;
-                TradingMarginPercentage?: number | undefined;
-                LogoFile?: {
-                    Reference?: string | undefined;
-                    Extension?: string | undefined;
-                    Name?: string | undefined;
-                } | undefined;
-                Industry?: Industry | undefined;
-                AssetMarginPercentage?: number | undefined;
                 Denom?: {
                     Currency?: {
                         Symbol?: string | undefined;
@@ -3993,31 +3474,25 @@ export declare const Assets: {
                 } | undefined;
             } | undefined;
             MetaData?: {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } | undefined;
             Audit?: {
                 ChangedBy?: string | undefined;
@@ -4025,31 +3500,7 @@ export declare const Assets: {
                 Reason?: string | undefined;
             } | undefined;
         }[]>]: never; }) | undefined;
-    } & { [K_45 in Exclude<keyof I_1, "Assets">]: never; }>(object: I_1): Assets;
-};
-export declare const LogoFile: {
-    encode(message: LogoFile, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): LogoFile;
-    fromJSON(object: any): LogoFile;
-    toJSON(message: LogoFile): unknown;
-    create<I extends {
-        Reference?: string | undefined;
-        Extension?: string | undefined;
-        Name?: string | undefined;
-    } & {
-        Reference?: string | undefined;
-        Extension?: string | undefined;
-        Name?: string | undefined;
-    } & { [K in Exclude<keyof I, keyof LogoFile>]: never; }>(base?: I | undefined): LogoFile;
-    fromPartial<I_1 extends {
-        Reference?: string | undefined;
-        Extension?: string | undefined;
-        Name?: string | undefined;
-    } & {
-        Reference?: string | undefined;
-        Extension?: string | undefined;
-        Name?: string | undefined;
-    } & { [K_1 in Exclude<keyof I_1, keyof LogoFile>]: never; }>(object: I_1): LogoFile;
+    } & { [K_41 in Exclude<keyof I_1, "Assets">]: never; }>(object: I_1): Assets;
 };
 export declare const UserAssetList: {
     encode(message: UserAssetList, writer?: _m0.Writer): _m0.Writer;
@@ -4062,31 +3513,25 @@ export declare const UserAssetList: {
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
         MetaData?: {
-            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-            UpdatedAt?: Date | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedByAccount?: string | undefined;
-            MetaDataDetails?: {
-                name?: string | undefined;
-                description?: string | undefined;
-                image?: string | undefined;
-                externalUrl?: string | undefined;
-                addressLine1?: string | undefined;
-                addressLine2?: string | undefined;
-                city?: string | undefined;
-                region?: string | undefined;
-                postalCode?: string | undefined;
-                country?: string | undefined;
-                yearFounded?: number | undefined;
-                licensed?: boolean | undefined;
-                licenseCountry?: string | undefined;
-                licenseNumber?: string | undefined;
-                phone?: string | undefined;
-                email?: string | undefined;
-                socialMediaLinks?: string[] | undefined;
-                keyClients?: string | undefined;
-                press?: string | undefined;
-            } | undefined;
+            Name?: string | undefined;
+            Description?: string | undefined;
+            Image?: string | undefined;
+            ExternalUrl?: string | undefined;
+            AddressLine1?: string | undefined;
+            AddressLine2?: string | undefined;
+            City?: string | undefined;
+            Region?: string | undefined;
+            PostalCode?: string | undefined;
+            Country?: string | undefined;
+            YearFounded?: number | undefined;
+            Licensed?: boolean | undefined;
+            LicenseCountry?: string | undefined;
+            LicenseNumber?: string | undefined;
+            Phone?: string | undefined;
+            Email?: string | undefined;
+            SocialMediaLinks?: string[] | undefined;
+            KeyClients?: string | undefined;
+            Press?: string | undefined;
         } | undefined;
         Visible?: boolean | undefined;
     } & {
@@ -4095,111 +3540,73 @@ export declare const UserAssetList: {
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
         MetaData?: ({
-            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-            UpdatedAt?: Date | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedByAccount?: string | undefined;
-            MetaDataDetails?: {
-                name?: string | undefined;
-                description?: string | undefined;
-                image?: string | undefined;
-                externalUrl?: string | undefined;
-                addressLine1?: string | undefined;
-                addressLine2?: string | undefined;
-                city?: string | undefined;
-                region?: string | undefined;
-                postalCode?: string | undefined;
-                country?: string | undefined;
-                yearFounded?: number | undefined;
-                licensed?: boolean | undefined;
-                licenseCountry?: string | undefined;
-                licenseNumber?: string | undefined;
-                phone?: string | undefined;
-                email?: string | undefined;
-                socialMediaLinks?: string[] | undefined;
-                keyClients?: string | undefined;
-                press?: string | undefined;
-            } | undefined;
+            Name?: string | undefined;
+            Description?: string | undefined;
+            Image?: string | undefined;
+            ExternalUrl?: string | undefined;
+            AddressLine1?: string | undefined;
+            AddressLine2?: string | undefined;
+            City?: string | undefined;
+            Region?: string | undefined;
+            PostalCode?: string | undefined;
+            Country?: string | undefined;
+            YearFounded?: number | undefined;
+            Licensed?: boolean | undefined;
+            LicenseCountry?: string | undefined;
+            LicenseNumber?: string | undefined;
+            Phone?: string | undefined;
+            Email?: string | undefined;
+            SocialMediaLinks?: string[] | undefined;
+            KeyClients?: string | undefined;
+            Press?: string | undefined;
         } & {
-            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-            UpdatedAt?: Date | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedByAccount?: string | undefined;
-            MetaDataDetails?: ({
-                name?: string | undefined;
-                description?: string | undefined;
-                image?: string | undefined;
-                externalUrl?: string | undefined;
-                addressLine1?: string | undefined;
-                addressLine2?: string | undefined;
-                city?: string | undefined;
-                region?: string | undefined;
-                postalCode?: string | undefined;
-                country?: string | undefined;
-                yearFounded?: number | undefined;
-                licensed?: boolean | undefined;
-                licenseCountry?: string | undefined;
-                licenseNumber?: string | undefined;
-                phone?: string | undefined;
-                email?: string | undefined;
-                socialMediaLinks?: string[] | undefined;
-                keyClients?: string | undefined;
-                press?: string | undefined;
-            } & {
-                name?: string | undefined;
-                description?: string | undefined;
-                image?: string | undefined;
-                externalUrl?: string | undefined;
-                addressLine1?: string | undefined;
-                addressLine2?: string | undefined;
-                city?: string | undefined;
-                region?: string | undefined;
-                postalCode?: string | undefined;
-                country?: string | undefined;
-                yearFounded?: number | undefined;
-                licensed?: boolean | undefined;
-                licenseCountry?: string | undefined;
-                licenseNumber?: string | undefined;
-                phone?: string | undefined;
-                email?: string | undefined;
-                socialMediaLinks?: (string[] & string[] & { [K in Exclude<keyof I["MetaData"]["MetaDataDetails"]["socialMediaLinks"], keyof string[]>]: never; }) | undefined;
-                keyClients?: string | undefined;
-                press?: string | undefined;
-            } & { [K_1 in Exclude<keyof I["MetaData"]["MetaDataDetails"], keyof import("./sologenic/com-fs-utils-lib/models/metadata/metadata").MetaDataDetails>]: never; }) | undefined;
-        } & { [K_2 in Exclude<keyof I["MetaData"], keyof MetaData>]: never; }) | undefined;
+            Name?: string | undefined;
+            Description?: string | undefined;
+            Image?: string | undefined;
+            ExternalUrl?: string | undefined;
+            AddressLine1?: string | undefined;
+            AddressLine2?: string | undefined;
+            City?: string | undefined;
+            Region?: string | undefined;
+            PostalCode?: string | undefined;
+            Country?: string | undefined;
+            YearFounded?: number | undefined;
+            Licensed?: boolean | undefined;
+            LicenseCountry?: string | undefined;
+            LicenseNumber?: string | undefined;
+            Phone?: string | undefined;
+            Email?: string | undefined;
+            SocialMediaLinks?: (string[] & string[] & { [K in Exclude<keyof I["MetaData"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
+            KeyClients?: string | undefined;
+            Press?: string | undefined;
+        } & { [K_1 in Exclude<keyof I["MetaData"], keyof MetadataDetails>]: never; }) | undefined;
         Visible?: boolean | undefined;
-    } & { [K_3 in Exclude<keyof I, keyof UserAssetList>]: never; }>(base?: I | undefined): UserAssetList;
+    } & { [K_2 in Exclude<keyof I, keyof UserAssetList>]: never; }>(base?: I | undefined): UserAssetList;
     fromPartial<I_1 extends {
         AccountID?: string | undefined;
         Wallet?: string | undefined;
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
         MetaData?: {
-            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-            UpdatedAt?: Date | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedByAccount?: string | undefined;
-            MetaDataDetails?: {
-                name?: string | undefined;
-                description?: string | undefined;
-                image?: string | undefined;
-                externalUrl?: string | undefined;
-                addressLine1?: string | undefined;
-                addressLine2?: string | undefined;
-                city?: string | undefined;
-                region?: string | undefined;
-                postalCode?: string | undefined;
-                country?: string | undefined;
-                yearFounded?: number | undefined;
-                licensed?: boolean | undefined;
-                licenseCountry?: string | undefined;
-                licenseNumber?: string | undefined;
-                phone?: string | undefined;
-                email?: string | undefined;
-                socialMediaLinks?: string[] | undefined;
-                keyClients?: string | undefined;
-                press?: string | undefined;
-            } | undefined;
+            Name?: string | undefined;
+            Description?: string | undefined;
+            Image?: string | undefined;
+            ExternalUrl?: string | undefined;
+            AddressLine1?: string | undefined;
+            AddressLine2?: string | undefined;
+            City?: string | undefined;
+            Region?: string | undefined;
+            PostalCode?: string | undefined;
+            Country?: string | undefined;
+            YearFounded?: number | undefined;
+            Licensed?: boolean | undefined;
+            LicenseCountry?: string | undefined;
+            LicenseNumber?: string | undefined;
+            Phone?: string | undefined;
+            Email?: string | undefined;
+            SocialMediaLinks?: string[] | undefined;
+            KeyClients?: string | undefined;
+            Press?: string | undefined;
         } | undefined;
         Visible?: boolean | undefined;
     } & {
@@ -4208,80 +3615,48 @@ export declare const UserAssetList: {
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
         MetaData?: ({
-            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-            UpdatedAt?: Date | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedByAccount?: string | undefined;
-            MetaDataDetails?: {
-                name?: string | undefined;
-                description?: string | undefined;
-                image?: string | undefined;
-                externalUrl?: string | undefined;
-                addressLine1?: string | undefined;
-                addressLine2?: string | undefined;
-                city?: string | undefined;
-                region?: string | undefined;
-                postalCode?: string | undefined;
-                country?: string | undefined;
-                yearFounded?: number | undefined;
-                licensed?: boolean | undefined;
-                licenseCountry?: string | undefined;
-                licenseNumber?: string | undefined;
-                phone?: string | undefined;
-                email?: string | undefined;
-                socialMediaLinks?: string[] | undefined;
-                keyClients?: string | undefined;
-                press?: string | undefined;
-            } | undefined;
+            Name?: string | undefined;
+            Description?: string | undefined;
+            Image?: string | undefined;
+            ExternalUrl?: string | undefined;
+            AddressLine1?: string | undefined;
+            AddressLine2?: string | undefined;
+            City?: string | undefined;
+            Region?: string | undefined;
+            PostalCode?: string | undefined;
+            Country?: string | undefined;
+            YearFounded?: number | undefined;
+            Licensed?: boolean | undefined;
+            LicenseCountry?: string | undefined;
+            LicenseNumber?: string | undefined;
+            Phone?: string | undefined;
+            Email?: string | undefined;
+            SocialMediaLinks?: string[] | undefined;
+            KeyClients?: string | undefined;
+            Press?: string | undefined;
         } & {
-            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-            UpdatedAt?: Date | undefined;
-            CreatedAt?: Date | undefined;
-            UpdatedByAccount?: string | undefined;
-            MetaDataDetails?: ({
-                name?: string | undefined;
-                description?: string | undefined;
-                image?: string | undefined;
-                externalUrl?: string | undefined;
-                addressLine1?: string | undefined;
-                addressLine2?: string | undefined;
-                city?: string | undefined;
-                region?: string | undefined;
-                postalCode?: string | undefined;
-                country?: string | undefined;
-                yearFounded?: number | undefined;
-                licensed?: boolean | undefined;
-                licenseCountry?: string | undefined;
-                licenseNumber?: string | undefined;
-                phone?: string | undefined;
-                email?: string | undefined;
-                socialMediaLinks?: string[] | undefined;
-                keyClients?: string | undefined;
-                press?: string | undefined;
-            } & {
-                name?: string | undefined;
-                description?: string | undefined;
-                image?: string | undefined;
-                externalUrl?: string | undefined;
-                addressLine1?: string | undefined;
-                addressLine2?: string | undefined;
-                city?: string | undefined;
-                region?: string | undefined;
-                postalCode?: string | undefined;
-                country?: string | undefined;
-                yearFounded?: number | undefined;
-                licensed?: boolean | undefined;
-                licenseCountry?: string | undefined;
-                licenseNumber?: string | undefined;
-                phone?: string | undefined;
-                email?: string | undefined;
-                socialMediaLinks?: (string[] & string[] & { [K_4 in Exclude<keyof I_1["MetaData"]["MetaDataDetails"]["socialMediaLinks"], keyof string[]>]: never; }) | undefined;
-                keyClients?: string | undefined;
-                press?: string | undefined;
-            } & { [K_5 in Exclude<keyof I_1["MetaData"]["MetaDataDetails"], keyof import("./sologenic/com-fs-utils-lib/models/metadata/metadata").MetaDataDetails>]: never; }) | undefined;
-        } & { [K_6 in Exclude<keyof I_1["MetaData"], keyof MetaData>]: never; }) | undefined;
+            Name?: string | undefined;
+            Description?: string | undefined;
+            Image?: string | undefined;
+            ExternalUrl?: string | undefined;
+            AddressLine1?: string | undefined;
+            AddressLine2?: string | undefined;
+            City?: string | undefined;
+            Region?: string | undefined;
+            PostalCode?: string | undefined;
+            Country?: string | undefined;
+            YearFounded?: number | undefined;
+            Licensed?: boolean | undefined;
+            LicenseCountry?: string | undefined;
+            LicenseNumber?: string | undefined;
+            Phone?: string | undefined;
+            Email?: string | undefined;
+            SocialMediaLinks?: (string[] & string[] & { [K_3 in Exclude<keyof I_1["MetaData"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
+            KeyClients?: string | undefined;
+            Press?: string | undefined;
+        } & { [K_4 in Exclude<keyof I_1["MetaData"], keyof MetadataDetails>]: never; }) | undefined;
         Visible?: boolean | undefined;
-    } & { [K_7 in Exclude<keyof I_1, keyof UserAssetList>]: never; }>(object: I_1): UserAssetList;
+    } & { [K_5 in Exclude<keyof I_1, keyof UserAssetList>]: never; }>(object: I_1): UserAssetList;
 };
 export declare const UserAssetLists: {
     encode(message: UserAssetLists, writer?: _m0.Writer): _m0.Writer;
@@ -4295,31 +3670,25 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
         }[] | undefined;
@@ -4330,31 +3699,25 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
         }[] & ({
@@ -4363,31 +3726,25 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
         } & {
@@ -4396,114 +3753,76 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: ({
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } & {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: ({
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } & {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: (string[] & string[] & { [K in Exclude<keyof I["UserAssetLists"][number]["MetaData"]["MetaDataDetails"]["socialMediaLinks"], keyof string[]>]: never; }) | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } & { [K_1 in Exclude<keyof I["UserAssetLists"][number]["MetaData"]["MetaDataDetails"], keyof import("./sologenic/com-fs-utils-lib/models/metadata/metadata").MetaDataDetails>]: never; }) | undefined;
-            } & { [K_2 in Exclude<keyof I["UserAssetLists"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: (string[] & string[] & { [K in Exclude<keyof I["UserAssetLists"][number]["MetaData"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
+            } & { [K_1 in Exclude<keyof I["UserAssetLists"][number]["MetaData"], keyof MetadataDetails>]: never; }) | undefined;
             Visible?: boolean | undefined;
-        } & { [K_3 in Exclude<keyof I["UserAssetLists"][number], keyof UserAssetList>]: never; })[] & { [K_4 in Exclude<keyof I["UserAssetLists"], keyof {
+        } & { [K_2 in Exclude<keyof I["UserAssetLists"][number], keyof UserAssetList>]: never; })[] & { [K_3 in Exclude<keyof I["UserAssetLists"], keyof {
             AccountID?: string | undefined;
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
         }[]>]: never; }) | undefined;
-    } & { [K_5 in Exclude<keyof I, "UserAssetLists">]: never; }>(base?: I | undefined): UserAssetLists;
+    } & { [K_4 in Exclude<keyof I, "UserAssetLists">]: never; }>(base?: I | undefined): UserAssetLists;
     fromPartial<I_1 extends {
         UserAssetLists?: {
             AccountID?: string | undefined;
@@ -4511,31 +3830,25 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
         }[] | undefined;
@@ -4546,31 +3859,25 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
         }[] & ({
@@ -4579,31 +3886,25 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
         } & {
@@ -4612,114 +3913,76 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: ({
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } & {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: ({
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } & {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: (string[] & string[] & { [K_6 in Exclude<keyof I_1["UserAssetLists"][number]["MetaData"]["MetaDataDetails"]["socialMediaLinks"], keyof string[]>]: never; }) | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } & { [K_7 in Exclude<keyof I_1["UserAssetLists"][number]["MetaData"]["MetaDataDetails"], keyof import("./sologenic/com-fs-utils-lib/models/metadata/metadata").MetaDataDetails>]: never; }) | undefined;
-            } & { [K_8 in Exclude<keyof I_1["UserAssetLists"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: (string[] & string[] & { [K_5 in Exclude<keyof I_1["UserAssetLists"][number]["MetaData"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
+            } & { [K_6 in Exclude<keyof I_1["UserAssetLists"][number]["MetaData"], keyof MetadataDetails>]: never; }) | undefined;
             Visible?: boolean | undefined;
-        } & { [K_9 in Exclude<keyof I_1["UserAssetLists"][number], keyof UserAssetList>]: never; })[] & { [K_10 in Exclude<keyof I_1["UserAssetLists"], keyof {
+        } & { [K_7 in Exclude<keyof I_1["UserAssetLists"][number], keyof UserAssetList>]: never; })[] & { [K_8 in Exclude<keyof I_1["UserAssetLists"], keyof {
             AccountID?: string | undefined;
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
-                UpdatedAt?: Date | undefined;
-                CreatedAt?: Date | undefined;
-                UpdatedByAccount?: string | undefined;
-                MetaDataDetails?: {
-                    name?: string | undefined;
-                    description?: string | undefined;
-                    image?: string | undefined;
-                    externalUrl?: string | undefined;
-                    addressLine1?: string | undefined;
-                    addressLine2?: string | undefined;
-                    city?: string | undefined;
-                    region?: string | undefined;
-                    postalCode?: string | undefined;
-                    country?: string | undefined;
-                    yearFounded?: number | undefined;
-                    licensed?: boolean | undefined;
-                    licenseCountry?: string | undefined;
-                    licenseNumber?: string | undefined;
-                    phone?: string | undefined;
-                    email?: string | undefined;
-                    socialMediaLinks?: string[] | undefined;
-                    keyClients?: string | undefined;
-                    press?: string | undefined;
-                } | undefined;
+                Name?: string | undefined;
+                Description?: string | undefined;
+                Image?: string | undefined;
+                ExternalUrl?: string | undefined;
+                AddressLine1?: string | undefined;
+                AddressLine2?: string | undefined;
+                City?: string | undefined;
+                Region?: string | undefined;
+                PostalCode?: string | undefined;
+                Country?: string | undefined;
+                YearFounded?: number | undefined;
+                Licensed?: boolean | undefined;
+                LicenseCountry?: string | undefined;
+                LicenseNumber?: string | undefined;
+                Phone?: string | undefined;
+                Email?: string | undefined;
+                SocialMediaLinks?: string[] | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
         }[]>]: never; }) | undefined;
-    } & { [K_11 in Exclude<keyof I_1, "UserAssetLists">]: never; }>(object: I_1): UserAssetLists;
+    } & { [K_9 in Exclude<keyof I_1, "UserAssetLists">]: never; }>(object: I_1): UserAssetLists;
 };
 export declare const RealEstate: {
     encode(message: RealEstate, writer?: _m0.Writer): _m0.Writer;
@@ -5080,6 +4343,94 @@ export declare const InvestmentFund: {
         ExpenseRatio?: number | undefined;
         Holdings?: (string[] & string[] & { [K_2 in Exclude<keyof I_1["Holdings"], keyof string[]>]: never; }) | undefined;
     } & { [K_3 in Exclude<keyof I_1, keyof InvestmentFund>]: never; }>(object: I_1): InvestmentFund;
+};
+export declare const MetadataDetails: {
+    encode(message: MetadataDetails, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): MetadataDetails;
+    fromJSON(object: any): MetadataDetails;
+    toJSON(message: MetadataDetails): unknown;
+    create<I extends {
+        Name?: string | undefined;
+        Description?: string | undefined;
+        Image?: string | undefined;
+        ExternalUrl?: string | undefined;
+        AddressLine1?: string | undefined;
+        AddressLine2?: string | undefined;
+        City?: string | undefined;
+        Region?: string | undefined;
+        PostalCode?: string | undefined;
+        Country?: string | undefined;
+        YearFounded?: number | undefined;
+        Licensed?: boolean | undefined;
+        LicenseCountry?: string | undefined;
+        LicenseNumber?: string | undefined;
+        Phone?: string | undefined;
+        Email?: string | undefined;
+        SocialMediaLinks?: string[] | undefined;
+        KeyClients?: string | undefined;
+        Press?: string | undefined;
+    } & {
+        Name?: string | undefined;
+        Description?: string | undefined;
+        Image?: string | undefined;
+        ExternalUrl?: string | undefined;
+        AddressLine1?: string | undefined;
+        AddressLine2?: string | undefined;
+        City?: string | undefined;
+        Region?: string | undefined;
+        PostalCode?: string | undefined;
+        Country?: string | undefined;
+        YearFounded?: number | undefined;
+        Licensed?: boolean | undefined;
+        LicenseCountry?: string | undefined;
+        LicenseNumber?: string | undefined;
+        Phone?: string | undefined;
+        Email?: string | undefined;
+        SocialMediaLinks?: (string[] & string[] & { [K in Exclude<keyof I["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
+        KeyClients?: string | undefined;
+        Press?: string | undefined;
+    } & { [K_1 in Exclude<keyof I, keyof MetadataDetails>]: never; }>(base?: I | undefined): MetadataDetails;
+    fromPartial<I_1 extends {
+        Name?: string | undefined;
+        Description?: string | undefined;
+        Image?: string | undefined;
+        ExternalUrl?: string | undefined;
+        AddressLine1?: string | undefined;
+        AddressLine2?: string | undefined;
+        City?: string | undefined;
+        Region?: string | undefined;
+        PostalCode?: string | undefined;
+        Country?: string | undefined;
+        YearFounded?: number | undefined;
+        Licensed?: boolean | undefined;
+        LicenseCountry?: string | undefined;
+        LicenseNumber?: string | undefined;
+        Phone?: string | undefined;
+        Email?: string | undefined;
+        SocialMediaLinks?: string[] | undefined;
+        KeyClients?: string | undefined;
+        Press?: string | undefined;
+    } & {
+        Name?: string | undefined;
+        Description?: string | undefined;
+        Image?: string | undefined;
+        ExternalUrl?: string | undefined;
+        AddressLine1?: string | undefined;
+        AddressLine2?: string | undefined;
+        City?: string | undefined;
+        Region?: string | undefined;
+        PostalCode?: string | undefined;
+        Country?: string | undefined;
+        YearFounded?: number | undefined;
+        Licensed?: boolean | undefined;
+        LicenseCountry?: string | undefined;
+        LicenseNumber?: string | undefined;
+        Phone?: string | undefined;
+        Email?: string | undefined;
+        SocialMediaLinks?: (string[] & string[] & { [K_2 in Exclude<keyof I_1["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
+        KeyClients?: string | undefined;
+        Press?: string | undefined;
+    } & { [K_3 in Exclude<keyof I_1, keyof MetadataDetails>]: never; }>(object: I_1): MetadataDetails;
 };
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 export type DeepPartial<T> = T extends Builtin ? T : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>> : T extends {} ? {

@@ -8,7 +8,6 @@
 import _m0 from "protobufjs/minimal";
 import { Denom } from "./sologenic/com-fs-asset-model/domain/denom/denom";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
-import { MetaData } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 
 export const protobufPackage = "asset";
 
@@ -234,196 +233,18 @@ export function userAssetStatusToJSON(object: UserAssetStatus): string {
   }
 }
 
-export enum Exchange {
-  EXCHANGE_DO_NOT_USE = 0,
-  NASDAQ = 1,
-  NYSE = 2,
-  /** ONCHAIN - On‑chain token/cryptocurrency markets, e.g. wrapped USDC */
-  ONCHAIN = 3,
-  UNRECOGNIZED = -1,
-}
-
-export function exchangeFromJSON(object: any): Exchange {
-  switch (object) {
-    case 0:
-    case "EXCHANGE_DO_NOT_USE":
-      return Exchange.EXCHANGE_DO_NOT_USE;
-    case 1:
-    case "NASDAQ":
-      return Exchange.NASDAQ;
-    case 2:
-    case "NYSE":
-      return Exchange.NYSE;
-    case 3:
-    case "ONCHAIN":
-      return Exchange.ONCHAIN;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return Exchange.UNRECOGNIZED;
-  }
-}
-
-export function exchangeToJSON(object: Exchange): string {
-  switch (object) {
-    case Exchange.EXCHANGE_DO_NOT_USE:
-      return "EXCHANGE_DO_NOT_USE";
-    case Exchange.NASDAQ:
-      return "NASDAQ";
-    case Exchange.NYSE:
-      return "NYSE";
-    case Exchange.ONCHAIN:
-      return "ONCHAIN";
-    case Exchange.UNRECOGNIZED:
-    default:
-      return "UNRECOGNIZED";
-  }
-}
-
-export enum Industry {
-  INDUSTRY_DO_NOT_USE = 0,
-  ENERGY = 1,
-  MATERIALS = 2,
-  INDUSTRIALS = 3,
-  CONSUMER_DISCRETIONARY = 4,
-  CONSUMER_STAPLES = 5,
-  HEALTH_CARE = 6,
-  FINANCIALS = 7,
-  INFORMATION_TECHNOLOGY = 8,
-  COMMUNICATION_SERVICES = 9,
-  UTILITIES = 10,
-  REAL_ESTATE = 11,
-  UNRECOGNIZED = -1,
-}
-
-export function industryFromJSON(object: any): Industry {
-  switch (object) {
-    case 0:
-    case "INDUSTRY_DO_NOT_USE":
-      return Industry.INDUSTRY_DO_NOT_USE;
-    case 1:
-    case "ENERGY":
-      return Industry.ENERGY;
-    case 2:
-    case "MATERIALS":
-      return Industry.MATERIALS;
-    case 3:
-    case "INDUSTRIALS":
-      return Industry.INDUSTRIALS;
-    case 4:
-    case "CONSUMER_DISCRETIONARY":
-      return Industry.CONSUMER_DISCRETIONARY;
-    case 5:
-    case "CONSUMER_STAPLES":
-      return Industry.CONSUMER_STAPLES;
-    case 6:
-    case "HEALTH_CARE":
-      return Industry.HEALTH_CARE;
-    case 7:
-    case "FINANCIALS":
-      return Industry.FINANCIALS;
-    case 8:
-    case "INFORMATION_TECHNOLOGY":
-      return Industry.INFORMATION_TECHNOLOGY;
-    case 9:
-    case "COMMUNICATION_SERVICES":
-      return Industry.COMMUNICATION_SERVICES;
-    case 10:
-    case "UTILITIES":
-      return Industry.UTILITIES;
-    case 11:
-    case "REAL_ESTATE":
-      return Industry.REAL_ESTATE;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return Industry.UNRECOGNIZED;
-  }
-}
-
-export function industryToJSON(object: Industry): string {
-  switch (object) {
-    case Industry.INDUSTRY_DO_NOT_USE:
-      return "INDUSTRY_DO_NOT_USE";
-    case Industry.ENERGY:
-      return "ENERGY";
-    case Industry.MATERIALS:
-      return "MATERIALS";
-    case Industry.INDUSTRIALS:
-      return "INDUSTRIALS";
-    case Industry.CONSUMER_DISCRETIONARY:
-      return "CONSUMER_DISCRETIONARY";
-    case Industry.CONSUMER_STAPLES:
-      return "CONSUMER_STAPLES";
-    case Industry.HEALTH_CARE:
-      return "HEALTH_CARE";
-    case Industry.FINANCIALS:
-      return "FINANCIALS";
-    case Industry.INFORMATION_TECHNOLOGY:
-      return "INFORMATION_TECHNOLOGY";
-    case Industry.COMMUNICATION_SERVICES:
-      return "COMMUNICATION_SERVICES";
-    case Industry.UTILITIES:
-      return "UTILITIES";
-    case Industry.REAL_ESTATE:
-      return "REAL_ESTATE";
-    case Industry.UNRECOGNIZED:
-    default:
-      return "UNRECOGNIZED";
-  }
-}
-
 export interface AssetDetails {
-  /**
-   * Key combination: Currency_OrganizationID_SmartContractIssuerAddr
-   * e.g., "appl_1_72c4c072-2fe4-4f72-ae9d-d9d52a05fd71_testcore1et29c..."
-   */
+  /** Key string to prevent composing the key all the time and reduce errors */
   ID: string;
-  /** External entity (broker) that owns this asset */
   OrganizationID: string;
   Status: AssetStatus;
-  Reason?:
-    | Reason
-    | undefined;
-  /** list of jurisdictionIDs where this asset is allowed to be traded */
+  Reason?: Reason | undefined;
   JurisdictionIDs: string[];
   Type: AssetType;
-  /** Asset specific properties */
   Name: string;
-  ExchangeTickerSymbol: string;
-  Exchange: Exchange;
-  /** Description for internal use, not for on-chain */
-  InternalDescription: string;
-  MinTransactionAmount: number;
-  /**
-   * Required additional margin as a percentage of the order value that buyers must provide.
-   * Value should be between 0.0 and 1.0 (0% to 100%)
-   * Example: If TradingMarginPercentage = 0.1 (10%) and order value is $100:
-   *  - Buyer must provide $110 total ($100 asset cost + $10 margin)
-   *  - $5 (5%, cost) is kept for transaction costs
-   *  - $5 (5%, refundable) is returned to the buyer after execution
-   */
-  TradingMarginPercentage: number;
-  LogoFile:
-    | LogoFile
-    | undefined;
-  /** Global Industry Classification Standard (GICS®) sector */
-  Industry: Industry;
-  /**
-   * Margin percentage specific to the asset. This is the asset's individual margin percentage used to calculate buying power.
-   * Buying Power = AvailableFunds(On-chain) + (Σ Assets(non-stablecoin)  × AssetMarginPercentage)
-   * Asset Margin Percentage: represents the collateral value of the asset (e.g., 50% → 10,000BTC → 5,000 buying power contribution)
-   */
-  AssetMarginPercentage: number;
-  /** On-chain properties */
-  Denom:
-    | Denom
-    | undefined;
-  /** Flag to indicate if the asset is issued in the smart contract */
+  Denom: Denom | undefined;
   IsIssuedInSmartContract: boolean;
-  /** Issuer address of the smart contract (distinct from Denom.Issuer) */
   SmartContractIssuerAddr: string;
-  /** -------- New category-specific optional fields -------- */
   RealEstateDetails?: RealEstate | undefined;
   StableCoinDetails?: StableCoin | undefined;
   CommodityDetails?: Commodity | undefined;
@@ -435,7 +256,7 @@ export interface AssetDetails {
 
 export interface Asset {
   AssetDetails: AssetDetails | undefined;
-  MetaData: MetaData | undefined;
+  MetaData: MetadataDetails | undefined;
   Audit: Audit | undefined;
 }
 
@@ -443,22 +264,12 @@ export interface Assets {
   Assets: Asset[];
 }
 
-export interface LogoFile {
-  /** The reference to the file */
-  Reference: string;
-  Extension: string;
-  /** User defined name of the file, used as a "description" */
-  Name?: string | undefined;
-}
-
 export interface UserAssetList {
-  /** Key combination: Currency-OrganizationID-AccountID-Wallet (AssetKey-AccountID-Wallet) */
   AccountID: string;
   Wallet: string;
-  /** Currency-OrganizationID */
   AssetKey: string;
   Status: UserAssetStatus;
-  MetaData: MetaData | undefined;
+  MetaData: MetadataDetails | undefined;
   Visible: boolean;
 }
 
@@ -556,6 +367,28 @@ export interface InvestmentFund {
   Holdings: string[];
 }
 
+export interface MetadataDetails {
+  Name: string;
+  Description: string;
+  Image: string;
+  ExternalUrl: string;
+  AddressLine1: string;
+  AddressLine2?: string | undefined;
+  City: string;
+  Region?: string | undefined;
+  PostalCode?: string | undefined;
+  Country: string;
+  YearFounded: number;
+  Licensed: boolean;
+  LicenseCountry?: string | undefined;
+  LicenseNumber?: string | undefined;
+  Phone?: string | undefined;
+  Email?: string | undefined;
+  SocialMediaLinks: string[];
+  KeyClients?: string | undefined;
+  Press?: string | undefined;
+}
+
 function createBaseAssetDetails(): AssetDetails {
   return {
     ID: "",
@@ -565,14 +398,6 @@ function createBaseAssetDetails(): AssetDetails {
     JurisdictionIDs: [],
     Type: 0,
     Name: "",
-    ExchangeTickerSymbol: "",
-    Exchange: 0,
-    InternalDescription: "",
-    MinTransactionAmount: 0,
-    TradingMarginPercentage: 0,
-    LogoFile: undefined,
-    Industry: 0,
-    AssetMarginPercentage: 0,
     Denom: undefined,
     IsIssuedInSmartContract: false,
     SmartContractIssuerAddr: "",
@@ -608,30 +433,6 @@ export const AssetDetails = {
     }
     if (message.Name !== "") {
       writer.uint32(58).string(message.Name);
-    }
-    if (message.ExchangeTickerSymbol !== "") {
-      writer.uint32(66).string(message.ExchangeTickerSymbol);
-    }
-    if (message.Exchange !== 0) {
-      writer.uint32(72).int32(message.Exchange);
-    }
-    if (message.InternalDescription !== "") {
-      writer.uint32(82).string(message.InternalDescription);
-    }
-    if (message.MinTransactionAmount !== 0) {
-      writer.uint32(89).double(message.MinTransactionAmount);
-    }
-    if (message.TradingMarginPercentage !== 0) {
-      writer.uint32(97).double(message.TradingMarginPercentage);
-    }
-    if (message.LogoFile !== undefined) {
-      LogoFile.encode(message.LogoFile, writer.uint32(106).fork()).ldelim();
-    }
-    if (message.Industry !== 0) {
-      writer.uint32(112).int32(message.Industry);
-    }
-    if (message.AssetMarginPercentage !== 0) {
-      writer.uint32(121).double(message.AssetMarginPercentage);
     }
     if (message.Denom !== undefined) {
       Denom.encode(message.Denom, writer.uint32(138).fork()).ldelim();
@@ -721,62 +522,6 @@ export const AssetDetails = {
           }
 
           message.Name = reader.string();
-          continue;
-        case 8:
-          if (tag !== 66) {
-            break;
-          }
-
-          message.ExchangeTickerSymbol = reader.string();
-          continue;
-        case 9:
-          if (tag !== 72) {
-            break;
-          }
-
-          message.Exchange = reader.int32() as any;
-          continue;
-        case 10:
-          if (tag !== 82) {
-            break;
-          }
-
-          message.InternalDescription = reader.string();
-          continue;
-        case 11:
-          if (tag !== 89) {
-            break;
-          }
-
-          message.MinTransactionAmount = reader.double();
-          continue;
-        case 12:
-          if (tag !== 97) {
-            break;
-          }
-
-          message.TradingMarginPercentage = reader.double();
-          continue;
-        case 13:
-          if (tag !== 106) {
-            break;
-          }
-
-          message.LogoFile = LogoFile.decode(reader, reader.uint32());
-          continue;
-        case 14:
-          if (tag !== 112) {
-            break;
-          }
-
-          message.Industry = reader.int32() as any;
-          continue;
-        case 15:
-          if (tag !== 121) {
-            break;
-          }
-
-          message.AssetMarginPercentage = reader.double();
           continue;
         case 17:
           if (tag !== 138) {
@@ -868,16 +613,6 @@ export const AssetDetails = {
         : [],
       Type: isSet(object.Type) ? assetTypeFromJSON(object.Type) : 0,
       Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
-      ExchangeTickerSymbol: isSet(object.ExchangeTickerSymbol) ? globalThis.String(object.ExchangeTickerSymbol) : "",
-      Exchange: isSet(object.Exchange) ? exchangeFromJSON(object.Exchange) : 0,
-      InternalDescription: isSet(object.InternalDescription) ? globalThis.String(object.InternalDescription) : "",
-      MinTransactionAmount: isSet(object.MinTransactionAmount) ? globalThis.Number(object.MinTransactionAmount) : 0,
-      TradingMarginPercentage: isSet(object.TradingMarginPercentage)
-        ? globalThis.Number(object.TradingMarginPercentage)
-        : 0,
-      LogoFile: isSet(object.LogoFile) ? LogoFile.fromJSON(object.LogoFile) : undefined,
-      Industry: isSet(object.Industry) ? industryFromJSON(object.Industry) : 0,
-      AssetMarginPercentage: isSet(object.AssetMarginPercentage) ? globalThis.Number(object.AssetMarginPercentage) : 0,
       Denom: isSet(object.Denom) ? Denom.fromJSON(object.Denom) : undefined,
       IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
         ? globalThis.Boolean(object.IsIssuedInSmartContract)
@@ -924,30 +659,6 @@ export const AssetDetails = {
     if (message.Name !== "") {
       obj.Name = message.Name;
     }
-    if (message.ExchangeTickerSymbol !== "") {
-      obj.ExchangeTickerSymbol = message.ExchangeTickerSymbol;
-    }
-    if (message.Exchange !== 0) {
-      obj.Exchange = exchangeToJSON(message.Exchange);
-    }
-    if (message.InternalDescription !== "") {
-      obj.InternalDescription = message.InternalDescription;
-    }
-    if (message.MinTransactionAmount !== 0) {
-      obj.MinTransactionAmount = message.MinTransactionAmount;
-    }
-    if (message.TradingMarginPercentage !== 0) {
-      obj.TradingMarginPercentage = message.TradingMarginPercentage;
-    }
-    if (message.LogoFile !== undefined) {
-      obj.LogoFile = LogoFile.toJSON(message.LogoFile);
-    }
-    if (message.Industry !== 0) {
-      obj.Industry = industryToJSON(message.Industry);
-    }
-    if (message.AssetMarginPercentage !== 0) {
-      obj.AssetMarginPercentage = message.AssetMarginPercentage;
-    }
     if (message.Denom !== undefined) {
       obj.Denom = Denom.toJSON(message.Denom);
     }
@@ -993,16 +704,6 @@ export const AssetDetails = {
     message.JurisdictionIDs = object.JurisdictionIDs?.map((e) => e) || [];
     message.Type = object.Type ?? 0;
     message.Name = object.Name ?? "";
-    message.ExchangeTickerSymbol = object.ExchangeTickerSymbol ?? "";
-    message.Exchange = object.Exchange ?? 0;
-    message.InternalDescription = object.InternalDescription ?? "";
-    message.MinTransactionAmount = object.MinTransactionAmount ?? 0;
-    message.TradingMarginPercentage = object.TradingMarginPercentage ?? 0;
-    message.LogoFile = (object.LogoFile !== undefined && object.LogoFile !== null)
-      ? LogoFile.fromPartial(object.LogoFile)
-      : undefined;
-    message.Industry = object.Industry ?? 0;
-    message.AssetMarginPercentage = object.AssetMarginPercentage ?? 0;
     message.Denom = (object.Denom !== undefined && object.Denom !== null) ? Denom.fromPartial(object.Denom) : undefined;
     message.IsIssuedInSmartContract = object.IsIssuedInSmartContract ?? false;
     message.SmartContractIssuerAddr = object.SmartContractIssuerAddr ?? "";
@@ -1043,7 +744,7 @@ export const Asset = {
       AssetDetails.encode(message.AssetDetails, writer.uint32(10).fork()).ldelim();
     }
     if (message.MetaData !== undefined) {
-      MetaData.encode(message.MetaData, writer.uint32(18).fork()).ldelim();
+      MetadataDetails.encode(message.MetaData, writer.uint32(18).fork()).ldelim();
     }
     if (message.Audit !== undefined) {
       Audit.encode(message.Audit, writer.uint32(26).fork()).ldelim();
@@ -1070,7 +771,7 @@ export const Asset = {
             break;
           }
 
-          message.MetaData = MetaData.decode(reader, reader.uint32());
+          message.MetaData = MetadataDetails.decode(reader, reader.uint32());
           continue;
         case 3:
           if (tag !== 26) {
@@ -1091,7 +792,7 @@ export const Asset = {
   fromJSON(object: any): Asset {
     return {
       AssetDetails: isSet(object.AssetDetails) ? AssetDetails.fromJSON(object.AssetDetails) : undefined,
-      MetaData: isSet(object.MetaData) ? MetaData.fromJSON(object.MetaData) : undefined,
+      MetaData: isSet(object.MetaData) ? MetadataDetails.fromJSON(object.MetaData) : undefined,
       Audit: isSet(object.Audit) ? Audit.fromJSON(object.Audit) : undefined,
     };
   },
@@ -1102,7 +803,7 @@ export const Asset = {
       obj.AssetDetails = AssetDetails.toJSON(message.AssetDetails);
     }
     if (message.MetaData !== undefined) {
-      obj.MetaData = MetaData.toJSON(message.MetaData);
+      obj.MetaData = MetadataDetails.toJSON(message.MetaData);
     }
     if (message.Audit !== undefined) {
       obj.Audit = Audit.toJSON(message.Audit);
@@ -1119,7 +820,7 @@ export const Asset = {
       ? AssetDetails.fromPartial(object.AssetDetails)
       : undefined;
     message.MetaData = (object.MetaData !== undefined && object.MetaData !== null)
-      ? MetaData.fromPartial(object.MetaData)
+      ? MetadataDetails.fromPartial(object.MetaData)
       : undefined;
     message.Audit = (object.Audit !== undefined && object.Audit !== null) ? Audit.fromPartial(object.Audit) : undefined;
     return message;
@@ -1183,95 +884,6 @@ export const Assets = {
   },
 };
 
-function createBaseLogoFile(): LogoFile {
-  return { Reference: "", Extension: "", Name: undefined };
-}
-
-export const LogoFile = {
-  encode(message: LogoFile, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (message.Reference !== "") {
-      writer.uint32(10).string(message.Reference);
-    }
-    if (message.Extension !== "") {
-      writer.uint32(18).string(message.Extension);
-    }
-    if (message.Name !== undefined) {
-      writer.uint32(26).string(message.Name);
-    }
-    return writer;
-  },
-
-  decode(input: _m0.Reader | Uint8Array, length?: number): LogoFile {
-    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
-    let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseLogoFile();
-    while (reader.pos < end) {
-      const tag = reader.uint32();
-      switch (tag >>> 3) {
-        case 1:
-          if (tag !== 10) {
-            break;
-          }
-
-          message.Reference = reader.string();
-          continue;
-        case 2:
-          if (tag !== 18) {
-            break;
-          }
-
-          message.Extension = reader.string();
-          continue;
-        case 3:
-          if (tag !== 26) {
-            break;
-          }
-
-          message.Name = reader.string();
-          continue;
-      }
-      if ((tag & 7) === 4 || tag === 0) {
-        break;
-      }
-      reader.skipType(tag & 7);
-    }
-    return message;
-  },
-
-  fromJSON(object: any): LogoFile {
-    return {
-      Reference: isSet(object.Reference) ? globalThis.String(object.Reference) : "",
-      Extension: isSet(object.Extension) ? globalThis.String(object.Extension) : "",
-      Name: isSet(object.Name) ? globalThis.String(object.Name) : undefined,
-    };
-  },
-
-  toJSON(message: LogoFile): unknown {
-    const obj: any = {};
-    if (message.Reference !== "") {
-      obj.Reference = message.Reference;
-    }
-    if (message.Extension !== "") {
-      obj.Extension = message.Extension;
-    }
-    if (message.Name !== undefined) {
-      obj.Name = message.Name;
-    }
-    return obj;
-  },
-
-  create<I extends Exact<DeepPartial<LogoFile>, I>>(base?: I): LogoFile {
-    return LogoFile.fromPartial(base ?? ({} as any));
-  },
-  fromPartial<I extends Exact<DeepPartial<LogoFile>, I>>(object: I): LogoFile {
-    const message = createBaseLogoFile();
-    message.Reference = object.Reference ?? "";
-    message.Extension = object.Extension ?? "";
-    message.Name = object.Name ?? undefined;
-    return message;
-  },
-};
-
 function createBaseUserAssetList(): UserAssetList {
   return { AccountID: "", Wallet: "", AssetKey: "", Status: 0, MetaData: undefined, Visible: false };
 }
@@ -1291,7 +903,7 @@ export const UserAssetList = {
       writer.uint32(32).int32(message.Status);
     }
     if (message.MetaData !== undefined) {
-      MetaData.encode(message.MetaData, writer.uint32(42).fork()).ldelim();
+      MetadataDetails.encode(message.MetaData, writer.uint32(42).fork()).ldelim();
     }
     if (message.Visible !== false) {
       writer.uint32(48).bool(message.Visible);
@@ -1339,7 +951,7 @@ export const UserAssetList = {
             break;
           }
 
-          message.MetaData = MetaData.decode(reader, reader.uint32());
+          message.MetaData = MetadataDetails.decode(reader, reader.uint32());
           continue;
         case 6:
           if (tag !== 48) {
@@ -1363,7 +975,7 @@ export const UserAssetList = {
       Wallet: isSet(object.Wallet) ? globalThis.String(object.Wallet) : "",
       AssetKey: isSet(object.AssetKey) ? globalThis.String(object.AssetKey) : "",
       Status: isSet(object.Status) ? userAssetStatusFromJSON(object.Status) : 0,
-      MetaData: isSet(object.MetaData) ? MetaData.fromJSON(object.MetaData) : undefined,
+      MetaData: isSet(object.MetaData) ? MetadataDetails.fromJSON(object.MetaData) : undefined,
       Visible: isSet(object.Visible) ? globalThis.Boolean(object.Visible) : false,
     };
   },
@@ -1383,7 +995,7 @@ export const UserAssetList = {
       obj.Status = userAssetStatusToJSON(message.Status);
     }
     if (message.MetaData !== undefined) {
-      obj.MetaData = MetaData.toJSON(message.MetaData);
+      obj.MetaData = MetadataDetails.toJSON(message.MetaData);
     }
     if (message.Visible !== false) {
       obj.Visible = message.Visible;
@@ -1401,7 +1013,7 @@ export const UserAssetList = {
     message.AssetKey = object.AssetKey ?? "";
     message.Status = object.Status ?? 0;
     message.MetaData = (object.MetaData !== undefined && object.MetaData !== null)
-      ? MetaData.fromPartial(object.MetaData)
+      ? MetadataDetails.fromPartial(object.MetaData)
       : undefined;
     message.Visible = object.Visible ?? false;
     return message;
@@ -2914,6 +2526,357 @@ export const InvestmentFund = {
     message.Manager = object.Manager ?? undefined;
     message.ExpenseRatio = object.ExpenseRatio ?? undefined;
     message.Holdings = object.Holdings?.map((e) => e) || [];
+    return message;
+  },
+};
+
+function createBaseMetadataDetails(): MetadataDetails {
+  return {
+    Name: "",
+    Description: "",
+    Image: "",
+    ExternalUrl: "",
+    AddressLine1: "",
+    AddressLine2: undefined,
+    City: "",
+    Region: undefined,
+    PostalCode: undefined,
+    Country: "",
+    YearFounded: 0,
+    Licensed: false,
+    LicenseCountry: undefined,
+    LicenseNumber: undefined,
+    Phone: undefined,
+    Email: undefined,
+    SocialMediaLinks: [],
+    KeyClients: undefined,
+    Press: undefined,
+  };
+}
+
+export const MetadataDetails = {
+  encode(message: MetadataDetails, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.Name !== "") {
+      writer.uint32(10).string(message.Name);
+    }
+    if (message.Description !== "") {
+      writer.uint32(18).string(message.Description);
+    }
+    if (message.Image !== "") {
+      writer.uint32(26).string(message.Image);
+    }
+    if (message.ExternalUrl !== "") {
+      writer.uint32(34).string(message.ExternalUrl);
+    }
+    if (message.AddressLine1 !== "") {
+      writer.uint32(42).string(message.AddressLine1);
+    }
+    if (message.AddressLine2 !== undefined) {
+      writer.uint32(50).string(message.AddressLine2);
+    }
+    if (message.City !== "") {
+      writer.uint32(58).string(message.City);
+    }
+    if (message.Region !== undefined) {
+      writer.uint32(66).string(message.Region);
+    }
+    if (message.PostalCode !== undefined) {
+      writer.uint32(74).string(message.PostalCode);
+    }
+    if (message.Country !== "") {
+      writer.uint32(82).string(message.Country);
+    }
+    if (message.YearFounded !== 0) {
+      writer.uint32(88).int32(message.YearFounded);
+    }
+    if (message.Licensed !== false) {
+      writer.uint32(96).bool(message.Licensed);
+    }
+    if (message.LicenseCountry !== undefined) {
+      writer.uint32(106).string(message.LicenseCountry);
+    }
+    if (message.LicenseNumber !== undefined) {
+      writer.uint32(114).string(message.LicenseNumber);
+    }
+    if (message.Phone !== undefined) {
+      writer.uint32(122).string(message.Phone);
+    }
+    if (message.Email !== undefined) {
+      writer.uint32(130).string(message.Email);
+    }
+    for (const v of message.SocialMediaLinks) {
+      writer.uint32(138).string(v!);
+    }
+    if (message.KeyClients !== undefined) {
+      writer.uint32(146).string(message.KeyClients);
+    }
+    if (message.Press !== undefined) {
+      writer.uint32(154).string(message.Press);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MetadataDetails {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMetadataDetails();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.Name = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.Description = reader.string();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.Image = reader.string();
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.ExternalUrl = reader.string();
+          continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          message.AddressLine1 = reader.string();
+          continue;
+        case 6:
+          if (tag !== 50) {
+            break;
+          }
+
+          message.AddressLine2 = reader.string();
+          continue;
+        case 7:
+          if (tag !== 58) {
+            break;
+          }
+
+          message.City = reader.string();
+          continue;
+        case 8:
+          if (tag !== 66) {
+            break;
+          }
+
+          message.Region = reader.string();
+          continue;
+        case 9:
+          if (tag !== 74) {
+            break;
+          }
+
+          message.PostalCode = reader.string();
+          continue;
+        case 10:
+          if (tag !== 82) {
+            break;
+          }
+
+          message.Country = reader.string();
+          continue;
+        case 11:
+          if (tag !== 88) {
+            break;
+          }
+
+          message.YearFounded = reader.int32();
+          continue;
+        case 12:
+          if (tag !== 96) {
+            break;
+          }
+
+          message.Licensed = reader.bool();
+          continue;
+        case 13:
+          if (tag !== 106) {
+            break;
+          }
+
+          message.LicenseCountry = reader.string();
+          continue;
+        case 14:
+          if (tag !== 114) {
+            break;
+          }
+
+          message.LicenseNumber = reader.string();
+          continue;
+        case 15:
+          if (tag !== 122) {
+            break;
+          }
+
+          message.Phone = reader.string();
+          continue;
+        case 16:
+          if (tag !== 130) {
+            break;
+          }
+
+          message.Email = reader.string();
+          continue;
+        case 17:
+          if (tag !== 138) {
+            break;
+          }
+
+          message.SocialMediaLinks.push(reader.string());
+          continue;
+        case 18:
+          if (tag !== 146) {
+            break;
+          }
+
+          message.KeyClients = reader.string();
+          continue;
+        case 19:
+          if (tag !== 154) {
+            break;
+          }
+
+          message.Press = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MetadataDetails {
+    return {
+      Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
+      Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
+      Image: isSet(object.Image) ? globalThis.String(object.Image) : "",
+      ExternalUrl: isSet(object.ExternalUrl) ? globalThis.String(object.ExternalUrl) : "",
+      AddressLine1: isSet(object.AddressLine1) ? globalThis.String(object.AddressLine1) : "",
+      AddressLine2: isSet(object.AddressLine2) ? globalThis.String(object.AddressLine2) : undefined,
+      City: isSet(object.City) ? globalThis.String(object.City) : "",
+      Region: isSet(object.Region) ? globalThis.String(object.Region) : undefined,
+      PostalCode: isSet(object.PostalCode) ? globalThis.String(object.PostalCode) : undefined,
+      Country: isSet(object.Country) ? globalThis.String(object.Country) : "",
+      YearFounded: isSet(object.YearFounded) ? globalThis.Number(object.YearFounded) : 0,
+      Licensed: isSet(object.Licensed) ? globalThis.Boolean(object.Licensed) : false,
+      LicenseCountry: isSet(object.LicenseCountry) ? globalThis.String(object.LicenseCountry) : undefined,
+      LicenseNumber: isSet(object.LicenseNumber) ? globalThis.String(object.LicenseNumber) : undefined,
+      Phone: isSet(object.Phone) ? globalThis.String(object.Phone) : undefined,
+      Email: isSet(object.Email) ? globalThis.String(object.Email) : undefined,
+      SocialMediaLinks: globalThis.Array.isArray(object?.SocialMediaLinks)
+        ? object.SocialMediaLinks.map((e: any) => globalThis.String(e))
+        : [],
+      KeyClients: isSet(object.KeyClients) ? globalThis.String(object.KeyClients) : undefined,
+      Press: isSet(object.Press) ? globalThis.String(object.Press) : undefined,
+    };
+  },
+
+  toJSON(message: MetadataDetails): unknown {
+    const obj: any = {};
+    if (message.Name !== "") {
+      obj.Name = message.Name;
+    }
+    if (message.Description !== "") {
+      obj.Description = message.Description;
+    }
+    if (message.Image !== "") {
+      obj.Image = message.Image;
+    }
+    if (message.ExternalUrl !== "") {
+      obj.ExternalUrl = message.ExternalUrl;
+    }
+    if (message.AddressLine1 !== "") {
+      obj.AddressLine1 = message.AddressLine1;
+    }
+    if (message.AddressLine2 !== undefined) {
+      obj.AddressLine2 = message.AddressLine2;
+    }
+    if (message.City !== "") {
+      obj.City = message.City;
+    }
+    if (message.Region !== undefined) {
+      obj.Region = message.Region;
+    }
+    if (message.PostalCode !== undefined) {
+      obj.PostalCode = message.PostalCode;
+    }
+    if (message.Country !== "") {
+      obj.Country = message.Country;
+    }
+    if (message.YearFounded !== 0) {
+      obj.YearFounded = Math.round(message.YearFounded);
+    }
+    if (message.Licensed !== false) {
+      obj.Licensed = message.Licensed;
+    }
+    if (message.LicenseCountry !== undefined) {
+      obj.LicenseCountry = message.LicenseCountry;
+    }
+    if (message.LicenseNumber !== undefined) {
+      obj.LicenseNumber = message.LicenseNumber;
+    }
+    if (message.Phone !== undefined) {
+      obj.Phone = message.Phone;
+    }
+    if (message.Email !== undefined) {
+      obj.Email = message.Email;
+    }
+    if (message.SocialMediaLinks?.length) {
+      obj.SocialMediaLinks = message.SocialMediaLinks;
+    }
+    if (message.KeyClients !== undefined) {
+      obj.KeyClients = message.KeyClients;
+    }
+    if (message.Press !== undefined) {
+      obj.Press = message.Press;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<MetadataDetails>, I>>(base?: I): MetadataDetails {
+    return MetadataDetails.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<MetadataDetails>, I>>(object: I): MetadataDetails {
+    const message = createBaseMetadataDetails();
+    message.Name = object.Name ?? "";
+    message.Description = object.Description ?? "";
+    message.Image = object.Image ?? "";
+    message.ExternalUrl = object.ExternalUrl ?? "";
+    message.AddressLine1 = object.AddressLine1 ?? "";
+    message.AddressLine2 = object.AddressLine2 ?? undefined;
+    message.City = object.City ?? "";
+    message.Region = object.Region ?? undefined;
+    message.PostalCode = object.PostalCode ?? undefined;
+    message.Country = object.Country ?? "";
+    message.YearFounded = object.YearFounded ?? 0;
+    message.Licensed = object.Licensed ?? false;
+    message.LicenseCountry = object.LicenseCountry ?? undefined;
+    message.LicenseNumber = object.LicenseNumber ?? undefined;
+    message.Phone = object.Phone ?? undefined;
+    message.Email = object.Email ?? undefined;
+    message.SocialMediaLinks = object.SocialMediaLinks?.map((e) => e) || [];
+    message.KeyClients = object.KeyClients ?? undefined;
+    message.Press = object.Press ?? undefined;
     return message;
   },
 };

@@ -67,20 +67,16 @@ func (x *AssetKey) GetKey() string {
 }
 
 type AssetQuery struct {
-	state                   protoimpl.MessageState `protogen:"open.v1"`
-	Network                 metadata.Network       `protobuf:"varint,1,opt,name=Network,proto3,enum=metadata.Network" json:"Network,omitempty"`
-	Offset                  *int32                 `protobuf:"varint,2,opt,name=Offset,proto3,oneof" json:"Offset,omitempty"`
-	JurisdictionIDs         []string               `protobuf:"bytes,3,rep,name=JurisdictionIDs,proto3" json:"JurisdictionIDs,omitempty"`
-	OrganizationID          *string                `protobuf:"bytes,4,opt,name=OrganizationID,proto3,oneof" json:"OrganizationID,omitempty"`
-	Status                  *AssetStatus           `protobuf:"varint,5,opt,name=Status,proto3,enum=asset.AssetStatus,oneof" json:"Status,omitempty"`
-	AssetType               *AssetType             `protobuf:"varint,6,opt,name=AssetType,proto3,enum=asset.AssetType,oneof" json:"AssetType,omitempty"`
-	ExchangeTickerSymbol    *string                `protobuf:"bytes,7,opt,name=ExchangeTickerSymbol,proto3,oneof" json:"ExchangeTickerSymbol,omitempty"`
-	Exchange                *string                `protobuf:"bytes,8,opt,name=Exchange,proto3,oneof" json:"Exchange,omitempty"`
-	Symbol                  *string                `protobuf:"bytes,9,opt,name=Symbol,proto3,oneof" json:"Symbol,omitempty"`
-	Version                 *string                `protobuf:"bytes,10,opt,name=Version,proto3,oneof" json:"Version,omitempty"`
-	Issuer                  *string                `protobuf:"bytes,11,opt,name=Issuer,proto3,oneof" json:"Issuer,omitempty"`
-	Industry                *Industry              `protobuf:"varint,12,opt,name=Industry,proto3,enum=asset.Industry,oneof" json:"Industry,omitempty"`
-	SmartContractIssuerAddr *string                `protobuf:"bytes,13,opt,name=SmartContractIssuerAddr,proto3,oneof" json:"SmartContractIssuerAddr,omitempty"`
+	state   protoimpl.MessageState `protogen:"open.v1"`
+	Network metadata.Network       `protobuf:"varint,1,opt,name=Network,proto3,enum=metadata.Network" json:"Network,omitempty"`
+	Offset  *int32                 `protobuf:"varint,2,opt,name=Offset,proto3,oneof" json:"Offset,omitempty"`
+	// Compliance filter: list assets allowed in these jurisdictions
+	JurisdictionIDs []string     `protobuf:"bytes,3,rep,name=JurisdictionIDs,proto3" json:"JurisdictionIDs,omitempty"`
+	OrganizationID  *string      `protobuf:"bytes,4,opt,name=OrganizationID,proto3,oneof" json:"OrganizationID,omitempty"`
+	Status          *AssetStatus `protobuf:"varint,5,opt,name=Status,proto3,enum=asset.AssetStatus,oneof" json:"Status,omitempty"`
+	AssetType       *AssetType   `protobuf:"varint,6,opt,name=AssetType,proto3,enum=asset.AssetType,oneof" json:"AssetType,omitempty"`
+	// On-chain issuer address (distinct from Denom.Issuer)
+	SmartContractIssuerAddr *string `protobuf:"bytes,7,opt,name=SmartContractIssuerAddr,proto3,oneof" json:"SmartContractIssuerAddr,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -155,48 +151,6 @@ func (x *AssetQuery) GetAssetType() AssetType {
 		return *x.AssetType
 	}
 	return AssetType_ASSET_TYPE_DO_NOT_USE
-}
-
-func (x *AssetQuery) GetExchangeTickerSymbol() string {
-	if x != nil && x.ExchangeTickerSymbol != nil {
-		return *x.ExchangeTickerSymbol
-	}
-	return ""
-}
-
-func (x *AssetQuery) GetExchange() string {
-	if x != nil && x.Exchange != nil {
-		return *x.Exchange
-	}
-	return ""
-}
-
-func (x *AssetQuery) GetSymbol() string {
-	if x != nil && x.Symbol != nil {
-		return *x.Symbol
-	}
-	return ""
-}
-
-func (x *AssetQuery) GetVersion() string {
-	if x != nil && x.Version != nil {
-		return *x.Version
-	}
-	return ""
-}
-
-func (x *AssetQuery) GetIssuer() string {
-	if x != nil && x.Issuer != nil {
-		return *x.Issuer
-	}
-	return ""
-}
-
-func (x *AssetQuery) GetIndustry() Industry {
-	if x != nil && x.Industry != nil {
-		return *x.Industry
-	}
-	return Industry_INDUSTRY_DO_NOT_USE
 }
 
 func (x *AssetQuery) GetSmartContractIssuerAddr() string {
@@ -348,7 +302,7 @@ const file_asset_grpc_proto_rawDesc = "" +
 	"\n" +
 	"\x10asset-grpc.proto\x12\x05asset\x1a\vasset.proto\x1a9sologenic/com-fs-utils-lib/models/metadata/metadata.proto\"\x1c\n" +
 	"\bAssetKey\x12\x10\n" +
-	"\x03Key\x18\x01 \x01(\tR\x03Key\"\xdf\x05\n" +
+	"\x03Key\x18\x01 \x01(\tR\x03Key\"\xa5\x03\n" +
 	"\n" +
 	"AssetQuery\x12+\n" +
 	"\aNetwork\x18\x01 \x01(\x0e2\x11.metadata.NetworkR\aNetwork\x12\x1b\n" +
@@ -356,28 +310,13 @@ const file_asset_grpc_proto_rawDesc = "" +
 	"\x0fJurisdictionIDs\x18\x03 \x03(\tR\x0fJurisdictionIDs\x12+\n" +
 	"\x0eOrganizationID\x18\x04 \x01(\tH\x01R\x0eOrganizationID\x88\x01\x01\x12/\n" +
 	"\x06Status\x18\x05 \x01(\x0e2\x12.asset.AssetStatusH\x02R\x06Status\x88\x01\x01\x123\n" +
-	"\tAssetType\x18\x06 \x01(\x0e2\x10.asset.AssetTypeH\x03R\tAssetType\x88\x01\x01\x127\n" +
-	"\x14ExchangeTickerSymbol\x18\a \x01(\tH\x04R\x14ExchangeTickerSymbol\x88\x01\x01\x12\x1f\n" +
-	"\bExchange\x18\b \x01(\tH\x05R\bExchange\x88\x01\x01\x12\x1b\n" +
-	"\x06Symbol\x18\t \x01(\tH\x06R\x06Symbol\x88\x01\x01\x12\x1d\n" +
-	"\aVersion\x18\n" +
-	" \x01(\tH\aR\aVersion\x88\x01\x01\x12\x1b\n" +
-	"\x06Issuer\x18\v \x01(\tH\bR\x06Issuer\x88\x01\x01\x120\n" +
-	"\bIndustry\x18\f \x01(\x0e2\x0f.asset.IndustryH\tR\bIndustry\x88\x01\x01\x12=\n" +
-	"\x17SmartContractIssuerAddr\x18\r \x01(\tH\n" +
-	"R\x17SmartContractIssuerAddr\x88\x01\x01B\t\n" +
+	"\tAssetType\x18\x06 \x01(\x0e2\x10.asset.AssetTypeH\x03R\tAssetType\x88\x01\x01\x12=\n" +
+	"\x17SmartContractIssuerAddr\x18\a \x01(\tH\x04R\x17SmartContractIssuerAddr\x88\x01\x01B\t\n" +
 	"\a_OffsetB\x11\n" +
 	"\x0f_OrganizationIDB\t\n" +
 	"\a_StatusB\f\n" +
 	"\n" +
-	"_AssetTypeB\x17\n" +
-	"\x15_ExchangeTickerSymbolB\v\n" +
-	"\t_ExchangeB\t\n" +
-	"\a_SymbolB\n" +
-	"\n" +
-	"\b_VersionB\t\n" +
-	"\a_IssuerB\v\n" +
-	"\t_IndustryB\x1a\n" +
+	"_AssetTypeB\x1a\n" +
 	"\x18_SmartContractIssuerAddr\"$\n" +
 	"\x10UserAssetListKey\x12\x10\n" +
 	"\x03Key\x18\x01 \x01(\tR\x03Key\"\xdb\x02\n" +
@@ -426,37 +365,35 @@ var file_asset_grpc_proto_goTypes = []any{
 	(metadata.Network)(0),      // 4: metadata.Network
 	(AssetStatus)(0),           // 5: asset.AssetStatus
 	(AssetType)(0),             // 6: asset.AssetType
-	(Industry)(0),              // 7: asset.Industry
-	(UserAssetStatus)(0),       // 8: asset.UserAssetStatus
-	(*Asset)(nil),              // 9: asset.Asset
-	(*UserAssetList)(nil),      // 10: asset.UserAssetList
-	(*Assets)(nil),             // 11: asset.Assets
-	(*UserAssetLists)(nil),     // 12: asset.UserAssetLists
+	(UserAssetStatus)(0),       // 7: asset.UserAssetStatus
+	(*Asset)(nil),              // 8: asset.Asset
+	(*UserAssetList)(nil),      // 9: asset.UserAssetList
+	(*Assets)(nil),             // 10: asset.Assets
+	(*UserAssetLists)(nil),     // 11: asset.UserAssetLists
 }
 var file_asset_grpc_proto_depIdxs = []int32{
 	4,  // 0: asset.AssetQuery.Network:type_name -> metadata.Network
 	5,  // 1: asset.AssetQuery.Status:type_name -> asset.AssetStatus
 	6,  // 2: asset.AssetQuery.AssetType:type_name -> asset.AssetType
-	7,  // 3: asset.AssetQuery.Industry:type_name -> asset.Industry
-	4,  // 4: asset.UserAssetListQuery.Network:type_name -> metadata.Network
-	8,  // 5: asset.UserAssetListQuery.Status:type_name -> asset.UserAssetStatus
-	9,  // 6: asset.AssetListService.UpsertAsset:input_type -> asset.Asset
-	0,  // 7: asset.AssetListService.GetAsset:input_type -> asset.AssetKey
-	1,  // 8: asset.AssetListService.GetAssets:input_type -> asset.AssetQuery
-	10, // 9: asset.AssetListService.UpsertUserAssetList:input_type -> asset.UserAssetList
-	2,  // 10: asset.AssetListService.GetUserAssetList:input_type -> asset.UserAssetListKey
-	3,  // 11: asset.AssetListService.GetUserAssetLists:input_type -> asset.UserAssetListQuery
-	0,  // 12: asset.AssetListService.UpsertAsset:output_type -> asset.AssetKey
-	9,  // 13: asset.AssetListService.GetAsset:output_type -> asset.Asset
-	11, // 14: asset.AssetListService.GetAssets:output_type -> asset.Assets
-	2,  // 15: asset.AssetListService.UpsertUserAssetList:output_type -> asset.UserAssetListKey
-	10, // 16: asset.AssetListService.GetUserAssetList:output_type -> asset.UserAssetList
-	12, // 17: asset.AssetListService.GetUserAssetLists:output_type -> asset.UserAssetLists
-	12, // [12:18] is the sub-list for method output_type
-	6,  // [6:12] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	4,  // 3: asset.UserAssetListQuery.Network:type_name -> metadata.Network
+	7,  // 4: asset.UserAssetListQuery.Status:type_name -> asset.UserAssetStatus
+	8,  // 5: asset.AssetListService.UpsertAsset:input_type -> asset.Asset
+	0,  // 6: asset.AssetListService.GetAsset:input_type -> asset.AssetKey
+	1,  // 7: asset.AssetListService.GetAssets:input_type -> asset.AssetQuery
+	9,  // 8: asset.AssetListService.UpsertUserAssetList:input_type -> asset.UserAssetList
+	2,  // 9: asset.AssetListService.GetUserAssetList:input_type -> asset.UserAssetListKey
+	3,  // 10: asset.AssetListService.GetUserAssetLists:input_type -> asset.UserAssetListQuery
+	0,  // 11: asset.AssetListService.UpsertAsset:output_type -> asset.AssetKey
+	8,  // 12: asset.AssetListService.GetAsset:output_type -> asset.Asset
+	10, // 13: asset.AssetListService.GetAssets:output_type -> asset.Assets
+	2,  // 14: asset.AssetListService.UpsertUserAssetList:output_type -> asset.UserAssetListKey
+	9,  // 15: asset.AssetListService.GetUserAssetList:output_type -> asset.UserAssetList
+	11, // 16: asset.AssetListService.GetUserAssetLists:output_type -> asset.UserAssetLists
+	11, // [11:17] is the sub-list for method output_type
+	5,  // [5:11] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_asset_grpc_proto_init() }
