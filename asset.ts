@@ -251,11 +251,22 @@ export interface AssetDetails {
   CollectibleDetails?: Collectible | undefined;
   VehicleDetails?: Vehicle | undefined;
   IntellectualPropertyDetails?: IntellectualProperty | undefined;
-  InvestmentFundDetails?: InvestmentFund | undefined;
+  InvestmentFundDetails?:
+    | InvestmentFund
+    | undefined;
+  /** Financial-specific properties */
+  FinancialProperties?:
+    | FinancialProperties
+    | undefined;
+  /** Human-readable descriptive properties */
+  Description?: Description | undefined;
 }
 
 export interface Asset {
-  AssetDetails: AssetDetails | undefined;
+  AssetDetails:
+    | AssetDetails
+    | undefined;
+  /** Legacy, for backward compatibility */
   MetaData: MetadataDetails | undefined;
   Audit: Audit | undefined;
 }
@@ -367,6 +378,47 @@ export interface InvestmentFund {
   Holdings: string[];
 }
 
+export interface FinancialProperties {
+  Symbol: string;
+  Issuer: string;
+  JurisdictionIDs: string[];
+  JurisdictionRestrictions?: string | undefined;
+  RedemptionTerms?: string | undefined;
+  ComplianceRequired?: boolean | undefined;
+  Type: string;
+  TradeAllowances: string[];
+  Transferable: boolean;
+  Platform: string;
+  PlatformType: string;
+  ContractAddress?: string | undefined;
+  Fractional: boolean;
+  TotalSupply: number;
+  DecimalPlacesSupply: number;
+  Subunit?: string | undefined;
+  Price?: number | undefined;
+  DecimalPlacesPrice: number;
+  Currency: string;
+  InitialValuation: number;
+  CurrentValuation: number;
+  ValuationDate?: string | undefined;
+  Network: string;
+  Status: string;
+}
+
+export interface Description {
+  Name: string;
+  Description: string;
+  Image?: string | undefined;
+  AssetID: string;
+  URL: string;
+  Country: string;
+  Documents: string[];
+  Images: string[];
+  Vertical: string;
+  CreatedAt?: string | undefined;
+  UpdatedAt?: string | undefined;
+}
+
 export interface MetadataDetails {
   Name: string;
   Description: string;
@@ -408,6 +460,8 @@ function createBaseAssetDetails(): AssetDetails {
     VehicleDetails: undefined,
     IntellectualPropertyDetails: undefined,
     InvestmentFundDetails: undefined,
+    FinancialProperties: undefined,
+    Description: undefined,
   };
 }
 
@@ -463,6 +517,12 @@ export const AssetDetails = {
     }
     if (message.InvestmentFundDetails !== undefined) {
       InvestmentFund.encode(message.InvestmentFundDetails, writer.uint32(210).fork()).ldelim();
+    }
+    if (message.FinancialProperties !== undefined) {
+      FinancialProperties.encode(message.FinancialProperties, writer.uint32(218).fork()).ldelim();
+    }
+    if (message.Description !== undefined) {
+      Description.encode(message.Description, writer.uint32(226).fork()).ldelim();
     }
     return writer;
   },
@@ -593,6 +653,20 @@ export const AssetDetails = {
 
           message.InvestmentFundDetails = InvestmentFund.decode(reader, reader.uint32());
           continue;
+        case 27:
+          if (tag !== 218) {
+            break;
+          }
+
+          message.FinancialProperties = FinancialProperties.decode(reader, reader.uint32());
+          continue;
+        case 28:
+          if (tag !== 226) {
+            break;
+          }
+
+          message.Description = Description.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -633,6 +707,10 @@ export const AssetDetails = {
       InvestmentFundDetails: isSet(object.InvestmentFundDetails)
         ? InvestmentFund.fromJSON(object.InvestmentFundDetails)
         : undefined,
+      FinancialProperties: isSet(object.FinancialProperties)
+        ? FinancialProperties.fromJSON(object.FinancialProperties)
+        : undefined,
+      Description: isSet(object.Description) ? Description.fromJSON(object.Description) : undefined,
     };
   },
 
@@ -689,6 +767,12 @@ export const AssetDetails = {
     if (message.InvestmentFundDetails !== undefined) {
       obj.InvestmentFundDetails = InvestmentFund.toJSON(message.InvestmentFundDetails);
     }
+    if (message.FinancialProperties !== undefined) {
+      obj.FinancialProperties = FinancialProperties.toJSON(message.FinancialProperties);
+    }
+    if (message.Description !== undefined) {
+      obj.Description = Description.toJSON(message.Description);
+    }
     return obj;
   },
 
@@ -730,6 +814,12 @@ export const AssetDetails = {
       (object.InvestmentFundDetails !== undefined && object.InvestmentFundDetails !== null)
         ? InvestmentFund.fromPartial(object.InvestmentFundDetails)
         : undefined;
+    message.FinancialProperties = (object.FinancialProperties !== undefined && object.FinancialProperties !== null)
+      ? FinancialProperties.fromPartial(object.FinancialProperties)
+      : undefined;
+    message.Description = (object.Description !== undefined && object.Description !== null)
+      ? Description.fromPartial(object.Description)
+      : undefined;
     return message;
   },
 };
@@ -2526,6 +2616,664 @@ export const InvestmentFund = {
     message.Manager = object.Manager ?? undefined;
     message.ExpenseRatio = object.ExpenseRatio ?? undefined;
     message.Holdings = object.Holdings?.map((e) => e) || [];
+    return message;
+  },
+};
+
+function createBaseFinancialProperties(): FinancialProperties {
+  return {
+    Symbol: "",
+    Issuer: "",
+    JurisdictionIDs: [],
+    JurisdictionRestrictions: undefined,
+    RedemptionTerms: undefined,
+    ComplianceRequired: undefined,
+    Type: "",
+    TradeAllowances: [],
+    Transferable: false,
+    Platform: "",
+    PlatformType: "",
+    ContractAddress: undefined,
+    Fractional: false,
+    TotalSupply: 0,
+    DecimalPlacesSupply: 0,
+    Subunit: undefined,
+    Price: undefined,
+    DecimalPlacesPrice: 0,
+    Currency: "",
+    InitialValuation: 0,
+    CurrentValuation: 0,
+    ValuationDate: undefined,
+    Network: "",
+    Status: "",
+  };
+}
+
+export const FinancialProperties = {
+  encode(message: FinancialProperties, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.Symbol !== "") {
+      writer.uint32(10).string(message.Symbol);
+    }
+    if (message.Issuer !== "") {
+      writer.uint32(18).string(message.Issuer);
+    }
+    for (const v of message.JurisdictionIDs) {
+      writer.uint32(26).string(v!);
+    }
+    if (message.JurisdictionRestrictions !== undefined) {
+      writer.uint32(34).string(message.JurisdictionRestrictions);
+    }
+    if (message.RedemptionTerms !== undefined) {
+      writer.uint32(42).string(message.RedemptionTerms);
+    }
+    if (message.ComplianceRequired !== undefined) {
+      writer.uint32(48).bool(message.ComplianceRequired);
+    }
+    if (message.Type !== "") {
+      writer.uint32(58).string(message.Type);
+    }
+    for (const v of message.TradeAllowances) {
+      writer.uint32(66).string(v!);
+    }
+    if (message.Transferable !== false) {
+      writer.uint32(72).bool(message.Transferable);
+    }
+    if (message.Platform !== "") {
+      writer.uint32(82).string(message.Platform);
+    }
+    if (message.PlatformType !== "") {
+      writer.uint32(90).string(message.PlatformType);
+    }
+    if (message.ContractAddress !== undefined) {
+      writer.uint32(98).string(message.ContractAddress);
+    }
+    if (message.Fractional !== false) {
+      writer.uint32(104).bool(message.Fractional);
+    }
+    if (message.TotalSupply !== 0) {
+      writer.uint32(112).int32(message.TotalSupply);
+    }
+    if (message.DecimalPlacesSupply !== 0) {
+      writer.uint32(120).int32(message.DecimalPlacesSupply);
+    }
+    if (message.Subunit !== undefined) {
+      writer.uint32(130).string(message.Subunit);
+    }
+    if (message.Price !== undefined) {
+      writer.uint32(141).float(message.Price);
+    }
+    if (message.DecimalPlacesPrice !== 0) {
+      writer.uint32(144).int32(message.DecimalPlacesPrice);
+    }
+    if (message.Currency !== "") {
+      writer.uint32(154).string(message.Currency);
+    }
+    if (message.InitialValuation !== 0) {
+      writer.uint32(165).float(message.InitialValuation);
+    }
+    if (message.CurrentValuation !== 0) {
+      writer.uint32(173).float(message.CurrentValuation);
+    }
+    if (message.ValuationDate !== undefined) {
+      writer.uint32(178).string(message.ValuationDate);
+    }
+    if (message.Network !== "") {
+      writer.uint32(186).string(message.Network);
+    }
+    if (message.Status !== "") {
+      writer.uint32(194).string(message.Status);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): FinancialProperties {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseFinancialProperties();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.Symbol = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.Issuer = reader.string();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.JurisdictionIDs.push(reader.string());
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.JurisdictionRestrictions = reader.string();
+          continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          message.RedemptionTerms = reader.string();
+          continue;
+        case 6:
+          if (tag !== 48) {
+            break;
+          }
+
+          message.ComplianceRequired = reader.bool();
+          continue;
+        case 7:
+          if (tag !== 58) {
+            break;
+          }
+
+          message.Type = reader.string();
+          continue;
+        case 8:
+          if (tag !== 66) {
+            break;
+          }
+
+          message.TradeAllowances.push(reader.string());
+          continue;
+        case 9:
+          if (tag !== 72) {
+            break;
+          }
+
+          message.Transferable = reader.bool();
+          continue;
+        case 10:
+          if (tag !== 82) {
+            break;
+          }
+
+          message.Platform = reader.string();
+          continue;
+        case 11:
+          if (tag !== 90) {
+            break;
+          }
+
+          message.PlatformType = reader.string();
+          continue;
+        case 12:
+          if (tag !== 98) {
+            break;
+          }
+
+          message.ContractAddress = reader.string();
+          continue;
+        case 13:
+          if (tag !== 104) {
+            break;
+          }
+
+          message.Fractional = reader.bool();
+          continue;
+        case 14:
+          if (tag !== 112) {
+            break;
+          }
+
+          message.TotalSupply = reader.int32();
+          continue;
+        case 15:
+          if (tag !== 120) {
+            break;
+          }
+
+          message.DecimalPlacesSupply = reader.int32();
+          continue;
+        case 16:
+          if (tag !== 130) {
+            break;
+          }
+
+          message.Subunit = reader.string();
+          continue;
+        case 17:
+          if (tag !== 141) {
+            break;
+          }
+
+          message.Price = reader.float();
+          continue;
+        case 18:
+          if (tag !== 144) {
+            break;
+          }
+
+          message.DecimalPlacesPrice = reader.int32();
+          continue;
+        case 19:
+          if (tag !== 154) {
+            break;
+          }
+
+          message.Currency = reader.string();
+          continue;
+        case 20:
+          if (tag !== 165) {
+            break;
+          }
+
+          message.InitialValuation = reader.float();
+          continue;
+        case 21:
+          if (tag !== 173) {
+            break;
+          }
+
+          message.CurrentValuation = reader.float();
+          continue;
+        case 22:
+          if (tag !== 178) {
+            break;
+          }
+
+          message.ValuationDate = reader.string();
+          continue;
+        case 23:
+          if (tag !== 186) {
+            break;
+          }
+
+          message.Network = reader.string();
+          continue;
+        case 24:
+          if (tag !== 194) {
+            break;
+          }
+
+          message.Status = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): FinancialProperties {
+    return {
+      Symbol: isSet(object.Symbol) ? globalThis.String(object.Symbol) : "",
+      Issuer: isSet(object.Issuer) ? globalThis.String(object.Issuer) : "",
+      JurisdictionIDs: globalThis.Array.isArray(object?.JurisdictionIDs)
+        ? object.JurisdictionIDs.map((e: any) => globalThis.String(e))
+        : [],
+      JurisdictionRestrictions: isSet(object.JurisdictionRestrictions)
+        ? globalThis.String(object.JurisdictionRestrictions)
+        : undefined,
+      RedemptionTerms: isSet(object.RedemptionTerms) ? globalThis.String(object.RedemptionTerms) : undefined,
+      ComplianceRequired: isSet(object.ComplianceRequired) ? globalThis.Boolean(object.ComplianceRequired) : undefined,
+      Type: isSet(object.Type) ? globalThis.String(object.Type) : "",
+      TradeAllowances: globalThis.Array.isArray(object?.TradeAllowances)
+        ? object.TradeAllowances.map((e: any) => globalThis.String(e))
+        : [],
+      Transferable: isSet(object.Transferable) ? globalThis.Boolean(object.Transferable) : false,
+      Platform: isSet(object.Platform) ? globalThis.String(object.Platform) : "",
+      PlatformType: isSet(object.PlatformType) ? globalThis.String(object.PlatformType) : "",
+      ContractAddress: isSet(object.ContractAddress) ? globalThis.String(object.ContractAddress) : undefined,
+      Fractional: isSet(object.Fractional) ? globalThis.Boolean(object.Fractional) : false,
+      TotalSupply: isSet(object.TotalSupply) ? globalThis.Number(object.TotalSupply) : 0,
+      DecimalPlacesSupply: isSet(object.DecimalPlacesSupply) ? globalThis.Number(object.DecimalPlacesSupply) : 0,
+      Subunit: isSet(object.Subunit) ? globalThis.String(object.Subunit) : undefined,
+      Price: isSet(object.Price) ? globalThis.Number(object.Price) : undefined,
+      DecimalPlacesPrice: isSet(object.DecimalPlacesPrice) ? globalThis.Number(object.DecimalPlacesPrice) : 0,
+      Currency: isSet(object.Currency) ? globalThis.String(object.Currency) : "",
+      InitialValuation: isSet(object.InitialValuation) ? globalThis.Number(object.InitialValuation) : 0,
+      CurrentValuation: isSet(object.CurrentValuation) ? globalThis.Number(object.CurrentValuation) : 0,
+      ValuationDate: isSet(object.ValuationDate) ? globalThis.String(object.ValuationDate) : undefined,
+      Network: isSet(object.Network) ? globalThis.String(object.Network) : "",
+      Status: isSet(object.Status) ? globalThis.String(object.Status) : "",
+    };
+  },
+
+  toJSON(message: FinancialProperties): unknown {
+    const obj: any = {};
+    if (message.Symbol !== "") {
+      obj.Symbol = message.Symbol;
+    }
+    if (message.Issuer !== "") {
+      obj.Issuer = message.Issuer;
+    }
+    if (message.JurisdictionIDs?.length) {
+      obj.JurisdictionIDs = message.JurisdictionIDs;
+    }
+    if (message.JurisdictionRestrictions !== undefined) {
+      obj.JurisdictionRestrictions = message.JurisdictionRestrictions;
+    }
+    if (message.RedemptionTerms !== undefined) {
+      obj.RedemptionTerms = message.RedemptionTerms;
+    }
+    if (message.ComplianceRequired !== undefined) {
+      obj.ComplianceRequired = message.ComplianceRequired;
+    }
+    if (message.Type !== "") {
+      obj.Type = message.Type;
+    }
+    if (message.TradeAllowances?.length) {
+      obj.TradeAllowances = message.TradeAllowances;
+    }
+    if (message.Transferable !== false) {
+      obj.Transferable = message.Transferable;
+    }
+    if (message.Platform !== "") {
+      obj.Platform = message.Platform;
+    }
+    if (message.PlatformType !== "") {
+      obj.PlatformType = message.PlatformType;
+    }
+    if (message.ContractAddress !== undefined) {
+      obj.ContractAddress = message.ContractAddress;
+    }
+    if (message.Fractional !== false) {
+      obj.Fractional = message.Fractional;
+    }
+    if (message.TotalSupply !== 0) {
+      obj.TotalSupply = Math.round(message.TotalSupply);
+    }
+    if (message.DecimalPlacesSupply !== 0) {
+      obj.DecimalPlacesSupply = Math.round(message.DecimalPlacesSupply);
+    }
+    if (message.Subunit !== undefined) {
+      obj.Subunit = message.Subunit;
+    }
+    if (message.Price !== undefined) {
+      obj.Price = message.Price;
+    }
+    if (message.DecimalPlacesPrice !== 0) {
+      obj.DecimalPlacesPrice = Math.round(message.DecimalPlacesPrice);
+    }
+    if (message.Currency !== "") {
+      obj.Currency = message.Currency;
+    }
+    if (message.InitialValuation !== 0) {
+      obj.InitialValuation = message.InitialValuation;
+    }
+    if (message.CurrentValuation !== 0) {
+      obj.CurrentValuation = message.CurrentValuation;
+    }
+    if (message.ValuationDate !== undefined) {
+      obj.ValuationDate = message.ValuationDate;
+    }
+    if (message.Network !== "") {
+      obj.Network = message.Network;
+    }
+    if (message.Status !== "") {
+      obj.Status = message.Status;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<FinancialProperties>, I>>(base?: I): FinancialProperties {
+    return FinancialProperties.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<FinancialProperties>, I>>(object: I): FinancialProperties {
+    const message = createBaseFinancialProperties();
+    message.Symbol = object.Symbol ?? "";
+    message.Issuer = object.Issuer ?? "";
+    message.JurisdictionIDs = object.JurisdictionIDs?.map((e) => e) || [];
+    message.JurisdictionRestrictions = object.JurisdictionRestrictions ?? undefined;
+    message.RedemptionTerms = object.RedemptionTerms ?? undefined;
+    message.ComplianceRequired = object.ComplianceRequired ?? undefined;
+    message.Type = object.Type ?? "";
+    message.TradeAllowances = object.TradeAllowances?.map((e) => e) || [];
+    message.Transferable = object.Transferable ?? false;
+    message.Platform = object.Platform ?? "";
+    message.PlatformType = object.PlatformType ?? "";
+    message.ContractAddress = object.ContractAddress ?? undefined;
+    message.Fractional = object.Fractional ?? false;
+    message.TotalSupply = object.TotalSupply ?? 0;
+    message.DecimalPlacesSupply = object.DecimalPlacesSupply ?? 0;
+    message.Subunit = object.Subunit ?? undefined;
+    message.Price = object.Price ?? undefined;
+    message.DecimalPlacesPrice = object.DecimalPlacesPrice ?? 0;
+    message.Currency = object.Currency ?? "";
+    message.InitialValuation = object.InitialValuation ?? 0;
+    message.CurrentValuation = object.CurrentValuation ?? 0;
+    message.ValuationDate = object.ValuationDate ?? undefined;
+    message.Network = object.Network ?? "";
+    message.Status = object.Status ?? "";
+    return message;
+  },
+};
+
+function createBaseDescription(): Description {
+  return {
+    Name: "",
+    Description: "",
+    Image: undefined,
+    AssetID: "",
+    URL: "",
+    Country: "",
+    Documents: [],
+    Images: [],
+    Vertical: "",
+    CreatedAt: undefined,
+    UpdatedAt: undefined,
+  };
+}
+
+export const Description = {
+  encode(message: Description, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.Name !== "") {
+      writer.uint32(10).string(message.Name);
+    }
+    if (message.Description !== "") {
+      writer.uint32(18).string(message.Description);
+    }
+    if (message.Image !== undefined) {
+      writer.uint32(26).string(message.Image);
+    }
+    if (message.AssetID !== "") {
+      writer.uint32(34).string(message.AssetID);
+    }
+    if (message.URL !== "") {
+      writer.uint32(42).string(message.URL);
+    }
+    if (message.Country !== "") {
+      writer.uint32(50).string(message.Country);
+    }
+    for (const v of message.Documents) {
+      writer.uint32(58).string(v!);
+    }
+    for (const v of message.Images) {
+      writer.uint32(66).string(v!);
+    }
+    if (message.Vertical !== "") {
+      writer.uint32(74).string(message.Vertical);
+    }
+    if (message.CreatedAt !== undefined) {
+      writer.uint32(82).string(message.CreatedAt);
+    }
+    if (message.UpdatedAt !== undefined) {
+      writer.uint32(90).string(message.UpdatedAt);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Description {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDescription();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.Name = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.Description = reader.string();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.Image = reader.string();
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.AssetID = reader.string();
+          continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          message.URL = reader.string();
+          continue;
+        case 6:
+          if (tag !== 50) {
+            break;
+          }
+
+          message.Country = reader.string();
+          continue;
+        case 7:
+          if (tag !== 58) {
+            break;
+          }
+
+          message.Documents.push(reader.string());
+          continue;
+        case 8:
+          if (tag !== 66) {
+            break;
+          }
+
+          message.Images.push(reader.string());
+          continue;
+        case 9:
+          if (tag !== 74) {
+            break;
+          }
+
+          message.Vertical = reader.string();
+          continue;
+        case 10:
+          if (tag !== 82) {
+            break;
+          }
+
+          message.CreatedAt = reader.string();
+          continue;
+        case 11:
+          if (tag !== 90) {
+            break;
+          }
+
+          message.UpdatedAt = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Description {
+    return {
+      Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
+      Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
+      Image: isSet(object.Image) ? globalThis.String(object.Image) : undefined,
+      AssetID: isSet(object.AssetID) ? globalThis.String(object.AssetID) : "",
+      URL: isSet(object.URL) ? globalThis.String(object.URL) : "",
+      Country: isSet(object.Country) ? globalThis.String(object.Country) : "",
+      Documents: globalThis.Array.isArray(object?.Documents)
+        ? object.Documents.map((e: any) => globalThis.String(e))
+        : [],
+      Images: globalThis.Array.isArray(object?.Images) ? object.Images.map((e: any) => globalThis.String(e)) : [],
+      Vertical: isSet(object.Vertical) ? globalThis.String(object.Vertical) : "",
+      CreatedAt: isSet(object.CreatedAt) ? globalThis.String(object.CreatedAt) : undefined,
+      UpdatedAt: isSet(object.UpdatedAt) ? globalThis.String(object.UpdatedAt) : undefined,
+    };
+  },
+
+  toJSON(message: Description): unknown {
+    const obj: any = {};
+    if (message.Name !== "") {
+      obj.Name = message.Name;
+    }
+    if (message.Description !== "") {
+      obj.Description = message.Description;
+    }
+    if (message.Image !== undefined) {
+      obj.Image = message.Image;
+    }
+    if (message.AssetID !== "") {
+      obj.AssetID = message.AssetID;
+    }
+    if (message.URL !== "") {
+      obj.URL = message.URL;
+    }
+    if (message.Country !== "") {
+      obj.Country = message.Country;
+    }
+    if (message.Documents?.length) {
+      obj.Documents = message.Documents;
+    }
+    if (message.Images?.length) {
+      obj.Images = message.Images;
+    }
+    if (message.Vertical !== "") {
+      obj.Vertical = message.Vertical;
+    }
+    if (message.CreatedAt !== undefined) {
+      obj.CreatedAt = message.CreatedAt;
+    }
+    if (message.UpdatedAt !== undefined) {
+      obj.UpdatedAt = message.UpdatedAt;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Description>, I>>(base?: I): Description {
+    return Description.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Description>, I>>(object: I): Description {
+    const message = createBaseDescription();
+    message.Name = object.Name ?? "";
+    message.Description = object.Description ?? "";
+    message.Image = object.Image ?? undefined;
+    message.AssetID = object.AssetID ?? "";
+    message.URL = object.URL ?? "";
+    message.Country = object.Country ?? "";
+    message.Documents = object.Documents?.map((e) => e) || [];
+    message.Images = object.Images?.map((e) => e) || [];
+    message.Vertical = object.Vertical ?? "";
+    message.CreatedAt = object.CreatedAt ?? undefined;
+    message.UpdatedAt = object.UpdatedAt ?? undefined;
     return message;
   },
 };

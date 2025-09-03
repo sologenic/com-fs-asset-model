@@ -241,6 +241,8 @@ function createBaseAssetDetails() {
         VehicleDetails: undefined,
         IntellectualPropertyDetails: undefined,
         InvestmentFundDetails: undefined,
+        FinancialProperties: undefined,
+        Description: undefined,
     };
 }
 export const AssetDetails = {
@@ -295,6 +297,12 @@ export const AssetDetails = {
         }
         if (message.InvestmentFundDetails !== undefined) {
             InvestmentFund.encode(message.InvestmentFundDetails, writer.uint32(210).fork()).ldelim();
+        }
+        if (message.FinancialProperties !== undefined) {
+            FinancialProperties.encode(message.FinancialProperties, writer.uint32(218).fork()).ldelim();
+        }
+        if (message.Description !== undefined) {
+            Description.encode(message.Description, writer.uint32(226).fork()).ldelim();
         }
         return writer;
     },
@@ -407,6 +415,18 @@ export const AssetDetails = {
                     }
                     message.InvestmentFundDetails = InvestmentFund.decode(reader, reader.uint32());
                     continue;
+                case 27:
+                    if (tag !== 218) {
+                        break;
+                    }
+                    message.FinancialProperties = FinancialProperties.decode(reader, reader.uint32());
+                    continue;
+                case 28:
+                    if (tag !== 226) {
+                        break;
+                    }
+                    message.Description = Description.decode(reader, reader.uint32());
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -446,6 +466,10 @@ export const AssetDetails = {
             InvestmentFundDetails: isSet(object.InvestmentFundDetails)
                 ? InvestmentFund.fromJSON(object.InvestmentFundDetails)
                 : undefined,
+            FinancialProperties: isSet(object.FinancialProperties)
+                ? FinancialProperties.fromJSON(object.FinancialProperties)
+                : undefined,
+            Description: isSet(object.Description) ? Description.fromJSON(object.Description) : undefined,
         };
     },
     toJSON(message) {
@@ -502,6 +526,12 @@ export const AssetDetails = {
         if (message.InvestmentFundDetails !== undefined) {
             obj.InvestmentFundDetails = InvestmentFund.toJSON(message.InvestmentFundDetails);
         }
+        if (message.FinancialProperties !== undefined) {
+            obj.FinancialProperties = FinancialProperties.toJSON(message.FinancialProperties);
+        }
+        if (message.Description !== undefined) {
+            obj.Description = Description.toJSON(message.Description);
+        }
         return obj;
     },
     create(base) {
@@ -543,6 +573,12 @@ export const AssetDetails = {
             (object.InvestmentFundDetails !== undefined && object.InvestmentFundDetails !== null)
                 ? InvestmentFund.fromPartial(object.InvestmentFundDetails)
                 : undefined;
+        message.FinancialProperties = (object.FinancialProperties !== undefined && object.FinancialProperties !== null)
+            ? FinancialProperties.fromPartial(object.FinancialProperties)
+            : undefined;
+        message.Description = (object.Description !== undefined && object.Description !== null)
+            ? Description.fromPartial(object.Description)
+            : undefined;
         return message;
     },
 };
@@ -2206,6 +2242,621 @@ export const InvestmentFund = {
         message.Manager = (_f = object.Manager) !== null && _f !== void 0 ? _f : undefined;
         message.ExpenseRatio = (_g = object.ExpenseRatio) !== null && _g !== void 0 ? _g : undefined;
         message.Holdings = ((_h = object.Holdings) === null || _h === void 0 ? void 0 : _h.map((e) => e)) || [];
+        return message;
+    },
+};
+function createBaseFinancialProperties() {
+    return {
+        Symbol: "",
+        Issuer: "",
+        JurisdictionIDs: [],
+        JurisdictionRestrictions: undefined,
+        RedemptionTerms: undefined,
+        ComplianceRequired: undefined,
+        Type: "",
+        TradeAllowances: [],
+        Transferable: false,
+        Platform: "",
+        PlatformType: "",
+        ContractAddress: undefined,
+        Fractional: false,
+        TotalSupply: 0,
+        DecimalPlacesSupply: 0,
+        Subunit: undefined,
+        Price: undefined,
+        DecimalPlacesPrice: 0,
+        Currency: "",
+        InitialValuation: 0,
+        CurrentValuation: 0,
+        ValuationDate: undefined,
+        Network: "",
+        Status: "",
+    };
+}
+export const FinancialProperties = {
+    encode(message, writer = _m0.Writer.create()) {
+        if (message.Symbol !== "") {
+            writer.uint32(10).string(message.Symbol);
+        }
+        if (message.Issuer !== "") {
+            writer.uint32(18).string(message.Issuer);
+        }
+        for (const v of message.JurisdictionIDs) {
+            writer.uint32(26).string(v);
+        }
+        if (message.JurisdictionRestrictions !== undefined) {
+            writer.uint32(34).string(message.JurisdictionRestrictions);
+        }
+        if (message.RedemptionTerms !== undefined) {
+            writer.uint32(42).string(message.RedemptionTerms);
+        }
+        if (message.ComplianceRequired !== undefined) {
+            writer.uint32(48).bool(message.ComplianceRequired);
+        }
+        if (message.Type !== "") {
+            writer.uint32(58).string(message.Type);
+        }
+        for (const v of message.TradeAllowances) {
+            writer.uint32(66).string(v);
+        }
+        if (message.Transferable !== false) {
+            writer.uint32(72).bool(message.Transferable);
+        }
+        if (message.Platform !== "") {
+            writer.uint32(82).string(message.Platform);
+        }
+        if (message.PlatformType !== "") {
+            writer.uint32(90).string(message.PlatformType);
+        }
+        if (message.ContractAddress !== undefined) {
+            writer.uint32(98).string(message.ContractAddress);
+        }
+        if (message.Fractional !== false) {
+            writer.uint32(104).bool(message.Fractional);
+        }
+        if (message.TotalSupply !== 0) {
+            writer.uint32(112).int32(message.TotalSupply);
+        }
+        if (message.DecimalPlacesSupply !== 0) {
+            writer.uint32(120).int32(message.DecimalPlacesSupply);
+        }
+        if (message.Subunit !== undefined) {
+            writer.uint32(130).string(message.Subunit);
+        }
+        if (message.Price !== undefined) {
+            writer.uint32(141).float(message.Price);
+        }
+        if (message.DecimalPlacesPrice !== 0) {
+            writer.uint32(144).int32(message.DecimalPlacesPrice);
+        }
+        if (message.Currency !== "") {
+            writer.uint32(154).string(message.Currency);
+        }
+        if (message.InitialValuation !== 0) {
+            writer.uint32(165).float(message.InitialValuation);
+        }
+        if (message.CurrentValuation !== 0) {
+            writer.uint32(173).float(message.CurrentValuation);
+        }
+        if (message.ValuationDate !== undefined) {
+            writer.uint32(178).string(message.ValuationDate);
+        }
+        if (message.Network !== "") {
+            writer.uint32(186).string(message.Network);
+        }
+        if (message.Status !== "") {
+            writer.uint32(194).string(message.Status);
+        }
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseFinancialProperties();
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    if (tag !== 10) {
+                        break;
+                    }
+                    message.Symbol = reader.string();
+                    continue;
+                case 2:
+                    if (tag !== 18) {
+                        break;
+                    }
+                    message.Issuer = reader.string();
+                    continue;
+                case 3:
+                    if (tag !== 26) {
+                        break;
+                    }
+                    message.JurisdictionIDs.push(reader.string());
+                    continue;
+                case 4:
+                    if (tag !== 34) {
+                        break;
+                    }
+                    message.JurisdictionRestrictions = reader.string();
+                    continue;
+                case 5:
+                    if (tag !== 42) {
+                        break;
+                    }
+                    message.RedemptionTerms = reader.string();
+                    continue;
+                case 6:
+                    if (tag !== 48) {
+                        break;
+                    }
+                    message.ComplianceRequired = reader.bool();
+                    continue;
+                case 7:
+                    if (tag !== 58) {
+                        break;
+                    }
+                    message.Type = reader.string();
+                    continue;
+                case 8:
+                    if (tag !== 66) {
+                        break;
+                    }
+                    message.TradeAllowances.push(reader.string());
+                    continue;
+                case 9:
+                    if (tag !== 72) {
+                        break;
+                    }
+                    message.Transferable = reader.bool();
+                    continue;
+                case 10:
+                    if (tag !== 82) {
+                        break;
+                    }
+                    message.Platform = reader.string();
+                    continue;
+                case 11:
+                    if (tag !== 90) {
+                        break;
+                    }
+                    message.PlatformType = reader.string();
+                    continue;
+                case 12:
+                    if (tag !== 98) {
+                        break;
+                    }
+                    message.ContractAddress = reader.string();
+                    continue;
+                case 13:
+                    if (tag !== 104) {
+                        break;
+                    }
+                    message.Fractional = reader.bool();
+                    continue;
+                case 14:
+                    if (tag !== 112) {
+                        break;
+                    }
+                    message.TotalSupply = reader.int32();
+                    continue;
+                case 15:
+                    if (tag !== 120) {
+                        break;
+                    }
+                    message.DecimalPlacesSupply = reader.int32();
+                    continue;
+                case 16:
+                    if (tag !== 130) {
+                        break;
+                    }
+                    message.Subunit = reader.string();
+                    continue;
+                case 17:
+                    if (tag !== 141) {
+                        break;
+                    }
+                    message.Price = reader.float();
+                    continue;
+                case 18:
+                    if (tag !== 144) {
+                        break;
+                    }
+                    message.DecimalPlacesPrice = reader.int32();
+                    continue;
+                case 19:
+                    if (tag !== 154) {
+                        break;
+                    }
+                    message.Currency = reader.string();
+                    continue;
+                case 20:
+                    if (tag !== 165) {
+                        break;
+                    }
+                    message.InitialValuation = reader.float();
+                    continue;
+                case 21:
+                    if (tag !== 173) {
+                        break;
+                    }
+                    message.CurrentValuation = reader.float();
+                    continue;
+                case 22:
+                    if (tag !== 178) {
+                        break;
+                    }
+                    message.ValuationDate = reader.string();
+                    continue;
+                case 23:
+                    if (tag !== 186) {
+                        break;
+                    }
+                    message.Network = reader.string();
+                    continue;
+                case 24:
+                    if (tag !== 194) {
+                        break;
+                    }
+                    message.Status = reader.string();
+                    continue;
+            }
+            if ((tag & 7) === 4 || tag === 0) {
+                break;
+            }
+            reader.skipType(tag & 7);
+        }
+        return message;
+    },
+    fromJSON(object) {
+        return {
+            Symbol: isSet(object.Symbol) ? globalThis.String(object.Symbol) : "",
+            Issuer: isSet(object.Issuer) ? globalThis.String(object.Issuer) : "",
+            JurisdictionIDs: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.JurisdictionIDs)
+                ? object.JurisdictionIDs.map((e) => globalThis.String(e))
+                : [],
+            JurisdictionRestrictions: isSet(object.JurisdictionRestrictions)
+                ? globalThis.String(object.JurisdictionRestrictions)
+                : undefined,
+            RedemptionTerms: isSet(object.RedemptionTerms) ? globalThis.String(object.RedemptionTerms) : undefined,
+            ComplianceRequired: isSet(object.ComplianceRequired) ? globalThis.Boolean(object.ComplianceRequired) : undefined,
+            Type: isSet(object.Type) ? globalThis.String(object.Type) : "",
+            TradeAllowances: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.TradeAllowances)
+                ? object.TradeAllowances.map((e) => globalThis.String(e))
+                : [],
+            Transferable: isSet(object.Transferable) ? globalThis.Boolean(object.Transferable) : false,
+            Platform: isSet(object.Platform) ? globalThis.String(object.Platform) : "",
+            PlatformType: isSet(object.PlatformType) ? globalThis.String(object.PlatformType) : "",
+            ContractAddress: isSet(object.ContractAddress) ? globalThis.String(object.ContractAddress) : undefined,
+            Fractional: isSet(object.Fractional) ? globalThis.Boolean(object.Fractional) : false,
+            TotalSupply: isSet(object.TotalSupply) ? globalThis.Number(object.TotalSupply) : 0,
+            DecimalPlacesSupply: isSet(object.DecimalPlacesSupply) ? globalThis.Number(object.DecimalPlacesSupply) : 0,
+            Subunit: isSet(object.Subunit) ? globalThis.String(object.Subunit) : undefined,
+            Price: isSet(object.Price) ? globalThis.Number(object.Price) : undefined,
+            DecimalPlacesPrice: isSet(object.DecimalPlacesPrice) ? globalThis.Number(object.DecimalPlacesPrice) : 0,
+            Currency: isSet(object.Currency) ? globalThis.String(object.Currency) : "",
+            InitialValuation: isSet(object.InitialValuation) ? globalThis.Number(object.InitialValuation) : 0,
+            CurrentValuation: isSet(object.CurrentValuation) ? globalThis.Number(object.CurrentValuation) : 0,
+            ValuationDate: isSet(object.ValuationDate) ? globalThis.String(object.ValuationDate) : undefined,
+            Network: isSet(object.Network) ? globalThis.String(object.Network) : "",
+            Status: isSet(object.Status) ? globalThis.String(object.Status) : "",
+        };
+    },
+    toJSON(message) {
+        var _a, _b;
+        const obj = {};
+        if (message.Symbol !== "") {
+            obj.Symbol = message.Symbol;
+        }
+        if (message.Issuer !== "") {
+            obj.Issuer = message.Issuer;
+        }
+        if ((_a = message.JurisdictionIDs) === null || _a === void 0 ? void 0 : _a.length) {
+            obj.JurisdictionIDs = message.JurisdictionIDs;
+        }
+        if (message.JurisdictionRestrictions !== undefined) {
+            obj.JurisdictionRestrictions = message.JurisdictionRestrictions;
+        }
+        if (message.RedemptionTerms !== undefined) {
+            obj.RedemptionTerms = message.RedemptionTerms;
+        }
+        if (message.ComplianceRequired !== undefined) {
+            obj.ComplianceRequired = message.ComplianceRequired;
+        }
+        if (message.Type !== "") {
+            obj.Type = message.Type;
+        }
+        if ((_b = message.TradeAllowances) === null || _b === void 0 ? void 0 : _b.length) {
+            obj.TradeAllowances = message.TradeAllowances;
+        }
+        if (message.Transferable !== false) {
+            obj.Transferable = message.Transferable;
+        }
+        if (message.Platform !== "") {
+            obj.Platform = message.Platform;
+        }
+        if (message.PlatformType !== "") {
+            obj.PlatformType = message.PlatformType;
+        }
+        if (message.ContractAddress !== undefined) {
+            obj.ContractAddress = message.ContractAddress;
+        }
+        if (message.Fractional !== false) {
+            obj.Fractional = message.Fractional;
+        }
+        if (message.TotalSupply !== 0) {
+            obj.TotalSupply = Math.round(message.TotalSupply);
+        }
+        if (message.DecimalPlacesSupply !== 0) {
+            obj.DecimalPlacesSupply = Math.round(message.DecimalPlacesSupply);
+        }
+        if (message.Subunit !== undefined) {
+            obj.Subunit = message.Subunit;
+        }
+        if (message.Price !== undefined) {
+            obj.Price = message.Price;
+        }
+        if (message.DecimalPlacesPrice !== 0) {
+            obj.DecimalPlacesPrice = Math.round(message.DecimalPlacesPrice);
+        }
+        if (message.Currency !== "") {
+            obj.Currency = message.Currency;
+        }
+        if (message.InitialValuation !== 0) {
+            obj.InitialValuation = message.InitialValuation;
+        }
+        if (message.CurrentValuation !== 0) {
+            obj.CurrentValuation = message.CurrentValuation;
+        }
+        if (message.ValuationDate !== undefined) {
+            obj.ValuationDate = message.ValuationDate;
+        }
+        if (message.Network !== "") {
+            obj.Network = message.Network;
+        }
+        if (message.Status !== "") {
+            obj.Status = message.Status;
+        }
+        return obj;
+    },
+    create(base) {
+        return FinancialProperties.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial(object) {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z;
+        const message = createBaseFinancialProperties();
+        message.Symbol = (_a = object.Symbol) !== null && _a !== void 0 ? _a : "";
+        message.Issuer = (_b = object.Issuer) !== null && _b !== void 0 ? _b : "";
+        message.JurisdictionIDs = ((_c = object.JurisdictionIDs) === null || _c === void 0 ? void 0 : _c.map((e) => e)) || [];
+        message.JurisdictionRestrictions = (_d = object.JurisdictionRestrictions) !== null && _d !== void 0 ? _d : undefined;
+        message.RedemptionTerms = (_e = object.RedemptionTerms) !== null && _e !== void 0 ? _e : undefined;
+        message.ComplianceRequired = (_f = object.ComplianceRequired) !== null && _f !== void 0 ? _f : undefined;
+        message.Type = (_g = object.Type) !== null && _g !== void 0 ? _g : "";
+        message.TradeAllowances = ((_h = object.TradeAllowances) === null || _h === void 0 ? void 0 : _h.map((e) => e)) || [];
+        message.Transferable = (_j = object.Transferable) !== null && _j !== void 0 ? _j : false;
+        message.Platform = (_k = object.Platform) !== null && _k !== void 0 ? _k : "";
+        message.PlatformType = (_l = object.PlatformType) !== null && _l !== void 0 ? _l : "";
+        message.ContractAddress = (_m = object.ContractAddress) !== null && _m !== void 0 ? _m : undefined;
+        message.Fractional = (_o = object.Fractional) !== null && _o !== void 0 ? _o : false;
+        message.TotalSupply = (_p = object.TotalSupply) !== null && _p !== void 0 ? _p : 0;
+        message.DecimalPlacesSupply = (_q = object.DecimalPlacesSupply) !== null && _q !== void 0 ? _q : 0;
+        message.Subunit = (_r = object.Subunit) !== null && _r !== void 0 ? _r : undefined;
+        message.Price = (_s = object.Price) !== null && _s !== void 0 ? _s : undefined;
+        message.DecimalPlacesPrice = (_t = object.DecimalPlacesPrice) !== null && _t !== void 0 ? _t : 0;
+        message.Currency = (_u = object.Currency) !== null && _u !== void 0 ? _u : "";
+        message.InitialValuation = (_v = object.InitialValuation) !== null && _v !== void 0 ? _v : 0;
+        message.CurrentValuation = (_w = object.CurrentValuation) !== null && _w !== void 0 ? _w : 0;
+        message.ValuationDate = (_x = object.ValuationDate) !== null && _x !== void 0 ? _x : undefined;
+        message.Network = (_y = object.Network) !== null && _y !== void 0 ? _y : "";
+        message.Status = (_z = object.Status) !== null && _z !== void 0 ? _z : "";
+        return message;
+    },
+};
+function createBaseDescription() {
+    return {
+        Name: "",
+        Description: "",
+        Image: undefined,
+        AssetID: "",
+        URL: "",
+        Country: "",
+        Documents: [],
+        Images: [],
+        Vertical: "",
+        CreatedAt: undefined,
+        UpdatedAt: undefined,
+    };
+}
+export const Description = {
+    encode(message, writer = _m0.Writer.create()) {
+        if (message.Name !== "") {
+            writer.uint32(10).string(message.Name);
+        }
+        if (message.Description !== "") {
+            writer.uint32(18).string(message.Description);
+        }
+        if (message.Image !== undefined) {
+            writer.uint32(26).string(message.Image);
+        }
+        if (message.AssetID !== "") {
+            writer.uint32(34).string(message.AssetID);
+        }
+        if (message.URL !== "") {
+            writer.uint32(42).string(message.URL);
+        }
+        if (message.Country !== "") {
+            writer.uint32(50).string(message.Country);
+        }
+        for (const v of message.Documents) {
+            writer.uint32(58).string(v);
+        }
+        for (const v of message.Images) {
+            writer.uint32(66).string(v);
+        }
+        if (message.Vertical !== "") {
+            writer.uint32(74).string(message.Vertical);
+        }
+        if (message.CreatedAt !== undefined) {
+            writer.uint32(82).string(message.CreatedAt);
+        }
+        if (message.UpdatedAt !== undefined) {
+            writer.uint32(90).string(message.UpdatedAt);
+        }
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseDescription();
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    if (tag !== 10) {
+                        break;
+                    }
+                    message.Name = reader.string();
+                    continue;
+                case 2:
+                    if (tag !== 18) {
+                        break;
+                    }
+                    message.Description = reader.string();
+                    continue;
+                case 3:
+                    if (tag !== 26) {
+                        break;
+                    }
+                    message.Image = reader.string();
+                    continue;
+                case 4:
+                    if (tag !== 34) {
+                        break;
+                    }
+                    message.AssetID = reader.string();
+                    continue;
+                case 5:
+                    if (tag !== 42) {
+                        break;
+                    }
+                    message.URL = reader.string();
+                    continue;
+                case 6:
+                    if (tag !== 50) {
+                        break;
+                    }
+                    message.Country = reader.string();
+                    continue;
+                case 7:
+                    if (tag !== 58) {
+                        break;
+                    }
+                    message.Documents.push(reader.string());
+                    continue;
+                case 8:
+                    if (tag !== 66) {
+                        break;
+                    }
+                    message.Images.push(reader.string());
+                    continue;
+                case 9:
+                    if (tag !== 74) {
+                        break;
+                    }
+                    message.Vertical = reader.string();
+                    continue;
+                case 10:
+                    if (tag !== 82) {
+                        break;
+                    }
+                    message.CreatedAt = reader.string();
+                    continue;
+                case 11:
+                    if (tag !== 90) {
+                        break;
+                    }
+                    message.UpdatedAt = reader.string();
+                    continue;
+            }
+            if ((tag & 7) === 4 || tag === 0) {
+                break;
+            }
+            reader.skipType(tag & 7);
+        }
+        return message;
+    },
+    fromJSON(object) {
+        return {
+            Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
+            Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
+            Image: isSet(object.Image) ? globalThis.String(object.Image) : undefined,
+            AssetID: isSet(object.AssetID) ? globalThis.String(object.AssetID) : "",
+            URL: isSet(object.URL) ? globalThis.String(object.URL) : "",
+            Country: isSet(object.Country) ? globalThis.String(object.Country) : "",
+            Documents: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Documents)
+                ? object.Documents.map((e) => globalThis.String(e))
+                : [],
+            Images: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Images) ? object.Images.map((e) => globalThis.String(e)) : [],
+            Vertical: isSet(object.Vertical) ? globalThis.String(object.Vertical) : "",
+            CreatedAt: isSet(object.CreatedAt) ? globalThis.String(object.CreatedAt) : undefined,
+            UpdatedAt: isSet(object.UpdatedAt) ? globalThis.String(object.UpdatedAt) : undefined,
+        };
+    },
+    toJSON(message) {
+        var _a, _b;
+        const obj = {};
+        if (message.Name !== "") {
+            obj.Name = message.Name;
+        }
+        if (message.Description !== "") {
+            obj.Description = message.Description;
+        }
+        if (message.Image !== undefined) {
+            obj.Image = message.Image;
+        }
+        if (message.AssetID !== "") {
+            obj.AssetID = message.AssetID;
+        }
+        if (message.URL !== "") {
+            obj.URL = message.URL;
+        }
+        if (message.Country !== "") {
+            obj.Country = message.Country;
+        }
+        if ((_a = message.Documents) === null || _a === void 0 ? void 0 : _a.length) {
+            obj.Documents = message.Documents;
+        }
+        if ((_b = message.Images) === null || _b === void 0 ? void 0 : _b.length) {
+            obj.Images = message.Images;
+        }
+        if (message.Vertical !== "") {
+            obj.Vertical = message.Vertical;
+        }
+        if (message.CreatedAt !== undefined) {
+            obj.CreatedAt = message.CreatedAt;
+        }
+        if (message.UpdatedAt !== undefined) {
+            obj.UpdatedAt = message.UpdatedAt;
+        }
+        return obj;
+    },
+    create(base) {
+        return Description.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial(object) {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+        const message = createBaseDescription();
+        message.Name = (_a = object.Name) !== null && _a !== void 0 ? _a : "";
+        message.Description = (_b = object.Description) !== null && _b !== void 0 ? _b : "";
+        message.Image = (_c = object.Image) !== null && _c !== void 0 ? _c : undefined;
+        message.AssetID = (_d = object.AssetID) !== null && _d !== void 0 ? _d : "";
+        message.URL = (_e = object.URL) !== null && _e !== void 0 ? _e : "";
+        message.Country = (_f = object.Country) !== null && _f !== void 0 ? _f : "";
+        message.Documents = ((_g = object.Documents) === null || _g === void 0 ? void 0 : _g.map((e) => e)) || [];
+        message.Images = ((_h = object.Images) === null || _h === void 0 ? void 0 : _h.map((e) => e)) || [];
+        message.Vertical = (_j = object.Vertical) !== null && _j !== void 0 ? _j : "";
+        message.CreatedAt = (_k = object.CreatedAt) !== null && _k !== void 0 ? _k : undefined;
+        message.UpdatedAt = (_l = object.UpdatedAt) !== null && _l !== void 0 ? _l : undefined;
         return message;
     },
 };

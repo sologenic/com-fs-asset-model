@@ -29,13 +29,16 @@ message AssetDetails {
     optional Vehicle VehicleDetails = 24;
     optional IntellectualProperty IntellectualPropertyDetails = 25;
     optional InvestmentFund InvestmentFundDetails = 26;
+
+    optional FinancialProperties FinancialProperties = 27; // Financial-specific properties
+    optional Description Description = 28;                 // Human-readable descriptive properties
 }
 
 // ---------------- Existing Messages ----------------
 
 message Asset {
     AssetDetails AssetDetails = 1;
-    MetadataDetails MetaData = 2;
+    MetadataDetails MetaData = 2; // Legacy, for backward compatibility
     audit.Audit Audit = 3;
 }
 
@@ -146,6 +149,51 @@ message InvestmentFund {
     optional string Manager = 6;        
     optional float ExpenseRatio = 7;    
     repeated string Holdings = 8;       
+}
+
+// ---------------- FinancialProperties ----------------
+
+message FinancialProperties {
+    string Symbol = 1;                        
+    string Issuer = 2;                        
+    repeated string JurisdictionIDs = 3;      
+    optional string JurisdictionRestrictions = 4; 
+    optional string RedemptionTerms = 5;      
+    optional bool ComplianceRequired = 6;     
+    string Type = 7;                          
+    repeated string TradeAllowances = 8;      
+    bool Transferable = 9;                    
+    string Platform = 10;                     
+    string PlatformType = 11;                 
+    optional string ContractAddress = 12;     
+    bool Fractional = 13;                     
+    int32 TotalSupply = 14;                   
+    int32 DecimalPlacesSupply = 15;           
+    optional string Subunit = 16;             
+    optional float Price = 17;                
+    int32 DecimalPlacesPrice = 18;            
+    string Currency = 19;                     
+    float InitialValuation = 20;              
+    float CurrentValuation = 21;              
+    optional string ValuationDate = 22;       
+    string Network = 23;                      
+    string Status = 24;                       
+}
+
+// ---------------- Description ----------------
+
+message Description {
+    string Name = 1;                         
+    string Description = 2;                  
+    optional string Image = 3;               
+    string AssetID = 4;                      
+    string URL = 5;                          
+    string Country = 6;                      
+    repeated string Documents = 7;           
+    repeated string Images = 8;              
+    string Vertical = 9;                     
+    optional string CreatedAt = 10;          
+    optional string UpdatedAt = 11;          
 }
 
 // ---------------- Enums ----------------
