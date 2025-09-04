@@ -115,13 +115,14 @@ export function reasonToJSON(object: Reason): string {
 
 export enum AssetType {
   ASSET_TYPE_DO_NOT_USE = 0,
-  STOCKS = 1,
-  BONDS = 2,
+  FUNDS_AND_INVESTMENT_PRODUCT = 1,
+  COMMODITY = 2,
   WRAPPED_STABLECOIN = 3,
   CRYPTO = 4,
-  FOREX = 5,
-  FUTURES = 6,
-  OPTIONS = 7,
+  COLLECTIBLE = 5,
+  VEHICLE_INDUSTRIAL_EQUIPMENT = 6,
+  INTELLECTUAL_PROPERTY = 7,
+  REAL_ESTATE = 8,
   UNRECOGNIZED = -1,
 }
 
@@ -131,11 +132,11 @@ export function assetTypeFromJSON(object: any): AssetType {
     case "ASSET_TYPE_DO_NOT_USE":
       return AssetType.ASSET_TYPE_DO_NOT_USE;
     case 1:
-    case "STOCKS":
-      return AssetType.STOCKS;
+    case "FUNDS_AND_INVESTMENT_PRODUCT":
+      return AssetType.FUNDS_AND_INVESTMENT_PRODUCT;
     case 2:
-    case "BONDS":
-      return AssetType.BONDS;
+    case "COMMODITY":
+      return AssetType.COMMODITY;
     case 3:
     case "WRAPPED_STABLECOIN":
       return AssetType.WRAPPED_STABLECOIN;
@@ -143,14 +144,17 @@ export function assetTypeFromJSON(object: any): AssetType {
     case "CRYPTO":
       return AssetType.CRYPTO;
     case 5:
-    case "FOREX":
-      return AssetType.FOREX;
+    case "COLLECTIBLE":
+      return AssetType.COLLECTIBLE;
     case 6:
-    case "FUTURES":
-      return AssetType.FUTURES;
+    case "VEHICLE_INDUSTRIAL_EQUIPMENT":
+      return AssetType.VEHICLE_INDUSTRIAL_EQUIPMENT;
     case 7:
-    case "OPTIONS":
-      return AssetType.OPTIONS;
+    case "INTELLECTUAL_PROPERTY":
+      return AssetType.INTELLECTUAL_PROPERTY;
+    case 8:
+    case "REAL_ESTATE":
+      return AssetType.REAL_ESTATE;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -162,20 +166,22 @@ export function assetTypeToJSON(object: AssetType): string {
   switch (object) {
     case AssetType.ASSET_TYPE_DO_NOT_USE:
       return "ASSET_TYPE_DO_NOT_USE";
-    case AssetType.STOCKS:
-      return "STOCKS";
-    case AssetType.BONDS:
-      return "BONDS";
+    case AssetType.FUNDS_AND_INVESTMENT_PRODUCT:
+      return "FUNDS_AND_INVESTMENT_PRODUCT";
+    case AssetType.COMMODITY:
+      return "COMMODITY";
     case AssetType.WRAPPED_STABLECOIN:
       return "WRAPPED_STABLECOIN";
     case AssetType.CRYPTO:
       return "CRYPTO";
-    case AssetType.FOREX:
-      return "FOREX";
-    case AssetType.FUTURES:
-      return "FUTURES";
-    case AssetType.OPTIONS:
-      return "OPTIONS";
+    case AssetType.COLLECTIBLE:
+      return "COLLECTIBLE";
+    case AssetType.VEHICLE_INDUSTRIAL_EQUIPMENT:
+      return "VEHICLE_INDUSTRIAL_EQUIPMENT";
+    case AssetType.INTELLECTUAL_PROPERTY:
+      return "INTELLECTUAL_PROPERTY";
+    case AssetType.REAL_ESTATE:
+      return "REAL_ESTATE";
     case AssetType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -239,9 +245,7 @@ export interface AssetDetails {
   OrganizationID: string;
   Status: AssetStatus;
   Reason?: Reason | undefined;
-  JurisdictionIDs: string[];
   Type: AssetType;
-  Name: string;
   Denom: Denom | undefined;
   IsIssuedInSmartContract: boolean;
   SmartContractIssuerAddr: string;
@@ -263,10 +267,7 @@ export interface AssetDetails {
 }
 
 export interface Asset {
-  AssetDetails:
-    | AssetDetails
-    | undefined;
-  /** Legacy, for backward compatibility */
+  AssetDetails: AssetDetails | undefined;
   MetaData: MetadataDetails | undefined;
   Audit: Audit | undefined;
 }
@@ -447,9 +448,7 @@ function createBaseAssetDetails(): AssetDetails {
     OrganizationID: "",
     Status: 0,
     Reason: undefined,
-    JurisdictionIDs: [],
     Type: 0,
-    Name: "",
     Denom: undefined,
     IsIssuedInSmartContract: false,
     SmartContractIssuerAddr: "",
@@ -479,14 +478,8 @@ export const AssetDetails = {
     if (message.Reason !== undefined) {
       writer.uint32(32).int32(message.Reason);
     }
-    for (const v of message.JurisdictionIDs) {
-      writer.uint32(42).string(v!);
-    }
     if (message.Type !== 0) {
       writer.uint32(48).int32(message.Type);
-    }
-    if (message.Name !== "") {
-      writer.uint32(58).string(message.Name);
     }
     if (message.Denom !== undefined) {
       Denom.encode(message.Denom, writer.uint32(138).fork()).ldelim();
@@ -562,26 +555,12 @@ export const AssetDetails = {
 
           message.Reason = reader.int32() as any;
           continue;
-        case 5:
-          if (tag !== 42) {
-            break;
-          }
-
-          message.JurisdictionIDs.push(reader.string());
-          continue;
         case 6:
           if (tag !== 48) {
             break;
           }
 
           message.Type = reader.int32() as any;
-          continue;
-        case 7:
-          if (tag !== 58) {
-            break;
-          }
-
-          message.Name = reader.string();
           continue;
         case 17:
           if (tag !== 138) {
@@ -682,11 +661,7 @@ export const AssetDetails = {
       OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
       Status: isSet(object.Status) ? assetStatusFromJSON(object.Status) : 0,
       Reason: isSet(object.Reason) ? reasonFromJSON(object.Reason) : undefined,
-      JurisdictionIDs: globalThis.Array.isArray(object?.JurisdictionIDs)
-        ? object.JurisdictionIDs.map((e: any) => globalThis.String(e))
-        : [],
       Type: isSet(object.Type) ? assetTypeFromJSON(object.Type) : 0,
-      Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
       Denom: isSet(object.Denom) ? Denom.fromJSON(object.Denom) : undefined,
       IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
         ? globalThis.Boolean(object.IsIssuedInSmartContract)
@@ -728,14 +703,8 @@ export const AssetDetails = {
     if (message.Reason !== undefined) {
       obj.Reason = reasonToJSON(message.Reason);
     }
-    if (message.JurisdictionIDs?.length) {
-      obj.JurisdictionIDs = message.JurisdictionIDs;
-    }
     if (message.Type !== 0) {
       obj.Type = assetTypeToJSON(message.Type);
-    }
-    if (message.Name !== "") {
-      obj.Name = message.Name;
     }
     if (message.Denom !== undefined) {
       obj.Denom = Denom.toJSON(message.Denom);
@@ -785,9 +754,7 @@ export const AssetDetails = {
     message.OrganizationID = object.OrganizationID ?? "";
     message.Status = object.Status ?? 0;
     message.Reason = object.Reason ?? undefined;
-    message.JurisdictionIDs = object.JurisdictionIDs?.map((e) => e) || [];
     message.Type = object.Type ?? 0;
-    message.Name = object.Name ?? "";
     message.Denom = (object.Denom !== undefined && object.Denom !== null) ? Denom.fromPartial(object.Denom) : undefined;
     message.IsIssuedInSmartContract = object.IsIssuedInSmartContract ?? false;
     message.SmartContractIssuerAddr = object.SmartContractIssuerAddr ?? "";

@@ -136,37 +136,40 @@ func (Reason) EnumDescriptor() ([]byte, []int) {
 type AssetType int32
 
 const (
-	AssetType_ASSET_TYPE_DO_NOT_USE AssetType = 0
-	AssetType_STOCKS                AssetType = 1
-	AssetType_BONDS                 AssetType = 2
-	AssetType_WRAPPED_STABLECOIN    AssetType = 3
-	AssetType_CRYPTO                AssetType = 4
-	AssetType_FOREX                 AssetType = 5
-	AssetType_FUTURES               AssetType = 6
-	AssetType_OPTIONS               AssetType = 7
+	AssetType_ASSET_TYPE_DO_NOT_USE        AssetType = 0
+	AssetType_FUNDS_AND_INVESTMENT_PRODUCT AssetType = 1
+	AssetType_COMMODITY                    AssetType = 2
+	AssetType_WRAPPED_STABLECOIN           AssetType = 3
+	AssetType_CRYPTO                       AssetType = 4
+	AssetType_COLLECTIBLE                  AssetType = 5
+	AssetType_VEHICLE_INDUSTRIAL_EQUIPMENT AssetType = 6
+	AssetType_INTELLECTUAL_PROPERTY        AssetType = 7
+	AssetType_REAL_ESTATE                  AssetType = 8
 )
 
 // Enum value maps for AssetType.
 var (
 	AssetType_name = map[int32]string{
 		0: "ASSET_TYPE_DO_NOT_USE",
-		1: "STOCKS",
-		2: "BONDS",
+		1: "FUNDS_AND_INVESTMENT_PRODUCT",
+		2: "COMMODITY",
 		3: "WRAPPED_STABLECOIN",
 		4: "CRYPTO",
-		5: "FOREX",
-		6: "FUTURES",
-		7: "OPTIONS",
+		5: "COLLECTIBLE",
+		6: "VEHICLE_INDUSTRIAL_EQUIPMENT",
+		7: "INTELLECTUAL_PROPERTY",
+		8: "REAL_ESTATE",
 	}
 	AssetType_value = map[string]int32{
-		"ASSET_TYPE_DO_NOT_USE": 0,
-		"STOCKS":                1,
-		"BONDS":                 2,
-		"WRAPPED_STABLECOIN":    3,
-		"CRYPTO":                4,
-		"FOREX":                 5,
-		"FUTURES":               6,
-		"OPTIONS":               7,
+		"ASSET_TYPE_DO_NOT_USE":        0,
+		"FUNDS_AND_INVESTMENT_PRODUCT": 1,
+		"COMMODITY":                    2,
+		"WRAPPED_STABLECOIN":           3,
+		"CRYPTO":                       4,
+		"COLLECTIBLE":                  5,
+		"VEHICLE_INDUSTRIAL_EQUIPMENT": 6,
+		"INTELLECTUAL_PROPERTY":        7,
+		"REAL_ESTATE":                  8,
 	}
 )
 
@@ -258,9 +261,7 @@ type AssetDetails struct {
 	OrganizationID              string                 `protobuf:"bytes,2,opt,name=OrganizationID,proto3" json:"OrganizationID,omitempty"`
 	Status                      AssetStatus            `protobuf:"varint,3,opt,name=Status,proto3,enum=asset.AssetStatus" json:"Status,omitempty"`
 	Reason                      *Reason                `protobuf:"varint,4,opt,name=Reason,proto3,enum=asset.Reason,oneof" json:"Reason,omitempty"`
-	JurisdictionIDs             []string               `protobuf:"bytes,5,rep,name=JurisdictionIDs,proto3" json:"JurisdictionIDs,omitempty"`
 	Type                        AssetType              `protobuf:"varint,6,opt,name=Type,proto3,enum=asset.AssetType" json:"Type,omitempty"`
-	Name                        string                 `protobuf:"bytes,7,opt,name=Name,proto3" json:"Name,omitempty"`
 	Denom                       *denom.Denom           `protobuf:"bytes,17,opt,name=Denom,proto3" json:"Denom,omitempty"`
 	IsIssuedInSmartContract     bool                   `protobuf:"varint,18,opt,name=IsIssuedInSmartContract,proto3" json:"IsIssuedInSmartContract,omitempty"`
 	SmartContractIssuerAddr     string                 `protobuf:"bytes,19,opt,name=SmartContractIssuerAddr,proto3" json:"SmartContractIssuerAddr,omitempty"`
@@ -335,25 +336,11 @@ func (x *AssetDetails) GetReason() Reason {
 	return Reason_REASON_DO_NOT_USE
 }
 
-func (x *AssetDetails) GetJurisdictionIDs() []string {
-	if x != nil {
-		return x.JurisdictionIDs
-	}
-	return nil
-}
-
 func (x *AssetDetails) GetType() AssetType {
 	if x != nil {
 		return x.Type
 	}
 	return AssetType_ASSET_TYPE_DO_NOT_USE
-}
-
-func (x *AssetDetails) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
 }
 
 func (x *AssetDetails) GetDenom() *denom.Denom {
@@ -443,7 +430,7 @@ func (x *AssetDetails) GetDescription() *Description {
 type Asset struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	AssetDetails  *AssetDetails          `protobuf:"bytes,1,opt,name=AssetDetails,proto3" json:"AssetDetails,omitempty"`
-	MetaData      *MetadataDetails       `protobuf:"bytes,2,opt,name=MetaData,proto3" json:"MetaData,omitempty"` // Legacy, for backward compatibility
+	MetaData      *MetadataDetails       `protobuf:"bytes,2,opt,name=MetaData,proto3" json:"MetaData,omitempty"`
 	Audit         *audit.Audit           `protobuf:"bytes,3,opt,name=Audit,proto3" json:"Audit,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -2020,16 +2007,13 @@ var File_asset_proto protoreflect.FileDescriptor
 
 const file_asset_proto_rawDesc = "" +
 	"\n" +
-	"\vasset.proto\x12\x05asset\x1a5sologenic/com-fs-asset-model/domain/denom/denom.proto\x1a3sologenic/com-fs-utils-lib/models/audit/audit.proto\"\x8b\n" +
-	"\n" +
+	"\vasset.proto\x12\x05asset\x1a5sologenic/com-fs-asset-model/domain/denom/denom.proto\x1a3sologenic/com-fs-utils-lib/models/audit/audit.proto\"\xcd\t\n" +
 	"\fAssetDetails\x12\x0e\n" +
 	"\x02ID\x18\x01 \x01(\tR\x02ID\x12&\n" +
 	"\x0eOrganizationID\x18\x02 \x01(\tR\x0eOrganizationID\x12*\n" +
 	"\x06Status\x18\x03 \x01(\x0e2\x12.asset.AssetStatusR\x06Status\x12*\n" +
-	"\x06Reason\x18\x04 \x01(\x0e2\r.asset.ReasonH\x00R\x06Reason\x88\x01\x01\x12(\n" +
-	"\x0fJurisdictionIDs\x18\x05 \x03(\tR\x0fJurisdictionIDs\x12$\n" +
-	"\x04Type\x18\x06 \x01(\x0e2\x10.asset.AssetTypeR\x04Type\x12\x12\n" +
-	"\x04Name\x18\a \x01(\tR\x04Name\x12\"\n" +
+	"\x06Reason\x18\x04 \x01(\x0e2\r.asset.ReasonH\x00R\x06Reason\x88\x01\x01\x12$\n" +
+	"\x04Type\x18\x06 \x01(\x0e2\x10.asset.AssetTypeR\x04Type\x12\"\n" +
 	"\x05Denom\x18\x11 \x01(\v2\f.denom.DenomR\x05Denom\x128\n" +
 	"\x17IsIssuedInSmartContract\x18\x12 \x01(\bR\x17IsIssuedInSmartContract\x128\n" +
 	"\x17SmartContractIssuerAddr\x18\x13 \x01(\tR\x17SmartContractIssuerAddr\x12D\n" +
@@ -2310,18 +2294,18 @@ const file_asset_proto_rawDesc = "" +
 	"\x11REASON_DO_NOT_USE\x10\x00\x12\r\n" +
 	"\tDUPLICATE\x10\x01\x12\x12\n" +
 	"\x0eUNWANTED_ASSET\x10\x02\x12\x12\n" +
-	"\x0eUNSTABLE_ASSET\x10\x03*\x86\x01\n" +
+	"\x0eUNSTABLE_ASSET\x10\x03*\xda\x01\n" +
 	"\tAssetType\x12\x19\n" +
-	"\x15ASSET_TYPE_DO_NOT_USE\x10\x00\x12\n" +
-	"\n" +
-	"\x06STOCKS\x10\x01\x12\t\n" +
-	"\x05BONDS\x10\x02\x12\x16\n" +
+	"\x15ASSET_TYPE_DO_NOT_USE\x10\x00\x12 \n" +
+	"\x1cFUNDS_AND_INVESTMENT_PRODUCT\x10\x01\x12\r\n" +
+	"\tCOMMODITY\x10\x02\x12\x16\n" +
 	"\x12WRAPPED_STABLECOIN\x10\x03\x12\n" +
 	"\n" +
-	"\x06CRYPTO\x10\x04\x12\t\n" +
-	"\x05FOREX\x10\x05\x12\v\n" +
-	"\aFUTURES\x10\x06\x12\v\n" +
-	"\aOPTIONS\x10\a*\x8b\x01\n" +
+	"\x06CRYPTO\x10\x04\x12\x0f\n" +
+	"\vCOLLECTIBLE\x10\x05\x12 \n" +
+	"\x1cVEHICLE_INDUSTRIAL_EQUIPMENT\x10\x06\x12\x19\n" +
+	"\x15INTELLECTUAL_PROPERTY\x10\a\x12\x0f\n" +
+	"\vREAL_ESTATE\x10\b*\x8b\x01\n" +
 	"\x0fUserAssetStatus\x12 \n" +
 	"\x1cUSER_ASSET_STATUS_DO_NOT_USE\x10\x00\x12\x13\n" +
 	"\x0fNOT_WHITELISTED\x10\x01\x12\x1a\n" +

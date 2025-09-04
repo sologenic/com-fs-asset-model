@@ -109,13 +109,14 @@ export function reasonToJSON(object) {
 export var AssetType;
 (function (AssetType) {
     AssetType[AssetType["ASSET_TYPE_DO_NOT_USE"] = 0] = "ASSET_TYPE_DO_NOT_USE";
-    AssetType[AssetType["STOCKS"] = 1] = "STOCKS";
-    AssetType[AssetType["BONDS"] = 2] = "BONDS";
+    AssetType[AssetType["FUNDS_AND_INVESTMENT_PRODUCT"] = 1] = "FUNDS_AND_INVESTMENT_PRODUCT";
+    AssetType[AssetType["COMMODITY"] = 2] = "COMMODITY";
     AssetType[AssetType["WRAPPED_STABLECOIN"] = 3] = "WRAPPED_STABLECOIN";
     AssetType[AssetType["CRYPTO"] = 4] = "CRYPTO";
-    AssetType[AssetType["FOREX"] = 5] = "FOREX";
-    AssetType[AssetType["FUTURES"] = 6] = "FUTURES";
-    AssetType[AssetType["OPTIONS"] = 7] = "OPTIONS";
+    AssetType[AssetType["COLLECTIBLE"] = 5] = "COLLECTIBLE";
+    AssetType[AssetType["VEHICLE_INDUSTRIAL_EQUIPMENT"] = 6] = "VEHICLE_INDUSTRIAL_EQUIPMENT";
+    AssetType[AssetType["INTELLECTUAL_PROPERTY"] = 7] = "INTELLECTUAL_PROPERTY";
+    AssetType[AssetType["REAL_ESTATE"] = 8] = "REAL_ESTATE";
     AssetType[AssetType["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
 })(AssetType || (AssetType = {}));
 export function assetTypeFromJSON(object) {
@@ -124,11 +125,11 @@ export function assetTypeFromJSON(object) {
         case "ASSET_TYPE_DO_NOT_USE":
             return AssetType.ASSET_TYPE_DO_NOT_USE;
         case 1:
-        case "STOCKS":
-            return AssetType.STOCKS;
+        case "FUNDS_AND_INVESTMENT_PRODUCT":
+            return AssetType.FUNDS_AND_INVESTMENT_PRODUCT;
         case 2:
-        case "BONDS":
-            return AssetType.BONDS;
+        case "COMMODITY":
+            return AssetType.COMMODITY;
         case 3:
         case "WRAPPED_STABLECOIN":
             return AssetType.WRAPPED_STABLECOIN;
@@ -136,14 +137,17 @@ export function assetTypeFromJSON(object) {
         case "CRYPTO":
             return AssetType.CRYPTO;
         case 5:
-        case "FOREX":
-            return AssetType.FOREX;
+        case "COLLECTIBLE":
+            return AssetType.COLLECTIBLE;
         case 6:
-        case "FUTURES":
-            return AssetType.FUTURES;
+        case "VEHICLE_INDUSTRIAL_EQUIPMENT":
+            return AssetType.VEHICLE_INDUSTRIAL_EQUIPMENT;
         case 7:
-        case "OPTIONS":
-            return AssetType.OPTIONS;
+        case "INTELLECTUAL_PROPERTY":
+            return AssetType.INTELLECTUAL_PROPERTY;
+        case 8:
+        case "REAL_ESTATE":
+            return AssetType.REAL_ESTATE;
         case -1:
         case "UNRECOGNIZED":
         default:
@@ -154,20 +158,22 @@ export function assetTypeToJSON(object) {
     switch (object) {
         case AssetType.ASSET_TYPE_DO_NOT_USE:
             return "ASSET_TYPE_DO_NOT_USE";
-        case AssetType.STOCKS:
-            return "STOCKS";
-        case AssetType.BONDS:
-            return "BONDS";
+        case AssetType.FUNDS_AND_INVESTMENT_PRODUCT:
+            return "FUNDS_AND_INVESTMENT_PRODUCT";
+        case AssetType.COMMODITY:
+            return "COMMODITY";
         case AssetType.WRAPPED_STABLECOIN:
             return "WRAPPED_STABLECOIN";
         case AssetType.CRYPTO:
             return "CRYPTO";
-        case AssetType.FOREX:
-            return "FOREX";
-        case AssetType.FUTURES:
-            return "FUTURES";
-        case AssetType.OPTIONS:
-            return "OPTIONS";
+        case AssetType.COLLECTIBLE:
+            return "COLLECTIBLE";
+        case AssetType.VEHICLE_INDUSTRIAL_EQUIPMENT:
+            return "VEHICLE_INDUSTRIAL_EQUIPMENT";
+        case AssetType.INTELLECTUAL_PROPERTY:
+            return "INTELLECTUAL_PROPERTY";
+        case AssetType.REAL_ESTATE:
+            return "REAL_ESTATE";
         case AssetType.UNRECOGNIZED:
         default:
             return "UNRECOGNIZED";
@@ -228,9 +234,7 @@ function createBaseAssetDetails() {
         OrganizationID: "",
         Status: 0,
         Reason: undefined,
-        JurisdictionIDs: [],
         Type: 0,
-        Name: "",
         Denom: undefined,
         IsIssuedInSmartContract: false,
         SmartContractIssuerAddr: "",
@@ -259,14 +263,8 @@ export const AssetDetails = {
         if (message.Reason !== undefined) {
             writer.uint32(32).int32(message.Reason);
         }
-        for (const v of message.JurisdictionIDs) {
-            writer.uint32(42).string(v);
-        }
         if (message.Type !== 0) {
             writer.uint32(48).int32(message.Type);
-        }
-        if (message.Name !== "") {
-            writer.uint32(58).string(message.Name);
         }
         if (message.Denom !== undefined) {
             Denom.encode(message.Denom, writer.uint32(138).fork()).ldelim();
@@ -337,23 +335,11 @@ export const AssetDetails = {
                     }
                     message.Reason = reader.int32();
                     continue;
-                case 5:
-                    if (tag !== 42) {
-                        break;
-                    }
-                    message.JurisdictionIDs.push(reader.string());
-                    continue;
                 case 6:
                     if (tag !== 48) {
                         break;
                     }
                     message.Type = reader.int32();
-                    continue;
-                case 7:
-                    if (tag !== 58) {
-                        break;
-                    }
-                    message.Name = reader.string();
                     continue;
                 case 17:
                     if (tag !== 138) {
@@ -441,11 +427,7 @@ export const AssetDetails = {
             OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
             Status: isSet(object.Status) ? assetStatusFromJSON(object.Status) : 0,
             Reason: isSet(object.Reason) ? reasonFromJSON(object.Reason) : undefined,
-            JurisdictionIDs: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.JurisdictionIDs)
-                ? object.JurisdictionIDs.map((e) => globalThis.String(e))
-                : [],
             Type: isSet(object.Type) ? assetTypeFromJSON(object.Type) : 0,
-            Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
             Denom: isSet(object.Denom) ? Denom.fromJSON(object.Denom) : undefined,
             IsIssuedInSmartContract: isSet(object.IsIssuedInSmartContract)
                 ? globalThis.Boolean(object.IsIssuedInSmartContract)
@@ -473,7 +455,6 @@ export const AssetDetails = {
         };
     },
     toJSON(message) {
-        var _a;
         const obj = {};
         if (message.ID !== "") {
             obj.ID = message.ID;
@@ -487,14 +468,8 @@ export const AssetDetails = {
         if (message.Reason !== undefined) {
             obj.Reason = reasonToJSON(message.Reason);
         }
-        if ((_a = message.JurisdictionIDs) === null || _a === void 0 ? void 0 : _a.length) {
-            obj.JurisdictionIDs = message.JurisdictionIDs;
-        }
         if (message.Type !== 0) {
             obj.Type = assetTypeToJSON(message.Type);
-        }
-        if (message.Name !== "") {
-            obj.Name = message.Name;
         }
         if (message.Denom !== undefined) {
             obj.Denom = Denom.toJSON(message.Denom);
@@ -538,18 +513,16 @@ export const AssetDetails = {
         return AssetDetails.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+        var _a, _b, _c, _d, _e, _f, _g;
         const message = createBaseAssetDetails();
         message.ID = (_a = object.ID) !== null && _a !== void 0 ? _a : "";
         message.OrganizationID = (_b = object.OrganizationID) !== null && _b !== void 0 ? _b : "";
         message.Status = (_c = object.Status) !== null && _c !== void 0 ? _c : 0;
         message.Reason = (_d = object.Reason) !== null && _d !== void 0 ? _d : undefined;
-        message.JurisdictionIDs = ((_e = object.JurisdictionIDs) === null || _e === void 0 ? void 0 : _e.map((e) => e)) || [];
-        message.Type = (_f = object.Type) !== null && _f !== void 0 ? _f : 0;
-        message.Name = (_g = object.Name) !== null && _g !== void 0 ? _g : "";
+        message.Type = (_e = object.Type) !== null && _e !== void 0 ? _e : 0;
         message.Denom = (object.Denom !== undefined && object.Denom !== null) ? Denom.fromPartial(object.Denom) : undefined;
-        message.IsIssuedInSmartContract = (_h = object.IsIssuedInSmartContract) !== null && _h !== void 0 ? _h : false;
-        message.SmartContractIssuerAddr = (_j = object.SmartContractIssuerAddr) !== null && _j !== void 0 ? _j : "";
+        message.IsIssuedInSmartContract = (_f = object.IsIssuedInSmartContract) !== null && _f !== void 0 ? _f : false;
+        message.SmartContractIssuerAddr = (_g = object.SmartContractIssuerAddr) !== null && _g !== void 0 ? _g : "";
         message.RealEstateDetails = (object.RealEstateDetails !== undefined && object.RealEstateDetails !== null)
             ? RealEstate.fromPartial(object.RealEstateDetails)
             : undefined;

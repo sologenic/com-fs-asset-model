@@ -14,9 +14,7 @@ message AssetDetails {
     string OrganizationID = 2; 
     AssetStatus Status = 3;
     optional Reason Reason = 4;
-    repeated string JurisdictionIDs = 5; 
     AssetType Type = 6;
-    string Name = 7;
 
     denom.Denom Denom = 17; 
     bool IsIssuedInSmartContract = 18; 
@@ -38,7 +36,7 @@ message AssetDetails {
 
 message Asset {
     AssetDetails AssetDetails = 1;
-    MetadataDetails MetaData = 2; // Legacy, for backward compatibility
+    MetadataDetails MetaData = 2;
     audit.Audit Audit = 3;
 }
 
@@ -216,13 +214,14 @@ enum Reason {
 
 enum AssetType {
     ASSET_TYPE_DO_NOT_USE = 0;
-    STOCKS = 1;
-    BONDS = 2;
+    FUNDS_AND_INVESTMENT_PRODUCT = 1;
+    COMMODITY = 2;
     WRAPPED_STABLECOIN = 3;
     CRYPTO = 4;
-    FOREX = 5;
-    FUTURES = 6;
-    OPTIONS = 7;
+    COLLECTIBLE = 5;
+    VEHICLE_INDUSTRIAL_EQUIPMENT = 6;
+    INTELLECTUAL_PROPERTY = 7;
+    REAL_ESTATE = 8;
 }
 
 enum UserAssetStatus {
