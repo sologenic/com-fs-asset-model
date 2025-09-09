@@ -27,6 +27,7 @@ message AssetDetails {
     optional Vehicle VehicleDetails = 24;
     optional IntellectualProperty IntellectualPropertyDetails = 25;
     optional InvestmentFund InvestmentFundDetails = 26;
+    optional Equity EquityDetails = 29;
 
     optional FinancialProperties FinancialProperties = 27; // Financial-specific properties
     optional Description Description = 28;                 // Human-readable descriptive properties
@@ -147,6 +148,14 @@ message InvestmentFund {
     optional string Manager = 6;        
     optional float ExpenseRatio = 7;    
     repeated string Holdings = 8;       
+}
+
+message Equity {
+    optional string ExchangeTickerSymbol = 1;
+    optional string Exchange = 2;
+    string MinTransactionAmount = 3; 
+    string ExtraPercentage = 4;
+    string AssetMarginPercentage = 5;
 }
 
 // ---------------- FinancialProperties ----------------

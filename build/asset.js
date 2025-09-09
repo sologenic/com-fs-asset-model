@@ -245,6 +245,7 @@ function createBaseAssetDetails() {
         VehicleDetails: undefined,
         IntellectualPropertyDetails: undefined,
         InvestmentFundDetails: undefined,
+        EquityDetails: undefined,
         FinancialProperties: undefined,
         Description: undefined,
     };
@@ -295,6 +296,9 @@ export const AssetDetails = {
         }
         if (message.InvestmentFundDetails !== undefined) {
             InvestmentFund.encode(message.InvestmentFundDetails, writer.uint32(210).fork()).ldelim();
+        }
+        if (message.EquityDetails !== undefined) {
+            Equity.encode(message.EquityDetails, writer.uint32(234).fork()).ldelim();
         }
         if (message.FinancialProperties !== undefined) {
             FinancialProperties.encode(message.FinancialProperties, writer.uint32(218).fork()).ldelim();
@@ -401,6 +405,12 @@ export const AssetDetails = {
                     }
                     message.InvestmentFundDetails = InvestmentFund.decode(reader, reader.uint32());
                     continue;
+                case 29:
+                    if (tag !== 234) {
+                        break;
+                    }
+                    message.EquityDetails = Equity.decode(reader, reader.uint32());
+                    continue;
                 case 27:
                     if (tag !== 218) {
                         break;
@@ -448,6 +458,7 @@ export const AssetDetails = {
             InvestmentFundDetails: isSet(object.InvestmentFundDetails)
                 ? InvestmentFund.fromJSON(object.InvestmentFundDetails)
                 : undefined,
+            EquityDetails: isSet(object.EquityDetails) ? Equity.fromJSON(object.EquityDetails) : undefined,
             FinancialProperties: isSet(object.FinancialProperties)
                 ? FinancialProperties.fromJSON(object.FinancialProperties)
                 : undefined,
@@ -501,6 +512,9 @@ export const AssetDetails = {
         if (message.InvestmentFundDetails !== undefined) {
             obj.InvestmentFundDetails = InvestmentFund.toJSON(message.InvestmentFundDetails);
         }
+        if (message.EquityDetails !== undefined) {
+            obj.EquityDetails = Equity.toJSON(message.EquityDetails);
+        }
         if (message.FinancialProperties !== undefined) {
             obj.FinancialProperties = FinancialProperties.toJSON(message.FinancialProperties);
         }
@@ -546,6 +560,9 @@ export const AssetDetails = {
             (object.InvestmentFundDetails !== undefined && object.InvestmentFundDetails !== null)
                 ? InvestmentFund.fromPartial(object.InvestmentFundDetails)
                 : undefined;
+        message.EquityDetails = (object.EquityDetails !== undefined && object.EquityDetails !== null)
+            ? Equity.fromPartial(object.EquityDetails)
+            : undefined;
         message.FinancialProperties = (object.FinancialProperties !== undefined && object.FinancialProperties !== null)
             ? FinancialProperties.fromPartial(object.FinancialProperties)
             : undefined;
@@ -2215,6 +2232,123 @@ export const InvestmentFund = {
         message.Manager = (_f = object.Manager) !== null && _f !== void 0 ? _f : undefined;
         message.ExpenseRatio = (_g = object.ExpenseRatio) !== null && _g !== void 0 ? _g : undefined;
         message.Holdings = ((_h = object.Holdings) === null || _h === void 0 ? void 0 : _h.map((e) => e)) || [];
+        return message;
+    },
+};
+function createBaseEquity() {
+    return {
+        ExchangeTickerSymbol: undefined,
+        Exchange: undefined,
+        MinTransactionAmount: "",
+        ExtraPercentage: "",
+        AssetMarginPercentage: "",
+    };
+}
+export const Equity = {
+    encode(message, writer = _m0.Writer.create()) {
+        if (message.ExchangeTickerSymbol !== undefined) {
+            writer.uint32(10).string(message.ExchangeTickerSymbol);
+        }
+        if (message.Exchange !== undefined) {
+            writer.uint32(18).string(message.Exchange);
+        }
+        if (message.MinTransactionAmount !== "") {
+            writer.uint32(26).string(message.MinTransactionAmount);
+        }
+        if (message.ExtraPercentage !== "") {
+            writer.uint32(34).string(message.ExtraPercentage);
+        }
+        if (message.AssetMarginPercentage !== "") {
+            writer.uint32(42).string(message.AssetMarginPercentage);
+        }
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseEquity();
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    if (tag !== 10) {
+                        break;
+                    }
+                    message.ExchangeTickerSymbol = reader.string();
+                    continue;
+                case 2:
+                    if (tag !== 18) {
+                        break;
+                    }
+                    message.Exchange = reader.string();
+                    continue;
+                case 3:
+                    if (tag !== 26) {
+                        break;
+                    }
+                    message.MinTransactionAmount = reader.string();
+                    continue;
+                case 4:
+                    if (tag !== 34) {
+                        break;
+                    }
+                    message.ExtraPercentage = reader.string();
+                    continue;
+                case 5:
+                    if (tag !== 42) {
+                        break;
+                    }
+                    message.AssetMarginPercentage = reader.string();
+                    continue;
+            }
+            if ((tag & 7) === 4 || tag === 0) {
+                break;
+            }
+            reader.skipType(tag & 7);
+        }
+        return message;
+    },
+    fromJSON(object) {
+        return {
+            ExchangeTickerSymbol: isSet(object.ExchangeTickerSymbol)
+                ? globalThis.String(object.ExchangeTickerSymbol)
+                : undefined,
+            Exchange: isSet(object.Exchange) ? globalThis.String(object.Exchange) : undefined,
+            MinTransactionAmount: isSet(object.MinTransactionAmount) ? globalThis.String(object.MinTransactionAmount) : "",
+            ExtraPercentage: isSet(object.ExtraPercentage) ? globalThis.String(object.ExtraPercentage) : "",
+            AssetMarginPercentage: isSet(object.AssetMarginPercentage) ? globalThis.String(object.AssetMarginPercentage) : "",
+        };
+    },
+    toJSON(message) {
+        const obj = {};
+        if (message.ExchangeTickerSymbol !== undefined) {
+            obj.ExchangeTickerSymbol = message.ExchangeTickerSymbol;
+        }
+        if (message.Exchange !== undefined) {
+            obj.Exchange = message.Exchange;
+        }
+        if (message.MinTransactionAmount !== "") {
+            obj.MinTransactionAmount = message.MinTransactionAmount;
+        }
+        if (message.ExtraPercentage !== "") {
+            obj.ExtraPercentage = message.ExtraPercentage;
+        }
+        if (message.AssetMarginPercentage !== "") {
+            obj.AssetMarginPercentage = message.AssetMarginPercentage;
+        }
+        return obj;
+    },
+    create(base) {
+        return Equity.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial(object) {
+        var _a, _b, _c, _d, _e;
+        const message = createBaseEquity();
+        message.ExchangeTickerSymbol = (_a = object.ExchangeTickerSymbol) !== null && _a !== void 0 ? _a : undefined;
+        message.Exchange = (_b = object.Exchange) !== null && _b !== void 0 ? _b : undefined;
+        message.MinTransactionAmount = (_c = object.MinTransactionAmount) !== null && _c !== void 0 ? _c : "";
+        message.ExtraPercentage = (_d = object.ExtraPercentage) !== null && _d !== void 0 ? _d : "";
+        message.AssetMarginPercentage = (_e = object.AssetMarginPercentage) !== null && _e !== void 0 ? _e : "";
         return message;
     },
 };
