@@ -32,6 +32,7 @@ export declare enum AssetType {
     VEHICLE_INDUSTRIAL_EQUIPMENT = 6,
     INTELLECTUAL_PROPERTY = 7,
     REAL_ESTATE = 8,
+    EQUITY = 9,
     UNRECOGNIZED = -1
 }
 export declare function assetTypeFromJSON(object: any): AssetType;
