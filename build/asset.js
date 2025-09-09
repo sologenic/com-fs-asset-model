@@ -8,6 +8,122 @@ import _m0 from "protobufjs/minimal";
 import { Denom } from "./sologenic/com-fs-asset-model/domain/denom/denom";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
 export const protobufPackage = "asset";
+export var LinkType;
+(function (LinkType) {
+    LinkType[LinkType["LINK_TYPE_DO_NOT_USE"] = 0] = "LINK_TYPE_DO_NOT_USE";
+    LinkType[LinkType["WEBSITE"] = 1] = "WEBSITE";
+    LinkType[LinkType["GITHUB"] = 2] = "GITHUB";
+    LinkType[LinkType["WHITEPAPER"] = 3] = "WHITEPAPER";
+    LinkType[LinkType["DOCS"] = 4] = "DOCS";
+    LinkType[LinkType["EXPLORER"] = 5] = "EXPLORER";
+    LinkType[LinkType["GOVERNANCE"] = 6] = "GOVERNANCE";
+    LinkType[LinkType["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
+})(LinkType || (LinkType = {}));
+export function linkTypeFromJSON(object) {
+    switch (object) {
+        case 0:
+        case "LINK_TYPE_DO_NOT_USE":
+            return LinkType.LINK_TYPE_DO_NOT_USE;
+        case 1:
+        case "WEBSITE":
+            return LinkType.WEBSITE;
+        case 2:
+        case "GITHUB":
+            return LinkType.GITHUB;
+        case 3:
+        case "WHITEPAPER":
+            return LinkType.WHITEPAPER;
+        case 4:
+        case "DOCS":
+            return LinkType.DOCS;
+        case 5:
+        case "EXPLORER":
+            return LinkType.EXPLORER;
+        case 6:
+        case "GOVERNANCE":
+            return LinkType.GOVERNANCE;
+        case -1:
+        case "UNRECOGNIZED":
+        default:
+            return LinkType.UNRECOGNIZED;
+    }
+}
+export function linkTypeToJSON(object) {
+    switch (object) {
+        case LinkType.LINK_TYPE_DO_NOT_USE:
+            return "LINK_TYPE_DO_NOT_USE";
+        case LinkType.WEBSITE:
+            return "WEBSITE";
+        case LinkType.GITHUB:
+            return "GITHUB";
+        case LinkType.WHITEPAPER:
+            return "WHITEPAPER";
+        case LinkType.DOCS:
+            return "DOCS";
+        case LinkType.EXPLORER:
+            return "EXPLORER";
+        case LinkType.GOVERNANCE:
+            return "GOVERNANCE";
+        case LinkType.UNRECOGNIZED:
+        default:
+            return "UNRECOGNIZED";
+    }
+}
+export var SocialMediaType;
+(function (SocialMediaType) {
+    SocialMediaType[SocialMediaType["SOCIAL_MEDIA_TYPE_DO_NOT_USE"] = 0] = "SOCIAL_MEDIA_TYPE_DO_NOT_USE";
+    SocialMediaType[SocialMediaType["TWITTER"] = 1] = "TWITTER";
+    SocialMediaType[SocialMediaType["TELEGRAM"] = 2] = "TELEGRAM";
+    SocialMediaType[SocialMediaType["DISCORD"] = 3] = "DISCORD";
+    SocialMediaType[SocialMediaType["MEDIUM"] = 4] = "MEDIUM";
+    SocialMediaType[SocialMediaType["LINKEDIN"] = 5] = "LINKEDIN";
+    SocialMediaType[SocialMediaType["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
+})(SocialMediaType || (SocialMediaType = {}));
+export function socialMediaTypeFromJSON(object) {
+    switch (object) {
+        case 0:
+        case "SOCIAL_MEDIA_TYPE_DO_NOT_USE":
+            return SocialMediaType.SOCIAL_MEDIA_TYPE_DO_NOT_USE;
+        case 1:
+        case "TWITTER":
+            return SocialMediaType.TWITTER;
+        case 2:
+        case "TELEGRAM":
+            return SocialMediaType.TELEGRAM;
+        case 3:
+        case "DISCORD":
+            return SocialMediaType.DISCORD;
+        case 4:
+        case "MEDIUM":
+            return SocialMediaType.MEDIUM;
+        case 5:
+        case "LINKEDIN":
+            return SocialMediaType.LINKEDIN;
+        case -1:
+        case "UNRECOGNIZED":
+        default:
+            return SocialMediaType.UNRECOGNIZED;
+    }
+}
+export function socialMediaTypeToJSON(object) {
+    switch (object) {
+        case SocialMediaType.SOCIAL_MEDIA_TYPE_DO_NOT_USE:
+            return "SOCIAL_MEDIA_TYPE_DO_NOT_USE";
+        case SocialMediaType.TWITTER:
+            return "TWITTER";
+        case SocialMediaType.TELEGRAM:
+            return "TELEGRAM";
+        case SocialMediaType.DISCORD:
+            return "DISCORD";
+        case SocialMediaType.MEDIUM:
+            return "MEDIUM";
+        case SocialMediaType.LINKEDIN:
+            return "LINKEDIN";
+        case SocialMediaType.UNRECOGNIZED:
+        default:
+            return "UNRECOGNIZED";
+    }
+}
 export var AssetStatus;
 (function (AssetStatus) {
     AssetStatus[AssetStatus["ASSET_STATUS_DO_NOT_USE"] = 0] = "ASSET_STATUS_DO_NOT_USE";
@@ -247,6 +363,7 @@ function createBaseAssetDetails() {
         InvestmentFundDetails: undefined,
         FinancialProperties: undefined,
         Description: undefined,
+        ExternalResources: undefined,
     };
 }
 export const AssetDetails = {
@@ -301,6 +418,9 @@ export const AssetDetails = {
         }
         if (message.Description !== undefined) {
             Description.encode(message.Description, writer.uint32(226).fork()).ldelim();
+        }
+        if (message.ExternalResources !== undefined) {
+            ExternalResources.encode(message.ExternalResources, writer.uint32(242).fork()).ldelim();
         }
         return writer;
     },
@@ -413,6 +533,12 @@ export const AssetDetails = {
                     }
                     message.Description = Description.decode(reader, reader.uint32());
                     continue;
+                case 30:
+                    if (tag !== 242) {
+                        break;
+                    }
+                    message.ExternalResources = ExternalResources.decode(reader, reader.uint32());
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -452,6 +578,9 @@ export const AssetDetails = {
                 ? FinancialProperties.fromJSON(object.FinancialProperties)
                 : undefined,
             Description: isSet(object.Description) ? Description.fromJSON(object.Description) : undefined,
+            ExternalResources: isSet(object.ExternalResources)
+                ? ExternalResources.fromJSON(object.ExternalResources)
+                : undefined,
         };
     },
     toJSON(message) {
@@ -507,6 +636,9 @@ export const AssetDetails = {
         if (message.Description !== undefined) {
             obj.Description = Description.toJSON(message.Description);
         }
+        if (message.ExternalResources !== undefined) {
+            obj.ExternalResources = ExternalResources.toJSON(message.ExternalResources);
+        }
         return obj;
     },
     create(base) {
@@ -551,6 +683,9 @@ export const AssetDetails = {
             : undefined;
         message.Description = (object.Description !== undefined && object.Description !== null)
             ? Description.fromPartial(object.Description)
+            : undefined;
+        message.ExternalResources = (object.ExternalResources !== undefined && object.ExternalResources !== null)
+            ? ExternalResources.fromPartial(object.ExternalResources)
             : undefined;
         return message;
     },
@@ -2830,6 +2965,208 @@ export const Description = {
         message.Vertical = (_j = object.Vertical) !== null && _j !== void 0 ? _j : "";
         message.CreatedAt = (_k = object.CreatedAt) !== null && _k !== void 0 ? _k : undefined;
         message.UpdatedAt = (_l = object.UpdatedAt) !== null && _l !== void 0 ? _l : undefined;
+        return message;
+    },
+};
+function createBaseExternalResources() {
+    return { Links: [], Socials: [] };
+}
+export const ExternalResources = {
+    encode(message, writer = _m0.Writer.create()) {
+        for (const v of message.Links) {
+            Link.encode(v, writer.uint32(10).fork()).ldelim();
+        }
+        for (const v of message.Socials) {
+            SocialMedia.encode(v, writer.uint32(18).fork()).ldelim();
+        }
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseExternalResources();
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    if (tag !== 10) {
+                        break;
+                    }
+                    message.Links.push(Link.decode(reader, reader.uint32()));
+                    continue;
+                case 2:
+                    if (tag !== 18) {
+                        break;
+                    }
+                    message.Socials.push(SocialMedia.decode(reader, reader.uint32()));
+                    continue;
+            }
+            if ((tag & 7) === 4 || tag === 0) {
+                break;
+            }
+            reader.skipType(tag & 7);
+        }
+        return message;
+    },
+    fromJSON(object) {
+        return {
+            Links: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Links) ? object.Links.map((e) => Link.fromJSON(e)) : [],
+            Socials: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Socials) ? object.Socials.map((e) => SocialMedia.fromJSON(e)) : [],
+        };
+    },
+    toJSON(message) {
+        var _a, _b;
+        const obj = {};
+        if ((_a = message.Links) === null || _a === void 0 ? void 0 : _a.length) {
+            obj.Links = message.Links.map((e) => Link.toJSON(e));
+        }
+        if ((_b = message.Socials) === null || _b === void 0 ? void 0 : _b.length) {
+            obj.Socials = message.Socials.map((e) => SocialMedia.toJSON(e));
+        }
+        return obj;
+    },
+    create(base) {
+        return ExternalResources.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial(object) {
+        var _a, _b;
+        const message = createBaseExternalResources();
+        message.Links = ((_a = object.Links) === null || _a === void 0 ? void 0 : _a.map((e) => Link.fromPartial(e))) || [];
+        message.Socials = ((_b = object.Socials) === null || _b === void 0 ? void 0 : _b.map((e) => SocialMedia.fromPartial(e))) || [];
+        return message;
+    },
+};
+function createBaseLink() {
+    return { Type: 0, URL: "" };
+}
+export const Link = {
+    encode(message, writer = _m0.Writer.create()) {
+        if (message.Type !== 0) {
+            writer.uint32(8).int32(message.Type);
+        }
+        if (message.URL !== "") {
+            writer.uint32(18).string(message.URL);
+        }
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseLink();
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    if (tag !== 8) {
+                        break;
+                    }
+                    message.Type = reader.int32();
+                    continue;
+                case 2:
+                    if (tag !== 18) {
+                        break;
+                    }
+                    message.URL = reader.string();
+                    continue;
+            }
+            if ((tag & 7) === 4 || tag === 0) {
+                break;
+            }
+            reader.skipType(tag & 7);
+        }
+        return message;
+    },
+    fromJSON(object) {
+        return {
+            Type: isSet(object.Type) ? linkTypeFromJSON(object.Type) : 0,
+            URL: isSet(object.URL) ? globalThis.String(object.URL) : "",
+        };
+    },
+    toJSON(message) {
+        const obj = {};
+        if (message.Type !== 0) {
+            obj.Type = linkTypeToJSON(message.Type);
+        }
+        if (message.URL !== "") {
+            obj.URL = message.URL;
+        }
+        return obj;
+    },
+    create(base) {
+        return Link.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial(object) {
+        var _a, _b;
+        const message = createBaseLink();
+        message.Type = (_a = object.Type) !== null && _a !== void 0 ? _a : 0;
+        message.URL = (_b = object.URL) !== null && _b !== void 0 ? _b : "";
+        return message;
+    },
+};
+function createBaseSocialMedia() {
+    return { Type: 0, URL: "" };
+}
+export const SocialMedia = {
+    encode(message, writer = _m0.Writer.create()) {
+        if (message.Type !== 0) {
+            writer.uint32(8).int32(message.Type);
+        }
+        if (message.URL !== "") {
+            writer.uint32(18).string(message.URL);
+        }
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseSocialMedia();
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    if (tag !== 8) {
+                        break;
+                    }
+                    message.Type = reader.int32();
+                    continue;
+                case 2:
+                    if (tag !== 18) {
+                        break;
+                    }
+                    message.URL = reader.string();
+                    continue;
+            }
+            if ((tag & 7) === 4 || tag === 0) {
+                break;
+            }
+            reader.skipType(tag & 7);
+        }
+        return message;
+    },
+    fromJSON(object) {
+        return {
+            Type: isSet(object.Type) ? socialMediaTypeFromJSON(object.Type) : 0,
+            URL: isSet(object.URL) ? globalThis.String(object.URL) : "",
+        };
+    },
+    toJSON(message) {
+        const obj = {};
+        if (message.Type !== 0) {
+            obj.Type = socialMediaTypeToJSON(message.Type);
+        }
+        if (message.URL !== "") {
+            obj.URL = message.URL;
+        }
+        return obj;
+    },
+    create(base) {
+        return SocialMedia.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial(object) {
+        var _a, _b;
+        const message = createBaseSocialMedia();
+        message.Type = (_a = object.Type) !== null && _a !== void 0 ? _a : 0;
+        message.URL = (_b = object.URL) !== null && _b !== void 0 ? _b : "";
         return message;
     },
 };

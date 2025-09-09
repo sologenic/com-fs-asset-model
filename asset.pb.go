@@ -23,6 +23,125 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type LinkType int32
+
+const (
+	LinkType_LINK_TYPE_DO_NOT_USE LinkType = 0
+	LinkType_WEBSITE              LinkType = 1
+	LinkType_GITHUB               LinkType = 2
+	LinkType_WHITEPAPER           LinkType = 3
+	LinkType_DOCS                 LinkType = 4
+	LinkType_EXPLORER             LinkType = 5
+	LinkType_GOVERNANCE           LinkType = 6
+)
+
+// Enum value maps for LinkType.
+var (
+	LinkType_name = map[int32]string{
+		0: "LINK_TYPE_DO_NOT_USE",
+		1: "WEBSITE",
+		2: "GITHUB",
+		3: "WHITEPAPER",
+		4: "DOCS",
+		5: "EXPLORER",
+		6: "GOVERNANCE",
+	}
+	LinkType_value = map[string]int32{
+		"LINK_TYPE_DO_NOT_USE": 0,
+		"WEBSITE":              1,
+		"GITHUB":               2,
+		"WHITEPAPER":           3,
+		"DOCS":                 4,
+		"EXPLORER":             5,
+		"GOVERNANCE":           6,
+	}
+)
+
+func (x LinkType) Enum() *LinkType {
+	p := new(LinkType)
+	*p = x
+	return p
+}
+
+func (x LinkType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (LinkType) Descriptor() protoreflect.EnumDescriptor {
+	return file_asset_proto_enumTypes[0].Descriptor()
+}
+
+func (LinkType) Type() protoreflect.EnumType {
+	return &file_asset_proto_enumTypes[0]
+}
+
+func (x LinkType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use LinkType.Descriptor instead.
+func (LinkType) EnumDescriptor() ([]byte, []int) {
+	return file_asset_proto_rawDescGZIP(), []int{0}
+}
+
+type SocialMediaType int32
+
+const (
+	SocialMediaType_SOCIAL_MEDIA_TYPE_DO_NOT_USE SocialMediaType = 0
+	SocialMediaType_TWITTER                      SocialMediaType = 1
+	SocialMediaType_TELEGRAM                     SocialMediaType = 2
+	SocialMediaType_DISCORD                      SocialMediaType = 3
+	SocialMediaType_MEDIUM                       SocialMediaType = 4
+	SocialMediaType_LINKEDIN                     SocialMediaType = 5
+)
+
+// Enum value maps for SocialMediaType.
+var (
+	SocialMediaType_name = map[int32]string{
+		0: "SOCIAL_MEDIA_TYPE_DO_NOT_USE",
+		1: "TWITTER",
+		2: "TELEGRAM",
+		3: "DISCORD",
+		4: "MEDIUM",
+		5: "LINKEDIN",
+	}
+	SocialMediaType_value = map[string]int32{
+		"SOCIAL_MEDIA_TYPE_DO_NOT_USE": 0,
+		"TWITTER":                      1,
+		"TELEGRAM":                     2,
+		"DISCORD":                      3,
+		"MEDIUM":                       4,
+		"LINKEDIN":                     5,
+	}
+)
+
+func (x SocialMediaType) Enum() *SocialMediaType {
+	p := new(SocialMediaType)
+	*p = x
+	return p
+}
+
+func (x SocialMediaType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (SocialMediaType) Descriptor() protoreflect.EnumDescriptor {
+	return file_asset_proto_enumTypes[1].Descriptor()
+}
+
+func (SocialMediaType) Type() protoreflect.EnumType {
+	return &file_asset_proto_enumTypes[1]
+}
+
+func (x SocialMediaType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use SocialMediaType.Descriptor instead.
+func (SocialMediaType) EnumDescriptor() ([]byte, []int) {
+	return file_asset_proto_rawDescGZIP(), []int{1}
+}
+
 type AssetStatus int32
 
 const (
@@ -65,11 +184,11 @@ func (x AssetStatus) String() string {
 }
 
 func (AssetStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_asset_proto_enumTypes[0].Descriptor()
+	return file_asset_proto_enumTypes[2].Descriptor()
 }
 
 func (AssetStatus) Type() protoreflect.EnumType {
-	return &file_asset_proto_enumTypes[0]
+	return &file_asset_proto_enumTypes[2]
 }
 
 func (x AssetStatus) Number() protoreflect.EnumNumber {
@@ -78,7 +197,7 @@ func (x AssetStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AssetStatus.Descriptor instead.
 func (AssetStatus) EnumDescriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{0}
+	return file_asset_proto_rawDescGZIP(), []int{2}
 }
 
 type Reason int32
@@ -117,11 +236,11 @@ func (x Reason) String() string {
 }
 
 func (Reason) Descriptor() protoreflect.EnumDescriptor {
-	return file_asset_proto_enumTypes[1].Descriptor()
+	return file_asset_proto_enumTypes[3].Descriptor()
 }
 
 func (Reason) Type() protoreflect.EnumType {
-	return &file_asset_proto_enumTypes[1]
+	return &file_asset_proto_enumTypes[3]
 }
 
 func (x Reason) Number() protoreflect.EnumNumber {
@@ -130,7 +249,7 @@ func (x Reason) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Reason.Descriptor instead.
 func (Reason) EnumDescriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{1}
+	return file_asset_proto_rawDescGZIP(), []int{3}
 }
 
 type AssetType int32
@@ -184,11 +303,11 @@ func (x AssetType) String() string {
 }
 
 func (AssetType) Descriptor() protoreflect.EnumDescriptor {
-	return file_asset_proto_enumTypes[2].Descriptor()
+	return file_asset_proto_enumTypes[4].Descriptor()
 }
 
 func (AssetType) Type() protoreflect.EnumType {
-	return &file_asset_proto_enumTypes[2]
+	return &file_asset_proto_enumTypes[4]
 }
 
 func (x AssetType) Number() protoreflect.EnumNumber {
@@ -197,7 +316,7 @@ func (x AssetType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AssetType.Descriptor instead.
 func (AssetType) EnumDescriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{2}
+	return file_asset_proto_rawDescGZIP(), []int{4}
 }
 
 type UserAssetStatus int32
@@ -239,11 +358,11 @@ func (x UserAssetStatus) String() string {
 }
 
 func (UserAssetStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_asset_proto_enumTypes[3].Descriptor()
+	return file_asset_proto_enumTypes[5].Descriptor()
 }
 
 func (UserAssetStatus) Type() protoreflect.EnumType {
-	return &file_asset_proto_enumTypes[3]
+	return &file_asset_proto_enumTypes[5]
 }
 
 func (x UserAssetStatus) Number() protoreflect.EnumNumber {
@@ -252,7 +371,7 @@ func (x UserAssetStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use UserAssetStatus.Descriptor instead.
 func (UserAssetStatus) EnumDescriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{3}
+	return file_asset_proto_rawDescGZIP(), []int{5}
 }
 
 type AssetDetails struct {
@@ -274,6 +393,7 @@ type AssetDetails struct {
 	InvestmentFundDetails       *InvestmentFund        `protobuf:"bytes,26,opt,name=InvestmentFundDetails,proto3,oneof" json:"InvestmentFundDetails,omitempty"`
 	FinancialProperties         *FinancialProperties   `protobuf:"bytes,27,opt,name=FinancialProperties,proto3,oneof" json:"FinancialProperties,omitempty"` // Financial-specific properties
 	Description                 *Description           `protobuf:"bytes,28,opt,name=Description,proto3,oneof" json:"Description,omitempty"`                 // Human-readable descriptive properties
+	ExternalResources           *ExternalResources     `protobuf:"bytes,30,opt,name=ExternalResources,proto3,oneof" json:"ExternalResources,omitempty"`     // External links and resources
 	unknownFields               protoimpl.UnknownFields
 	sizeCache                   protoimpl.SizeCache
 }
@@ -423,6 +543,13 @@ func (x *AssetDetails) GetFinancialProperties() *FinancialProperties {
 func (x *AssetDetails) GetDescription() *Description {
 	if x != nil {
 		return x.Description
+	}
+	return nil
+}
+
+func (x *AssetDetails) GetExternalResources() *ExternalResources {
+	if x != nil {
+		return x.ExternalResources
 	}
 	return nil
 }
@@ -1815,6 +1942,162 @@ func (x *Description) GetUpdatedAt() string {
 	return ""
 }
 
+type ExternalResources struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Links         []*Link                `protobuf:"bytes,1,rep,name=Links,proto3" json:"Links,omitempty"`     // Flexible list of links with type and URL
+	Socials       []*SocialMedia         `protobuf:"bytes,2,rep,name=Socials,proto3" json:"Socials,omitempty"` // Flexible list of social media with type and URL
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExternalResources) Reset() {
+	*x = ExternalResources{}
+	mi := &file_asset_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExternalResources) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExternalResources) ProtoMessage() {}
+
+func (x *ExternalResources) ProtoReflect() protoreflect.Message {
+	mi := &file_asset_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExternalResources.ProtoReflect.Descriptor instead.
+func (*ExternalResources) Descriptor() ([]byte, []int) {
+	return file_asset_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *ExternalResources) GetLinks() []*Link {
+	if x != nil {
+		return x.Links
+	}
+	return nil
+}
+
+func (x *ExternalResources) GetSocials() []*SocialMedia {
+	if x != nil {
+		return x.Socials
+	}
+	return nil
+}
+
+type Link struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Type          LinkType               `protobuf:"varint,1,opt,name=Type,proto3,enum=asset.LinkType" json:"Type,omitempty"` // Type of link (e.g., "website", "github", "whitepaper", "docs", "explorer", "governance", etc.)
+	URL           string                 `protobuf:"bytes,2,opt,name=URL,proto3" json:"URL,omitempty"`                        // The actual URL
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Link) Reset() {
+	*x = Link{}
+	mi := &file_asset_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Link) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Link) ProtoMessage() {}
+
+func (x *Link) ProtoReflect() protoreflect.Message {
+	mi := &file_asset_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Link.ProtoReflect.Descriptor instead.
+func (*Link) Descriptor() ([]byte, []int) {
+	return file_asset_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *Link) GetType() LinkType {
+	if x != nil {
+		return x.Type
+	}
+	return LinkType_LINK_TYPE_DO_NOT_USE
+}
+
+func (x *Link) GetURL() string {
+	if x != nil {
+		return x.URL
+	}
+	return ""
+}
+
+type SocialMedia struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Type          SocialMediaType        `protobuf:"varint,1,opt,name=Type,proto3,enum=asset.SocialMediaType" json:"Type,omitempty"` // Type of social media (e.g., "twitter", "telegram", "discord", "medium", "linkedin", etc.)
+	URL           string                 `protobuf:"bytes,2,opt,name=URL,proto3" json:"URL,omitempty"`                               // The actual URL
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SocialMedia) Reset() {
+	*x = SocialMedia{}
+	mi := &file_asset_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SocialMedia) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SocialMedia) ProtoMessage() {}
+
+func (x *SocialMedia) ProtoReflect() protoreflect.Message {
+	mi := &file_asset_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SocialMedia.ProtoReflect.Descriptor instead.
+func (*SocialMedia) Descriptor() ([]byte, []int) {
+	return file_asset_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *SocialMedia) GetType() SocialMediaType {
+	if x != nil {
+		return x.Type
+	}
+	return SocialMediaType_SOCIAL_MEDIA_TYPE_DO_NOT_USE
+}
+
+func (x *SocialMedia) GetURL() string {
+	if x != nil {
+		return x.URL
+	}
+	return ""
+}
+
 type MetadataDetails struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	Name             string                 `protobuf:"bytes,1,opt,name=Name,proto3" json:"Name,omitempty"`
@@ -1842,7 +2125,7 @@ type MetadataDetails struct {
 
 func (x *MetadataDetails) Reset() {
 	*x = MetadataDetails{}
-	mi := &file_asset_proto_msgTypes[14]
+	mi := &file_asset_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1854,7 +2137,7 @@ func (x *MetadataDetails) String() string {
 func (*MetadataDetails) ProtoMessage() {}
 
 func (x *MetadataDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_asset_proto_msgTypes[14]
+	mi := &file_asset_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1867,7 +2150,7 @@ func (x *MetadataDetails) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MetadataDetails.ProtoReflect.Descriptor instead.
 func (*MetadataDetails) Descriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{14}
+	return file_asset_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *MetadataDetails) GetName() string {
@@ -2007,7 +2290,8 @@ var File_asset_proto protoreflect.FileDescriptor
 
 const file_asset_proto_rawDesc = "" +
 	"\n" +
-	"\vasset.proto\x12\x05asset\x1a5sologenic/com-fs-asset-model/domain/denom/denom.proto\x1a3sologenic/com-fs-utils-lib/models/audit/audit.proto\"\xcd\t\n" +
+	"\vasset.proto\x12\x05asset\x1a5sologenic/com-fs-asset-model/domain/denom/denom.proto\x1a3sologenic/com-fs-utils-lib/models/audit/audit.proto\"\xb0\n" +
+	"\n" +
 	"\fAssetDetails\x12\x0e\n" +
 	"\x02ID\x18\x01 \x01(\tR\x02ID\x12&\n" +
 	"\x0eOrganizationID\x18\x02 \x01(\tR\x0eOrganizationID\x12*\n" +
@@ -2025,7 +2309,9 @@ const file_asset_proto_rawDesc = "" +
 	"\x1bIntellectualPropertyDetails\x18\x19 \x01(\v2\x1b.asset.IntellectualPropertyH\x06R\x1bIntellectualPropertyDetails\x88\x01\x01\x12P\n" +
 	"\x15InvestmentFundDetails\x18\x1a \x01(\v2\x15.asset.InvestmentFundH\aR\x15InvestmentFundDetails\x88\x01\x01\x12Q\n" +
 	"\x13FinancialProperties\x18\x1b \x01(\v2\x1a.asset.FinancialPropertiesH\bR\x13FinancialProperties\x88\x01\x01\x129\n" +
-	"\vDescription\x18\x1c \x01(\v2\x12.asset.DescriptionH\tR\vDescription\x88\x01\x01B\t\n" +
+	"\vDescription\x18\x1c \x01(\v2\x12.asset.DescriptionH\tR\vDescription\x88\x01\x01\x12K\n" +
+	"\x11ExternalResources\x18\x1e \x01(\v2\x18.asset.ExternalResourcesH\n" +
+	"R\x11ExternalResources\x88\x01\x01B\t\n" +
 	"\a_ReasonB\x14\n" +
 	"\x12_RealEstateDetailsB\x14\n" +
 	"\x12_StableCoinDetailsB\x13\n" +
@@ -2035,7 +2321,8 @@ const file_asset_proto_rawDesc = "" +
 	"\x1c_IntellectualPropertyDetailsB\x18\n" +
 	"\x16_InvestmentFundDetailsB\x16\n" +
 	"\x14_FinancialPropertiesB\x0e\n" +
-	"\f_Description\"\x98\x01\n" +
+	"\f_DescriptionB\x14\n" +
+	"\x12_ExternalResources\"\x98\x01\n" +
 	"\x05Asset\x127\n" +
 	"\fAssetDetails\x18\x01 \x01(\v2\x13.asset.AssetDetailsR\fAssetDetails\x122\n" +
 	"\bMetaData\x18\x02 \x01(\v2\x16.asset.MetadataDetailsR\bMetaData\x12\"\n" +
@@ -2247,7 +2534,16 @@ const file_asset_proto_rawDesc = "" +
 	"\n" +
 	"_CreatedAtB\f\n" +
 	"\n" +
-	"_UpdatedAt\"\xf1\x05\n" +
+	"_UpdatedAt\"d\n" +
+	"\x11ExternalResources\x12!\n" +
+	"\x05Links\x18\x01 \x03(\v2\v.asset.LinkR\x05Links\x12,\n" +
+	"\aSocials\x18\x02 \x03(\v2\x12.asset.SocialMediaR\aSocials\"=\n" +
+	"\x04Link\x12#\n" +
+	"\x04Type\x18\x01 \x01(\x0e2\x0f.asset.LinkTypeR\x04Type\x12\x10\n" +
+	"\x03URL\x18\x02 \x01(\tR\x03URL\"K\n" +
+	"\vSocialMedia\x12*\n" +
+	"\x04Type\x18\x01 \x01(\x0e2\x16.asset.SocialMediaTypeR\x04Type\x12\x10\n" +
+	"\x03URL\x18\x02 \x01(\tR\x03URL\"\xf1\x05\n" +
 	"\x0fMetadataDetails\x12\x12\n" +
 	"\x04Name\x18\x01 \x01(\tR\x04Name\x12 \n" +
 	"\vDescription\x18\x02 \x01(\tR\vDescription\x12\x14\n" +
@@ -2281,7 +2577,26 @@ const file_asset_proto_rawDesc = "" +
 	"\x06_PhoneB\b\n" +
 	"\x06_EmailB\r\n" +
 	"\v_KeyClientsB\b\n" +
-	"\x06_Press*\x9c\x01\n" +
+	"\x06_Press*u\n" +
+	"\bLinkType\x12\x18\n" +
+	"\x14LINK_TYPE_DO_NOT_USE\x10\x00\x12\v\n" +
+	"\aWEBSITE\x10\x01\x12\n" +
+	"\n" +
+	"\x06GITHUB\x10\x02\x12\x0e\n" +
+	"\n" +
+	"WHITEPAPER\x10\x03\x12\b\n" +
+	"\x04DOCS\x10\x04\x12\f\n" +
+	"\bEXPLORER\x10\x05\x12\x0e\n" +
+	"\n" +
+	"GOVERNANCE\x10\x06*u\n" +
+	"\x0fSocialMediaType\x12 \n" +
+	"\x1cSOCIAL_MEDIA_TYPE_DO_NOT_USE\x10\x00\x12\v\n" +
+	"\aTWITTER\x10\x01\x12\f\n" +
+	"\bTELEGRAM\x10\x02\x12\v\n" +
+	"\aDISCORD\x10\x03\x12\n" +
+	"\n" +
+	"\x06MEDIUM\x10\x04\x12\f\n" +
+	"\bLINKEDIN\x10\x05*\x9c\x01\n" +
 	"\vAssetStatus\x12\x1b\n" +
 	"\x17ASSET_STATUS_DO_NOT_USE\x10\x00\x12\x0f\n" +
 	"\vDO_NOT_LIST\x10\x01\x12\x13\n" +
@@ -2325,57 +2640,67 @@ func file_asset_proto_rawDescGZIP() []byte {
 	return file_asset_proto_rawDescData
 }
 
-var file_asset_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_asset_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_asset_proto_enumTypes = make([]protoimpl.EnumInfo, 6)
+var file_asset_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_asset_proto_goTypes = []any{
-	(AssetStatus)(0),             // 0: asset.AssetStatus
-	(Reason)(0),                  // 1: asset.Reason
-	(AssetType)(0),               // 2: asset.AssetType
-	(UserAssetStatus)(0),         // 3: asset.UserAssetStatus
-	(*AssetDetails)(nil),         // 4: asset.AssetDetails
-	(*Asset)(nil),                // 5: asset.Asset
-	(*Assets)(nil),               // 6: asset.Assets
-	(*UserAssetList)(nil),        // 7: asset.UserAssetList
-	(*UserAssetLists)(nil),       // 8: asset.UserAssetLists
-	(*RealEstate)(nil),           // 9: asset.RealEstate
-	(*StableCoin)(nil),           // 10: asset.StableCoin
-	(*Commodity)(nil),            // 11: asset.Commodity
-	(*Collectible)(nil),          // 12: asset.Collectible
-	(*Vehicle)(nil),              // 13: asset.Vehicle
-	(*IntellectualProperty)(nil), // 14: asset.IntellectualProperty
-	(*InvestmentFund)(nil),       // 15: asset.InvestmentFund
-	(*FinancialProperties)(nil),  // 16: asset.FinancialProperties
-	(*Description)(nil),          // 17: asset.Description
-	(*MetadataDetails)(nil),      // 18: asset.MetadataDetails
-	(*denom.Denom)(nil),          // 19: denom.Denom
-	(*audit.Audit)(nil),          // 20: audit.Audit
+	(LinkType)(0),                // 0: asset.LinkType
+	(SocialMediaType)(0),         // 1: asset.SocialMediaType
+	(AssetStatus)(0),             // 2: asset.AssetStatus
+	(Reason)(0),                  // 3: asset.Reason
+	(AssetType)(0),               // 4: asset.AssetType
+	(UserAssetStatus)(0),         // 5: asset.UserAssetStatus
+	(*AssetDetails)(nil),         // 6: asset.AssetDetails
+	(*Asset)(nil),                // 7: asset.Asset
+	(*Assets)(nil),               // 8: asset.Assets
+	(*UserAssetList)(nil),        // 9: asset.UserAssetList
+	(*UserAssetLists)(nil),       // 10: asset.UserAssetLists
+	(*RealEstate)(nil),           // 11: asset.RealEstate
+	(*StableCoin)(nil),           // 12: asset.StableCoin
+	(*Commodity)(nil),            // 13: asset.Commodity
+	(*Collectible)(nil),          // 14: asset.Collectible
+	(*Vehicle)(nil),              // 15: asset.Vehicle
+	(*IntellectualProperty)(nil), // 16: asset.IntellectualProperty
+	(*InvestmentFund)(nil),       // 17: asset.InvestmentFund
+	(*FinancialProperties)(nil),  // 18: asset.FinancialProperties
+	(*Description)(nil),          // 19: asset.Description
+	(*ExternalResources)(nil),    // 20: asset.ExternalResources
+	(*Link)(nil),                 // 21: asset.Link
+	(*SocialMedia)(nil),          // 22: asset.SocialMedia
+	(*MetadataDetails)(nil),      // 23: asset.MetadataDetails
+	(*denom.Denom)(nil),          // 24: denom.Denom
+	(*audit.Audit)(nil),          // 25: audit.Audit
 }
 var file_asset_proto_depIdxs = []int32{
-	0,  // 0: asset.AssetDetails.Status:type_name -> asset.AssetStatus
-	1,  // 1: asset.AssetDetails.Reason:type_name -> asset.Reason
-	2,  // 2: asset.AssetDetails.Type:type_name -> asset.AssetType
-	19, // 3: asset.AssetDetails.Denom:type_name -> denom.Denom
-	9,  // 4: asset.AssetDetails.RealEstateDetails:type_name -> asset.RealEstate
-	10, // 5: asset.AssetDetails.StableCoinDetails:type_name -> asset.StableCoin
-	11, // 6: asset.AssetDetails.CommodityDetails:type_name -> asset.Commodity
-	12, // 7: asset.AssetDetails.CollectibleDetails:type_name -> asset.Collectible
-	13, // 8: asset.AssetDetails.VehicleDetails:type_name -> asset.Vehicle
-	14, // 9: asset.AssetDetails.IntellectualPropertyDetails:type_name -> asset.IntellectualProperty
-	15, // 10: asset.AssetDetails.InvestmentFundDetails:type_name -> asset.InvestmentFund
-	16, // 11: asset.AssetDetails.FinancialProperties:type_name -> asset.FinancialProperties
-	17, // 12: asset.AssetDetails.Description:type_name -> asset.Description
-	4,  // 13: asset.Asset.AssetDetails:type_name -> asset.AssetDetails
-	18, // 14: asset.Asset.MetaData:type_name -> asset.MetadataDetails
-	20, // 15: asset.Asset.Audit:type_name -> audit.Audit
-	5,  // 16: asset.Assets.Assets:type_name -> asset.Asset
-	3,  // 17: asset.UserAssetList.Status:type_name -> asset.UserAssetStatus
-	18, // 18: asset.UserAssetList.MetaData:type_name -> asset.MetadataDetails
-	7,  // 19: asset.UserAssetLists.UserAssetLists:type_name -> asset.UserAssetList
-	20, // [20:20] is the sub-list for method output_type
-	20, // [20:20] is the sub-list for method input_type
-	20, // [20:20] is the sub-list for extension type_name
-	20, // [20:20] is the sub-list for extension extendee
-	0,  // [0:20] is the sub-list for field type_name
+	2,  // 0: asset.AssetDetails.Status:type_name -> asset.AssetStatus
+	3,  // 1: asset.AssetDetails.Reason:type_name -> asset.Reason
+	4,  // 2: asset.AssetDetails.Type:type_name -> asset.AssetType
+	24, // 3: asset.AssetDetails.Denom:type_name -> denom.Denom
+	11, // 4: asset.AssetDetails.RealEstateDetails:type_name -> asset.RealEstate
+	12, // 5: asset.AssetDetails.StableCoinDetails:type_name -> asset.StableCoin
+	13, // 6: asset.AssetDetails.CommodityDetails:type_name -> asset.Commodity
+	14, // 7: asset.AssetDetails.CollectibleDetails:type_name -> asset.Collectible
+	15, // 8: asset.AssetDetails.VehicleDetails:type_name -> asset.Vehicle
+	16, // 9: asset.AssetDetails.IntellectualPropertyDetails:type_name -> asset.IntellectualProperty
+	17, // 10: asset.AssetDetails.InvestmentFundDetails:type_name -> asset.InvestmentFund
+	18, // 11: asset.AssetDetails.FinancialProperties:type_name -> asset.FinancialProperties
+	19, // 12: asset.AssetDetails.Description:type_name -> asset.Description
+	20, // 13: asset.AssetDetails.ExternalResources:type_name -> asset.ExternalResources
+	6,  // 14: asset.Asset.AssetDetails:type_name -> asset.AssetDetails
+	23, // 15: asset.Asset.MetaData:type_name -> asset.MetadataDetails
+	25, // 16: asset.Asset.Audit:type_name -> audit.Audit
+	7,  // 17: asset.Assets.Assets:type_name -> asset.Asset
+	5,  // 18: asset.UserAssetList.Status:type_name -> asset.UserAssetStatus
+	23, // 19: asset.UserAssetList.MetaData:type_name -> asset.MetadataDetails
+	9,  // 20: asset.UserAssetLists.UserAssetLists:type_name -> asset.UserAssetList
+	21, // 21: asset.ExternalResources.Links:type_name -> asset.Link
+	22, // 22: asset.ExternalResources.Socials:type_name -> asset.SocialMedia
+	0,  // 23: asset.Link.Type:type_name -> asset.LinkType
+	1,  // 24: asset.SocialMedia.Type:type_name -> asset.SocialMediaType
+	25, // [25:25] is the sub-list for method output_type
+	25, // [25:25] is the sub-list for method input_type
+	25, // [25:25] is the sub-list for extension type_name
+	25, // [25:25] is the sub-list for extension extendee
+	0,  // [0:25] is the sub-list for field type_name
 }
 
 func init() { file_asset_proto_init() }
@@ -2393,14 +2718,14 @@ func file_asset_proto_init() {
 	file_asset_proto_msgTypes[11].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[12].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[13].OneofWrappers = []any{}
-	file_asset_proto_msgTypes[14].OneofWrappers = []any{}
+	file_asset_proto_msgTypes[17].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_asset_proto_rawDesc), len(file_asset_proto_rawDesc)),
-			NumEnums:      4,
-			NumMessages:   15,
+			NumEnums:      6,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

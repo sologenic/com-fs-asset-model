@@ -11,6 +11,126 @@ import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
 
 export const protobufPackage = "asset";
 
+export enum LinkType {
+  LINK_TYPE_DO_NOT_USE = 0,
+  WEBSITE = 1,
+  GITHUB = 2,
+  WHITEPAPER = 3,
+  DOCS = 4,
+  EXPLORER = 5,
+  GOVERNANCE = 6,
+  UNRECOGNIZED = -1,
+}
+
+export function linkTypeFromJSON(object: any): LinkType {
+  switch (object) {
+    case 0:
+    case "LINK_TYPE_DO_NOT_USE":
+      return LinkType.LINK_TYPE_DO_NOT_USE;
+    case 1:
+    case "WEBSITE":
+      return LinkType.WEBSITE;
+    case 2:
+    case "GITHUB":
+      return LinkType.GITHUB;
+    case 3:
+    case "WHITEPAPER":
+      return LinkType.WHITEPAPER;
+    case 4:
+    case "DOCS":
+      return LinkType.DOCS;
+    case 5:
+    case "EXPLORER":
+      return LinkType.EXPLORER;
+    case 6:
+    case "GOVERNANCE":
+      return LinkType.GOVERNANCE;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return LinkType.UNRECOGNIZED;
+  }
+}
+
+export function linkTypeToJSON(object: LinkType): string {
+  switch (object) {
+    case LinkType.LINK_TYPE_DO_NOT_USE:
+      return "LINK_TYPE_DO_NOT_USE";
+    case LinkType.WEBSITE:
+      return "WEBSITE";
+    case LinkType.GITHUB:
+      return "GITHUB";
+    case LinkType.WHITEPAPER:
+      return "WHITEPAPER";
+    case LinkType.DOCS:
+      return "DOCS";
+    case LinkType.EXPLORER:
+      return "EXPLORER";
+    case LinkType.GOVERNANCE:
+      return "GOVERNANCE";
+    case LinkType.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
+export enum SocialMediaType {
+  SOCIAL_MEDIA_TYPE_DO_NOT_USE = 0,
+  TWITTER = 1,
+  TELEGRAM = 2,
+  DISCORD = 3,
+  MEDIUM = 4,
+  LINKEDIN = 5,
+  UNRECOGNIZED = -1,
+}
+
+export function socialMediaTypeFromJSON(object: any): SocialMediaType {
+  switch (object) {
+    case 0:
+    case "SOCIAL_MEDIA_TYPE_DO_NOT_USE":
+      return SocialMediaType.SOCIAL_MEDIA_TYPE_DO_NOT_USE;
+    case 1:
+    case "TWITTER":
+      return SocialMediaType.TWITTER;
+    case 2:
+    case "TELEGRAM":
+      return SocialMediaType.TELEGRAM;
+    case 3:
+    case "DISCORD":
+      return SocialMediaType.DISCORD;
+    case 4:
+    case "MEDIUM":
+      return SocialMediaType.MEDIUM;
+    case 5:
+    case "LINKEDIN":
+      return SocialMediaType.LINKEDIN;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return SocialMediaType.UNRECOGNIZED;
+  }
+}
+
+export function socialMediaTypeToJSON(object: SocialMediaType): string {
+  switch (object) {
+    case SocialMediaType.SOCIAL_MEDIA_TYPE_DO_NOT_USE:
+      return "SOCIAL_MEDIA_TYPE_DO_NOT_USE";
+    case SocialMediaType.TWITTER:
+      return "TWITTER";
+    case SocialMediaType.TELEGRAM:
+      return "TELEGRAM";
+    case SocialMediaType.DISCORD:
+      return "DISCORD";
+    case SocialMediaType.MEDIUM:
+      return "MEDIUM";
+    case SocialMediaType.LINKEDIN:
+      return "LINKEDIN";
+    case SocialMediaType.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
 export enum AssetStatus {
   ASSET_STATUS_DO_NOT_USE = 0,
   DO_NOT_LIST = 1,
@@ -263,7 +383,11 @@ export interface AssetDetails {
     | FinancialProperties
     | undefined;
   /** Human-readable descriptive properties */
-  Description?: Description | undefined;
+  Description?:
+    | Description
+    | undefined;
+  /** External links and resources */
+  ExternalResources?: ExternalResources | undefined;
 }
 
 export interface Asset {
@@ -420,6 +544,27 @@ export interface Description {
   UpdatedAt?: string | undefined;
 }
 
+export interface ExternalResources {
+  /** Flexible list of links with type and URL */
+  Links: Link[];
+  /** Flexible list of social media with type and URL */
+  Socials: SocialMedia[];
+}
+
+export interface Link {
+  /** Type of link (e.g., "website", "github", "whitepaper", "docs", "explorer", "governance", etc.) */
+  Type: LinkType;
+  /** The actual URL */
+  URL: string;
+}
+
+export interface SocialMedia {
+  /** Type of social media (e.g., "twitter", "telegram", "discord", "medium", "linkedin", etc.) */
+  Type: SocialMediaType;
+  /** The actual URL */
+  URL: string;
+}
+
 export interface MetadataDetails {
   Name: string;
   Description: string;
@@ -461,6 +606,7 @@ function createBaseAssetDetails(): AssetDetails {
     InvestmentFundDetails: undefined,
     FinancialProperties: undefined,
     Description: undefined,
+    ExternalResources: undefined,
   };
 }
 
@@ -516,6 +662,9 @@ export const AssetDetails = {
     }
     if (message.Description !== undefined) {
       Description.encode(message.Description, writer.uint32(226).fork()).ldelim();
+    }
+    if (message.ExternalResources !== undefined) {
+      ExternalResources.encode(message.ExternalResources, writer.uint32(242).fork()).ldelim();
     }
     return writer;
   },
@@ -646,6 +795,13 @@ export const AssetDetails = {
 
           message.Description = Description.decode(reader, reader.uint32());
           continue;
+        case 30:
+          if (tag !== 242) {
+            break;
+          }
+
+          message.ExternalResources = ExternalResources.decode(reader, reader.uint32());
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -686,6 +842,9 @@ export const AssetDetails = {
         ? FinancialProperties.fromJSON(object.FinancialProperties)
         : undefined,
       Description: isSet(object.Description) ? Description.fromJSON(object.Description) : undefined,
+      ExternalResources: isSet(object.ExternalResources)
+        ? ExternalResources.fromJSON(object.ExternalResources)
+        : undefined,
     };
   },
 
@@ -742,6 +901,9 @@ export const AssetDetails = {
     if (message.Description !== undefined) {
       obj.Description = Description.toJSON(message.Description);
     }
+    if (message.ExternalResources !== undefined) {
+      obj.ExternalResources = ExternalResources.toJSON(message.ExternalResources);
+    }
     return obj;
   },
 
@@ -786,6 +948,9 @@ export const AssetDetails = {
       : undefined;
     message.Description = (object.Description !== undefined && object.Description !== null)
       ? Description.fromPartial(object.Description)
+      : undefined;
+    message.ExternalResources = (object.ExternalResources !== undefined && object.ExternalResources !== null)
+      ? ExternalResources.fromPartial(object.ExternalResources)
       : undefined;
     return message;
   },
@@ -3241,6 +3406,228 @@ export const Description = {
     message.Vertical = object.Vertical ?? "";
     message.CreatedAt = object.CreatedAt ?? undefined;
     message.UpdatedAt = object.UpdatedAt ?? undefined;
+    return message;
+  },
+};
+
+function createBaseExternalResources(): ExternalResources {
+  return { Links: [], Socials: [] };
+}
+
+export const ExternalResources = {
+  encode(message: ExternalResources, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.Links) {
+      Link.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    for (const v of message.Socials) {
+      SocialMedia.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): ExternalResources {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseExternalResources();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.Links.push(Link.decode(reader, reader.uint32()));
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.Socials.push(SocialMedia.decode(reader, reader.uint32()));
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ExternalResources {
+    return {
+      Links: globalThis.Array.isArray(object?.Links) ? object.Links.map((e: any) => Link.fromJSON(e)) : [],
+      Socials: globalThis.Array.isArray(object?.Socials) ? object.Socials.map((e: any) => SocialMedia.fromJSON(e)) : [],
+    };
+  },
+
+  toJSON(message: ExternalResources): unknown {
+    const obj: any = {};
+    if (message.Links?.length) {
+      obj.Links = message.Links.map((e) => Link.toJSON(e));
+    }
+    if (message.Socials?.length) {
+      obj.Socials = message.Socials.map((e) => SocialMedia.toJSON(e));
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ExternalResources>, I>>(base?: I): ExternalResources {
+    return ExternalResources.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<ExternalResources>, I>>(object: I): ExternalResources {
+    const message = createBaseExternalResources();
+    message.Links = object.Links?.map((e) => Link.fromPartial(e)) || [];
+    message.Socials = object.Socials?.map((e) => SocialMedia.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseLink(): Link {
+  return { Type: 0, URL: "" };
+}
+
+export const Link = {
+  encode(message: Link, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.Type !== 0) {
+      writer.uint32(8).int32(message.Type);
+    }
+    if (message.URL !== "") {
+      writer.uint32(18).string(message.URL);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Link {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseLink();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.Type = reader.int32() as any;
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.URL = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Link {
+    return {
+      Type: isSet(object.Type) ? linkTypeFromJSON(object.Type) : 0,
+      URL: isSet(object.URL) ? globalThis.String(object.URL) : "",
+    };
+  },
+
+  toJSON(message: Link): unknown {
+    const obj: any = {};
+    if (message.Type !== 0) {
+      obj.Type = linkTypeToJSON(message.Type);
+    }
+    if (message.URL !== "") {
+      obj.URL = message.URL;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Link>, I>>(base?: I): Link {
+    return Link.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Link>, I>>(object: I): Link {
+    const message = createBaseLink();
+    message.Type = object.Type ?? 0;
+    message.URL = object.URL ?? "";
+    return message;
+  },
+};
+
+function createBaseSocialMedia(): SocialMedia {
+  return { Type: 0, URL: "" };
+}
+
+export const SocialMedia = {
+  encode(message: SocialMedia, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.Type !== 0) {
+      writer.uint32(8).int32(message.Type);
+    }
+    if (message.URL !== "") {
+      writer.uint32(18).string(message.URL);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): SocialMedia {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseSocialMedia();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.Type = reader.int32() as any;
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.URL = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): SocialMedia {
+    return {
+      Type: isSet(object.Type) ? socialMediaTypeFromJSON(object.Type) : 0,
+      URL: isSet(object.URL) ? globalThis.String(object.URL) : "",
+    };
+  },
+
+  toJSON(message: SocialMedia): unknown {
+    const obj: any = {};
+    if (message.Type !== 0) {
+      obj.Type = socialMediaTypeToJSON(message.Type);
+    }
+    if (message.URL !== "") {
+      obj.URL = message.URL;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<SocialMedia>, I>>(base?: I): SocialMedia {
+    return SocialMedia.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<SocialMedia>, I>>(object: I): SocialMedia {
+    const message = createBaseSocialMedia();
+    message.Type = object.Type ?? 0;
+    message.URL = object.URL ?? "";
     return message;
   },
 };

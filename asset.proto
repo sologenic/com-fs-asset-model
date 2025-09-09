@@ -30,6 +30,7 @@ message AssetDetails {
 
     optional FinancialProperties FinancialProperties = 27; // Financial-specific properties
     optional Description Description = 28;                 // Human-readable descriptive properties
+    optional ExternalResources ExternalResources = 30;     // External links and resources
 }
 
 // ---------------- Existing Messages ----------------
@@ -194,7 +195,43 @@ message Description {
     optional string UpdatedAt = 11;          
 }
 
+// ---------------- ExternalResources ----------------
+
+message ExternalResources {
+  repeated Link Links = 1;                 // Flexible list of links with type and URL
+  repeated SocialMedia Socials = 2;        // Flexible list of social media with type and URL
+}
+
+message Link {
+  LinkType Type = 1;                       // Type of link (e.g., "website", "github", "whitepaper", "docs", "explorer", "governance", etc.)
+  string URL = 2;                          // The actual URL
+}
+
+message SocialMedia {
+  SocialMediaType Type = 1;                // Type of social media (e.g., "twitter", "telegram", "discord", "medium", "linkedin", etc.)
+  string URL = 2;                          // The actual URL
+}
+
 // ---------------- Enums ----------------
+
+enum LinkType {
+    LINK_TYPE_DO_NOT_USE = 0;
+    WEBSITE = 1;
+    GITHUB = 2;
+    WHITEPAPER = 3;
+    DOCS = 4;
+    EXPLORER = 5;
+    GOVERNANCE = 6;
+}
+
+enum SocialMediaType {
+    SOCIAL_MEDIA_TYPE_DO_NOT_USE = 0;
+    TWITTER = 1;
+    TELEGRAM = 2;
+    DISCORD = 3;
+    MEDIUM = 4;
+    LINKEDIN = 5;
+}
 
 enum AssetStatus {
     ASSET_STATUS_DO_NOT_USE = 0;
