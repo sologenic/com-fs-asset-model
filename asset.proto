@@ -4,6 +4,7 @@ package asset;
 
 import "sologenic/com-fs-asset-model/domain/denom/denom.proto";
 import "sologenic/com-fs-utils-lib/models/audit/audit.proto";
+import "sologenic/com-fs-utils-lib/models/metadata/metadata.proto";
 
 option go_package = "github.com/sologenic/com-fs-asset-model;asset";
 
@@ -174,7 +175,7 @@ message FinancialProperties {
     float InitialValuation = 20;              
     float CurrentValuation = 21;              
     optional string ValuationDate = 22;       
-    string Network = 23;                      
+    metadata.Network Network = 23;                      
     string Status = 24;                       
 }
 

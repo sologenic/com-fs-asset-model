@@ -8,6 +8,7 @@
 import _m0 from "protobufjs/minimal";
 import { Denom } from "./sologenic/com-fs-asset-model/domain/denom/denom";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
+import { Network, networkFromJSON, networkToJSON } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 
 export const protobufPackage = "asset";
 
@@ -402,7 +403,7 @@ export interface FinancialProperties {
   InitialValuation: number;
   CurrentValuation: number;
   ValuationDate?: string | undefined;
-  Network: string;
+  Network: Network;
   Status: string;
 }
 
@@ -2611,7 +2612,7 @@ function createBaseFinancialProperties(): FinancialProperties {
     InitialValuation: 0,
     CurrentValuation: 0,
     ValuationDate: undefined,
-    Network: "",
+    Network: 0,
     Status: "",
   };
 }
@@ -2684,8 +2685,8 @@ export const FinancialProperties = {
     if (message.ValuationDate !== undefined) {
       writer.uint32(178).string(message.ValuationDate);
     }
-    if (message.Network !== "") {
-      writer.uint32(186).string(message.Network);
+    if (message.Network !== 0) {
+      writer.uint32(184).int32(message.Network);
     }
     if (message.Status !== "") {
       writer.uint32(194).string(message.Status);
@@ -2855,11 +2856,11 @@ export const FinancialProperties = {
           message.ValuationDate = reader.string();
           continue;
         case 23:
-          if (tag !== 186) {
+          if (tag !== 184) {
             break;
           }
 
-          message.Network = reader.string();
+          message.Network = reader.int32() as any;
           continue;
         case 24:
           if (tag !== 194) {
@@ -2907,7 +2908,7 @@ export const FinancialProperties = {
       InitialValuation: isSet(object.InitialValuation) ? globalThis.Number(object.InitialValuation) : 0,
       CurrentValuation: isSet(object.CurrentValuation) ? globalThis.Number(object.CurrentValuation) : 0,
       ValuationDate: isSet(object.ValuationDate) ? globalThis.String(object.ValuationDate) : undefined,
-      Network: isSet(object.Network) ? globalThis.String(object.Network) : "",
+      Network: isSet(object.Network) ? networkFromJSON(object.Network) : 0,
       Status: isSet(object.Status) ? globalThis.String(object.Status) : "",
     };
   },
@@ -2980,8 +2981,8 @@ export const FinancialProperties = {
     if (message.ValuationDate !== undefined) {
       obj.ValuationDate = message.ValuationDate;
     }
-    if (message.Network !== "") {
-      obj.Network = message.Network;
+    if (message.Network !== 0) {
+      obj.Network = networkToJSON(message.Network);
     }
     if (message.Status !== "") {
       obj.Status = message.Status;
@@ -3016,7 +3017,7 @@ export const FinancialProperties = {
     message.InitialValuation = object.InitialValuation ?? 0;
     message.CurrentValuation = object.CurrentValuation ?? 0;
     message.ValuationDate = object.ValuationDate ?? undefined;
-    message.Network = object.Network ?? "";
+    message.Network = object.Network ?? 0;
     message.Status = object.Status ?? "";
     return message;
   },

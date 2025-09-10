@@ -9,6 +9,7 @@ package asset
 import (
 	denom "github.com/sologenic/com-fs-asset-model/domain/denom"
 	audit "github.com/sologenic/com-fs-utils-lib/models/audit"
+	metadata "github.com/sologenic/com-fs-utils-lib/models/metadata"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -1487,7 +1488,7 @@ type FinancialProperties struct {
 	InitialValuation         float32                `protobuf:"fixed32,20,opt,name=InitialValuation,proto3" json:"InitialValuation,omitempty"`
 	CurrentValuation         float32                `protobuf:"fixed32,21,opt,name=CurrentValuation,proto3" json:"CurrentValuation,omitempty"`
 	ValuationDate            *string                `protobuf:"bytes,22,opt,name=ValuationDate,proto3,oneof" json:"ValuationDate,omitempty"`
-	Network                  string                 `protobuf:"bytes,23,opt,name=Network,proto3" json:"Network,omitempty"`
+	Network                  metadata.Network       `protobuf:"varint,23,opt,name=Network,proto3,enum=metadata.Network" json:"Network,omitempty"`
 	Status                   string                 `protobuf:"bytes,24,opt,name=Status,proto3" json:"Status,omitempty"`
 	unknownFields            protoimpl.UnknownFields
 	sizeCache                protoimpl.SizeCache
@@ -1677,11 +1678,11 @@ func (x *FinancialProperties) GetValuationDate() string {
 	return ""
 }
 
-func (x *FinancialProperties) GetNetwork() string {
+func (x *FinancialProperties) GetNetwork() metadata.Network {
 	if x != nil {
 		return x.Network
 	}
-	return ""
+	return metadata.Network(0)
 }
 
 func (x *FinancialProperties) GetStatus() string {
@@ -2007,7 +2008,7 @@ var File_asset_proto protoreflect.FileDescriptor
 
 const file_asset_proto_rawDesc = "" +
 	"\n" +
-	"\vasset.proto\x12\x05asset\x1a5sologenic/com-fs-asset-model/domain/denom/denom.proto\x1a3sologenic/com-fs-utils-lib/models/audit/audit.proto\"\xcd\t\n" +
+	"\vasset.proto\x12\x05asset\x1a5sologenic/com-fs-asset-model/domain/denom/denom.proto\x1a3sologenic/com-fs-utils-lib/models/audit/audit.proto\x1a9sologenic/com-fs-utils-lib/models/metadata/metadata.proto\"\xcd\t\n" +
 	"\fAssetDetails\x12\x0e\n" +
 	"\x02ID\x18\x01 \x01(\tR\x02ID\x12&\n" +
 	"\x0eOrganizationID\x18\x02 \x01(\tR\x0eOrganizationID\x12*\n" +
@@ -2193,7 +2194,7 @@ const file_asset_proto_rawDesc = "" +
 	"\x0e_InceptionDateB\n" +
 	"\n" +
 	"\b_ManagerB\x0f\n" +
-	"\r_ExpenseRatio\"\x98\b\n" +
+	"\r_ExpenseRatio\"\xab\b\n" +
 	"\x13FinancialProperties\x12\x16\n" +
 	"\x06Symbol\x18\x01 \x01(\tR\x06Symbol\x12\x16\n" +
 	"\x06Issuer\x18\x02 \x01(\tR\x06Issuer\x12(\n" +
@@ -2219,8 +2220,8 @@ const file_asset_proto_rawDesc = "" +
 	"\bCurrency\x18\x13 \x01(\tR\bCurrency\x12*\n" +
 	"\x10InitialValuation\x18\x14 \x01(\x02R\x10InitialValuation\x12*\n" +
 	"\x10CurrentValuation\x18\x15 \x01(\x02R\x10CurrentValuation\x12)\n" +
-	"\rValuationDate\x18\x16 \x01(\tH\x06R\rValuationDate\x88\x01\x01\x12\x18\n" +
-	"\aNetwork\x18\x17 \x01(\tR\aNetwork\x12\x16\n" +
+	"\rValuationDate\x18\x16 \x01(\tH\x06R\rValuationDate\x88\x01\x01\x12+\n" +
+	"\aNetwork\x18\x17 \x01(\x0e2\x11.metadata.NetworkR\aNetwork\x12\x16\n" +
 	"\x06Status\x18\x18 \x01(\tR\x06StatusB\x1b\n" +
 	"\x19_JurisdictionRestrictionsB\x12\n" +
 	"\x10_RedemptionTermsB\x15\n" +
@@ -2349,6 +2350,7 @@ var file_asset_proto_goTypes = []any{
 	(*MetadataDetails)(nil),      // 18: asset.MetadataDetails
 	(*denom.Denom)(nil),          // 19: denom.Denom
 	(*audit.Audit)(nil),          // 20: audit.Audit
+	(metadata.Network)(0),        // 21: metadata.Network
 }
 var file_asset_proto_depIdxs = []int32{
 	0,  // 0: asset.AssetDetails.Status:type_name -> asset.AssetStatus
@@ -2371,11 +2373,12 @@ var file_asset_proto_depIdxs = []int32{
 	3,  // 17: asset.UserAssetList.Status:type_name -> asset.UserAssetStatus
 	18, // 18: asset.UserAssetList.MetaData:type_name -> asset.MetadataDetails
 	7,  // 19: asset.UserAssetLists.UserAssetLists:type_name -> asset.UserAssetList
-	20, // [20:20] is the sub-list for method output_type
-	20, // [20:20] is the sub-list for method input_type
-	20, // [20:20] is the sub-list for extension type_name
-	20, // [20:20] is the sub-list for extension extendee
-	0,  // [0:20] is the sub-list for field type_name
+	21, // 20: asset.FinancialProperties.Network:type_name -> metadata.Network
+	21, // [21:21] is the sub-list for method output_type
+	21, // [21:21] is the sub-list for method input_type
+	21, // [21:21] is the sub-list for extension type_name
+	21, // [21:21] is the sub-list for extension extendee
+	0,  // [0:21] is the sub-list for field type_name
 }
 
 func init() { file_asset_proto_init() }

@@ -1,6 +1,7 @@
 import _m0 from "protobufjs/minimal";
 import { Denom } from "./sologenic/com-fs-asset-model/domain/denom/denom";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
+import { Network } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 export declare const protobufPackage = "asset";
 export declare enum AssetStatus {
     ASSET_STATUS_DO_NOT_USE = 0,
@@ -193,7 +194,7 @@ export interface FinancialProperties {
     InitialValuation: number;
     CurrentValuation: number;
     ValuationDate?: string | undefined;
-    Network: string;
+    Network: Network;
     Status: string;
 }
 export interface Description {
@@ -359,7 +360,7 @@ export declare const AssetDetails: {
             InitialValuation?: number | undefined;
             CurrentValuation?: number | undefined;
             ValuationDate?: string | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             Status?: string | undefined;
         } | undefined;
         Description?: {
@@ -587,7 +588,7 @@ export declare const AssetDetails: {
             InitialValuation?: number | undefined;
             CurrentValuation?: number | undefined;
             ValuationDate?: string | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             Status?: string | undefined;
         } & {
             Symbol?: string | undefined;
@@ -612,7 +613,7 @@ export declare const AssetDetails: {
             InitialValuation?: number | undefined;
             CurrentValuation?: number | undefined;
             ValuationDate?: string | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             Status?: string | undefined;
         } & { [K_15 in Exclude<keyof I["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
         Description?: ({
@@ -765,7 +766,7 @@ export declare const AssetDetails: {
             InitialValuation?: number | undefined;
             CurrentValuation?: number | undefined;
             ValuationDate?: string | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             Status?: string | undefined;
         } | undefined;
         Description?: {
@@ -993,7 +994,7 @@ export declare const AssetDetails: {
             InitialValuation?: number | undefined;
             CurrentValuation?: number | undefined;
             ValuationDate?: string | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             Status?: string | undefined;
         } & {
             Symbol?: string | undefined;
@@ -1018,7 +1019,7 @@ export declare const AssetDetails: {
             InitialValuation?: number | undefined;
             CurrentValuation?: number | undefined;
             ValuationDate?: string | undefined;
-            Network?: string | undefined;
+            Network?: Network | undefined;
             Status?: string | undefined;
         } & { [K_35 in Exclude<keyof I_1["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
         Description?: ({
@@ -1178,7 +1179,7 @@ export declare const Asset: {
                 InitialValuation?: number | undefined;
                 CurrentValuation?: number | undefined;
                 ValuationDate?: string | undefined;
-                Network?: string | undefined;
+                Network?: Network | undefined;
                 Status?: string | undefined;
             } | undefined;
             Description?: {
@@ -1346,7 +1347,7 @@ export declare const Asset: {
                 InitialValuation?: number | undefined;
                 CurrentValuation?: number | undefined;
                 ValuationDate?: string | undefined;
-                Network?: string | undefined;
+                Network?: Network | undefined;
                 Status?: string | undefined;
             } | undefined;
             Description?: {
@@ -1574,7 +1575,7 @@ export declare const Asset: {
                 InitialValuation?: number | undefined;
                 CurrentValuation?: number | undefined;
                 ValuationDate?: string | undefined;
-                Network?: string | undefined;
+                Network?: Network | undefined;
                 Status?: string | undefined;
             } & {
                 Symbol?: string | undefined;
@@ -1599,7 +1600,7 @@ export declare const Asset: {
                 InitialValuation?: number | undefined;
                 CurrentValuation?: number | undefined;
                 ValuationDate?: string | undefined;
-                Network?: string | undefined;
+                Network?: Network | undefined;
                 Status?: string | undefined;
             } & { [K_15 in Exclude<keyof I["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
             Description?: ({
@@ -1804,7 +1805,7 @@ export declare const Asset: {
                 InitialValuation?: number | undefined;
                 CurrentValuation?: number | undefined;
                 ValuationDate?: string | undefined;
-                Network?: string | undefined;
+                Network?: Network | undefined;
                 Status?: string | undefined;
             } | undefined;
             Description?: {
@@ -1972,7 +1973,7 @@ export declare const Asset: {
                 InitialValuation?: number | undefined;
                 CurrentValuation?: number | undefined;
                 ValuationDate?: string | undefined;
-                Network?: string | undefined;
+                Network?: Network | undefined;
                 Status?: string | undefined;
             } | undefined;
             Description?: {
@@ -2200,7 +2201,7 @@ export declare const Asset: {
                 InitialValuation?: number | undefined;
                 CurrentValuation?: number | undefined;
                 ValuationDate?: string | undefined;
-                Network?: string | undefined;
+                Network?: Network | undefined;
                 Status?: string | undefined;
             } & {
                 Symbol?: string | undefined;
@@ -2225,7 +2226,7 @@ export declare const Asset: {
                 InitialValuation?: number | undefined;
                 CurrentValuation?: number | undefined;
                 ValuationDate?: string | undefined;
-                Network?: string | undefined;
+                Network?: Network | undefined;
                 Status?: string | undefined;
             } & { [K_39 in Exclude<keyof I_1["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
             Description?: ({
@@ -2437,7 +2438,7 @@ export declare const Assets: {
                     InitialValuation?: number | undefined;
                     CurrentValuation?: number | undefined;
                     ValuationDate?: string | undefined;
-                    Network?: string | undefined;
+                    Network?: Network | undefined;
                     Status?: string | undefined;
                 } | undefined;
                 Description?: {
@@ -2607,7 +2608,7 @@ export declare const Assets: {
                     InitialValuation?: number | undefined;
                     CurrentValuation?: number | undefined;
                     ValuationDate?: string | undefined;
-                    Network?: string | undefined;
+                    Network?: Network | undefined;
                     Status?: string | undefined;
                 } | undefined;
                 Description?: {
@@ -2775,7 +2776,7 @@ export declare const Assets: {
                     InitialValuation?: number | undefined;
                     CurrentValuation?: number | undefined;
                     ValuationDate?: string | undefined;
-                    Network?: string | undefined;
+                    Network?: Network | undefined;
                     Status?: string | undefined;
                 } | undefined;
                 Description?: {
@@ -2943,7 +2944,7 @@ export declare const Assets: {
                     InitialValuation?: number | undefined;
                     CurrentValuation?: number | undefined;
                     ValuationDate?: string | undefined;
-                    Network?: string | undefined;
+                    Network?: Network | undefined;
                     Status?: string | undefined;
                 } | undefined;
                 Description?: {
@@ -3171,7 +3172,7 @@ export declare const Assets: {
                     InitialValuation?: number | undefined;
                     CurrentValuation?: number | undefined;
                     ValuationDate?: string | undefined;
-                    Network?: string | undefined;
+                    Network?: Network | undefined;
                     Status?: string | undefined;
                 } & {
                     Symbol?: string | undefined;
@@ -3196,7 +3197,7 @@ export declare const Assets: {
                     InitialValuation?: number | undefined;
                     CurrentValuation?: number | undefined;
                     ValuationDate?: string | undefined;
-                    Network?: string | undefined;
+                    Network?: Network | undefined;
                     Status?: string | undefined;
                 } & { [K_15 in Exclude<keyof I["Assets"][number]["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
                 Description?: ({
@@ -3400,7 +3401,7 @@ export declare const Assets: {
                     InitialValuation?: number | undefined;
                     CurrentValuation?: number | undefined;
                     ValuationDate?: string | undefined;
-                    Network?: string | undefined;
+                    Network?: Network | undefined;
                     Status?: string | undefined;
                 } | undefined;
                 Description?: {
@@ -3571,7 +3572,7 @@ export declare const Assets: {
                     InitialValuation?: number | undefined;
                     CurrentValuation?: number | undefined;
                     ValuationDate?: string | undefined;
-                    Network?: string | undefined;
+                    Network?: Network | undefined;
                     Status?: string | undefined;
                 } | undefined;
                 Description?: {
@@ -3741,7 +3742,7 @@ export declare const Assets: {
                     InitialValuation?: number | undefined;
                     CurrentValuation?: number | undefined;
                     ValuationDate?: string | undefined;
-                    Network?: string | undefined;
+                    Network?: Network | undefined;
                     Status?: string | undefined;
                 } | undefined;
                 Description?: {
@@ -3909,7 +3910,7 @@ export declare const Assets: {
                     InitialValuation?: number | undefined;
                     CurrentValuation?: number | undefined;
                     ValuationDate?: string | undefined;
-                    Network?: string | undefined;
+                    Network?: Network | undefined;
                     Status?: string | undefined;
                 } | undefined;
                 Description?: {
@@ -4077,7 +4078,7 @@ export declare const Assets: {
                     InitialValuation?: number | undefined;
                     CurrentValuation?: number | undefined;
                     ValuationDate?: string | undefined;
-                    Network?: string | undefined;
+                    Network?: Network | undefined;
                     Status?: string | undefined;
                 } | undefined;
                 Description?: {
@@ -4305,7 +4306,7 @@ export declare const Assets: {
                     InitialValuation?: number | undefined;
                     CurrentValuation?: number | undefined;
                     ValuationDate?: string | undefined;
-                    Network?: string | undefined;
+                    Network?: Network | undefined;
                     Status?: string | undefined;
                 } & {
                     Symbol?: string | undefined;
@@ -4330,7 +4331,7 @@ export declare const Assets: {
                     InitialValuation?: number | undefined;
                     CurrentValuation?: number | undefined;
                     ValuationDate?: string | undefined;
-                    Network?: string | undefined;
+                    Network?: Network | undefined;
                     Status?: string | undefined;
                 } & { [K_41 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
                 Description?: ({
@@ -4534,7 +4535,7 @@ export declare const Assets: {
                     InitialValuation?: number | undefined;
                     CurrentValuation?: number | undefined;
                     ValuationDate?: string | undefined;
-                    Network?: string | undefined;
+                    Network?: Network | undefined;
                     Status?: string | undefined;
                 } | undefined;
                 Description?: {
@@ -5450,7 +5451,7 @@ export declare const FinancialProperties: {
         InitialValuation?: number | undefined;
         CurrentValuation?: number | undefined;
         ValuationDate?: string | undefined;
-        Network?: string | undefined;
+        Network?: Network | undefined;
         Status?: string | undefined;
     } & {
         Symbol?: string | undefined;
@@ -5475,7 +5476,7 @@ export declare const FinancialProperties: {
         InitialValuation?: number | undefined;
         CurrentValuation?: number | undefined;
         ValuationDate?: string | undefined;
-        Network?: string | undefined;
+        Network?: Network | undefined;
         Status?: string | undefined;
     } & { [K_2 in Exclude<keyof I, keyof FinancialProperties>]: never; }>(base?: I | undefined): FinancialProperties;
     fromPartial<I_1 extends {
@@ -5501,7 +5502,7 @@ export declare const FinancialProperties: {
         InitialValuation?: number | undefined;
         CurrentValuation?: number | undefined;
         ValuationDate?: string | undefined;
-        Network?: string | undefined;
+        Network?: Network | undefined;
         Status?: string | undefined;
     } & {
         Symbol?: string | undefined;
@@ -5526,7 +5527,7 @@ export declare const FinancialProperties: {
         InitialValuation?: number | undefined;
         CurrentValuation?: number | undefined;
         ValuationDate?: string | undefined;
-        Network?: string | undefined;
+        Network?: Network | undefined;
         Status?: string | undefined;
     } & { [K_5 in Exclude<keyof I_1, keyof FinancialProperties>]: never; }>(object: I_1): FinancialProperties;
 };
