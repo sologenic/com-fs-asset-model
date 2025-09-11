@@ -28,6 +28,7 @@ message AssetDetails {
     optional Vehicle VehicleDetails = 24;
     optional IntellectualProperty IntellectualPropertyDetails = 25;
     optional InvestmentFund InvestmentFundDetails = 26;
+    optional Equity EquityDetails = 29;
 
     optional FinancialProperties FinancialProperties = 27; // Financial-specific properties
     optional Description Description = 28;                 // Human-readable descriptive properties
@@ -150,6 +151,14 @@ message InvestmentFund {
     repeated string Holdings = 8;       
 }
 
+message Equity {
+    optional string ExchangeTickerSymbol = 1;
+    optional string Exchange = 2;
+    string MinTransactionAmount = 3; 
+    string ExtraPercentage = 4;
+    string AssetMarginPercentage = 5;
+}
+
 // ---------------- FinancialProperties ----------------
 
 message FinancialProperties {
@@ -223,6 +232,7 @@ enum AssetType {
     VEHICLE_INDUSTRIAL_EQUIPMENT = 6;
     INTELLECTUAL_PROPERTY = 7;
     REAL_ESTATE = 8;
+    EQUITY = 9;
 }
 
 enum UserAssetStatus {

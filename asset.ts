@@ -124,6 +124,7 @@ export enum AssetType {
   VEHICLE_INDUSTRIAL_EQUIPMENT = 6,
   INTELLECTUAL_PROPERTY = 7,
   REAL_ESTATE = 8,
+  EQUITY = 9,
   UNRECOGNIZED = -1,
 }
 
@@ -156,6 +157,9 @@ export function assetTypeFromJSON(object: any): AssetType {
     case 8:
     case "REAL_ESTATE":
       return AssetType.REAL_ESTATE;
+    case 9:
+    case "EQUITY":
+      return AssetType.EQUITY;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -183,6 +187,8 @@ export function assetTypeToJSON(object: AssetType): string {
       return "INTELLECTUAL_PROPERTY";
     case AssetType.REAL_ESTATE:
       return "REAL_ESTATE";
+    case AssetType.EQUITY:
+      return "EQUITY";
     case AssetType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -256,8 +262,9 @@ export interface AssetDetails {
   CollectibleDetails?: Collectible | undefined;
   VehicleDetails?: Vehicle | undefined;
   IntellectualPropertyDetails?: IntellectualProperty | undefined;
-  InvestmentFundDetails?:
-    | InvestmentFund
+  InvestmentFundDetails?: InvestmentFund | undefined;
+  EquityDetails?:
+    | Equity
     | undefined;
   /** Financial-specific properties */
   FinancialProperties?:
@@ -380,6 +387,14 @@ export interface InvestmentFund {
   Holdings: string[];
 }
 
+export interface Equity {
+  ExchangeTickerSymbol?: string | undefined;
+  Exchange?: string | undefined;
+  MinTransactionAmount: string;
+  ExtraPercentage: string;
+  AssetMarginPercentage: string;
+}
+
 export interface FinancialProperties {
   Symbol: string;
   Issuer: string;
@@ -460,6 +475,7 @@ function createBaseAssetDetails(): AssetDetails {
     VehicleDetails: undefined,
     IntellectualPropertyDetails: undefined,
     InvestmentFundDetails: undefined,
+    EquityDetails: undefined,
     FinancialProperties: undefined,
     Description: undefined,
   };
@@ -511,6 +527,9 @@ export const AssetDetails = {
     }
     if (message.InvestmentFundDetails !== undefined) {
       InvestmentFund.encode(message.InvestmentFundDetails, writer.uint32(210).fork()).ldelim();
+    }
+    if (message.EquityDetails !== undefined) {
+      Equity.encode(message.EquityDetails, writer.uint32(234).fork()).ldelim();
     }
     if (message.FinancialProperties !== undefined) {
       FinancialProperties.encode(message.FinancialProperties, writer.uint32(218).fork()).ldelim();
@@ -633,6 +652,13 @@ export const AssetDetails = {
 
           message.InvestmentFundDetails = InvestmentFund.decode(reader, reader.uint32());
           continue;
+        case 29:
+          if (tag !== 234) {
+            break;
+          }
+
+          message.EquityDetails = Equity.decode(reader, reader.uint32());
+          continue;
         case 27:
           if (tag !== 218) {
             break;
@@ -683,6 +709,7 @@ export const AssetDetails = {
       InvestmentFundDetails: isSet(object.InvestmentFundDetails)
         ? InvestmentFund.fromJSON(object.InvestmentFundDetails)
         : undefined,
+      EquityDetails: isSet(object.EquityDetails) ? Equity.fromJSON(object.EquityDetails) : undefined,
       FinancialProperties: isSet(object.FinancialProperties)
         ? FinancialProperties.fromJSON(object.FinancialProperties)
         : undefined,
@@ -737,6 +764,9 @@ export const AssetDetails = {
     if (message.InvestmentFundDetails !== undefined) {
       obj.InvestmentFundDetails = InvestmentFund.toJSON(message.InvestmentFundDetails);
     }
+    if (message.EquityDetails !== undefined) {
+      obj.EquityDetails = Equity.toJSON(message.EquityDetails);
+    }
     if (message.FinancialProperties !== undefined) {
       obj.FinancialProperties = FinancialProperties.toJSON(message.FinancialProperties);
     }
@@ -782,6 +812,9 @@ export const AssetDetails = {
       (object.InvestmentFundDetails !== undefined && object.InvestmentFundDetails !== null)
         ? InvestmentFund.fromPartial(object.InvestmentFundDetails)
         : undefined;
+    message.EquityDetails = (object.EquityDetails !== undefined && object.EquityDetails !== null)
+      ? Equity.fromPartial(object.EquityDetails)
+      : undefined;
     message.FinancialProperties = (object.FinancialProperties !== undefined && object.FinancialProperties !== null)
       ? FinancialProperties.fromPartial(object.FinancialProperties)
       : undefined;
@@ -2584,6 +2617,133 @@ export const InvestmentFund = {
     message.Manager = object.Manager ?? undefined;
     message.ExpenseRatio = object.ExpenseRatio ?? undefined;
     message.Holdings = object.Holdings?.map((e) => e) || [];
+    return message;
+  },
+};
+
+function createBaseEquity(): Equity {
+  return {
+    ExchangeTickerSymbol: undefined,
+    Exchange: undefined,
+    MinTransactionAmount: "",
+    ExtraPercentage: "",
+    AssetMarginPercentage: "",
+  };
+}
+
+export const Equity = {
+  encode(message: Equity, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.ExchangeTickerSymbol !== undefined) {
+      writer.uint32(10).string(message.ExchangeTickerSymbol);
+    }
+    if (message.Exchange !== undefined) {
+      writer.uint32(18).string(message.Exchange);
+    }
+    if (message.MinTransactionAmount !== "") {
+      writer.uint32(26).string(message.MinTransactionAmount);
+    }
+    if (message.ExtraPercentage !== "") {
+      writer.uint32(34).string(message.ExtraPercentage);
+    }
+    if (message.AssetMarginPercentage !== "") {
+      writer.uint32(42).string(message.AssetMarginPercentage);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Equity {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseEquity();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.ExchangeTickerSymbol = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.Exchange = reader.string();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.MinTransactionAmount = reader.string();
+          continue;
+        case 4:
+          if (tag !== 34) {
+            break;
+          }
+
+          message.ExtraPercentage = reader.string();
+          continue;
+        case 5:
+          if (tag !== 42) {
+            break;
+          }
+
+          message.AssetMarginPercentage = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Equity {
+    return {
+      ExchangeTickerSymbol: isSet(object.ExchangeTickerSymbol)
+        ? globalThis.String(object.ExchangeTickerSymbol)
+        : undefined,
+      Exchange: isSet(object.Exchange) ? globalThis.String(object.Exchange) : undefined,
+      MinTransactionAmount: isSet(object.MinTransactionAmount) ? globalThis.String(object.MinTransactionAmount) : "",
+      ExtraPercentage: isSet(object.ExtraPercentage) ? globalThis.String(object.ExtraPercentage) : "",
+      AssetMarginPercentage: isSet(object.AssetMarginPercentage) ? globalThis.String(object.AssetMarginPercentage) : "",
+    };
+  },
+
+  toJSON(message: Equity): unknown {
+    const obj: any = {};
+    if (message.ExchangeTickerSymbol !== undefined) {
+      obj.ExchangeTickerSymbol = message.ExchangeTickerSymbol;
+    }
+    if (message.Exchange !== undefined) {
+      obj.Exchange = message.Exchange;
+    }
+    if (message.MinTransactionAmount !== "") {
+      obj.MinTransactionAmount = message.MinTransactionAmount;
+    }
+    if (message.ExtraPercentage !== "") {
+      obj.ExtraPercentage = message.ExtraPercentage;
+    }
+    if (message.AssetMarginPercentage !== "") {
+      obj.AssetMarginPercentage = message.AssetMarginPercentage;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Equity>, I>>(base?: I): Equity {
+    return Equity.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Equity>, I>>(object: I): Equity {
+    const message = createBaseEquity();
+    message.ExchangeTickerSymbol = object.ExchangeTickerSymbol ?? undefined;
+    message.Exchange = object.Exchange ?? undefined;
+    message.MinTransactionAmount = object.MinTransactionAmount ?? "";
+    message.ExtraPercentage = object.ExtraPercentage ?? "";
+    message.AssetMarginPercentage = object.AssetMarginPercentage ?? "";
     return message;
   },
 };
