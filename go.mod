@@ -4,6 +4,7 @@ go 1.24.4
 
 require (
 	github.com/google/go-cmp v0.7.0
+	github.com/sologenic/com-fs-utils-lib/go/decimal v0.0.0-20250731190227-eba0dc415460
 	github.com/sologenic/com-fs-utils-lib/go/unittest v0.0.0-20250131210530-7306ae3e5762
 	github.com/sologenic/com-fs-utils-lib/models/audit v0.0.0-20250709230730-743382da78ab
 	github.com/sologenic/com-fs-utils-lib/models/metadata v0.0.0-20250709230730-743382da78ab
@@ -29,6 +30,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rs/zerolog v1.34.0 // indirect
+	github.com/shopspring/decimal v1.4.0 // indirect
 	github.com/sologenic/fs-utils-lib/go/logger v0.0.0-20250502225811-66b8d7777c07 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.62.0 // indirect

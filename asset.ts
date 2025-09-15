@@ -7,6 +7,7 @@
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
 import { Denom } from "./sologenic/com-fs-asset-model/domain/denom/denom";
+import { Decimal } from "./sologenic/com-fs-utils-lib/go/decimal/decimal";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
 import { Network, networkFromJSON, networkToJSON } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 
@@ -366,6 +367,54 @@ export function userAssetStatusToJSON(object: UserAssetStatus): string {
   }
 }
 
+export enum CommissionType {
+  NOT_USED_COMMISSION_TYPE = 0,
+  /** NOTIONAL - Charge commission on a per order basis (default) */
+  NOTIONAL = 1,
+  /** QTY - Charge commission on a per qty/contract basis, pro rated */
+  QTY = 2,
+  /** BPS - Commission expressed in basis points (percent), converted to notional amount for purposes of calculating commission(max two decimal places) */
+  BPS = 3,
+  UNRECOGNIZED = -1,
+}
+
+export function commissionTypeFromJSON(object: any): CommissionType {
+  switch (object) {
+    case 0:
+    case "NOT_USED_COMMISSION_TYPE":
+      return CommissionType.NOT_USED_COMMISSION_TYPE;
+    case 1:
+    case "NOTIONAL":
+      return CommissionType.NOTIONAL;
+    case 2:
+    case "QTY":
+      return CommissionType.QTY;
+    case 3:
+    case "BPS":
+      return CommissionType.BPS;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return CommissionType.UNRECOGNIZED;
+  }
+}
+
+export function commissionTypeToJSON(object: CommissionType): string {
+  switch (object) {
+    case CommissionType.NOT_USED_COMMISSION_TYPE:
+      return "NOT_USED_COMMISSION_TYPE";
+    case CommissionType.NOTIONAL:
+      return "NOTIONAL";
+    case CommissionType.QTY:
+      return "QTY";
+    case CommissionType.BPS:
+      return "BPS";
+    case CommissionType.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
 export interface AssetDetails {
   /** Key string to prevent composing the key all the time and reduce errors */
   ID: string;
@@ -544,6 +593,12 @@ export interface FinancialProperties {
   ValuationDate?: string | undefined;
   Network: Network;
   Status: string;
+  /** Broker API specific commission fields */
+  Commission?:
+    | Decimal
+    | undefined;
+  /** How commission field value is calculated */
+  CommissionType?: CommissionType | undefined;
 }
 
 export interface Description {
@@ -2939,6 +2994,8 @@ function createBaseFinancialProperties(): FinancialProperties {
     ValuationDate: undefined,
     Network: 0,
     Status: "",
+    Commission: undefined,
+    CommissionType: undefined,
   };
 }
 
@@ -3015,6 +3072,12 @@ export const FinancialProperties = {
     }
     if (message.Status !== "") {
       writer.uint32(194).string(message.Status);
+    }
+    if (message.Commission !== undefined) {
+      Decimal.encode(message.Commission, writer.uint32(202).fork()).ldelim();
+    }
+    if (message.CommissionType !== undefined) {
+      writer.uint32(208).int32(message.CommissionType);
     }
     return writer;
   },
@@ -3194,6 +3257,20 @@ export const FinancialProperties = {
 
           message.Status = reader.string();
           continue;
+        case 25:
+          if (tag !== 202) {
+            break;
+          }
+
+          message.Commission = Decimal.decode(reader, reader.uint32());
+          continue;
+        case 26:
+          if (tag !== 208) {
+            break;
+          }
+
+          message.CommissionType = reader.int32() as any;
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3235,6 +3312,8 @@ export const FinancialProperties = {
       ValuationDate: isSet(object.ValuationDate) ? globalThis.String(object.ValuationDate) : undefined,
       Network: isSet(object.Network) ? networkFromJSON(object.Network) : 0,
       Status: isSet(object.Status) ? globalThis.String(object.Status) : "",
+      Commission: isSet(object.Commission) ? Decimal.fromJSON(object.Commission) : undefined,
+      CommissionType: isSet(object.CommissionType) ? commissionTypeFromJSON(object.CommissionType) : undefined,
     };
   },
 
@@ -3312,6 +3391,12 @@ export const FinancialProperties = {
     if (message.Status !== "") {
       obj.Status = message.Status;
     }
+    if (message.Commission !== undefined) {
+      obj.Commission = Decimal.toJSON(message.Commission);
+    }
+    if (message.CommissionType !== undefined) {
+      obj.CommissionType = commissionTypeToJSON(message.CommissionType);
+    }
     return obj;
   },
 
@@ -3344,6 +3429,10 @@ export const FinancialProperties = {
     message.ValuationDate = object.ValuationDate ?? undefined;
     message.Network = object.Network ?? 0;
     message.Status = object.Status ?? "";
+    message.Commission = (object.Commission !== undefined && object.Commission !== null)
+      ? Decimal.fromPartial(object.Commission)
+      : undefined;
+    message.CommissionType = object.CommissionType ?? undefined;
     return message;
   },
 };
