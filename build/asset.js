@@ -8,7 +8,7 @@ import _m0 from "protobufjs/minimal";
 import { Denom } from "./sologenic/com-fs-asset-model/domain/denom/denom";
 import { Decimal } from "./sologenic/com-fs-utils-lib/go/decimal/decimal";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
-import { networkFromJSON, networkToJSON } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
+import { MetaData, networkFromJSON, networkToJSON, } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 export const protobufPackage = "asset";
 export var LinkType;
 (function (LinkType) {
@@ -762,7 +762,7 @@ export const AssetDetails = {
     },
 };
 function createBaseAsset() {
-    return { AssetDetails: undefined, MetaData: undefined, Audit: undefined };
+    return { AssetDetails: undefined, MetaData: undefined, Audit: undefined, IssuerDetails: undefined };
 }
 export const Asset = {
     encode(message, writer = _m0.Writer.create()) {
@@ -770,10 +770,13 @@ export const Asset = {
             AssetDetails.encode(message.AssetDetails, writer.uint32(10).fork()).ldelim();
         }
         if (message.MetaData !== undefined) {
-            MetadataDetails.encode(message.MetaData, writer.uint32(18).fork()).ldelim();
+            MetaData.encode(message.MetaData, writer.uint32(18).fork()).ldelim();
         }
         if (message.Audit !== undefined) {
             Audit.encode(message.Audit, writer.uint32(26).fork()).ldelim();
+        }
+        if (message.IssuerDetails !== undefined) {
+            IssuerDetails.encode(message.IssuerDetails, writer.uint32(34).fork()).ldelim();
         }
         return writer;
     },
@@ -794,13 +797,19 @@ export const Asset = {
                     if (tag !== 18) {
                         break;
                     }
-                    message.MetaData = MetadataDetails.decode(reader, reader.uint32());
+                    message.MetaData = MetaData.decode(reader, reader.uint32());
                     continue;
                 case 3:
                     if (tag !== 26) {
                         break;
                     }
                     message.Audit = Audit.decode(reader, reader.uint32());
+                    continue;
+                case 4:
+                    if (tag !== 34) {
+                        break;
+                    }
+                    message.IssuerDetails = IssuerDetails.decode(reader, reader.uint32());
                     continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
@@ -813,8 +822,9 @@ export const Asset = {
     fromJSON(object) {
         return {
             AssetDetails: isSet(object.AssetDetails) ? AssetDetails.fromJSON(object.AssetDetails) : undefined,
-            MetaData: isSet(object.MetaData) ? MetadataDetails.fromJSON(object.MetaData) : undefined,
+            MetaData: isSet(object.MetaData) ? MetaData.fromJSON(object.MetaData) : undefined,
             Audit: isSet(object.Audit) ? Audit.fromJSON(object.Audit) : undefined,
+            IssuerDetails: isSet(object.IssuerDetails) ? IssuerDetails.fromJSON(object.IssuerDetails) : undefined,
         };
     },
     toJSON(message) {
@@ -823,10 +833,13 @@ export const Asset = {
             obj.AssetDetails = AssetDetails.toJSON(message.AssetDetails);
         }
         if (message.MetaData !== undefined) {
-            obj.MetaData = MetadataDetails.toJSON(message.MetaData);
+            obj.MetaData = MetaData.toJSON(message.MetaData);
         }
         if (message.Audit !== undefined) {
             obj.Audit = Audit.toJSON(message.Audit);
+        }
+        if (message.IssuerDetails !== undefined) {
+            obj.IssuerDetails = IssuerDetails.toJSON(message.IssuerDetails);
         }
         return obj;
     },
@@ -839,9 +852,12 @@ export const Asset = {
             ? AssetDetails.fromPartial(object.AssetDetails)
             : undefined;
         message.MetaData = (object.MetaData !== undefined && object.MetaData !== null)
-            ? MetadataDetails.fromPartial(object.MetaData)
+            ? MetaData.fromPartial(object.MetaData)
             : undefined;
         message.Audit = (object.Audit !== undefined && object.Audit !== null) ? Audit.fromPartial(object.Audit) : undefined;
+        message.IssuerDetails = (object.IssuerDetails !== undefined && object.IssuerDetails !== null)
+            ? IssuerDetails.fromPartial(object.IssuerDetails)
+            : undefined;
         return message;
     },
 };
@@ -931,7 +947,7 @@ export const UserAssetList = {
             writer.uint32(32).int32(message.Status);
         }
         if (message.MetaData !== undefined) {
-            MetadataDetails.encode(message.MetaData, writer.uint32(42).fork()).ldelim();
+            MetaData.encode(message.MetaData, writer.uint32(42).fork()).ldelim();
         }
         if (message.Visible !== false) {
             writer.uint32(48).bool(message.Visible);
@@ -973,7 +989,7 @@ export const UserAssetList = {
                     if (tag !== 42) {
                         break;
                     }
-                    message.MetaData = MetadataDetails.decode(reader, reader.uint32());
+                    message.MetaData = MetaData.decode(reader, reader.uint32());
                     continue;
                 case 6:
                     if (tag !== 48) {
@@ -995,7 +1011,7 @@ export const UserAssetList = {
             Wallet: isSet(object.Wallet) ? globalThis.String(object.Wallet) : "",
             AssetKey: isSet(object.AssetKey) ? globalThis.String(object.AssetKey) : "",
             Status: isSet(object.Status) ? userAssetStatusFromJSON(object.Status) : 0,
-            MetaData: isSet(object.MetaData) ? MetadataDetails.fromJSON(object.MetaData) : undefined,
+            MetaData: isSet(object.MetaData) ? MetaData.fromJSON(object.MetaData) : undefined,
             Visible: isSet(object.Visible) ? globalThis.Boolean(object.Visible) : false,
         };
     },
@@ -1014,7 +1030,7 @@ export const UserAssetList = {
             obj.Status = userAssetStatusToJSON(message.Status);
         }
         if (message.MetaData !== undefined) {
-            obj.MetaData = MetadataDetails.toJSON(message.MetaData);
+            obj.MetaData = MetaData.toJSON(message.MetaData);
         }
         if (message.Visible !== false) {
             obj.Visible = message.Visible;
@@ -1032,7 +1048,7 @@ export const UserAssetList = {
         message.AssetKey = (_c = object.AssetKey) !== null && _c !== void 0 ? _c : "";
         message.Status = (_d = object.Status) !== null && _d !== void 0 ? _d : 0;
         message.MetaData = (object.MetaData !== undefined && object.MetaData !== null)
-            ? MetadataDetails.fromPartial(object.MetaData)
+            ? MetaData.fromPartial(object.MetaData)
             : undefined;
         message.Visible = (_e = object.Visible) !== null && _e !== void 0 ? _e : false;
         return message;
@@ -3406,7 +3422,7 @@ export const SocialMedia = {
         return message;
     },
 };
-function createBaseMetadataDetails() {
+function createBaseIssuerDetails() {
     return {
         Name: "",
         Description: "",
@@ -3429,7 +3445,7 @@ function createBaseMetadataDetails() {
         Press: undefined,
     };
 }
-export const MetadataDetails = {
+export const IssuerDetails = {
     encode(message, writer = _m0.Writer.create()) {
         if (message.Name !== "") {
             writer.uint32(10).string(message.Name);
@@ -3493,7 +3509,7 @@ export const MetadataDetails = {
     decode(input, length) {
         const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
         let end = length === undefined ? reader.len : reader.pos + length;
-        const message = createBaseMetadataDetails();
+        const message = createBaseIssuerDetails();
         while (reader.pos < end) {
             const tag = reader.uint32();
             switch (tag >>> 3) {
@@ -3707,11 +3723,11 @@ export const MetadataDetails = {
         return obj;
     },
     create(base) {
-        return MetadataDetails.fromPartial(base !== null && base !== void 0 ? base : {});
+        return IssuerDetails.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u;
-        const message = createBaseMetadataDetails();
+        const message = createBaseIssuerDetails();
         message.Name = (_a = object.Name) !== null && _a !== void 0 ? _a : "";
         message.Description = (_b = object.Description) !== null && _b !== void 0 ? _b : "";
         message.Image = (_c = object.Image) !== null && _c !== void 0 ? _c : "";

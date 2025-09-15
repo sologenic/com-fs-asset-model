@@ -40,8 +40,9 @@ message AssetDetails {
 
 message Asset {
     AssetDetails AssetDetails = 1;
-    MetadataDetails MetaData = 2;
+    metadata.MetaData MetaData = 2;
     audit.Audit Audit = 3;
+    IssuerDetails IssuerDetails = 4;
 }
 
 message Assets {
@@ -54,7 +55,7 @@ message UserAssetList {
     string Wallet = 2;
     string AssetKey = 3;
     UserAssetStatus Status = 4;
-    MetadataDetails MetaData = 5;
+    metadata.MetaData MetaData = 5;
     bool Visible = 6;
 }
 
@@ -292,7 +293,7 @@ enum CommissionType {
   BPS = 3; // Commission expressed in basis points (percent), converted to notional amount for purposes of calculating commission(max two decimal places)
 }
 
-message MetadataDetails {
+message IssuerDetails {
   string Name = 1;                       
   string Description = 2;                
   string Image = 3;                      

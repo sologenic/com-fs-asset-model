@@ -2,7 +2,7 @@ import _m0 from "protobufjs/minimal";
 import { Denom } from "./sologenic/com-fs-asset-model/domain/denom/denom";
 import { Decimal } from "./sologenic/com-fs-utils-lib/go/decimal/decimal";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
-import { Network } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
+import { MetaData, Network } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 export declare const protobufPackage = "asset";
 export declare enum LinkType {
     LINK_TYPE_DO_NOT_USE = 0,
@@ -111,8 +111,9 @@ export interface AssetDetails {
 }
 export interface Asset {
     AssetDetails: AssetDetails | undefined;
-    MetaData: MetadataDetails | undefined;
+    MetaData: MetaData | undefined;
     Audit: Audit | undefined;
+    IssuerDetails: IssuerDetails | undefined;
 }
 export interface Assets {
     Assets: Asset[];
@@ -124,7 +125,7 @@ export interface UserAssetList {
     Wallet: string;
     AssetKey: string;
     Status: UserAssetStatus;
-    MetaData: MetadataDetails | undefined;
+    MetaData: MetaData | undefined;
     Visible: boolean;
 }
 export interface UserAssetLists {
@@ -281,7 +282,7 @@ export interface SocialMedia {
     /** The actual URL */
     URL: string;
 }
-export interface MetadataDetails {
+export interface IssuerDetails {
     Name: string;
     Description: string;
     Image: string;
@@ -1460,6 +1461,17 @@ export declare const Asset: {
             } | undefined;
         } | undefined;
         MetaData?: {
+            Network?: Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } | undefined;
+        Audit?: {
+            ChangedBy?: string | undefined;
+            ChangedAt?: Date | undefined;
+            Reason?: string | undefined;
+        } | undefined;
+        IssuerDetails?: {
             Name?: string | undefined;
             Description?: string | undefined;
             Image?: string | undefined;
@@ -1479,11 +1491,6 @@ export declare const Asset: {
             SocialMediaLinks?: string[] | undefined;
             KeyClients?: string | undefined;
             Press?: string | undefined;
-        } | undefined;
-        Audit?: {
-            ChangedBy?: string | undefined;
-            ChangedAt?: Date | undefined;
-            Reason?: string | undefined;
         } | undefined;
     } & {
         AssetDetails?: ({
@@ -1978,6 +1985,26 @@ export declare const Asset: {
             } & { [K_25 in Exclude<keyof I["AssetDetails"]["ExternalResources"], keyof ExternalResources>]: never; }) | undefined;
         } & { [K_26 in Exclude<keyof I["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
         MetaData?: ({
+            Network?: Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } & {
+            Network?: Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } & { [K_27 in Exclude<keyof I["MetaData"], keyof MetaData>]: never; }) | undefined;
+        Audit?: ({
+            ChangedBy?: string | undefined;
+            ChangedAt?: Date | undefined;
+            Reason?: string | undefined;
+        } & {
+            ChangedBy?: string | undefined;
+            ChangedAt?: Date | undefined;
+            Reason?: string | undefined;
+        } & { [K_28 in Exclude<keyof I["Audit"], keyof Audit>]: never; }) | undefined;
+        IssuerDetails?: ({
             Name?: string | undefined;
             Description?: string | undefined;
             Image?: string | undefined;
@@ -2014,20 +2041,11 @@ export declare const Asset: {
             LicenseNumber?: string | undefined;
             Phone?: string | undefined;
             Email?: string | undefined;
-            SocialMediaLinks?: (string[] & string[] & { [K_27 in Exclude<keyof I["MetaData"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
+            SocialMediaLinks?: (string[] & string[] & { [K_29 in Exclude<keyof I["IssuerDetails"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
             KeyClients?: string | undefined;
             Press?: string | undefined;
-        } & { [K_28 in Exclude<keyof I["MetaData"], keyof MetadataDetails>]: never; }) | undefined;
-        Audit?: ({
-            ChangedBy?: string | undefined;
-            ChangedAt?: Date | undefined;
-            Reason?: string | undefined;
-        } & {
-            ChangedBy?: string | undefined;
-            ChangedAt?: Date | undefined;
-            Reason?: string | undefined;
-        } & { [K_29 in Exclude<keyof I["Audit"], keyof Audit>]: never; }) | undefined;
-    } & { [K_30 in Exclude<keyof I, keyof Asset>]: never; }>(base?: I | undefined): Asset;
+        } & { [K_30 in Exclude<keyof I["IssuerDetails"], keyof IssuerDetails>]: never; }) | undefined;
+    } & { [K_31 in Exclude<keyof I, keyof Asset>]: never; }>(base?: I | undefined): Asset;
     fromPartial<I_1 extends {
         AssetDetails?: {
             ID?: string | undefined;
@@ -2193,6 +2211,17 @@ export declare const Asset: {
             } | undefined;
         } | undefined;
         MetaData?: {
+            Network?: Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } | undefined;
+        Audit?: {
+            ChangedBy?: string | undefined;
+            ChangedAt?: Date | undefined;
+            Reason?: string | undefined;
+        } | undefined;
+        IssuerDetails?: {
             Name?: string | undefined;
             Description?: string | undefined;
             Image?: string | undefined;
@@ -2212,11 +2241,6 @@ export declare const Asset: {
             SocialMediaLinks?: string[] | undefined;
             KeyClients?: string | undefined;
             Press?: string | undefined;
-        } | undefined;
-        Audit?: {
-            ChangedBy?: string | undefined;
-            ChangedAt?: Date | undefined;
-            Reason?: string | undefined;
         } | undefined;
     } & {
         AssetDetails?: ({
@@ -2403,12 +2427,12 @@ export declare const Asset: {
                 } & {
                     Symbol?: string | undefined;
                     Version?: string | undefined;
-                } & { [K_31 in Exclude<keyof I_1["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
+                } & { [K_32 in Exclude<keyof I_1["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
                 Precision?: number | undefined;
                 Description?: string | undefined;
-            } & { [K_32 in Exclude<keyof I_1["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
+            } & { [K_33 in Exclude<keyof I_1["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
             IsIssuedInSmartContract?: boolean | undefined;
             SmartContractIssuerAddr?: string | undefined;
             RealEstateDetails?: ({
@@ -2436,8 +2460,8 @@ export declare const Asset: {
                 SquareFootage?: number | undefined;
                 TenancyStatus?: string | undefined;
                 YearBuilt?: number | undefined;
-                YieldPercent?: (number[] & number[] & { [K_33 in Exclude<keyof I_1["AssetDetails"]["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
-            } & { [K_34 in Exclude<keyof I_1["AssetDetails"]["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
+                YieldPercent?: (number[] & number[] & { [K_34 in Exclude<keyof I_1["AssetDetails"]["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
+            } & { [K_35 in Exclude<keyof I_1["AssetDetails"]["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
             StableCoinDetails?: ({
                 Version?: string | undefined;
                 PegType?: string | undefined;
@@ -2458,7 +2482,7 @@ export declare const Asset: {
                 MinTransactionAmount?: number | undefined;
                 TradingMarginPercentage?: number | undefined;
                 AssetMarginPercentage?: number | undefined;
-            } & { [K_35 in Exclude<keyof I_1["AssetDetails"]["StableCoinDetails"], keyof StableCoin>]: never; }) | undefined;
+            } & { [K_36 in Exclude<keyof I_1["AssetDetails"]["StableCoinDetails"], keyof StableCoin>]: never; }) | undefined;
             CommodityDetails?: ({
                 Category?: string | undefined;
                 Quality?: string | undefined;
@@ -2483,7 +2507,7 @@ export declare const Asset: {
                 StorageLocation?: string | undefined;
                 ContractType?: string | undefined;
                 DeliveryDate?: string | undefined;
-            } & { [K_36 in Exclude<keyof I_1["AssetDetails"]["CommodityDetails"], keyof Commodity>]: never; }) | undefined;
+            } & { [K_37 in Exclude<keyof I_1["AssetDetails"]["CommodityDetails"], keyof Commodity>]: never; }) | undefined;
             CollectibleDetails?: ({
                 Category?: string | undefined;
                 CollectionName?: string | undefined;
@@ -2500,9 +2524,9 @@ export declare const Asset: {
                 TokenID?: string | undefined;
                 MetadataURI?: string | undefined;
                 Creator?: string | undefined;
-                OwnershipHistory?: (string[] & string[] & { [K_37 in Exclude<keyof I_1["AssetDetails"]["CollectibleDetails"]["OwnershipHistory"], keyof string[]>]: never; }) | undefined;
+                OwnershipHistory?: (string[] & string[] & { [K_38 in Exclude<keyof I_1["AssetDetails"]["CollectibleDetails"]["OwnershipHistory"], keyof string[]>]: never; }) | undefined;
                 CurrentOwner?: string | undefined;
-            } & { [K_38 in Exclude<keyof I_1["AssetDetails"]["CollectibleDetails"], keyof Collectible>]: never; }) | undefined;
+            } & { [K_39 in Exclude<keyof I_1["AssetDetails"]["CollectibleDetails"], keyof Collectible>]: never; }) | undefined;
             VehicleDetails?: ({
                 Category?: string | undefined;
                 Manufacturer?: string | undefined;
@@ -2529,7 +2553,7 @@ export declare const Asset: {
                 Condition?: string | undefined;
                 CurrentOwner?: string | undefined;
                 Location?: string | undefined;
-            } & { [K_39 in Exclude<keyof I_1["AssetDetails"]["VehicleDetails"], keyof Vehicle>]: never; }) | undefined;
+            } & { [K_40 in Exclude<keyof I_1["AssetDetails"]["VehicleDetails"], keyof Vehicle>]: never; }) | undefined;
             IntellectualPropertyDetails?: ({
                 Category?: string | undefined;
                 Owner?: string | undefined;
@@ -2546,11 +2570,11 @@ export declare const Asset: {
                 RegistrationNumber?: string | undefined;
                 FilingDate?: string | undefined;
                 ExpirationDate?: string | undefined;
-                IPJurisdictionIDs?: (string[] & string[] & { [K_40 in Exclude<keyof I_1["AssetDetails"]["IntellectualPropertyDetails"]["IPJurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+                IPJurisdictionIDs?: (string[] & string[] & { [K_41 in Exclude<keyof I_1["AssetDetails"]["IntellectualPropertyDetails"]["IPJurisdictionIDs"], keyof string[]>]: never; }) | undefined;
                 LicenseType?: string | undefined;
                 LicenseTerms?: string | undefined;
                 Value?: number | undefined;
-            } & { [K_41 in Exclude<keyof I_1["AssetDetails"]["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
+            } & { [K_42 in Exclude<keyof I_1["AssetDetails"]["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
             InvestmentFundDetails?: ({
                 FundType?: string | undefined;
                 Exchange?: string | undefined;
@@ -2568,8 +2592,8 @@ export declare const Asset: {
                 InceptionDate?: string | undefined;
                 Manager?: string | undefined;
                 ExpenseRatio?: number | undefined;
-                Holdings?: (string[] & string[] & { [K_42 in Exclude<keyof I_1["AssetDetails"]["InvestmentFundDetails"]["Holdings"], keyof string[]>]: never; }) | undefined;
-            } & { [K_43 in Exclude<keyof I_1["AssetDetails"]["InvestmentFundDetails"], keyof InvestmentFund>]: never; }) | undefined;
+                Holdings?: (string[] & string[] & { [K_43 in Exclude<keyof I_1["AssetDetails"]["InvestmentFundDetails"]["Holdings"], keyof string[]>]: never; }) | undefined;
+            } & { [K_44 in Exclude<keyof I_1["AssetDetails"]["InvestmentFundDetails"], keyof InvestmentFund>]: never; }) | undefined;
             EquityDetails?: ({
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: string | undefined;
@@ -2582,7 +2606,7 @@ export declare const Asset: {
                 MinTransactionAmount?: string | undefined;
                 ExtraPercentage?: string | undefined;
                 AssetMarginPercentage?: string | undefined;
-            } & { [K_44 in Exclude<keyof I_1["AssetDetails"]["EquityDetails"], keyof Equity>]: never; }) | undefined;
+            } & { [K_45 in Exclude<keyof I_1["AssetDetails"]["EquityDetails"], keyof Equity>]: never; }) | undefined;
             FinancialProperties?: ({
                 Symbol?: string | undefined;
                 Issuer?: string | undefined;
@@ -2616,12 +2640,12 @@ export declare const Asset: {
             } & {
                 Symbol?: string | undefined;
                 Issuer?: string | undefined;
-                JurisdictionIDs?: (string[] & string[] & { [K_45 in Exclude<keyof I_1["AssetDetails"]["FinancialProperties"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+                JurisdictionIDs?: (string[] & string[] & { [K_46 in Exclude<keyof I_1["AssetDetails"]["FinancialProperties"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
                 JurisdictionRestrictions?: string | undefined;
                 RedemptionTerms?: string | undefined;
                 ComplianceRequired?: boolean | undefined;
                 Type?: string | undefined;
-                TradeAllowances?: (string[] & string[] & { [K_46 in Exclude<keyof I_1["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
+                TradeAllowances?: (string[] & string[] & { [K_47 in Exclude<keyof I_1["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
                 Transferable?: boolean | undefined;
                 Platform?: string | undefined;
                 PlatformType?: string | undefined;
@@ -2644,9 +2668,9 @@ export declare const Asset: {
                 } & {
                     Value?: number | undefined;
                     Exp?: number | undefined;
-                } & { [K_47 in Exclude<keyof I_1["AssetDetails"]["FinancialProperties"]["Commission"], keyof Decimal>]: never; }) | undefined;
+                } & { [K_48 in Exclude<keyof I_1["AssetDetails"]["FinancialProperties"]["Commission"], keyof Decimal>]: never; }) | undefined;
                 CommissionType?: CommissionType | undefined;
-            } & { [K_48 in Exclude<keyof I_1["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
+            } & { [K_49 in Exclude<keyof I_1["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
             Description?: ({
                 Name?: string | undefined;
                 Description?: string | undefined;
@@ -2666,12 +2690,12 @@ export declare const Asset: {
                 AssetID?: string | undefined;
                 URL?: string | undefined;
                 Country?: string | undefined;
-                Documents?: (string[] & string[] & { [K_49 in Exclude<keyof I_1["AssetDetails"]["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
-                Images?: (string[] & string[] & { [K_50 in Exclude<keyof I_1["AssetDetails"]["Description"]["Images"], keyof string[]>]: never; }) | undefined;
+                Documents?: (string[] & string[] & { [K_50 in Exclude<keyof I_1["AssetDetails"]["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
+                Images?: (string[] & string[] & { [K_51 in Exclude<keyof I_1["AssetDetails"]["Description"]["Images"], keyof string[]>]: never; }) | undefined;
                 Vertical?: string | undefined;
                 CreatedAt?: string | undefined;
                 UpdatedAt?: string | undefined;
-            } & { [K_51 in Exclude<keyof I_1["AssetDetails"]["Description"], keyof Description>]: never; }) | undefined;
+            } & { [K_52 in Exclude<keyof I_1["AssetDetails"]["Description"], keyof Description>]: never; }) | undefined;
             ExternalResources?: ({
                 Links?: {
                     Type?: LinkType | undefined;
@@ -2691,7 +2715,7 @@ export declare const Asset: {
                 } & {
                     Type?: LinkType | undefined;
                     URL?: string | undefined;
-                } & { [K_52 in Exclude<keyof I_1["AssetDetails"]["ExternalResources"]["Links"][number], keyof Link>]: never; })[] & { [K_53 in Exclude<keyof I_1["AssetDetails"]["ExternalResources"]["Links"], keyof {
+                } & { [K_53 in Exclude<keyof I_1["AssetDetails"]["ExternalResources"]["Links"][number], keyof Link>]: never; })[] & { [K_54 in Exclude<keyof I_1["AssetDetails"]["ExternalResources"]["Links"], keyof {
                     Type?: LinkType | undefined;
                     URL?: string | undefined;
                 }[]>]: never; }) | undefined;
@@ -2704,13 +2728,33 @@ export declare const Asset: {
                 } & {
                     Type?: SocialMediaType | undefined;
                     URL?: string | undefined;
-                } & { [K_54 in Exclude<keyof I_1["AssetDetails"]["ExternalResources"]["Socials"][number], keyof SocialMedia>]: never; })[] & { [K_55 in Exclude<keyof I_1["AssetDetails"]["ExternalResources"]["Socials"], keyof {
+                } & { [K_55 in Exclude<keyof I_1["AssetDetails"]["ExternalResources"]["Socials"][number], keyof SocialMedia>]: never; })[] & { [K_56 in Exclude<keyof I_1["AssetDetails"]["ExternalResources"]["Socials"], keyof {
                     Type?: SocialMediaType | undefined;
                     URL?: string | undefined;
                 }[]>]: never; }) | undefined;
-            } & { [K_56 in Exclude<keyof I_1["AssetDetails"]["ExternalResources"], keyof ExternalResources>]: never; }) | undefined;
-        } & { [K_57 in Exclude<keyof I_1["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+            } & { [K_57 in Exclude<keyof I_1["AssetDetails"]["ExternalResources"], keyof ExternalResources>]: never; }) | undefined;
+        } & { [K_58 in Exclude<keyof I_1["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
         MetaData?: ({
+            Network?: Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } & {
+            Network?: Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } & { [K_59 in Exclude<keyof I_1["MetaData"], keyof MetaData>]: never; }) | undefined;
+        Audit?: ({
+            ChangedBy?: string | undefined;
+            ChangedAt?: Date | undefined;
+            Reason?: string | undefined;
+        } & {
+            ChangedBy?: string | undefined;
+            ChangedAt?: Date | undefined;
+            Reason?: string | undefined;
+        } & { [K_60 in Exclude<keyof I_1["Audit"], keyof Audit>]: never; }) | undefined;
+        IssuerDetails?: ({
             Name?: string | undefined;
             Description?: string | undefined;
             Image?: string | undefined;
@@ -2747,20 +2791,11 @@ export declare const Asset: {
             LicenseNumber?: string | undefined;
             Phone?: string | undefined;
             Email?: string | undefined;
-            SocialMediaLinks?: (string[] & string[] & { [K_58 in Exclude<keyof I_1["MetaData"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
+            SocialMediaLinks?: (string[] & string[] & { [K_61 in Exclude<keyof I_1["IssuerDetails"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
             KeyClients?: string | undefined;
             Press?: string | undefined;
-        } & { [K_59 in Exclude<keyof I_1["MetaData"], keyof MetadataDetails>]: never; }) | undefined;
-        Audit?: ({
-            ChangedBy?: string | undefined;
-            ChangedAt?: Date | undefined;
-            Reason?: string | undefined;
-        } & {
-            ChangedBy?: string | undefined;
-            ChangedAt?: Date | undefined;
-            Reason?: string | undefined;
-        } & { [K_60 in Exclude<keyof I_1["Audit"], keyof Audit>]: never; }) | undefined;
-    } & { [K_61 in Exclude<keyof I_1, keyof Asset>]: never; }>(object: I_1): Asset;
+        } & { [K_62 in Exclude<keyof I_1["IssuerDetails"], keyof IssuerDetails>]: never; }) | undefined;
+    } & { [K_63 in Exclude<keyof I_1, keyof Asset>]: never; }>(object: I_1): Asset;
 };
 export declare const Assets: {
     encode(message: Assets, writer?: _m0.Writer): _m0.Writer;
@@ -2933,6 +2968,17 @@ export declare const Assets: {
                 } | undefined;
             } | undefined;
             MetaData?: {
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
+            Audit?: {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } | undefined;
+            IssuerDetails?: {
                 Name?: string | undefined;
                 Description?: string | undefined;
                 Image?: string | undefined;
@@ -2952,11 +2998,6 @@ export declare const Assets: {
                 SocialMediaLinks?: string[] | undefined;
                 KeyClients?: string | undefined;
                 Press?: string | undefined;
-            } | undefined;
-            Audit?: {
-                ChangedBy?: string | undefined;
-                ChangedAt?: Date | undefined;
-                Reason?: string | undefined;
             } | undefined;
         }[] | undefined;
         Offset?: number | undefined;
@@ -3126,6 +3167,17 @@ export declare const Assets: {
                 } | undefined;
             } | undefined;
             MetaData?: {
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
+            Audit?: {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } | undefined;
+            IssuerDetails?: {
                 Name?: string | undefined;
                 Description?: string | undefined;
                 Image?: string | undefined;
@@ -3145,11 +3197,6 @@ export declare const Assets: {
                 SocialMediaLinks?: string[] | undefined;
                 KeyClients?: string | undefined;
                 Press?: string | undefined;
-            } | undefined;
-            Audit?: {
-                ChangedBy?: string | undefined;
-                ChangedAt?: Date | undefined;
-                Reason?: string | undefined;
             } | undefined;
         }[] & ({
             AssetDetails?: {
@@ -3316,6 +3363,17 @@ export declare const Assets: {
                 } | undefined;
             } | undefined;
             MetaData?: {
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
+            Audit?: {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } | undefined;
+            IssuerDetails?: {
                 Name?: string | undefined;
                 Description?: string | undefined;
                 Image?: string | undefined;
@@ -3335,11 +3393,6 @@ export declare const Assets: {
                 SocialMediaLinks?: string[] | undefined;
                 KeyClients?: string | undefined;
                 Press?: string | undefined;
-            } | undefined;
-            Audit?: {
-                ChangedBy?: string | undefined;
-                ChangedAt?: Date | undefined;
-                Reason?: string | undefined;
             } | undefined;
         } & {
             AssetDetails?: ({
@@ -3834,6 +3887,26 @@ export declare const Assets: {
                 } & { [K_25 in Exclude<keyof I["Assets"][number]["AssetDetails"]["ExternalResources"], keyof ExternalResources>]: never; }) | undefined;
             } & { [K_26 in Exclude<keyof I["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
             MetaData?: ({
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } & {
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } & { [K_27 in Exclude<keyof I["Assets"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
+            Audit?: ({
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } & {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } & { [K_28 in Exclude<keyof I["Assets"][number]["Audit"], keyof Audit>]: never; }) | undefined;
+            IssuerDetails?: ({
                 Name?: string | undefined;
                 Description?: string | undefined;
                 Image?: string | undefined;
@@ -3870,20 +3943,11 @@ export declare const Assets: {
                 LicenseNumber?: string | undefined;
                 Phone?: string | undefined;
                 Email?: string | undefined;
-                SocialMediaLinks?: (string[] & string[] & { [K_27 in Exclude<keyof I["Assets"][number]["MetaData"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
+                SocialMediaLinks?: (string[] & string[] & { [K_29 in Exclude<keyof I["Assets"][number]["IssuerDetails"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
                 KeyClients?: string | undefined;
                 Press?: string | undefined;
-            } & { [K_28 in Exclude<keyof I["Assets"][number]["MetaData"], keyof MetadataDetails>]: never; }) | undefined;
-            Audit?: ({
-                ChangedBy?: string | undefined;
-                ChangedAt?: Date | undefined;
-                Reason?: string | undefined;
-            } & {
-                ChangedBy?: string | undefined;
-                ChangedAt?: Date | undefined;
-                Reason?: string | undefined;
-            } & { [K_29 in Exclude<keyof I["Assets"][number]["Audit"], keyof Audit>]: never; }) | undefined;
-        } & { [K_30 in Exclude<keyof I["Assets"][number], keyof Asset>]: never; })[] & { [K_31 in Exclude<keyof I["Assets"], keyof {
+            } & { [K_30 in Exclude<keyof I["Assets"][number]["IssuerDetails"], keyof IssuerDetails>]: never; }) | undefined;
+        } & { [K_31 in Exclude<keyof I["Assets"][number], keyof Asset>]: never; })[] & { [K_32 in Exclude<keyof I["Assets"], keyof {
             AssetDetails?: {
                 ID?: string | undefined;
                 OrganizationID?: string | undefined;
@@ -4048,6 +4112,17 @@ export declare const Assets: {
                 } | undefined;
             } | undefined;
             MetaData?: {
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
+            Audit?: {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } | undefined;
+            IssuerDetails?: {
                 Name?: string | undefined;
                 Description?: string | undefined;
                 Image?: string | undefined;
@@ -4068,14 +4143,9 @@ export declare const Assets: {
                 KeyClients?: string | undefined;
                 Press?: string | undefined;
             } | undefined;
-            Audit?: {
-                ChangedBy?: string | undefined;
-                ChangedAt?: Date | undefined;
-                Reason?: string | undefined;
-            } | undefined;
         }[]>]: never; }) | undefined;
         Offset?: number | undefined;
-    } & { [K_32 in Exclude<keyof I, keyof Assets>]: never; }>(base?: I | undefined): Assets;
+    } & { [K_33 in Exclude<keyof I, keyof Assets>]: never; }>(base?: I | undefined): Assets;
     fromPartial<I_1 extends {
         Assets?: {
             AssetDetails?: {
@@ -4242,6 +4312,17 @@ export declare const Assets: {
                 } | undefined;
             } | undefined;
             MetaData?: {
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
+            Audit?: {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } | undefined;
+            IssuerDetails?: {
                 Name?: string | undefined;
                 Description?: string | undefined;
                 Image?: string | undefined;
@@ -4261,11 +4342,6 @@ export declare const Assets: {
                 SocialMediaLinks?: string[] | undefined;
                 KeyClients?: string | undefined;
                 Press?: string | undefined;
-            } | undefined;
-            Audit?: {
-                ChangedBy?: string | undefined;
-                ChangedAt?: Date | undefined;
-                Reason?: string | undefined;
             } | undefined;
         }[] | undefined;
         Offset?: number | undefined;
@@ -4435,6 +4511,17 @@ export declare const Assets: {
                 } | undefined;
             } | undefined;
             MetaData?: {
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
+            Audit?: {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } | undefined;
+            IssuerDetails?: {
                 Name?: string | undefined;
                 Description?: string | undefined;
                 Image?: string | undefined;
@@ -4454,11 +4541,6 @@ export declare const Assets: {
                 SocialMediaLinks?: string[] | undefined;
                 KeyClients?: string | undefined;
                 Press?: string | undefined;
-            } | undefined;
-            Audit?: {
-                ChangedBy?: string | undefined;
-                ChangedAt?: Date | undefined;
-                Reason?: string | undefined;
             } | undefined;
         }[] & ({
             AssetDetails?: {
@@ -4625,6 +4707,17 @@ export declare const Assets: {
                 } | undefined;
             } | undefined;
             MetaData?: {
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
+            Audit?: {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } | undefined;
+            IssuerDetails?: {
                 Name?: string | undefined;
                 Description?: string | undefined;
                 Image?: string | undefined;
@@ -4644,11 +4737,6 @@ export declare const Assets: {
                 SocialMediaLinks?: string[] | undefined;
                 KeyClients?: string | undefined;
                 Press?: string | undefined;
-            } | undefined;
-            Audit?: {
-                ChangedBy?: string | undefined;
-                ChangedAt?: Date | undefined;
-                Reason?: string | undefined;
             } | undefined;
         } & {
             AssetDetails?: ({
@@ -4835,12 +4923,12 @@ export declare const Assets: {
                     } & {
                         Symbol?: string | undefined;
                         Version?: string | undefined;
-                    } & { [K_33 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
+                    } & { [K_34 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
                     Subunit?: string | undefined;
                     Issuer?: string | undefined;
                     Precision?: number | undefined;
                     Description?: string | undefined;
-                } & { [K_34 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
+                } & { [K_35 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
                 IsIssuedInSmartContract?: boolean | undefined;
                 SmartContractIssuerAddr?: string | undefined;
                 RealEstateDetails?: ({
@@ -4868,8 +4956,8 @@ export declare const Assets: {
                     SquareFootage?: number | undefined;
                     TenancyStatus?: string | undefined;
                     YearBuilt?: number | undefined;
-                    YieldPercent?: (number[] & number[] & { [K_35 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
-                } & { [K_36 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
+                    YieldPercent?: (number[] & number[] & { [K_36 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
+                } & { [K_37 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
                 StableCoinDetails?: ({
                     Version?: string | undefined;
                     PegType?: string | undefined;
@@ -4890,7 +4978,7 @@ export declare const Assets: {
                     MinTransactionAmount?: number | undefined;
                     TradingMarginPercentage?: number | undefined;
                     AssetMarginPercentage?: number | undefined;
-                } & { [K_37 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["StableCoinDetails"], keyof StableCoin>]: never; }) | undefined;
+                } & { [K_38 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["StableCoinDetails"], keyof StableCoin>]: never; }) | undefined;
                 CommodityDetails?: ({
                     Category?: string | undefined;
                     Quality?: string | undefined;
@@ -4915,7 +5003,7 @@ export declare const Assets: {
                     StorageLocation?: string | undefined;
                     ContractType?: string | undefined;
                     DeliveryDate?: string | undefined;
-                } & { [K_38 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["CommodityDetails"], keyof Commodity>]: never; }) | undefined;
+                } & { [K_39 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["CommodityDetails"], keyof Commodity>]: never; }) | undefined;
                 CollectibleDetails?: ({
                     Category?: string | undefined;
                     CollectionName?: string | undefined;
@@ -4932,9 +5020,9 @@ export declare const Assets: {
                     TokenID?: string | undefined;
                     MetadataURI?: string | undefined;
                     Creator?: string | undefined;
-                    OwnershipHistory?: (string[] & string[] & { [K_39 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["CollectibleDetails"]["OwnershipHistory"], keyof string[]>]: never; }) | undefined;
+                    OwnershipHistory?: (string[] & string[] & { [K_40 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["CollectibleDetails"]["OwnershipHistory"], keyof string[]>]: never; }) | undefined;
                     CurrentOwner?: string | undefined;
-                } & { [K_40 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["CollectibleDetails"], keyof Collectible>]: never; }) | undefined;
+                } & { [K_41 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["CollectibleDetails"], keyof Collectible>]: never; }) | undefined;
                 VehicleDetails?: ({
                     Category?: string | undefined;
                     Manufacturer?: string | undefined;
@@ -4961,7 +5049,7 @@ export declare const Assets: {
                     Condition?: string | undefined;
                     CurrentOwner?: string | undefined;
                     Location?: string | undefined;
-                } & { [K_41 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["VehicleDetails"], keyof Vehicle>]: never; }) | undefined;
+                } & { [K_42 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["VehicleDetails"], keyof Vehicle>]: never; }) | undefined;
                 IntellectualPropertyDetails?: ({
                     Category?: string | undefined;
                     Owner?: string | undefined;
@@ -4978,11 +5066,11 @@ export declare const Assets: {
                     RegistrationNumber?: string | undefined;
                     FilingDate?: string | undefined;
                     ExpirationDate?: string | undefined;
-                    IPJurisdictionIDs?: (string[] & string[] & { [K_42 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["IntellectualPropertyDetails"]["IPJurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+                    IPJurisdictionIDs?: (string[] & string[] & { [K_43 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["IntellectualPropertyDetails"]["IPJurisdictionIDs"], keyof string[]>]: never; }) | undefined;
                     LicenseType?: string | undefined;
                     LicenseTerms?: string | undefined;
                     Value?: number | undefined;
-                } & { [K_43 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
+                } & { [K_44 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
                 InvestmentFundDetails?: ({
                     FundType?: string | undefined;
                     Exchange?: string | undefined;
@@ -5000,8 +5088,8 @@ export declare const Assets: {
                     InceptionDate?: string | undefined;
                     Manager?: string | undefined;
                     ExpenseRatio?: number | undefined;
-                    Holdings?: (string[] & string[] & { [K_44 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["InvestmentFundDetails"]["Holdings"], keyof string[]>]: never; }) | undefined;
-                } & { [K_45 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["InvestmentFundDetails"], keyof InvestmentFund>]: never; }) | undefined;
+                    Holdings?: (string[] & string[] & { [K_45 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["InvestmentFundDetails"]["Holdings"], keyof string[]>]: never; }) | undefined;
+                } & { [K_46 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["InvestmentFundDetails"], keyof InvestmentFund>]: never; }) | undefined;
                 EquityDetails?: ({
                     ExchangeTickerSymbol?: string | undefined;
                     Exchange?: string | undefined;
@@ -5014,7 +5102,7 @@ export declare const Assets: {
                     MinTransactionAmount?: string | undefined;
                     ExtraPercentage?: string | undefined;
                     AssetMarginPercentage?: string | undefined;
-                } & { [K_46 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["EquityDetails"], keyof Equity>]: never; }) | undefined;
+                } & { [K_47 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["EquityDetails"], keyof Equity>]: never; }) | undefined;
                 FinancialProperties?: ({
                     Symbol?: string | undefined;
                     Issuer?: string | undefined;
@@ -5048,12 +5136,12 @@ export declare const Assets: {
                 } & {
                     Symbol?: string | undefined;
                     Issuer?: string | undefined;
-                    JurisdictionIDs?: (string[] & string[] & { [K_47 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["FinancialProperties"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
+                    JurisdictionIDs?: (string[] & string[] & { [K_48 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["FinancialProperties"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
                     JurisdictionRestrictions?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
-                    TradeAllowances?: (string[] & string[] & { [K_48 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
+                    TradeAllowances?: (string[] & string[] & { [K_49 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
                     Transferable?: boolean | undefined;
                     Platform?: string | undefined;
                     PlatformType?: string | undefined;
@@ -5076,9 +5164,9 @@ export declare const Assets: {
                     } & {
                         Value?: number | undefined;
                         Exp?: number | undefined;
-                    } & { [K_49 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["FinancialProperties"]["Commission"], keyof Decimal>]: never; }) | undefined;
+                    } & { [K_50 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["FinancialProperties"]["Commission"], keyof Decimal>]: never; }) | undefined;
                     CommissionType?: CommissionType | undefined;
-                } & { [K_50 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
+                } & { [K_51 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
                 Description?: ({
                     Name?: string | undefined;
                     Description?: string | undefined;
@@ -5098,12 +5186,12 @@ export declare const Assets: {
                     AssetID?: string | undefined;
                     URL?: string | undefined;
                     Country?: string | undefined;
-                    Documents?: (string[] & string[] & { [K_51 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
-                    Images?: (string[] & string[] & { [K_52 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"]["Images"], keyof string[]>]: never; }) | undefined;
+                    Documents?: (string[] & string[] & { [K_52 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
+                    Images?: (string[] & string[] & { [K_53 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"]["Images"], keyof string[]>]: never; }) | undefined;
                     Vertical?: string | undefined;
                     CreatedAt?: string | undefined;
                     UpdatedAt?: string | undefined;
-                } & { [K_53 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"], keyof Description>]: never; }) | undefined;
+                } & { [K_54 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"], keyof Description>]: never; }) | undefined;
                 ExternalResources?: ({
                     Links?: {
                         Type?: LinkType | undefined;
@@ -5123,7 +5211,7 @@ export declare const Assets: {
                     } & {
                         Type?: LinkType | undefined;
                         URL?: string | undefined;
-                    } & { [K_54 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["ExternalResources"]["Links"][number], keyof Link>]: never; })[] & { [K_55 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["ExternalResources"]["Links"], keyof {
+                    } & { [K_55 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["ExternalResources"]["Links"][number], keyof Link>]: never; })[] & { [K_56 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["ExternalResources"]["Links"], keyof {
                         Type?: LinkType | undefined;
                         URL?: string | undefined;
                     }[]>]: never; }) | undefined;
@@ -5136,13 +5224,33 @@ export declare const Assets: {
                     } & {
                         Type?: SocialMediaType | undefined;
                         URL?: string | undefined;
-                    } & { [K_56 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["ExternalResources"]["Socials"][number], keyof SocialMedia>]: never; })[] & { [K_57 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["ExternalResources"]["Socials"], keyof {
+                    } & { [K_57 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["ExternalResources"]["Socials"][number], keyof SocialMedia>]: never; })[] & { [K_58 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["ExternalResources"]["Socials"], keyof {
                         Type?: SocialMediaType | undefined;
                         URL?: string | undefined;
                     }[]>]: never; }) | undefined;
-                } & { [K_58 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["ExternalResources"], keyof ExternalResources>]: never; }) | undefined;
-            } & { [K_59 in Exclude<keyof I_1["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+                } & { [K_59 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["ExternalResources"], keyof ExternalResources>]: never; }) | undefined;
+            } & { [K_60 in Exclude<keyof I_1["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
             MetaData?: ({
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } & {
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } & { [K_61 in Exclude<keyof I_1["Assets"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
+            Audit?: ({
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } & {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } & { [K_62 in Exclude<keyof I_1["Assets"][number]["Audit"], keyof Audit>]: never; }) | undefined;
+            IssuerDetails?: ({
                 Name?: string | undefined;
                 Description?: string | undefined;
                 Image?: string | undefined;
@@ -5179,20 +5287,11 @@ export declare const Assets: {
                 LicenseNumber?: string | undefined;
                 Phone?: string | undefined;
                 Email?: string | undefined;
-                SocialMediaLinks?: (string[] & string[] & { [K_60 in Exclude<keyof I_1["Assets"][number]["MetaData"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
+                SocialMediaLinks?: (string[] & string[] & { [K_63 in Exclude<keyof I_1["Assets"][number]["IssuerDetails"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
                 KeyClients?: string | undefined;
                 Press?: string | undefined;
-            } & { [K_61 in Exclude<keyof I_1["Assets"][number]["MetaData"], keyof MetadataDetails>]: never; }) | undefined;
-            Audit?: ({
-                ChangedBy?: string | undefined;
-                ChangedAt?: Date | undefined;
-                Reason?: string | undefined;
-            } & {
-                ChangedBy?: string | undefined;
-                ChangedAt?: Date | undefined;
-                Reason?: string | undefined;
-            } & { [K_62 in Exclude<keyof I_1["Assets"][number]["Audit"], keyof Audit>]: never; }) | undefined;
-        } & { [K_63 in Exclude<keyof I_1["Assets"][number], keyof Asset>]: never; })[] & { [K_64 in Exclude<keyof I_1["Assets"], keyof {
+            } & { [K_64 in Exclude<keyof I_1["Assets"][number]["IssuerDetails"], keyof IssuerDetails>]: never; }) | undefined;
+        } & { [K_65 in Exclude<keyof I_1["Assets"][number], keyof Asset>]: never; })[] & { [K_66 in Exclude<keyof I_1["Assets"], keyof {
             AssetDetails?: {
                 ID?: string | undefined;
                 OrganizationID?: string | undefined;
@@ -5357,6 +5456,17 @@ export declare const Assets: {
                 } | undefined;
             } | undefined;
             MetaData?: {
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } | undefined;
+            Audit?: {
+                ChangedBy?: string | undefined;
+                ChangedAt?: Date | undefined;
+                Reason?: string | undefined;
+            } | undefined;
+            IssuerDetails?: {
                 Name?: string | undefined;
                 Description?: string | undefined;
                 Image?: string | undefined;
@@ -5377,14 +5487,9 @@ export declare const Assets: {
                 KeyClients?: string | undefined;
                 Press?: string | undefined;
             } | undefined;
-            Audit?: {
-                ChangedBy?: string | undefined;
-                ChangedAt?: Date | undefined;
-                Reason?: string | undefined;
-            } | undefined;
         }[]>]: never; }) | undefined;
         Offset?: number | undefined;
-    } & { [K_65 in Exclude<keyof I_1, keyof Assets>]: never; }>(object: I_1): Assets;
+    } & { [K_67 in Exclude<keyof I_1, keyof Assets>]: never; }>(object: I_1): Assets;
 };
 export declare const UserAssetList: {
     encode(message: UserAssetList, writer?: _m0.Writer): _m0.Writer;
@@ -5397,25 +5502,10 @@ export declare const UserAssetList: {
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
         MetaData?: {
-            Name?: string | undefined;
-            Description?: string | undefined;
-            Image?: string | undefined;
-            ExternalUrl?: string | undefined;
-            AddressLine1?: string | undefined;
-            AddressLine2?: string | undefined;
-            City?: string | undefined;
-            Region?: string | undefined;
-            PostalCode?: string | undefined;
-            Country?: string | undefined;
-            YearFounded?: number | undefined;
-            Licensed?: boolean | undefined;
-            LicenseCountry?: string | undefined;
-            LicenseNumber?: string | undefined;
-            Phone?: string | undefined;
-            Email?: string | undefined;
-            SocialMediaLinks?: string[] | undefined;
-            KeyClients?: string | undefined;
-            Press?: string | undefined;
+            Network?: Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
         } | undefined;
         Visible?: boolean | undefined;
     } & {
@@ -5424,73 +5514,28 @@ export declare const UserAssetList: {
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
         MetaData?: ({
-            Name?: string | undefined;
-            Description?: string | undefined;
-            Image?: string | undefined;
-            ExternalUrl?: string | undefined;
-            AddressLine1?: string | undefined;
-            AddressLine2?: string | undefined;
-            City?: string | undefined;
-            Region?: string | undefined;
-            PostalCode?: string | undefined;
-            Country?: string | undefined;
-            YearFounded?: number | undefined;
-            Licensed?: boolean | undefined;
-            LicenseCountry?: string | undefined;
-            LicenseNumber?: string | undefined;
-            Phone?: string | undefined;
-            Email?: string | undefined;
-            SocialMediaLinks?: string[] | undefined;
-            KeyClients?: string | undefined;
-            Press?: string | undefined;
+            Network?: Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
         } & {
-            Name?: string | undefined;
-            Description?: string | undefined;
-            Image?: string | undefined;
-            ExternalUrl?: string | undefined;
-            AddressLine1?: string | undefined;
-            AddressLine2?: string | undefined;
-            City?: string | undefined;
-            Region?: string | undefined;
-            PostalCode?: string | undefined;
-            Country?: string | undefined;
-            YearFounded?: number | undefined;
-            Licensed?: boolean | undefined;
-            LicenseCountry?: string | undefined;
-            LicenseNumber?: string | undefined;
-            Phone?: string | undefined;
-            Email?: string | undefined;
-            SocialMediaLinks?: (string[] & string[] & { [K in Exclude<keyof I["MetaData"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
-            KeyClients?: string | undefined;
-            Press?: string | undefined;
-        } & { [K_1 in Exclude<keyof I["MetaData"], keyof MetadataDetails>]: never; }) | undefined;
+            Network?: Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } & { [K in Exclude<keyof I["MetaData"], keyof MetaData>]: never; }) | undefined;
         Visible?: boolean | undefined;
-    } & { [K_2 in Exclude<keyof I, keyof UserAssetList>]: never; }>(base?: I | undefined): UserAssetList;
+    } & { [K_1 in Exclude<keyof I, keyof UserAssetList>]: never; }>(base?: I | undefined): UserAssetList;
     fromPartial<I_1 extends {
         AccountID?: string | undefined;
         Wallet?: string | undefined;
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
         MetaData?: {
-            Name?: string | undefined;
-            Description?: string | undefined;
-            Image?: string | undefined;
-            ExternalUrl?: string | undefined;
-            AddressLine1?: string | undefined;
-            AddressLine2?: string | undefined;
-            City?: string | undefined;
-            Region?: string | undefined;
-            PostalCode?: string | undefined;
-            Country?: string | undefined;
-            YearFounded?: number | undefined;
-            Licensed?: boolean | undefined;
-            LicenseCountry?: string | undefined;
-            LicenseNumber?: string | undefined;
-            Phone?: string | undefined;
-            Email?: string | undefined;
-            SocialMediaLinks?: string[] | undefined;
-            KeyClients?: string | undefined;
-            Press?: string | undefined;
+            Network?: Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
         } | undefined;
         Visible?: boolean | undefined;
     } & {
@@ -5499,48 +5544,18 @@ export declare const UserAssetList: {
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
         MetaData?: ({
-            Name?: string | undefined;
-            Description?: string | undefined;
-            Image?: string | undefined;
-            ExternalUrl?: string | undefined;
-            AddressLine1?: string | undefined;
-            AddressLine2?: string | undefined;
-            City?: string | undefined;
-            Region?: string | undefined;
-            PostalCode?: string | undefined;
-            Country?: string | undefined;
-            YearFounded?: number | undefined;
-            Licensed?: boolean | undefined;
-            LicenseCountry?: string | undefined;
-            LicenseNumber?: string | undefined;
-            Phone?: string | undefined;
-            Email?: string | undefined;
-            SocialMediaLinks?: string[] | undefined;
-            KeyClients?: string | undefined;
-            Press?: string | undefined;
+            Network?: Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
         } & {
-            Name?: string | undefined;
-            Description?: string | undefined;
-            Image?: string | undefined;
-            ExternalUrl?: string | undefined;
-            AddressLine1?: string | undefined;
-            AddressLine2?: string | undefined;
-            City?: string | undefined;
-            Region?: string | undefined;
-            PostalCode?: string | undefined;
-            Country?: string | undefined;
-            YearFounded?: number | undefined;
-            Licensed?: boolean | undefined;
-            LicenseCountry?: string | undefined;
-            LicenseNumber?: string | undefined;
-            Phone?: string | undefined;
-            Email?: string | undefined;
-            SocialMediaLinks?: (string[] & string[] & { [K_3 in Exclude<keyof I_1["MetaData"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
-            KeyClients?: string | undefined;
-            Press?: string | undefined;
-        } & { [K_4 in Exclude<keyof I_1["MetaData"], keyof MetadataDetails>]: never; }) | undefined;
+            Network?: Network | undefined;
+            UpdatedAt?: Date | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedByAccount?: string | undefined;
+        } & { [K_2 in Exclude<keyof I_1["MetaData"], keyof MetaData>]: never; }) | undefined;
         Visible?: boolean | undefined;
-    } & { [K_5 in Exclude<keyof I_1, keyof UserAssetList>]: never; }>(object: I_1): UserAssetList;
+    } & { [K_3 in Exclude<keyof I_1, keyof UserAssetList>]: never; }>(object: I_1): UserAssetList;
 };
 export declare const UserAssetLists: {
     encode(message: UserAssetLists, writer?: _m0.Writer): _m0.Writer;
@@ -5554,25 +5569,10 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Name?: string | undefined;
-                Description?: string | undefined;
-                Image?: string | undefined;
-                ExternalUrl?: string | undefined;
-                AddressLine1?: string | undefined;
-                AddressLine2?: string | undefined;
-                City?: string | undefined;
-                Region?: string | undefined;
-                PostalCode?: string | undefined;
-                Country?: string | undefined;
-                YearFounded?: number | undefined;
-                Licensed?: boolean | undefined;
-                LicenseCountry?: string | undefined;
-                LicenseNumber?: string | undefined;
-                Phone?: string | undefined;
-                Email?: string | undefined;
-                SocialMediaLinks?: string[] | undefined;
-                KeyClients?: string | undefined;
-                Press?: string | undefined;
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
         }[] | undefined;
@@ -5583,25 +5583,10 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Name?: string | undefined;
-                Description?: string | undefined;
-                Image?: string | undefined;
-                ExternalUrl?: string | undefined;
-                AddressLine1?: string | undefined;
-                AddressLine2?: string | undefined;
-                City?: string | undefined;
-                Region?: string | undefined;
-                PostalCode?: string | undefined;
-                Country?: string | undefined;
-                YearFounded?: number | undefined;
-                Licensed?: boolean | undefined;
-                LicenseCountry?: string | undefined;
-                LicenseNumber?: string | undefined;
-                Phone?: string | undefined;
-                Email?: string | undefined;
-                SocialMediaLinks?: string[] | undefined;
-                KeyClients?: string | undefined;
-                Press?: string | undefined;
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
         }[] & ({
@@ -5610,25 +5595,10 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Name?: string | undefined;
-                Description?: string | undefined;
-                Image?: string | undefined;
-                ExternalUrl?: string | undefined;
-                AddressLine1?: string | undefined;
-                AddressLine2?: string | undefined;
-                City?: string | undefined;
-                Region?: string | undefined;
-                PostalCode?: string | undefined;
-                Country?: string | undefined;
-                YearFounded?: number | undefined;
-                Licensed?: boolean | undefined;
-                LicenseCountry?: string | undefined;
-                LicenseNumber?: string | undefined;
-                Phone?: string | undefined;
-                Email?: string | undefined;
-                SocialMediaLinks?: string[] | undefined;
-                KeyClients?: string | undefined;
-                Press?: string | undefined;
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
         } & {
@@ -5637,76 +5607,31 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: ({
-                Name?: string | undefined;
-                Description?: string | undefined;
-                Image?: string | undefined;
-                ExternalUrl?: string | undefined;
-                AddressLine1?: string | undefined;
-                AddressLine2?: string | undefined;
-                City?: string | undefined;
-                Region?: string | undefined;
-                PostalCode?: string | undefined;
-                Country?: string | undefined;
-                YearFounded?: number | undefined;
-                Licensed?: boolean | undefined;
-                LicenseCountry?: string | undefined;
-                LicenseNumber?: string | undefined;
-                Phone?: string | undefined;
-                Email?: string | undefined;
-                SocialMediaLinks?: string[] | undefined;
-                KeyClients?: string | undefined;
-                Press?: string | undefined;
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
             } & {
-                Name?: string | undefined;
-                Description?: string | undefined;
-                Image?: string | undefined;
-                ExternalUrl?: string | undefined;
-                AddressLine1?: string | undefined;
-                AddressLine2?: string | undefined;
-                City?: string | undefined;
-                Region?: string | undefined;
-                PostalCode?: string | undefined;
-                Country?: string | undefined;
-                YearFounded?: number | undefined;
-                Licensed?: boolean | undefined;
-                LicenseCountry?: string | undefined;
-                LicenseNumber?: string | undefined;
-                Phone?: string | undefined;
-                Email?: string | undefined;
-                SocialMediaLinks?: (string[] & string[] & { [K in Exclude<keyof I["UserAssetLists"][number]["MetaData"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
-                KeyClients?: string | undefined;
-                Press?: string | undefined;
-            } & { [K_1 in Exclude<keyof I["UserAssetLists"][number]["MetaData"], keyof MetadataDetails>]: never; }) | undefined;
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } & { [K in Exclude<keyof I["UserAssetLists"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
             Visible?: boolean | undefined;
-        } & { [K_2 in Exclude<keyof I["UserAssetLists"][number], keyof UserAssetList>]: never; })[] & { [K_3 in Exclude<keyof I["UserAssetLists"], keyof {
+        } & { [K_1 in Exclude<keyof I["UserAssetLists"][number], keyof UserAssetList>]: never; })[] & { [K_2 in Exclude<keyof I["UserAssetLists"], keyof {
             AccountID?: string | undefined;
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Name?: string | undefined;
-                Description?: string | undefined;
-                Image?: string | undefined;
-                ExternalUrl?: string | undefined;
-                AddressLine1?: string | undefined;
-                AddressLine2?: string | undefined;
-                City?: string | undefined;
-                Region?: string | undefined;
-                PostalCode?: string | undefined;
-                Country?: string | undefined;
-                YearFounded?: number | undefined;
-                Licensed?: boolean | undefined;
-                LicenseCountry?: string | undefined;
-                LicenseNumber?: string | undefined;
-                Phone?: string | undefined;
-                Email?: string | undefined;
-                SocialMediaLinks?: string[] | undefined;
-                KeyClients?: string | undefined;
-                Press?: string | undefined;
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
         }[]>]: never; }) | undefined;
-    } & { [K_4 in Exclude<keyof I, "UserAssetLists">]: never; }>(base?: I | undefined): UserAssetLists;
+    } & { [K_3 in Exclude<keyof I, "UserAssetLists">]: never; }>(base?: I | undefined): UserAssetLists;
     fromPartial<I_1 extends {
         UserAssetLists?: {
             AccountID?: string | undefined;
@@ -5714,25 +5639,10 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Name?: string | undefined;
-                Description?: string | undefined;
-                Image?: string | undefined;
-                ExternalUrl?: string | undefined;
-                AddressLine1?: string | undefined;
-                AddressLine2?: string | undefined;
-                City?: string | undefined;
-                Region?: string | undefined;
-                PostalCode?: string | undefined;
-                Country?: string | undefined;
-                YearFounded?: number | undefined;
-                Licensed?: boolean | undefined;
-                LicenseCountry?: string | undefined;
-                LicenseNumber?: string | undefined;
-                Phone?: string | undefined;
-                Email?: string | undefined;
-                SocialMediaLinks?: string[] | undefined;
-                KeyClients?: string | undefined;
-                Press?: string | undefined;
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
         }[] | undefined;
@@ -5743,25 +5653,10 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Name?: string | undefined;
-                Description?: string | undefined;
-                Image?: string | undefined;
-                ExternalUrl?: string | undefined;
-                AddressLine1?: string | undefined;
-                AddressLine2?: string | undefined;
-                City?: string | undefined;
-                Region?: string | undefined;
-                PostalCode?: string | undefined;
-                Country?: string | undefined;
-                YearFounded?: number | undefined;
-                Licensed?: boolean | undefined;
-                LicenseCountry?: string | undefined;
-                LicenseNumber?: string | undefined;
-                Phone?: string | undefined;
-                Email?: string | undefined;
-                SocialMediaLinks?: string[] | undefined;
-                KeyClients?: string | undefined;
-                Press?: string | undefined;
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
         }[] & ({
@@ -5770,25 +5665,10 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Name?: string | undefined;
-                Description?: string | undefined;
-                Image?: string | undefined;
-                ExternalUrl?: string | undefined;
-                AddressLine1?: string | undefined;
-                AddressLine2?: string | undefined;
-                City?: string | undefined;
-                Region?: string | undefined;
-                PostalCode?: string | undefined;
-                Country?: string | undefined;
-                YearFounded?: number | undefined;
-                Licensed?: boolean | undefined;
-                LicenseCountry?: string | undefined;
-                LicenseNumber?: string | undefined;
-                Phone?: string | undefined;
-                Email?: string | undefined;
-                SocialMediaLinks?: string[] | undefined;
-                KeyClients?: string | undefined;
-                Press?: string | undefined;
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
         } & {
@@ -5797,76 +5677,31 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: ({
-                Name?: string | undefined;
-                Description?: string | undefined;
-                Image?: string | undefined;
-                ExternalUrl?: string | undefined;
-                AddressLine1?: string | undefined;
-                AddressLine2?: string | undefined;
-                City?: string | undefined;
-                Region?: string | undefined;
-                PostalCode?: string | undefined;
-                Country?: string | undefined;
-                YearFounded?: number | undefined;
-                Licensed?: boolean | undefined;
-                LicenseCountry?: string | undefined;
-                LicenseNumber?: string | undefined;
-                Phone?: string | undefined;
-                Email?: string | undefined;
-                SocialMediaLinks?: string[] | undefined;
-                KeyClients?: string | undefined;
-                Press?: string | undefined;
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
             } & {
-                Name?: string | undefined;
-                Description?: string | undefined;
-                Image?: string | undefined;
-                ExternalUrl?: string | undefined;
-                AddressLine1?: string | undefined;
-                AddressLine2?: string | undefined;
-                City?: string | undefined;
-                Region?: string | undefined;
-                PostalCode?: string | undefined;
-                Country?: string | undefined;
-                YearFounded?: number | undefined;
-                Licensed?: boolean | undefined;
-                LicenseCountry?: string | undefined;
-                LicenseNumber?: string | undefined;
-                Phone?: string | undefined;
-                Email?: string | undefined;
-                SocialMediaLinks?: (string[] & string[] & { [K_5 in Exclude<keyof I_1["UserAssetLists"][number]["MetaData"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
-                KeyClients?: string | undefined;
-                Press?: string | undefined;
-            } & { [K_6 in Exclude<keyof I_1["UserAssetLists"][number]["MetaData"], keyof MetadataDetails>]: never; }) | undefined;
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
+            } & { [K_4 in Exclude<keyof I_1["UserAssetLists"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
             Visible?: boolean | undefined;
-        } & { [K_7 in Exclude<keyof I_1["UserAssetLists"][number], keyof UserAssetList>]: never; })[] & { [K_8 in Exclude<keyof I_1["UserAssetLists"], keyof {
+        } & { [K_5 in Exclude<keyof I_1["UserAssetLists"][number], keyof UserAssetList>]: never; })[] & { [K_6 in Exclude<keyof I_1["UserAssetLists"], keyof {
             AccountID?: string | undefined;
             Wallet?: string | undefined;
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Name?: string | undefined;
-                Description?: string | undefined;
-                Image?: string | undefined;
-                ExternalUrl?: string | undefined;
-                AddressLine1?: string | undefined;
-                AddressLine2?: string | undefined;
-                City?: string | undefined;
-                Region?: string | undefined;
-                PostalCode?: string | undefined;
-                Country?: string | undefined;
-                YearFounded?: number | undefined;
-                Licensed?: boolean | undefined;
-                LicenseCountry?: string | undefined;
-                LicenseNumber?: string | undefined;
-                Phone?: string | undefined;
-                Email?: string | undefined;
-                SocialMediaLinks?: string[] | undefined;
-                KeyClients?: string | undefined;
-                Press?: string | undefined;
+                Network?: Network | undefined;
+                UpdatedAt?: Date | undefined;
+                CreatedAt?: Date | undefined;
+                UpdatedByAccount?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
         }[]>]: never; }) | undefined;
-    } & { [K_9 in Exclude<keyof I_1, "UserAssetLists">]: never; }>(object: I_1): UserAssetLists;
+    } & { [K_7 in Exclude<keyof I_1, "UserAssetLists">]: never; }>(object: I_1): UserAssetLists;
 };
 export declare const RealEstate: {
     encode(message: RealEstate, writer?: _m0.Writer): _m0.Writer;
@@ -6570,11 +6405,11 @@ export declare const SocialMedia: {
         URL?: string | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof SocialMedia>]: never; }>(object: I_1): SocialMedia;
 };
-export declare const MetadataDetails: {
-    encode(message: MetadataDetails, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): MetadataDetails;
-    fromJSON(object: any): MetadataDetails;
-    toJSON(message: MetadataDetails): unknown;
+export declare const IssuerDetails: {
+    encode(message: IssuerDetails, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): IssuerDetails;
+    fromJSON(object: any): IssuerDetails;
+    toJSON(message: IssuerDetails): unknown;
     create<I extends {
         Name?: string | undefined;
         Description?: string | undefined;
@@ -6615,7 +6450,7 @@ export declare const MetadataDetails: {
         SocialMediaLinks?: (string[] & string[] & { [K in Exclude<keyof I["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
         KeyClients?: string | undefined;
         Press?: string | undefined;
-    } & { [K_1 in Exclude<keyof I, keyof MetadataDetails>]: never; }>(base?: I | undefined): MetadataDetails;
+    } & { [K_1 in Exclude<keyof I, keyof IssuerDetails>]: never; }>(base?: I | undefined): IssuerDetails;
     fromPartial<I_1 extends {
         Name?: string | undefined;
         Description?: string | undefined;
@@ -6656,7 +6491,7 @@ export declare const MetadataDetails: {
         SocialMediaLinks?: (string[] & string[] & { [K_2 in Exclude<keyof I_1["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
         KeyClients?: string | undefined;
         Press?: string | undefined;
-    } & { [K_3 in Exclude<keyof I_1, keyof MetadataDetails>]: never; }>(object: I_1): MetadataDetails;
+    } & { [K_3 in Exclude<keyof I_1, keyof IssuerDetails>]: never; }>(object: I_1): IssuerDetails;
 };
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
 export type DeepPartial<T> = T extends Builtin ? T : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>> : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>> : T extends {} ? {
