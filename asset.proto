@@ -5,6 +5,7 @@ package asset;
 import "sologenic/com-fs-asset-model/domain/denom/denom.proto";
 import "sologenic/com-fs-utils-lib/models/audit/audit.proto";
 import "sologenic/com-fs-utils-lib/models/metadata/metadata.proto";
+import "sologenic/com-fs-utils-lib/go/decimal/decimal.proto";
 
 option go_package = "github.com/sologenic/com-fs-asset-model;asset";
 
@@ -186,7 +187,10 @@ message FinancialProperties {
     float CurrentValuation = 21;              
     optional string ValuationDate = 22;       
     metadata.Network Network = 23;                      
-    string Status = 24;                       
+    string Status = 24;
+    // Broker API specific commission fields
+    optional decimal.Decimal Commission = 25; // Commission charged for the order
+    optional CommissionType CommissionType = 26; // How commission field value is calculated
 }
 
 // ---------------- Description ----------------
@@ -278,6 +282,13 @@ enum UserAssetStatus {
     WHITELISTING_REQUESTED = 2;
     WHITELISTED = 3;
     OUTDATED_VERSION = 4;
+}
+
+enum CommissionType {
+  NOT_USED_COMMISSION_TYPE = 0;
+  NOTIONAL = 1; // Charge commission on a per order basis (default)
+  QTY = 2; // Charge commission on a per qty/contract basis, pro rated
+  BPS = 3; // Commission expressed in basis points (percent), converted to notional amount for purposes of calculating commission(max two decimal places)
 }
 
 message MetadataDetails {
