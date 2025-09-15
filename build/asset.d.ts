@@ -116,6 +116,8 @@ export interface Asset {
 }
 export interface Assets {
     Assets: Asset[];
+    /** If there is more data, this is the offset to pass to the next call */
+    Offset?: number | undefined;
 }
 export interface UserAssetList {
     AccountID: string;
@@ -2957,6 +2959,7 @@ export declare const Assets: {
                 Reason?: string | undefined;
             } | undefined;
         }[] | undefined;
+        Offset?: number | undefined;
     } & {
         Assets?: ({
             AssetDetails?: {
@@ -4071,7 +4074,8 @@ export declare const Assets: {
                 Reason?: string | undefined;
             } | undefined;
         }[]>]: never; }) | undefined;
-    } & { [K_32 in Exclude<keyof I, "Assets">]: never; }>(base?: I | undefined): Assets;
+        Offset?: number | undefined;
+    } & { [K_32 in Exclude<keyof I, keyof Assets>]: never; }>(base?: I | undefined): Assets;
     fromPartial<I_1 extends {
         Assets?: {
             AssetDetails?: {
@@ -4264,6 +4268,7 @@ export declare const Assets: {
                 Reason?: string | undefined;
             } | undefined;
         }[] | undefined;
+        Offset?: number | undefined;
     } & {
         Assets?: ({
             AssetDetails?: {
@@ -5378,7 +5383,8 @@ export declare const Assets: {
                 Reason?: string | undefined;
             } | undefined;
         }[]>]: never; }) | undefined;
-    } & { [K_65 in Exclude<keyof I_1, "Assets">]: never; }>(object: I_1): Assets;
+        Offset?: number | undefined;
+    } & { [K_65 in Exclude<keyof I_1, keyof Assets>]: never; }>(object: I_1): Assets;
 };
 export declare const UserAssetList: {
     encode(message: UserAssetList, writer?: _m0.Writer): _m0.Writer;

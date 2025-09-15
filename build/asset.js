@@ -846,12 +846,15 @@ export const Asset = {
     },
 };
 function createBaseAssets() {
-    return { Assets: [] };
+    return { Assets: [], Offset: undefined };
 }
 export const Assets = {
     encode(message, writer = _m0.Writer.create()) {
         for (const v of message.Assets) {
             Asset.encode(v, writer.uint32(10).fork()).ldelim();
+        }
+        if (message.Offset !== undefined) {
+            writer.uint32(16).int32(message.Offset);
         }
         return writer;
     },
@@ -868,6 +871,12 @@ export const Assets = {
                     }
                     message.Assets.push(Asset.decode(reader, reader.uint32()));
                     continue;
+                case 2:
+                    if (tag !== 16) {
+                        break;
+                    }
+                    message.Offset = reader.int32();
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -877,7 +886,10 @@ export const Assets = {
         return message;
     },
     fromJSON(object) {
-        return { Assets: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Assets) ? object.Assets.map((e) => Asset.fromJSON(e)) : [] };
+        return {
+            Assets: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Assets) ? object.Assets.map((e) => Asset.fromJSON(e)) : [],
+            Offset: isSet(object.Offset) ? globalThis.Number(object.Offset) : undefined,
+        };
     },
     toJSON(message) {
         var _a;
@@ -885,15 +897,19 @@ export const Assets = {
         if ((_a = message.Assets) === null || _a === void 0 ? void 0 : _a.length) {
             obj.Assets = message.Assets.map((e) => Asset.toJSON(e));
         }
+        if (message.Offset !== undefined) {
+            obj.Offset = Math.round(message.Offset);
+        }
         return obj;
     },
     create(base) {
         return Assets.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a;
+        var _a, _b;
         const message = createBaseAssets();
         message.Assets = ((_a = object.Assets) === null || _a === void 0 ? void 0 : _a.map((e) => Asset.fromPartial(e))) || [];
+        message.Offset = (_b = object.Offset) !== null && _b !== void 0 ? _b : undefined;
         return message;
     },
 };

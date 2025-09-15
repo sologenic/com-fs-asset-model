@@ -455,6 +455,8 @@ export interface Asset {
 
 export interface Assets {
   Assets: Asset[];
+  /** If there is more data, this is the offset to pass to the next call */
+  Offset?: number | undefined;
 }
 
 export interface UserAssetList {
@@ -1139,13 +1141,16 @@ export const Asset = {
 };
 
 function createBaseAssets(): Assets {
-  return { Assets: [] };
+  return { Assets: [], Offset: undefined };
 }
 
 export const Assets = {
   encode(message: Assets, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     for (const v of message.Assets) {
       Asset.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.Offset !== undefined) {
+      writer.uint32(16).int32(message.Offset);
     }
     return writer;
   },
@@ -1164,6 +1169,13 @@ export const Assets = {
 
           message.Assets.push(Asset.decode(reader, reader.uint32()));
           continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.Offset = reader.int32();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1174,13 +1186,19 @@ export const Assets = {
   },
 
   fromJSON(object: any): Assets {
-    return { Assets: globalThis.Array.isArray(object?.Assets) ? object.Assets.map((e: any) => Asset.fromJSON(e)) : [] };
+    return {
+      Assets: globalThis.Array.isArray(object?.Assets) ? object.Assets.map((e: any) => Asset.fromJSON(e)) : [],
+      Offset: isSet(object.Offset) ? globalThis.Number(object.Offset) : undefined,
+    };
   },
 
   toJSON(message: Assets): unknown {
     const obj: any = {};
     if (message.Assets?.length) {
       obj.Assets = message.Assets.map((e) => Asset.toJSON(e));
+    }
+    if (message.Offset !== undefined) {
+      obj.Offset = Math.round(message.Offset);
     }
     return obj;
   },
@@ -1191,6 +1209,7 @@ export const Assets = {
   fromPartial<I extends Exact<DeepPartial<Assets>, I>>(object: I): Assets {
     const message = createBaseAssets();
     message.Assets = object.Assets?.map((e) => Asset.fromPartial(e)) || [];
+    message.Offset = object.Offset ?? undefined;
     return message;
   },
 };

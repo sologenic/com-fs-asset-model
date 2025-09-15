@@ -46,6 +46,7 @@ message Asset {
 
 message Assets {
     repeated Asset Assets = 1;
+    optional int32 Offset = 2; // If there is more data, this is the offset to pass to the next call
 }
 
 message UserAssetList {
