@@ -196,12 +196,12 @@ message FinancialProperties {
 message Description {
     string Name = 1;                         
     string Description = 2;                  
-    optional string Image = 3;               
+    LogoFile Logo = 3;               
     string AssetID = 4;                      
     string URL = 5;                          
     string Country = 6;                      
     repeated string Documents = 7;           
-    LogoFile Logo = 8;              
+    repeated string Images = 8;              
     string Vertical = 9;                     
     optional string CreatedAt = 10;          
     optional string UpdatedAt = 11;          

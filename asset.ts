@@ -557,7 +557,7 @@ export interface FinancialProperties {
 export interface Description {
   Name: string;
   Description: string;
-  Image?: string | undefined;
+  Logo: LogoFile | undefined;
   AssetID: string;
   URL: string;
   Country: string;
@@ -609,6 +609,14 @@ export interface IssuerDetails {
   SocialMediaLinks: string[];
   KeyClients?: string | undefined;
   Press?: string | undefined;
+}
+
+export interface LogoFile {
+  /** The reference to the file */
+  Reference: string;
+  Extension: string;
+  /** User defined name of the file, used as a "description" and not to reference the file */
+  Name?: string | undefined;
 }
 
 function createBaseAssetDetails(): AssetDetails {
@@ -3394,7 +3402,7 @@ function createBaseDescription(): Description {
   return {
     Name: "",
     Description: "",
-    Image: undefined,
+    Logo: undefined,
     AssetID: "",
     URL: "",
     Country: "",
@@ -3414,8 +3422,8 @@ export const Description = {
     if (message.Description !== "") {
       writer.uint32(18).string(message.Description);
     }
-    if (message.Image !== undefined) {
-      writer.uint32(26).string(message.Image);
+    if (message.Logo !== undefined) {
+      LogoFile.encode(message.Logo, writer.uint32(26).fork()).ldelim();
     }
     if (message.AssetID !== "") {
       writer.uint32(34).string(message.AssetID);
@@ -3470,7 +3478,7 @@ export const Description = {
             break;
           }
 
-          message.Image = reader.string();
+          message.Logo = LogoFile.decode(reader, reader.uint32());
           continue;
         case 4:
           if (tag !== 34) {
@@ -3541,7 +3549,7 @@ export const Description = {
     return {
       Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
       Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
-      Image: isSet(object.Image) ? globalThis.String(object.Image) : undefined,
+      Logo: isSet(object.Logo) ? LogoFile.fromJSON(object.Logo) : undefined,
       AssetID: isSet(object.AssetID) ? globalThis.String(object.AssetID) : "",
       URL: isSet(object.URL) ? globalThis.String(object.URL) : "",
       Country: isSet(object.Country) ? globalThis.String(object.Country) : "",
@@ -3563,8 +3571,8 @@ export const Description = {
     if (message.Description !== "") {
       obj.Description = message.Description;
     }
-    if (message.Image !== undefined) {
-      obj.Image = message.Image;
+    if (message.Logo !== undefined) {
+      obj.Logo = LogoFile.toJSON(message.Logo);
     }
     if (message.AssetID !== "") {
       obj.AssetID = message.AssetID;
@@ -3600,7 +3608,7 @@ export const Description = {
     const message = createBaseDescription();
     message.Name = object.Name ?? "";
     message.Description = object.Description ?? "";
-    message.Image = object.Image ?? undefined;
+    message.Logo = (object.Logo !== undefined && object.Logo !== null) ? LogoFile.fromPartial(object.Logo) : undefined;
     message.AssetID = object.AssetID ?? "";
     message.URL = object.URL ?? "";
     message.Country = object.Country ?? "";
@@ -4182,6 +4190,95 @@ export const IssuerDetails = {
     message.SocialMediaLinks = object.SocialMediaLinks?.map((e) => e) || [];
     message.KeyClients = object.KeyClients ?? undefined;
     message.Press = object.Press ?? undefined;
+    return message;
+  },
+};
+
+function createBaseLogoFile(): LogoFile {
+  return { Reference: "", Extension: "", Name: undefined };
+}
+
+export const LogoFile = {
+  encode(message: LogoFile, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.Reference !== "") {
+      writer.uint32(10).string(message.Reference);
+    }
+    if (message.Extension !== "") {
+      writer.uint32(18).string(message.Extension);
+    }
+    if (message.Name !== undefined) {
+      writer.uint32(26).string(message.Name);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): LogoFile {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseLogoFile();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 10) {
+            break;
+          }
+
+          message.Reference = reader.string();
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.Extension = reader.string();
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.Name = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): LogoFile {
+    return {
+      Reference: isSet(object.Reference) ? globalThis.String(object.Reference) : "",
+      Extension: isSet(object.Extension) ? globalThis.String(object.Extension) : "",
+      Name: isSet(object.Name) ? globalThis.String(object.Name) : undefined,
+    };
+  },
+
+  toJSON(message: LogoFile): unknown {
+    const obj: any = {};
+    if (message.Reference !== "") {
+      obj.Reference = message.Reference;
+    }
+    if (message.Extension !== "") {
+      obj.Extension = message.Extension;
+    }
+    if (message.Name !== undefined) {
+      obj.Name = message.Name;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<LogoFile>, I>>(base?: I): LogoFile {
+    return LogoFile.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<LogoFile>, I>>(object: I): LogoFile {
+    const message = createBaseLogoFile();
+    message.Reference = object.Reference ?? "";
+    message.Extension = object.Extension ?? "";
+    message.Name = object.Name ?? undefined;
     return message;
   },
 };

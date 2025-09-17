@@ -2937,7 +2937,7 @@ function createBaseDescription() {
     return {
         Name: "",
         Description: "",
-        Image: undefined,
+        Logo: undefined,
         AssetID: "",
         URL: "",
         Country: "",
@@ -2956,8 +2956,8 @@ export const Description = {
         if (message.Description !== "") {
             writer.uint32(18).string(message.Description);
         }
-        if (message.Image !== undefined) {
-            writer.uint32(26).string(message.Image);
+        if (message.Logo !== undefined) {
+            LogoFile.encode(message.Logo, writer.uint32(26).fork()).ldelim();
         }
         if (message.AssetID !== "") {
             writer.uint32(34).string(message.AssetID);
@@ -3008,7 +3008,7 @@ export const Description = {
                     if (tag !== 26) {
                         break;
                     }
-                    message.Image = reader.string();
+                    message.Logo = LogoFile.decode(reader, reader.uint32());
                     continue;
                 case 4:
                     if (tag !== 34) {
@@ -3070,7 +3070,7 @@ export const Description = {
         return {
             Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
             Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
-            Image: isSet(object.Image) ? globalThis.String(object.Image) : undefined,
+            Logo: isSet(object.Logo) ? LogoFile.fromJSON(object.Logo) : undefined,
             AssetID: isSet(object.AssetID) ? globalThis.String(object.AssetID) : "",
             URL: isSet(object.URL) ? globalThis.String(object.URL) : "",
             Country: isSet(object.Country) ? globalThis.String(object.Country) : "",
@@ -3092,8 +3092,8 @@ export const Description = {
         if (message.Description !== "") {
             obj.Description = message.Description;
         }
-        if (message.Image !== undefined) {
-            obj.Image = message.Image;
+        if (message.Logo !== undefined) {
+            obj.Logo = LogoFile.toJSON(message.Logo);
         }
         if (message.AssetID !== "") {
             obj.AssetID = message.AssetID;
@@ -3125,19 +3125,19 @@ export const Description = {
         return Description.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
         const message = createBaseDescription();
         message.Name = (_a = object.Name) !== null && _a !== void 0 ? _a : "";
         message.Description = (_b = object.Description) !== null && _b !== void 0 ? _b : "";
-        message.Image = (_c = object.Image) !== null && _c !== void 0 ? _c : undefined;
-        message.AssetID = (_d = object.AssetID) !== null && _d !== void 0 ? _d : "";
-        message.URL = (_e = object.URL) !== null && _e !== void 0 ? _e : "";
-        message.Country = (_f = object.Country) !== null && _f !== void 0 ? _f : "";
-        message.Documents = ((_g = object.Documents) === null || _g === void 0 ? void 0 : _g.map((e) => e)) || [];
-        message.Images = ((_h = object.Images) === null || _h === void 0 ? void 0 : _h.map((e) => e)) || [];
-        message.Vertical = (_j = object.Vertical) !== null && _j !== void 0 ? _j : "";
-        message.CreatedAt = (_k = object.CreatedAt) !== null && _k !== void 0 ? _k : undefined;
-        message.UpdatedAt = (_l = object.UpdatedAt) !== null && _l !== void 0 ? _l : undefined;
+        message.Logo = (object.Logo !== undefined && object.Logo !== null) ? LogoFile.fromPartial(object.Logo) : undefined;
+        message.AssetID = (_c = object.AssetID) !== null && _c !== void 0 ? _c : "";
+        message.URL = (_d = object.URL) !== null && _d !== void 0 ? _d : "";
+        message.Country = (_e = object.Country) !== null && _e !== void 0 ? _e : "";
+        message.Documents = ((_f = object.Documents) === null || _f === void 0 ? void 0 : _f.map((e) => e)) || [];
+        message.Images = ((_g = object.Images) === null || _g === void 0 ? void 0 : _g.map((e) => e)) || [];
+        message.Vertical = (_h = object.Vertical) !== null && _h !== void 0 ? _h : "";
+        message.CreatedAt = (_j = object.CreatedAt) !== null && _j !== void 0 ? _j : undefined;
+        message.UpdatedAt = (_k = object.UpdatedAt) !== null && _k !== void 0 ? _k : undefined;
         return message;
     },
 };
@@ -3668,6 +3668,87 @@ export const IssuerDetails = {
         message.SocialMediaLinks = ((_s = object.SocialMediaLinks) === null || _s === void 0 ? void 0 : _s.map((e) => e)) || [];
         message.KeyClients = (_t = object.KeyClients) !== null && _t !== void 0 ? _t : undefined;
         message.Press = (_u = object.Press) !== null && _u !== void 0 ? _u : undefined;
+        return message;
+    },
+};
+function createBaseLogoFile() {
+    return { Reference: "", Extension: "", Name: undefined };
+}
+export const LogoFile = {
+    encode(message, writer = _m0.Writer.create()) {
+        if (message.Reference !== "") {
+            writer.uint32(10).string(message.Reference);
+        }
+        if (message.Extension !== "") {
+            writer.uint32(18).string(message.Extension);
+        }
+        if (message.Name !== undefined) {
+            writer.uint32(26).string(message.Name);
+        }
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseLogoFile();
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    if (tag !== 10) {
+                        break;
+                    }
+                    message.Reference = reader.string();
+                    continue;
+                case 2:
+                    if (tag !== 18) {
+                        break;
+                    }
+                    message.Extension = reader.string();
+                    continue;
+                case 3:
+                    if (tag !== 26) {
+                        break;
+                    }
+                    message.Name = reader.string();
+                    continue;
+            }
+            if ((tag & 7) === 4 || tag === 0) {
+                break;
+            }
+            reader.skipType(tag & 7);
+        }
+        return message;
+    },
+    fromJSON(object) {
+        return {
+            Reference: isSet(object.Reference) ? globalThis.String(object.Reference) : "",
+            Extension: isSet(object.Extension) ? globalThis.String(object.Extension) : "",
+            Name: isSet(object.Name) ? globalThis.String(object.Name) : undefined,
+        };
+    },
+    toJSON(message) {
+        const obj = {};
+        if (message.Reference !== "") {
+            obj.Reference = message.Reference;
+        }
+        if (message.Extension !== "") {
+            obj.Extension = message.Extension;
+        }
+        if (message.Name !== undefined) {
+            obj.Name = message.Name;
+        }
+        return obj;
+    },
+    create(base) {
+        return LogoFile.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial(object) {
+        var _a, _b, _c;
+        const message = createBaseLogoFile();
+        message.Reference = (_a = object.Reference) !== null && _a !== void 0 ? _a : "";
+        message.Extension = (_b = object.Extension) !== null && _b !== void 0 ? _b : "";
+        message.Name = (_c = object.Name) !== null && _c !== void 0 ? _c : undefined;
         return message;
     },
 };
