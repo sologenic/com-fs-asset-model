@@ -201,7 +201,7 @@ message Description {
     string URL = 5;                          
     string Country = 6;                      
     repeated string Documents = 7;           
-    repeated string Images = 8;              
+    LogoFile Logo = 8;              
     string Vertical = 9;                     
     optional string CreatedAt = 10;          
     optional string UpdatedAt = 11;          
@@ -302,4 +302,10 @@ message IssuerDetails {
   repeated string SocialMediaLinks = 17; 
   optional string KeyClients = 18;       
   optional string Press = 19;            
+}
+
+message LogoFile {
+    string Reference = 1; // The reference to the file
+    string Extension = 2;
+    optional string Name = 3; // User defined name of the file, used as a "description" and not to reference the file
 }
