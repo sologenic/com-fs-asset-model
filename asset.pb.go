@@ -8,7 +8,6 @@ package asset
 
 import (
 	denom "github.com/sologenic/com-fs-asset-model/domain/denom"
-	decimal "github.com/sologenic/com-fs-utils-lib/go/decimal"
 	audit "github.com/sologenic/com-fs-utils-lib/models/audit"
 	metadata "github.com/sologenic/com-fs-utils-lib/models/metadata"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -377,58 +376,6 @@ func (x UserAssetStatus) Number() protoreflect.EnumNumber {
 // Deprecated: Use UserAssetStatus.Descriptor instead.
 func (UserAssetStatus) EnumDescriptor() ([]byte, []int) {
 	return file_asset_proto_rawDescGZIP(), []int{5}
-}
-
-type CommissionType int32
-
-const (
-	CommissionType_NOT_USED_COMMISSION_TYPE CommissionType = 0
-	CommissionType_NOTIONAL                 CommissionType = 1 // Charge commission on a per order basis (default)
-	CommissionType_QTY                      CommissionType = 2 // Charge commission on a per qty/contract basis, pro rated
-	CommissionType_BPS                      CommissionType = 3 // Commission expressed in basis points (percent), converted to notional amount for purposes of calculating commission(max two decimal places)
-)
-
-// Enum value maps for CommissionType.
-var (
-	CommissionType_name = map[int32]string{
-		0: "NOT_USED_COMMISSION_TYPE",
-		1: "NOTIONAL",
-		2: "QTY",
-		3: "BPS",
-	}
-	CommissionType_value = map[string]int32{
-		"NOT_USED_COMMISSION_TYPE": 0,
-		"NOTIONAL":                 1,
-		"QTY":                      2,
-		"BPS":                      3,
-	}
-)
-
-func (x CommissionType) Enum() *CommissionType {
-	p := new(CommissionType)
-	*p = x
-	return p
-}
-
-func (x CommissionType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (CommissionType) Descriptor() protoreflect.EnumDescriptor {
-	return file_asset_proto_enumTypes[6].Descriptor()
-}
-
-func (CommissionType) Type() protoreflect.EnumType {
-	return &file_asset_proto_enumTypes[6]
-}
-
-func (x CommissionType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use CommissionType.Descriptor instead.
-func (CommissionType) EnumDescriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{6}
 }
 
 type AssetDetails struct {
@@ -1773,11 +1720,8 @@ type FinancialProperties struct {
 	ValuationDate            *string                `protobuf:"bytes,22,opt,name=ValuationDate,proto3,oneof" json:"ValuationDate,omitempty"`
 	Network                  metadata.Network       `protobuf:"varint,23,opt,name=Network,proto3,enum=metadata.Network" json:"Network,omitempty"`
 	Status                   string                 `protobuf:"bytes,24,opt,name=Status,proto3" json:"Status,omitempty"`
-	// Broker API specific commission fields
-	Commission     *decimal.Decimal `protobuf:"bytes,25,opt,name=Commission,proto3,oneof" json:"Commission,omitempty"`                                    // Commission charged for the order
-	CommissionType *CommissionType  `protobuf:"varint,26,opt,name=CommissionType,proto3,enum=asset.CommissionType,oneof" json:"CommissionType,omitempty"` // How commission field value is calculated
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	unknownFields            protoimpl.UnknownFields
+	sizeCache                protoimpl.SizeCache
 }
 
 func (x *FinancialProperties) Reset() {
@@ -1976,20 +1920,6 @@ func (x *FinancialProperties) GetStatus() string {
 		return x.Status
 	}
 	return ""
-}
-
-func (x *FinancialProperties) GetCommission() *decimal.Decimal {
-	if x != nil {
-		return x.Commission
-	}
-	return nil
-}
-
-func (x *FinancialProperties) GetCommissionType() CommissionType {
-	if x != nil && x.CommissionType != nil {
-		return *x.CommissionType
-	}
-	return CommissionType_NOT_USED_COMMISSION_TYPE
 }
 
 type Description struct {
@@ -2464,7 +2394,7 @@ var File_asset_proto protoreflect.FileDescriptor
 
 const file_asset_proto_rawDesc = "" +
 	"\n" +
-	"\vasset.proto\x12\x05asset\x1a5sologenic/com-fs-asset-model/domain/denom/denom.proto\x1a3sologenic/com-fs-utils-lib/models/audit/audit.proto\x1a9sologenic/com-fs-utils-lib/models/metadata/metadata.proto\x1a3sologenic/com-fs-utils-lib/go/decimal/decimal.proto\"\xfc\n" +
+	"\vasset.proto\x12\x05asset\x1a5sologenic/com-fs-asset-model/domain/denom/denom.proto\x1a3sologenic/com-fs-utils-lib/models/audit/audit.proto\x1a9sologenic/com-fs-utils-lib/models/metadata/metadata.proto\"\xfc\n" +
 	"\n" +
 	"\fAssetDetails\x12\x0e\n" +
 	"\x02ID\x18\x01 \x01(\tR\x02ID\x12&\n" +
@@ -2667,7 +2597,7 @@ const file_asset_proto_rawDesc = "" +
 	"\x0fExtraPercentage\x18\x04 \x01(\tR\x0fExtraPercentage\x124\n" +
 	"\x15AssetMarginPercentage\x18\x05 \x01(\tR\x15AssetMarginPercentageB\x17\n" +
 	"\x15_ExchangeTickerSymbolB\v\n" +
-	"\t_Exchange\"\xc8\t\n" +
+	"\t_Exchange\"\xab\b\n" +
 	"\x13FinancialProperties\x12\x16\n" +
 	"\x06Symbol\x18\x01 \x01(\tR\x06Symbol\x12\x16\n" +
 	"\x06Issuer\x18\x02 \x01(\tR\x06Issuer\x12(\n" +
@@ -2695,11 +2625,7 @@ const file_asset_proto_rawDesc = "" +
 	"\x10CurrentValuation\x18\x15 \x01(\x02R\x10CurrentValuation\x12)\n" +
 	"\rValuationDate\x18\x16 \x01(\tH\x06R\rValuationDate\x88\x01\x01\x12+\n" +
 	"\aNetwork\x18\x17 \x01(\x0e2\x11.metadata.NetworkR\aNetwork\x12\x16\n" +
-	"\x06Status\x18\x18 \x01(\tR\x06Status\x125\n" +
-	"\n" +
-	"Commission\x18\x19 \x01(\v2\x10.decimal.DecimalH\aR\n" +
-	"Commission\x88\x01\x01\x12B\n" +
-	"\x0eCommissionType\x18\x1a \x01(\x0e2\x15.asset.CommissionTypeH\bR\x0eCommissionType\x88\x01\x01B\x1b\n" +
+	"\x06Status\x18\x18 \x01(\tR\x06StatusB\x1b\n" +
 	"\x19_JurisdictionRestrictionsB\x12\n" +
 	"\x10_RedemptionTermsB\x15\n" +
 	"\x13_ComplianceRequiredB\x12\n" +
@@ -2707,9 +2633,7 @@ const file_asset_proto_rawDesc = "" +
 	"\n" +
 	"\b_SubunitB\b\n" +
 	"\x06_PriceB\x10\n" +
-	"\x0e_ValuationDateB\r\n" +
-	"\v_CommissionB\x11\n" +
-	"\x0f_CommissionType\"\xe2\x02\n" +
+	"\x0e_ValuationDate\"\xe2\x02\n" +
 	"\vDescription\x12\x12\n" +
 	"\x04Name\x18\x01 \x01(\tR\x04Name\x12 \n" +
 	"\vDescription\x18\x02 \x01(\tR\vDescription\x12\x19\n" +
@@ -2821,12 +2745,7 @@ const file_asset_proto_rawDesc = "" +
 	"\x0fNOT_WHITELISTED\x10\x01\x12\x1a\n" +
 	"\x16WHITELISTING_REQUESTED\x10\x02\x12\x0f\n" +
 	"\vWHITELISTED\x10\x03\x12\x14\n" +
-	"\x10OUTDATED_VERSION\x10\x04*N\n" +
-	"\x0eCommissionType\x12\x1c\n" +
-	"\x18NOT_USED_COMMISSION_TYPE\x10\x00\x12\f\n" +
-	"\bNOTIONAL\x10\x01\x12\a\n" +
-	"\x03QTY\x10\x02\x12\a\n" +
-	"\x03BPS\x10\x03B/Z-github.com/sologenic/com-fs-asset-model;assetb\x06proto3"
+	"\x10OUTDATED_VERSION\x10\x04B/Z-github.com/sologenic/com-fs-asset-model;assetb\x06proto3"
 
 var (
 	file_asset_proto_rawDescOnce sync.Once
@@ -2840,7 +2759,7 @@ func file_asset_proto_rawDescGZIP() []byte {
 	return file_asset_proto_rawDescData
 }
 
-var file_asset_proto_enumTypes = make([]protoimpl.EnumInfo, 7)
+var file_asset_proto_enumTypes = make([]protoimpl.EnumInfo, 6)
 var file_asset_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
 var file_asset_proto_goTypes = []any{
 	(LinkType)(0),                // 0: asset.LinkType
@@ -2849,68 +2768,64 @@ var file_asset_proto_goTypes = []any{
 	(Reason)(0),                  // 3: asset.Reason
 	(AssetType)(0),               // 4: asset.AssetType
 	(UserAssetStatus)(0),         // 5: asset.UserAssetStatus
-	(CommissionType)(0),          // 6: asset.CommissionType
-	(*AssetDetails)(nil),         // 7: asset.AssetDetails
-	(*Asset)(nil),                // 8: asset.Asset
-	(*Assets)(nil),               // 9: asset.Assets
-	(*UserAssetList)(nil),        // 10: asset.UserAssetList
-	(*UserAssetLists)(nil),       // 11: asset.UserAssetLists
-	(*RealEstate)(nil),           // 12: asset.RealEstate
-	(*StableCoin)(nil),           // 13: asset.StableCoin
-	(*Commodity)(nil),            // 14: asset.Commodity
-	(*Collectible)(nil),          // 15: asset.Collectible
-	(*Vehicle)(nil),              // 16: asset.Vehicle
-	(*IntellectualProperty)(nil), // 17: asset.IntellectualProperty
-	(*InvestmentFund)(nil),       // 18: asset.InvestmentFund
-	(*Equity)(nil),               // 19: asset.Equity
-	(*FinancialProperties)(nil),  // 20: asset.FinancialProperties
-	(*Description)(nil),          // 21: asset.Description
-	(*ExternalResources)(nil),    // 22: asset.ExternalResources
-	(*Link)(nil),                 // 23: asset.Link
-	(*SocialMedia)(nil),          // 24: asset.SocialMedia
-	(*IssuerDetails)(nil),        // 25: asset.IssuerDetails
-	(*denom.Denom)(nil),          // 26: denom.Denom
-	(*metadata.MetaData)(nil),    // 27: metadata.MetaData
-	(*audit.Audit)(nil),          // 28: audit.Audit
-	(metadata.Network)(0),        // 29: metadata.Network
-	(*decimal.Decimal)(nil),      // 30: decimal.Decimal
+	(*AssetDetails)(nil),         // 6: asset.AssetDetails
+	(*Asset)(nil),                // 7: asset.Asset
+	(*Assets)(nil),               // 8: asset.Assets
+	(*UserAssetList)(nil),        // 9: asset.UserAssetList
+	(*UserAssetLists)(nil),       // 10: asset.UserAssetLists
+	(*RealEstate)(nil),           // 11: asset.RealEstate
+	(*StableCoin)(nil),           // 12: asset.StableCoin
+	(*Commodity)(nil),            // 13: asset.Commodity
+	(*Collectible)(nil),          // 14: asset.Collectible
+	(*Vehicle)(nil),              // 15: asset.Vehicle
+	(*IntellectualProperty)(nil), // 16: asset.IntellectualProperty
+	(*InvestmentFund)(nil),       // 17: asset.InvestmentFund
+	(*Equity)(nil),               // 18: asset.Equity
+	(*FinancialProperties)(nil),  // 19: asset.FinancialProperties
+	(*Description)(nil),          // 20: asset.Description
+	(*ExternalResources)(nil),    // 21: asset.ExternalResources
+	(*Link)(nil),                 // 22: asset.Link
+	(*SocialMedia)(nil),          // 23: asset.SocialMedia
+	(*IssuerDetails)(nil),        // 24: asset.IssuerDetails
+	(*denom.Denom)(nil),          // 25: denom.Denom
+	(*metadata.MetaData)(nil),    // 26: metadata.MetaData
+	(*audit.Audit)(nil),          // 27: audit.Audit
+	(metadata.Network)(0),        // 28: metadata.Network
 }
 var file_asset_proto_depIdxs = []int32{
 	2,  // 0: asset.AssetDetails.Status:type_name -> asset.AssetStatus
 	3,  // 1: asset.AssetDetails.Reason:type_name -> asset.Reason
 	4,  // 2: asset.AssetDetails.Type:type_name -> asset.AssetType
-	26, // 3: asset.AssetDetails.Denom:type_name -> denom.Denom
-	12, // 4: asset.AssetDetails.RealEstateDetails:type_name -> asset.RealEstate
-	13, // 5: asset.AssetDetails.StableCoinDetails:type_name -> asset.StableCoin
-	14, // 6: asset.AssetDetails.CommodityDetails:type_name -> asset.Commodity
-	15, // 7: asset.AssetDetails.CollectibleDetails:type_name -> asset.Collectible
-	16, // 8: asset.AssetDetails.VehicleDetails:type_name -> asset.Vehicle
-	17, // 9: asset.AssetDetails.IntellectualPropertyDetails:type_name -> asset.IntellectualProperty
-	18, // 10: asset.AssetDetails.InvestmentFundDetails:type_name -> asset.InvestmentFund
-	19, // 11: asset.AssetDetails.EquityDetails:type_name -> asset.Equity
-	20, // 12: asset.AssetDetails.FinancialProperties:type_name -> asset.FinancialProperties
-	21, // 13: asset.AssetDetails.Description:type_name -> asset.Description
-	22, // 14: asset.AssetDetails.ExternalResources:type_name -> asset.ExternalResources
-	7,  // 15: asset.Asset.AssetDetails:type_name -> asset.AssetDetails
-	27, // 16: asset.Asset.MetaData:type_name -> metadata.MetaData
-	28, // 17: asset.Asset.Audit:type_name -> audit.Audit
-	25, // 18: asset.Asset.IssuerDetails:type_name -> asset.IssuerDetails
-	8,  // 19: asset.Assets.Assets:type_name -> asset.Asset
+	25, // 3: asset.AssetDetails.Denom:type_name -> denom.Denom
+	11, // 4: asset.AssetDetails.RealEstateDetails:type_name -> asset.RealEstate
+	12, // 5: asset.AssetDetails.StableCoinDetails:type_name -> asset.StableCoin
+	13, // 6: asset.AssetDetails.CommodityDetails:type_name -> asset.Commodity
+	14, // 7: asset.AssetDetails.CollectibleDetails:type_name -> asset.Collectible
+	15, // 8: asset.AssetDetails.VehicleDetails:type_name -> asset.Vehicle
+	16, // 9: asset.AssetDetails.IntellectualPropertyDetails:type_name -> asset.IntellectualProperty
+	17, // 10: asset.AssetDetails.InvestmentFundDetails:type_name -> asset.InvestmentFund
+	18, // 11: asset.AssetDetails.EquityDetails:type_name -> asset.Equity
+	19, // 12: asset.AssetDetails.FinancialProperties:type_name -> asset.FinancialProperties
+	20, // 13: asset.AssetDetails.Description:type_name -> asset.Description
+	21, // 14: asset.AssetDetails.ExternalResources:type_name -> asset.ExternalResources
+	6,  // 15: asset.Asset.AssetDetails:type_name -> asset.AssetDetails
+	26, // 16: asset.Asset.MetaData:type_name -> metadata.MetaData
+	27, // 17: asset.Asset.Audit:type_name -> audit.Audit
+	24, // 18: asset.Asset.IssuerDetails:type_name -> asset.IssuerDetails
+	7,  // 19: asset.Assets.Assets:type_name -> asset.Asset
 	5,  // 20: asset.UserAssetList.Status:type_name -> asset.UserAssetStatus
-	27, // 21: asset.UserAssetList.MetaData:type_name -> metadata.MetaData
-	10, // 22: asset.UserAssetLists.UserAssetLists:type_name -> asset.UserAssetList
-	29, // 23: asset.FinancialProperties.Network:type_name -> metadata.Network
-	30, // 24: asset.FinancialProperties.Commission:type_name -> decimal.Decimal
-	6,  // 25: asset.FinancialProperties.CommissionType:type_name -> asset.CommissionType
-	23, // 26: asset.ExternalResources.Links:type_name -> asset.Link
-	24, // 27: asset.ExternalResources.Socials:type_name -> asset.SocialMedia
-	0,  // 28: asset.Link.Type:type_name -> asset.LinkType
-	1,  // 29: asset.SocialMedia.Type:type_name -> asset.SocialMediaType
-	30, // [30:30] is the sub-list for method output_type
-	30, // [30:30] is the sub-list for method input_type
-	30, // [30:30] is the sub-list for extension type_name
-	30, // [30:30] is the sub-list for extension extendee
-	0,  // [0:30] is the sub-list for field type_name
+	26, // 21: asset.UserAssetList.MetaData:type_name -> metadata.MetaData
+	9,  // 22: asset.UserAssetLists.UserAssetLists:type_name -> asset.UserAssetList
+	28, // 23: asset.FinancialProperties.Network:type_name -> metadata.Network
+	22, // 24: asset.ExternalResources.Links:type_name -> asset.Link
+	23, // 25: asset.ExternalResources.Socials:type_name -> asset.SocialMedia
+	0,  // 26: asset.Link.Type:type_name -> asset.LinkType
+	1,  // 27: asset.SocialMedia.Type:type_name -> asset.SocialMediaType
+	28, // [28:28] is the sub-list for method output_type
+	28, // [28:28] is the sub-list for method input_type
+	28, // [28:28] is the sub-list for extension type_name
+	28, // [28:28] is the sub-list for extension extendee
+	0,  // [0:28] is the sub-list for field type_name
 }
 
 func init() { file_asset_proto_init() }
@@ -2936,7 +2851,7 @@ func file_asset_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_asset_proto_rawDesc), len(file_asset_proto_rawDesc)),
-			NumEnums:      7,
+			NumEnums:      6,
 			NumMessages:   19,
 			NumExtensions: 0,
 			NumServices:   0,

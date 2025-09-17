@@ -6,7 +6,6 @@
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
 import { Denom } from "./sologenic/com-fs-asset-model/domain/denom/denom";
-import { Decimal } from "./sologenic/com-fs-utils-lib/go/decimal/decimal";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
 import { MetaData, networkFromJSON, networkToJSON, } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 export const protobufPackage = "asset";
@@ -348,52 +347,6 @@ export function userAssetStatusToJSON(object) {
         case UserAssetStatus.OUTDATED_VERSION:
             return "OUTDATED_VERSION";
         case UserAssetStatus.UNRECOGNIZED:
-        default:
-            return "UNRECOGNIZED";
-    }
-}
-export var CommissionType;
-(function (CommissionType) {
-    CommissionType[CommissionType["NOT_USED_COMMISSION_TYPE"] = 0] = "NOT_USED_COMMISSION_TYPE";
-    /** NOTIONAL - Charge commission on a per order basis (default) */
-    CommissionType[CommissionType["NOTIONAL"] = 1] = "NOTIONAL";
-    /** QTY - Charge commission on a per qty/contract basis, pro rated */
-    CommissionType[CommissionType["QTY"] = 2] = "QTY";
-    /** BPS - Commission expressed in basis points (percent), converted to notional amount for purposes of calculating commission(max two decimal places) */
-    CommissionType[CommissionType["BPS"] = 3] = "BPS";
-    CommissionType[CommissionType["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
-})(CommissionType || (CommissionType = {}));
-export function commissionTypeFromJSON(object) {
-    switch (object) {
-        case 0:
-        case "NOT_USED_COMMISSION_TYPE":
-            return CommissionType.NOT_USED_COMMISSION_TYPE;
-        case 1:
-        case "NOTIONAL":
-            return CommissionType.NOTIONAL;
-        case 2:
-        case "QTY":
-            return CommissionType.QTY;
-        case 3:
-        case "BPS":
-            return CommissionType.BPS;
-        case -1:
-        case "UNRECOGNIZED":
-        default:
-            return CommissionType.UNRECOGNIZED;
-    }
-}
-export function commissionTypeToJSON(object) {
-    switch (object) {
-        case CommissionType.NOT_USED_COMMISSION_TYPE:
-            return "NOT_USED_COMMISSION_TYPE";
-        case CommissionType.NOTIONAL:
-            return "NOTIONAL";
-        case CommissionType.QTY:
-            return "QTY";
-        case CommissionType.BPS:
-            return "BPS";
-        case CommissionType.UNRECOGNIZED:
         default:
             return "UNRECOGNIZED";
     }
@@ -2599,8 +2552,6 @@ function createBaseFinancialProperties() {
         ValuationDate: undefined,
         Network: 0,
         Status: "",
-        Commission: undefined,
-        CommissionType: undefined,
     };
 }
 export const FinancialProperties = {
@@ -2676,12 +2627,6 @@ export const FinancialProperties = {
         }
         if (message.Status !== "") {
             writer.uint32(194).string(message.Status);
-        }
-        if (message.Commission !== undefined) {
-            Decimal.encode(message.Commission, writer.uint32(202).fork()).ldelim();
-        }
-        if (message.CommissionType !== undefined) {
-            writer.uint32(208).int32(message.CommissionType);
         }
         return writer;
     },
@@ -2836,18 +2781,6 @@ export const FinancialProperties = {
                     }
                     message.Status = reader.string();
                     continue;
-                case 25:
-                    if (tag !== 202) {
-                        break;
-                    }
-                    message.Commission = Decimal.decode(reader, reader.uint32());
-                    continue;
-                case 26:
-                    if (tag !== 208) {
-                        break;
-                    }
-                    message.CommissionType = reader.int32();
-                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -2888,8 +2821,6 @@ export const FinancialProperties = {
             ValuationDate: isSet(object.ValuationDate) ? globalThis.String(object.ValuationDate) : undefined,
             Network: isSet(object.Network) ? networkFromJSON(object.Network) : 0,
             Status: isSet(object.Status) ? globalThis.String(object.Status) : "",
-            Commission: isSet(object.Commission) ? Decimal.fromJSON(object.Commission) : undefined,
-            CommissionType: isSet(object.CommissionType) ? commissionTypeFromJSON(object.CommissionType) : undefined,
         };
     },
     toJSON(message) {
@@ -2967,19 +2898,13 @@ export const FinancialProperties = {
         if (message.Status !== "") {
             obj.Status = message.Status;
         }
-        if (message.Commission !== undefined) {
-            obj.Commission = Decimal.toJSON(message.Commission);
-        }
-        if (message.CommissionType !== undefined) {
-            obj.CommissionType = commissionTypeToJSON(message.CommissionType);
-        }
         return obj;
     },
     create(base) {
         return FinancialProperties.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z;
         const message = createBaseFinancialProperties();
         message.Symbol = (_a = object.Symbol) !== null && _a !== void 0 ? _a : "";
         message.Issuer = (_b = object.Issuer) !== null && _b !== void 0 ? _b : "";
@@ -3005,10 +2930,6 @@ export const FinancialProperties = {
         message.ValuationDate = (_x = object.ValuationDate) !== null && _x !== void 0 ? _x : undefined;
         message.Network = (_y = object.Network) !== null && _y !== void 0 ? _y : 0;
         message.Status = (_z = object.Status) !== null && _z !== void 0 ? _z : "";
-        message.Commission = (object.Commission !== undefined && object.Commission !== null)
-            ? Decimal.fromPartial(object.Commission)
-            : undefined;
-        message.CommissionType = (_0 = object.CommissionType) !== null && _0 !== void 0 ? _0 : undefined;
         return message;
     },
 };

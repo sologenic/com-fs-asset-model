@@ -47,10 +47,6 @@ github.com/rogpeppe/go-internal v1.13.1/go.mod h1:uMEvuHeurkdAXX61udpOXGD/AzZDWN
 github.com/rs/xid v1.6.0/go.mod h1:7XoLgs4eV+QndskICGsho+ADou8ySMSjJKDIan90Nz0=
 github.com/rs/zerolog v1.34.0 h1:k43nTLIwcTVQAncfCw4KZ2VY6ukYoZaBPNOE8txlOeY=
 github.com/rs/zerolog v1.34.0/go.mod h1:bJsvje4Z08ROH4Nhs5iH600c3IkWhwp44iRc54W6wYQ=
-github.com/shopspring/decimal v1.4.0 h1:bxl37RwXBklmTi0C79JfXCEBD1cqqHt0bbgBAGFp81k=
-github.com/shopspring/decimal v1.4.0/go.mod h1:gawqmDU56v4yIKSwfBSFip1HdCCXN8/+DMd9qYNcwME=
-github.com/sologenic/com-fs-utils-lib/go/decimal v0.0.0-20250731190227-eba0dc415460 h1:JyXePUUkdG7fu4c42h4lc7zJi9q45pq+aAoxW83L3ZE=
-github.com/sologenic/com-fs-utils-lib/go/decimal v0.0.0-20250731190227-eba0dc415460/go.mod h1:gujN2PaQ7sbIrj8Jzq7Ub5uwoKgJlfiDDba/V/amnR0=
 github.com/sologenic/com-fs-utils-lib/go/unittest v0.0.0-20250131210530-7306ae3e5762 h1:qAJMAxLCILcE18l/A+TVuVRUo1ucE1wxHnWqELOs9QQ=
 github.com/sologenic/com-fs-utils-lib/go/unittest v0.0.0-20250131210530-7306ae3e5762/go.mod h1:pWVR4sfDb4e+pj5DH26uV3EyDJVTRPzytbTmIUnV06E=
 github.com/sologenic/com-fs-utils-lib/models/audit v0.0.0-20250709230730-743382da78ab h1:rg3RdbsEyKczFmRPqxv+9CWNOX/2/fFjaKoSpiBX+Ag=
