@@ -2541,8 +2541,7 @@ function createBaseFinancialProperties() {
         PlatformType: "",
         ContractAddress: undefined,
         Fractional: false,
-        TotalSupply: 0,
-        DecimalPlacesSupply: 0,
+        TotalSupply: undefined,
         Subunit: undefined,
         Price: undefined,
         DecimalPlacesPrice: 0,
@@ -2595,38 +2594,35 @@ export const FinancialProperties = {
         if (message.Fractional !== false) {
             writer.uint32(104).bool(message.Fractional);
         }
-        if (message.TotalSupply !== 0) {
+        if (message.TotalSupply !== undefined) {
             writer.uint32(112).int32(message.TotalSupply);
         }
-        if (message.DecimalPlacesSupply !== 0) {
-            writer.uint32(120).int32(message.DecimalPlacesSupply);
-        }
         if (message.Subunit !== undefined) {
-            writer.uint32(130).string(message.Subunit);
+            writer.uint32(122).string(message.Subunit);
         }
         if (message.Price !== undefined) {
-            writer.uint32(141).float(message.Price);
+            writer.uint32(133).float(message.Price);
         }
         if (message.DecimalPlacesPrice !== 0) {
-            writer.uint32(144).int32(message.DecimalPlacesPrice);
+            writer.uint32(136).int32(message.DecimalPlacesPrice);
         }
         if (message.Currency !== "") {
-            writer.uint32(154).string(message.Currency);
+            writer.uint32(146).string(message.Currency);
         }
         if (message.InitialValuation !== 0) {
-            writer.uint32(165).float(message.InitialValuation);
+            writer.uint32(157).float(message.InitialValuation);
         }
         if (message.CurrentValuation !== 0) {
-            writer.uint32(173).float(message.CurrentValuation);
+            writer.uint32(165).float(message.CurrentValuation);
         }
         if (message.ValuationDate !== undefined) {
-            writer.uint32(178).string(message.ValuationDate);
+            writer.uint32(170).string(message.ValuationDate);
         }
         if (message.Network !== 0) {
-            writer.uint32(184).int32(message.Network);
+            writer.uint32(176).int32(message.Network);
         }
         if (message.Status !== "") {
-            writer.uint32(194).string(message.Status);
+            writer.uint32(186).string(message.Status);
         }
         return writer;
     },
@@ -2722,61 +2718,55 @@ export const FinancialProperties = {
                     message.TotalSupply = reader.int32();
                     continue;
                 case 15:
-                    if (tag !== 120) {
-                        break;
-                    }
-                    message.DecimalPlacesSupply = reader.int32();
-                    continue;
-                case 16:
-                    if (tag !== 130) {
+                    if (tag !== 122) {
                         break;
                     }
                     message.Subunit = reader.string();
                     continue;
-                case 17:
-                    if (tag !== 141) {
+                case 16:
+                    if (tag !== 133) {
                         break;
                     }
                     message.Price = reader.float();
                     continue;
-                case 18:
-                    if (tag !== 144) {
+                case 17:
+                    if (tag !== 136) {
                         break;
                     }
                     message.DecimalPlacesPrice = reader.int32();
                     continue;
-                case 19:
-                    if (tag !== 154) {
+                case 18:
+                    if (tag !== 146) {
                         break;
                     }
                     message.Currency = reader.string();
+                    continue;
+                case 19:
+                    if (tag !== 157) {
+                        break;
+                    }
+                    message.InitialValuation = reader.float();
                     continue;
                 case 20:
                     if (tag !== 165) {
                         break;
                     }
-                    message.InitialValuation = reader.float();
-                    continue;
-                case 21:
-                    if (tag !== 173) {
-                        break;
-                    }
                     message.CurrentValuation = reader.float();
                     continue;
-                case 22:
-                    if (tag !== 178) {
+                case 21:
+                    if (tag !== 170) {
                         break;
                     }
                     message.ValuationDate = reader.string();
                     continue;
-                case 23:
-                    if (tag !== 184) {
+                case 22:
+                    if (tag !== 176) {
                         break;
                     }
                     message.Network = reader.int32();
                     continue;
-                case 24:
-                    if (tag !== 194) {
+                case 23:
+                    if (tag !== 186) {
                         break;
                     }
                     message.Status = reader.string();
@@ -2810,8 +2800,7 @@ export const FinancialProperties = {
             PlatformType: isSet(object.PlatformType) ? globalThis.String(object.PlatformType) : "",
             ContractAddress: isSet(object.ContractAddress) ? globalThis.String(object.ContractAddress) : undefined,
             Fractional: isSet(object.Fractional) ? globalThis.Boolean(object.Fractional) : false,
-            TotalSupply: isSet(object.TotalSupply) ? globalThis.Number(object.TotalSupply) : 0,
-            DecimalPlacesSupply: isSet(object.DecimalPlacesSupply) ? globalThis.Number(object.DecimalPlacesSupply) : 0,
+            TotalSupply: isSet(object.TotalSupply) ? globalThis.Number(object.TotalSupply) : undefined,
             Subunit: isSet(object.Subunit) ? globalThis.String(object.Subunit) : undefined,
             Price: isSet(object.Price) ? globalThis.Number(object.Price) : undefined,
             DecimalPlacesPrice: isSet(object.DecimalPlacesPrice) ? globalThis.Number(object.DecimalPlacesPrice) : 0,
@@ -2865,11 +2854,8 @@ export const FinancialProperties = {
         if (message.Fractional !== false) {
             obj.Fractional = message.Fractional;
         }
-        if (message.TotalSupply !== 0) {
+        if (message.TotalSupply !== undefined) {
             obj.TotalSupply = Math.round(message.TotalSupply);
-        }
-        if (message.DecimalPlacesSupply !== 0) {
-            obj.DecimalPlacesSupply = Math.round(message.DecimalPlacesSupply);
         }
         if (message.Subunit !== undefined) {
             obj.Subunit = message.Subunit;
@@ -2904,7 +2890,7 @@ export const FinancialProperties = {
         return FinancialProperties.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y;
         const message = createBaseFinancialProperties();
         message.Symbol = (_a = object.Symbol) !== null && _a !== void 0 ? _a : "";
         message.Issuer = (_b = object.Issuer) !== null && _b !== void 0 ? _b : "";
@@ -2919,17 +2905,16 @@ export const FinancialProperties = {
         message.PlatformType = (_l = object.PlatformType) !== null && _l !== void 0 ? _l : "";
         message.ContractAddress = (_m = object.ContractAddress) !== null && _m !== void 0 ? _m : undefined;
         message.Fractional = (_o = object.Fractional) !== null && _o !== void 0 ? _o : false;
-        message.TotalSupply = (_p = object.TotalSupply) !== null && _p !== void 0 ? _p : 0;
-        message.DecimalPlacesSupply = (_q = object.DecimalPlacesSupply) !== null && _q !== void 0 ? _q : 0;
-        message.Subunit = (_r = object.Subunit) !== null && _r !== void 0 ? _r : undefined;
-        message.Price = (_s = object.Price) !== null && _s !== void 0 ? _s : undefined;
-        message.DecimalPlacesPrice = (_t = object.DecimalPlacesPrice) !== null && _t !== void 0 ? _t : 0;
-        message.Currency = (_u = object.Currency) !== null && _u !== void 0 ? _u : "";
-        message.InitialValuation = (_v = object.InitialValuation) !== null && _v !== void 0 ? _v : 0;
-        message.CurrentValuation = (_w = object.CurrentValuation) !== null && _w !== void 0 ? _w : 0;
-        message.ValuationDate = (_x = object.ValuationDate) !== null && _x !== void 0 ? _x : undefined;
-        message.Network = (_y = object.Network) !== null && _y !== void 0 ? _y : 0;
-        message.Status = (_z = object.Status) !== null && _z !== void 0 ? _z : "";
+        message.TotalSupply = (_p = object.TotalSupply) !== null && _p !== void 0 ? _p : undefined;
+        message.Subunit = (_q = object.Subunit) !== null && _q !== void 0 ? _q : undefined;
+        message.Price = (_r = object.Price) !== null && _r !== void 0 ? _r : undefined;
+        message.DecimalPlacesPrice = (_s = object.DecimalPlacesPrice) !== null && _s !== void 0 ? _s : 0;
+        message.Currency = (_t = object.Currency) !== null && _t !== void 0 ? _t : "";
+        message.InitialValuation = (_u = object.InitialValuation) !== null && _u !== void 0 ? _u : 0;
+        message.CurrentValuation = (_v = object.CurrentValuation) !== null && _v !== void 0 ? _v : 0;
+        message.ValuationDate = (_w = object.ValuationDate) !== null && _w !== void 0 ? _w : undefined;
+        message.Network = (_x = object.Network) !== null && _x !== void 0 ? _x : 0;
+        message.Status = (_y = object.Status) !== null && _y !== void 0 ? _y : "";
         return message;
     },
 };
@@ -2940,7 +2925,7 @@ function createBaseDescription() {
         Logo: undefined,
         AssetID: "",
         URL: "",
-        Country: "",
+        Country: [],
         Documents: [],
         Images: [],
         Vertical: "",
@@ -2965,8 +2950,8 @@ export const Description = {
         if (message.URL !== "") {
             writer.uint32(42).string(message.URL);
         }
-        if (message.Country !== "") {
-            writer.uint32(50).string(message.Country);
+        for (const v of message.Country) {
+            writer.uint32(50).string(v);
         }
         for (const v of message.Documents) {
             writer.uint32(58).string(v);
@@ -3026,7 +3011,7 @@ export const Description = {
                     if (tag !== 50) {
                         break;
                     }
-                    message.Country = reader.string();
+                    message.Country.push(reader.string());
                     continue;
                 case 7:
                     if (tag !== 58) {
@@ -3073,7 +3058,7 @@ export const Description = {
             Logo: isSet(object.Logo) ? LogoFile.fromJSON(object.Logo) : undefined,
             AssetID: isSet(object.AssetID) ? globalThis.String(object.AssetID) : "",
             URL: isSet(object.URL) ? globalThis.String(object.URL) : "",
-            Country: isSet(object.Country) ? globalThis.String(object.Country) : "",
+            Country: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Country) ? object.Country.map((e) => globalThis.String(e)) : [],
             Documents: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Documents)
                 ? object.Documents.map((e) => globalThis.String(e))
                 : [],
@@ -3084,7 +3069,7 @@ export const Description = {
         };
     },
     toJSON(message) {
-        var _a, _b;
+        var _a, _b, _c;
         const obj = {};
         if (message.Name !== "") {
             obj.Name = message.Name;
@@ -3101,13 +3086,13 @@ export const Description = {
         if (message.URL !== "") {
             obj.URL = message.URL;
         }
-        if (message.Country !== "") {
+        if ((_a = message.Country) === null || _a === void 0 ? void 0 : _a.length) {
             obj.Country = message.Country;
         }
-        if ((_a = message.Documents) === null || _a === void 0 ? void 0 : _a.length) {
+        if ((_b = message.Documents) === null || _b === void 0 ? void 0 : _b.length) {
             obj.Documents = message.Documents;
         }
-        if ((_b = message.Images) === null || _b === void 0 ? void 0 : _b.length) {
+        if ((_c = message.Images) === null || _c === void 0 ? void 0 : _c.length) {
             obj.Images = message.Images;
         }
         if (message.Vertical !== "") {
@@ -3132,7 +3117,7 @@ export const Description = {
         message.Logo = (object.Logo !== undefined && object.Logo !== null) ? LogoFile.fromPartial(object.Logo) : undefined;
         message.AssetID = (_c = object.AssetID) !== null && _c !== void 0 ? _c : "";
         message.URL = (_d = object.URL) !== null && _d !== void 0 ? _d : "";
-        message.Country = (_e = object.Country) !== null && _e !== void 0 ? _e : "";
+        message.Country = ((_e = object.Country) === null || _e === void 0 ? void 0 : _e.map((e) => e)) || [];
         message.Documents = ((_f = object.Documents) === null || _f === void 0 ? void 0 : _f.map((e) => e)) || [];
         message.Images = ((_g = object.Images) === null || _g === void 0 ? void 0 : _g.map((e) => e)) || [];
         message.Vertical = (_h = object.Vertical) !== null && _h !== void 0 ? _h : "";

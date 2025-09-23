@@ -178,17 +178,16 @@ message FinancialProperties {
     string PlatformType = 11;                 
     optional string ContractAddress = 12;     
     bool Fractional = 13;                     
-    int32 TotalSupply = 14;                   
-    int32 DecimalPlacesSupply = 15;           
-    optional string Subunit = 16;             
-    optional float Price = 17;                
-    int32 DecimalPlacesPrice = 18;            
-    string Currency = 19;                     
-    float InitialValuation = 20;              
-    float CurrentValuation = 21;              
-    optional string ValuationDate = 22;       
-    metadata.Network Network = 23;                      
-    string Status = 24;
+    optional int32 TotalSupply = 14;                   
+    optional string Subunit = 15;             
+    optional float Price = 16;                
+    int32 DecimalPlacesPrice = 17;            
+    string Currency = 18;                     
+    float InitialValuation = 19;              
+    float CurrentValuation = 20;              
+    optional string ValuationDate = 21;       
+    metadata.Network Network = 22;                      
+    string Status = 23;
 }
 
 // ---------------- Description ----------------
@@ -199,7 +198,7 @@ message Description {
     LogoFile Logo = 3;               
     string AssetID = 4;                      
     string URL = 5;                          
-    string Country = 6;                      
+    repeated string Country = 6;                      
     repeated string Documents = 7;           
     repeated string Images = 8;              
     string Vertical = 9;                     
