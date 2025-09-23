@@ -48,6 +48,8 @@ export declare enum UserAssetStatus {
     WHITELISTING_REQUESTED = 2,
     WHITELISTED = 3,
     OUTDATED_VERSION = 4,
+    BLACKLISTED = 5,
+    SELL_ONLY = 6,
     UNRECOGNIZED = -1
 }
 export declare function userAssetStatusFromJSON(object: any): UserAssetStatus;
