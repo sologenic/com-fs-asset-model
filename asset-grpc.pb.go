@@ -251,16 +251,17 @@ func (x *UserAssetListKey) GetKey() string {
 }
 
 type UserAssetListQuery struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Network       metadata.Network       `protobuf:"varint,1,opt,name=Network,proto3,enum=metadata.Network" json:"Network,omitempty"`
-	Offset        *int32                 `protobuf:"varint,2,opt,name=Offset,proto3,oneof" json:"Offset,omitempty"`
-	AccountID     *string                `protobuf:"bytes,3,opt,name=AccountID,proto3,oneof" json:"AccountID,omitempty"`
-	Wallet        *string                `protobuf:"bytes,4,opt,name=Wallet,proto3,oneof" json:"Wallet,omitempty"`
-	AssetKey      *string                `protobuf:"bytes,5,opt,name=AssetKey,proto3,oneof" json:"AssetKey,omitempty"`
-	Status        *UserAssetStatus       `protobuf:"varint,6,opt,name=Status,proto3,enum=asset.UserAssetStatus,oneof" json:"Status,omitempty"`
-	Visible       *bool                  `protobuf:"varint,7,opt,name=Visible,proto3,oneof" json:"Visible,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Network        metadata.Network       `protobuf:"varint,1,opt,name=Network,proto3,enum=metadata.Network" json:"Network,omitempty"`
+	Offset         *int32                 `protobuf:"varint,2,opt,name=Offset,proto3,oneof" json:"Offset,omitempty"`
+	AccountID      *string                `protobuf:"bytes,3,opt,name=AccountID,proto3,oneof" json:"AccountID,omitempty"`
+	Wallet         *string                `protobuf:"bytes,4,opt,name=Wallet,proto3,oneof" json:"Wallet,omitempty"`
+	AssetKey       *string                `protobuf:"bytes,5,opt,name=AssetKey,proto3,oneof" json:"AssetKey,omitempty"`
+	Status         *UserAssetStatus       `protobuf:"varint,6,opt,name=Status,proto3,enum=asset.UserAssetStatus,oneof" json:"Status,omitempty"`
+	Visible        *bool                  `protobuf:"varint,7,opt,name=Visible,proto3,oneof" json:"Visible,omitempty"`
+	OrganizationID *string                `protobuf:"bytes,8,opt,name=OrganizationID,proto3,oneof" json:"OrganizationID,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *UserAssetListQuery) Reset() {
@@ -342,6 +343,13 @@ func (x *UserAssetListQuery) GetVisible() bool {
 	return false
 }
 
+func (x *UserAssetListQuery) GetOrganizationID() string {
+	if x != nil && x.OrganizationID != nil {
+		return *x.OrganizationID
+	}
+	return ""
+}
+
 var File_asset_grpc_proto protoreflect.FileDescriptor
 
 const file_asset_grpc_proto_rawDesc = "" +
@@ -380,7 +388,7 @@ const file_asset_grpc_proto_rawDesc = "" +
 	"\t_IndustryB\x1a\n" +
 	"\x18_SmartContractIssuerAddr\"$\n" +
 	"\x10UserAssetListKey\x12\x10\n" +
-	"\x03Key\x18\x01 \x01(\tR\x03Key\"\xdb\x02\n" +
+	"\x03Key\x18\x01 \x01(\tR\x03Key\"\x9b\x03\n" +
 	"\x12UserAssetListQuery\x12+\n" +
 	"\aNetwork\x18\x01 \x01(\x0e2\x11.metadata.NetworkR\aNetwork\x12\x1b\n" +
 	"\x06Offset\x18\x02 \x01(\x05H\x00R\x06Offset\x88\x01\x01\x12!\n" +
@@ -388,7 +396,8 @@ const file_asset_grpc_proto_rawDesc = "" +
 	"\x06Wallet\x18\x04 \x01(\tH\x02R\x06Wallet\x88\x01\x01\x12\x1f\n" +
 	"\bAssetKey\x18\x05 \x01(\tH\x03R\bAssetKey\x88\x01\x01\x123\n" +
 	"\x06Status\x18\x06 \x01(\x0e2\x16.asset.UserAssetStatusH\x04R\x06Status\x88\x01\x01\x12\x1d\n" +
-	"\aVisible\x18\a \x01(\bH\x05R\aVisible\x88\x01\x01B\t\n" +
+	"\aVisible\x18\a \x01(\bH\x05R\aVisible\x88\x01\x01\x12+\n" +
+	"\x0eOrganizationID\x18\b \x01(\tH\x06R\x0eOrganizationID\x88\x01\x01B\t\n" +
 	"\a_OffsetB\f\n" +
 	"\n" +
 	"_AccountIDB\t\n" +
@@ -396,7 +405,8 @@ const file_asset_grpc_proto_rawDesc = "" +
 	"\t_AssetKeyB\t\n" +
 	"\a_StatusB\n" +
 	"\n" +
-	"\b_Visible2\xea\x02\n" +
+	"\b_VisibleB\x11\n" +
+	"\x0f_OrganizationID2\xea\x02\n" +
 	"\x10AssetListService\x12,\n" +
 	"\vUpsertAsset\x12\f.asset.Asset\x1a\x0f.asset.AssetKey\x12)\n" +
 	"\bGetAsset\x12\x0f.asset.AssetKey\x1a\f.asset.Asset\x12-\n" +

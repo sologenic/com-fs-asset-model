@@ -55,4 +55,5 @@ message UserAssetListQuery {
     optional string AssetKey = 5;
     optional UserAssetStatus Status = 6;
     optional bool Visible = 7;
+    optional string OrganizationID = 8;
 }
