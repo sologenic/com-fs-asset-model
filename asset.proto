@@ -66,6 +66,7 @@ message UserAssetList {
     UserAssetStatus Status = 4;
     metadata.MetaData MetaData = 5;
     bool Visible = 6;
+    string OrganizationID = 7;
 }
 
 message UserAssetLists {

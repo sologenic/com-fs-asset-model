@@ -749,14 +749,15 @@ func (x *LogoFile) GetName() string {
 type UserAssetList struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Key combination: Currency-OrganizationID-AccountID-Wallet (AssetKey-AccountID-Wallet)
-	AccountID     string             `protobuf:"bytes,1,opt,name=AccountID,proto3" json:"AccountID,omitempty"`
-	Wallet        string             `protobuf:"bytes,2,opt,name=Wallet,proto3" json:"Wallet,omitempty"`
-	AssetKey      string             `protobuf:"bytes,3,opt,name=AssetKey,proto3" json:"AssetKey,omitempty"` // Currency-OrganizationID
-	Status        UserAssetStatus    `protobuf:"varint,4,opt,name=Status,proto3,enum=asset.UserAssetStatus" json:"Status,omitempty"`
-	MetaData      *metadata.MetaData `protobuf:"bytes,5,opt,name=MetaData,proto3" json:"MetaData,omitempty"`
-	Visible       bool               `protobuf:"varint,6,opt,name=Visible,proto3" json:"Visible,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	AccountID      string             `protobuf:"bytes,1,opt,name=AccountID,proto3" json:"AccountID,omitempty"`
+	Wallet         string             `protobuf:"bytes,2,opt,name=Wallet,proto3" json:"Wallet,omitempty"`
+	AssetKey       string             `protobuf:"bytes,3,opt,name=AssetKey,proto3" json:"AssetKey,omitempty"` // Currency-OrganizationID
+	Status         UserAssetStatus    `protobuf:"varint,4,opt,name=Status,proto3,enum=asset.UserAssetStatus" json:"Status,omitempty"`
+	MetaData       *metadata.MetaData `protobuf:"bytes,5,opt,name=MetaData,proto3" json:"MetaData,omitempty"`
+	Visible        bool               `protobuf:"varint,6,opt,name=Visible,proto3" json:"Visible,omitempty"`
+	OrganizationID string             `protobuf:"bytes,7,opt,name=OrganizationID,proto3" json:"OrganizationID,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *UserAssetList) Reset() {
@@ -829,6 +830,13 @@ func (x *UserAssetList) GetVisible() bool {
 		return x.Visible
 	}
 	return false
+}
+
+func (x *UserAssetList) GetOrganizationID() string {
+	if x != nil {
+		return x.OrganizationID
+	}
+	return ""
 }
 
 type UserAssetLists struct {
@@ -911,14 +919,15 @@ const file_asset_proto_rawDesc = "" +
 	"\tReference\x18\x01 \x01(\tR\tReference\x12\x1c\n" +
 	"\tExtension\x18\x02 \x01(\tR\tExtension\x12\x17\n" +
 	"\x04Name\x18\x03 \x01(\tH\x00R\x04Name\x88\x01\x01B\a\n" +
-	"\x05_Name\"\xdb\x01\n" +
+	"\x05_Name\"\x83\x02\n" +
 	"\rUserAssetList\x12\x1c\n" +
 	"\tAccountID\x18\x01 \x01(\tR\tAccountID\x12\x16\n" +
 	"\x06Wallet\x18\x02 \x01(\tR\x06Wallet\x12\x1a\n" +
 	"\bAssetKey\x18\x03 \x01(\tR\bAssetKey\x12.\n" +
 	"\x06Status\x18\x04 \x01(\x0e2\x16.asset.UserAssetStatusR\x06Status\x12.\n" +
 	"\bMetaData\x18\x05 \x01(\v2\x12.metadata.MetaDataR\bMetaData\x12\x18\n" +
-	"\aVisible\x18\x06 \x01(\bR\aVisible\"N\n" +
+	"\aVisible\x18\x06 \x01(\bR\aVisible\x12&\n" +
+	"\x0eOrganizationID\x18\a \x01(\tR\x0eOrganizationID\"N\n" +
 	"\x0eUserAssetLists\x12<\n" +
 	"\x0eUserAssetLists\x18\x01 \x03(\v2\x14.asset.UserAssetListR\x0eUserAssetLists*\x9c\x01\n" +
 	"\vAssetStatus\x12\x1b\n" +

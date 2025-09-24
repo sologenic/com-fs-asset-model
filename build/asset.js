@@ -919,7 +919,15 @@ export const LogoFile = {
     },
 };
 function createBaseUserAssetList() {
-    return { AccountID: "", Wallet: "", AssetKey: "", Status: 0, MetaData: undefined, Visible: false };
+    return {
+        AccountID: "",
+        Wallet: "",
+        AssetKey: "",
+        Status: 0,
+        MetaData: undefined,
+        Visible: false,
+        OrganizationID: "",
+    };
 }
 export const UserAssetList = {
     encode(message, writer = _m0.Writer.create()) {
@@ -940,6 +948,9 @@ export const UserAssetList = {
         }
         if (message.Visible !== false) {
             writer.uint32(48).bool(message.Visible);
+        }
+        if (message.OrganizationID !== "") {
+            writer.uint32(58).string(message.OrganizationID);
         }
         return writer;
     },
@@ -986,6 +997,12 @@ export const UserAssetList = {
                     }
                     message.Visible = reader.bool();
                     continue;
+                case 7:
+                    if (tag !== 58) {
+                        break;
+                    }
+                    message.OrganizationID = reader.string();
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -1002,6 +1019,7 @@ export const UserAssetList = {
             Status: isSet(object.Status) ? userAssetStatusFromJSON(object.Status) : 0,
             MetaData: isSet(object.MetaData) ? MetaData.fromJSON(object.MetaData) : undefined,
             Visible: isSet(object.Visible) ? globalThis.Boolean(object.Visible) : false,
+            OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
         };
     },
     toJSON(message) {
@@ -1024,13 +1042,16 @@ export const UserAssetList = {
         if (message.Visible !== false) {
             obj.Visible = message.Visible;
         }
+        if (message.OrganizationID !== "") {
+            obj.OrganizationID = message.OrganizationID;
+        }
         return obj;
     },
     create(base) {
         return UserAssetList.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e;
+        var _a, _b, _c, _d, _e, _f;
         const message = createBaseUserAssetList();
         message.AccountID = (_a = object.AccountID) !== null && _a !== void 0 ? _a : "";
         message.Wallet = (_b = object.Wallet) !== null && _b !== void 0 ? _b : "";
@@ -1040,6 +1061,7 @@ export const UserAssetList = {
             ? MetaData.fromPartial(object.MetaData)
             : undefined;
         message.Visible = (_e = object.Visible) !== null && _e !== void 0 ? _e : false;
+        message.OrganizationID = (_f = object.OrganizationID) !== null && _f !== void 0 ? _f : "";
         return message;
     },
 };

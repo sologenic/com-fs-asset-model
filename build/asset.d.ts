@@ -151,6 +151,7 @@ export interface UserAssetList {
     Status: UserAssetStatus;
     MetaData: MetaData | undefined;
     Visible: boolean;
+    OrganizationID: string;
 }
 export interface UserAssetLists {
     UserAssetLists: UserAssetList[];
@@ -1246,6 +1247,7 @@ export declare const UserAssetList: {
             UpdatedByAccount?: string | undefined;
         } | undefined;
         Visible?: boolean | undefined;
+        OrganizationID?: string | undefined;
     } & {
         AccountID?: string | undefined;
         Wallet?: string | undefined;
@@ -1263,6 +1265,7 @@ export declare const UserAssetList: {
             UpdatedByAccount?: string | undefined;
         } & { [K in Exclude<keyof I["MetaData"], keyof MetaData>]: never; }) | undefined;
         Visible?: boolean | undefined;
+        OrganizationID?: string | undefined;
     } & { [K_1 in Exclude<keyof I, keyof UserAssetList>]: never; }>(base?: I | undefined): UserAssetList;
     fromPartial<I_1 extends {
         AccountID?: string | undefined;
@@ -1276,6 +1279,7 @@ export declare const UserAssetList: {
             UpdatedByAccount?: string | undefined;
         } | undefined;
         Visible?: boolean | undefined;
+        OrganizationID?: string | undefined;
     } & {
         AccountID?: string | undefined;
         Wallet?: string | undefined;
@@ -1293,6 +1297,7 @@ export declare const UserAssetList: {
             UpdatedByAccount?: string | undefined;
         } & { [K_2 in Exclude<keyof I_1["MetaData"], keyof MetaData>]: never; }) | undefined;
         Visible?: boolean | undefined;
+        OrganizationID?: string | undefined;
     } & { [K_3 in Exclude<keyof I_1, keyof UserAssetList>]: never; }>(object: I_1): UserAssetList;
 };
 export declare const UserAssetLists: {
@@ -1313,6 +1318,7 @@ export declare const UserAssetLists: {
                 UpdatedByAccount?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
+            OrganizationID?: string | undefined;
         }[] | undefined;
     } & {
         UserAssetLists?: ({
@@ -1327,6 +1333,7 @@ export declare const UserAssetLists: {
                 UpdatedByAccount?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
+            OrganizationID?: string | undefined;
         }[] & ({
             AccountID?: string | undefined;
             Wallet?: string | undefined;
@@ -1339,6 +1346,7 @@ export declare const UserAssetLists: {
                 UpdatedByAccount?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
+            OrganizationID?: string | undefined;
         } & {
             AccountID?: string | undefined;
             Wallet?: string | undefined;
@@ -1356,6 +1364,7 @@ export declare const UserAssetLists: {
                 UpdatedByAccount?: string | undefined;
             } & { [K in Exclude<keyof I["UserAssetLists"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
             Visible?: boolean | undefined;
+            OrganizationID?: string | undefined;
         } & { [K_1 in Exclude<keyof I["UserAssetLists"][number], keyof UserAssetList>]: never; })[] & { [K_2 in Exclude<keyof I["UserAssetLists"], keyof {
             AccountID?: string | undefined;
             Wallet?: string | undefined;
@@ -1368,6 +1377,7 @@ export declare const UserAssetLists: {
                 UpdatedByAccount?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
+            OrganizationID?: string | undefined;
         }[]>]: never; }) | undefined;
     } & { [K_3 in Exclude<keyof I, "UserAssetLists">]: never; }>(base?: I | undefined): UserAssetLists;
     fromPartial<I_1 extends {
@@ -1383,6 +1393,7 @@ export declare const UserAssetLists: {
                 UpdatedByAccount?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
+            OrganizationID?: string | undefined;
         }[] | undefined;
     } & {
         UserAssetLists?: ({
@@ -1397,6 +1408,7 @@ export declare const UserAssetLists: {
                 UpdatedByAccount?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
+            OrganizationID?: string | undefined;
         }[] & ({
             AccountID?: string | undefined;
             Wallet?: string | undefined;
@@ -1409,6 +1421,7 @@ export declare const UserAssetLists: {
                 UpdatedByAccount?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
+            OrganizationID?: string | undefined;
         } & {
             AccountID?: string | undefined;
             Wallet?: string | undefined;
@@ -1426,6 +1439,7 @@ export declare const UserAssetLists: {
                 UpdatedByAccount?: string | undefined;
             } & { [K_4 in Exclude<keyof I_1["UserAssetLists"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
             Visible?: boolean | undefined;
+            OrganizationID?: string | undefined;
         } & { [K_5 in Exclude<keyof I_1["UserAssetLists"][number], keyof UserAssetList>]: never; })[] & { [K_6 in Exclude<keyof I_1["UserAssetLists"], keyof {
             AccountID?: string | undefined;
             Wallet?: string | undefined;
@@ -1438,6 +1452,7 @@ export declare const UserAssetLists: {
                 UpdatedByAccount?: string | undefined;
             } | undefined;
             Visible?: boolean | undefined;
+            OrganizationID?: string | undefined;
         }[]>]: never; }) | undefined;
     } & { [K_7 in Exclude<keyof I_1, "UserAssetLists">]: never; }>(object: I_1): UserAssetLists;
 };

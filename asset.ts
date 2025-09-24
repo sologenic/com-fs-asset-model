@@ -471,6 +471,7 @@ export interface UserAssetList {
   Status: UserAssetStatus;
   MetaData: MetaData | undefined;
   Visible: boolean;
+  OrganizationID: string;
 }
 
 export interface UserAssetLists {
@@ -1060,7 +1061,15 @@ export const LogoFile = {
 };
 
 function createBaseUserAssetList(): UserAssetList {
-  return { AccountID: "", Wallet: "", AssetKey: "", Status: 0, MetaData: undefined, Visible: false };
+  return {
+    AccountID: "",
+    Wallet: "",
+    AssetKey: "",
+    Status: 0,
+    MetaData: undefined,
+    Visible: false,
+    OrganizationID: "",
+  };
 }
 
 export const UserAssetList = {
@@ -1082,6 +1091,9 @@ export const UserAssetList = {
     }
     if (message.Visible !== false) {
       writer.uint32(48).bool(message.Visible);
+    }
+    if (message.OrganizationID !== "") {
+      writer.uint32(58).string(message.OrganizationID);
     }
     return writer;
   },
@@ -1135,6 +1147,13 @@ export const UserAssetList = {
 
           message.Visible = reader.bool();
           continue;
+        case 7:
+          if (tag !== 58) {
+            break;
+          }
+
+          message.OrganizationID = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1152,6 +1171,7 @@ export const UserAssetList = {
       Status: isSet(object.Status) ? userAssetStatusFromJSON(object.Status) : 0,
       MetaData: isSet(object.MetaData) ? MetaData.fromJSON(object.MetaData) : undefined,
       Visible: isSet(object.Visible) ? globalThis.Boolean(object.Visible) : false,
+      OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
     };
   },
 
@@ -1175,6 +1195,9 @@ export const UserAssetList = {
     if (message.Visible !== false) {
       obj.Visible = message.Visible;
     }
+    if (message.OrganizationID !== "") {
+      obj.OrganizationID = message.OrganizationID;
+    }
     return obj;
   },
 
@@ -1191,6 +1214,7 @@ export const UserAssetList = {
       ? MetaData.fromPartial(object.MetaData)
       : undefined;
     message.Visible = object.Visible ?? false;
+    message.OrganizationID = object.OrganizationID ?? "";
     return message;
   },
 };
