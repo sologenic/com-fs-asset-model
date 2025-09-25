@@ -204,9 +204,9 @@ export interface InvestmentFund {
 export interface Equity {
     ExchangeTickerSymbol?: string | undefined;
     Exchange?: string | undefined;
-    MinTransactionAmount: string;
-    ExtraPercentage: string;
-    AssetMarginPercentage: string;
+    MinTransactionAmount: number;
+    TradingMarginPercentage: number;
+    AssetMarginPercentage: number;
 }
 export interface FinancialProperties {
     Symbol: string;
@@ -401,9 +401,9 @@ export declare const AssetDetails: {
         EquityDetails?: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
-            MinTransactionAmount?: string | undefined;
-            ExtraPercentage?: string | undefined;
-            AssetMarginPercentage?: string | undefined;
+            MinTransactionAmount?: number | undefined;
+            TradingMarginPercentage?: number | undefined;
+            AssetMarginPercentage?: number | undefined;
         } | undefined;
         FinancialProperties?: {
             Symbol?: string | undefined;
@@ -649,15 +649,15 @@ export declare const AssetDetails: {
         EquityDetails?: ({
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
-            MinTransactionAmount?: string | undefined;
-            ExtraPercentage?: string | undefined;
-            AssetMarginPercentage?: string | undefined;
+            MinTransactionAmount?: number | undefined;
+            TradingMarginPercentage?: number | undefined;
+            AssetMarginPercentage?: number | undefined;
         } & {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
-            MinTransactionAmount?: string | undefined;
-            ExtraPercentage?: string | undefined;
-            AssetMarginPercentage?: string | undefined;
+            MinTransactionAmount?: number | undefined;
+            TradingMarginPercentage?: number | undefined;
+            AssetMarginPercentage?: number | undefined;
         } & { [K_13 in Exclude<keyof I["EquityDetails"], keyof Equity>]: never; }) | undefined;
         FinancialProperties?: ({
             Symbol?: string | undefined;
@@ -887,9 +887,9 @@ export declare const AssetDetails: {
         EquityDetails?: {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
-            MinTransactionAmount?: string | undefined;
-            ExtraPercentage?: string | undefined;
-            AssetMarginPercentage?: string | undefined;
+            MinTransactionAmount?: number | undefined;
+            TradingMarginPercentage?: number | undefined;
+            AssetMarginPercentage?: number | undefined;
         } | undefined;
         FinancialProperties?: {
             Symbol?: string | undefined;
@@ -1135,15 +1135,15 @@ export declare const AssetDetails: {
         EquityDetails?: ({
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
-            MinTransactionAmount?: string | undefined;
-            ExtraPercentage?: string | undefined;
-            AssetMarginPercentage?: string | undefined;
+            MinTransactionAmount?: number | undefined;
+            TradingMarginPercentage?: number | undefined;
+            AssetMarginPercentage?: number | undefined;
         } & {
             ExchangeTickerSymbol?: string | undefined;
             Exchange?: string | undefined;
-            MinTransactionAmount?: string | undefined;
-            ExtraPercentage?: string | undefined;
-            AssetMarginPercentage?: string | undefined;
+            MinTransactionAmount?: number | undefined;
+            TradingMarginPercentage?: number | undefined;
+            AssetMarginPercentage?: number | undefined;
         } & { [K_41 in Exclude<keyof I_1["EquityDetails"], keyof Equity>]: never; }) | undefined;
         FinancialProperties?: ({
             Symbol?: string | undefined;
@@ -1380,9 +1380,9 @@ export declare const Asset: {
             EquityDetails?: {
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: string | undefined;
-                MinTransactionAmount?: string | undefined;
-                ExtraPercentage?: string | undefined;
-                AssetMarginPercentage?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                TradingMarginPercentage?: number | undefined;
+                AssetMarginPercentage?: number | undefined;
             } | undefined;
             FinancialProperties?: {
                 Symbol?: string | undefined;
@@ -1574,9 +1574,9 @@ export declare const Asset: {
             EquityDetails?: {
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: string | undefined;
-                MinTransactionAmount?: string | undefined;
-                ExtraPercentage?: string | undefined;
-                AssetMarginPercentage?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                TradingMarginPercentage?: number | undefined;
+                AssetMarginPercentage?: number | undefined;
             } | undefined;
             FinancialProperties?: {
                 Symbol?: string | undefined;
@@ -1822,15 +1822,15 @@ export declare const Asset: {
             EquityDetails?: ({
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: string | undefined;
-                MinTransactionAmount?: string | undefined;
-                ExtraPercentage?: string | undefined;
-                AssetMarginPercentage?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                TradingMarginPercentage?: number | undefined;
+                AssetMarginPercentage?: number | undefined;
             } & {
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: string | undefined;
-                MinTransactionAmount?: string | undefined;
-                ExtraPercentage?: string | undefined;
-                AssetMarginPercentage?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                TradingMarginPercentage?: number | undefined;
+                AssetMarginPercentage?: number | undefined;
             } & { [K_13 in Exclude<keyof I["AssetDetails"]["EquityDetails"], keyof Equity>]: never; }) | undefined;
             FinancialProperties?: ({
                 Symbol?: string | undefined;
@@ -2123,9 +2123,9 @@ export declare const Asset: {
             EquityDetails?: {
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: string | undefined;
-                MinTransactionAmount?: string | undefined;
-                ExtraPercentage?: string | undefined;
-                AssetMarginPercentage?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                TradingMarginPercentage?: number | undefined;
+                AssetMarginPercentage?: number | undefined;
             } | undefined;
             FinancialProperties?: {
                 Symbol?: string | undefined;
@@ -2317,9 +2317,9 @@ export declare const Asset: {
             EquityDetails?: {
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: string | undefined;
-                MinTransactionAmount?: string | undefined;
-                ExtraPercentage?: string | undefined;
-                AssetMarginPercentage?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                TradingMarginPercentage?: number | undefined;
+                AssetMarginPercentage?: number | undefined;
             } | undefined;
             FinancialProperties?: {
                 Symbol?: string | undefined;
@@ -2565,15 +2565,15 @@ export declare const Asset: {
             EquityDetails?: ({
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: string | undefined;
-                MinTransactionAmount?: string | undefined;
-                ExtraPercentage?: string | undefined;
-                AssetMarginPercentage?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                TradingMarginPercentage?: number | undefined;
+                AssetMarginPercentage?: number | undefined;
             } & {
                 ExchangeTickerSymbol?: string | undefined;
                 Exchange?: string | undefined;
-                MinTransactionAmount?: string | undefined;
-                ExtraPercentage?: string | undefined;
-                AssetMarginPercentage?: string | undefined;
+                MinTransactionAmount?: number | undefined;
+                TradingMarginPercentage?: number | undefined;
+                AssetMarginPercentage?: number | undefined;
             } & { [K_46 in Exclude<keyof I_1["AssetDetails"]["EquityDetails"], keyof Equity>]: never; }) | undefined;
             FinancialProperties?: ({
                 Symbol?: string | undefined;
@@ -2873,9 +2873,9 @@ export declare const Assets: {
                 EquityDetails?: {
                     ExchangeTickerSymbol?: string | undefined;
                     Exchange?: string | undefined;
-                    MinTransactionAmount?: string | undefined;
-                    ExtraPercentage?: string | undefined;
-                    AssetMarginPercentage?: string | undefined;
+                    MinTransactionAmount?: number | undefined;
+                    TradingMarginPercentage?: number | undefined;
+                    AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
                     Symbol?: string | undefined;
@@ -3070,9 +3070,9 @@ export declare const Assets: {
                 EquityDetails?: {
                     ExchangeTickerSymbol?: string | undefined;
                     Exchange?: string | undefined;
-                    MinTransactionAmount?: string | undefined;
-                    ExtraPercentage?: string | undefined;
-                    AssetMarginPercentage?: string | undefined;
+                    MinTransactionAmount?: number | undefined;
+                    TradingMarginPercentage?: number | undefined;
+                    AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
                     Symbol?: string | undefined;
@@ -3264,9 +3264,9 @@ export declare const Assets: {
                 EquityDetails?: {
                     ExchangeTickerSymbol?: string | undefined;
                     Exchange?: string | undefined;
-                    MinTransactionAmount?: string | undefined;
-                    ExtraPercentage?: string | undefined;
-                    AssetMarginPercentage?: string | undefined;
+                    MinTransactionAmount?: number | undefined;
+                    TradingMarginPercentage?: number | undefined;
+                    AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
                     Symbol?: string | undefined;
@@ -3458,9 +3458,9 @@ export declare const Assets: {
                 EquityDetails?: {
                     ExchangeTickerSymbol?: string | undefined;
                     Exchange?: string | undefined;
-                    MinTransactionAmount?: string | undefined;
-                    ExtraPercentage?: string | undefined;
-                    AssetMarginPercentage?: string | undefined;
+                    MinTransactionAmount?: number | undefined;
+                    TradingMarginPercentage?: number | undefined;
+                    AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
                     Symbol?: string | undefined;
@@ -3706,15 +3706,15 @@ export declare const Assets: {
                 EquityDetails?: ({
                     ExchangeTickerSymbol?: string | undefined;
                     Exchange?: string | undefined;
-                    MinTransactionAmount?: string | undefined;
-                    ExtraPercentage?: string | undefined;
-                    AssetMarginPercentage?: string | undefined;
+                    MinTransactionAmount?: number | undefined;
+                    TradingMarginPercentage?: number | undefined;
+                    AssetMarginPercentage?: number | undefined;
                 } & {
                     ExchangeTickerSymbol?: string | undefined;
                     Exchange?: string | undefined;
-                    MinTransactionAmount?: string | undefined;
-                    ExtraPercentage?: string | undefined;
-                    AssetMarginPercentage?: string | undefined;
+                    MinTransactionAmount?: number | undefined;
+                    TradingMarginPercentage?: number | undefined;
+                    AssetMarginPercentage?: number | undefined;
                 } & { [K_13 in Exclude<keyof I["Assets"][number]["AssetDetails"]["EquityDetails"], keyof Equity>]: never; }) | undefined;
                 FinancialProperties?: ({
                     Symbol?: string | undefined;
@@ -4006,9 +4006,9 @@ export declare const Assets: {
                 EquityDetails?: {
                     ExchangeTickerSymbol?: string | undefined;
                     Exchange?: string | undefined;
-                    MinTransactionAmount?: string | undefined;
-                    ExtraPercentage?: string | undefined;
-                    AssetMarginPercentage?: string | undefined;
+                    MinTransactionAmount?: number | undefined;
+                    TradingMarginPercentage?: number | undefined;
+                    AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
                     Symbol?: string | undefined;
@@ -4204,9 +4204,9 @@ export declare const Assets: {
                 EquityDetails?: {
                     ExchangeTickerSymbol?: string | undefined;
                     Exchange?: string | undefined;
-                    MinTransactionAmount?: string | undefined;
-                    ExtraPercentage?: string | undefined;
-                    AssetMarginPercentage?: string | undefined;
+                    MinTransactionAmount?: number | undefined;
+                    TradingMarginPercentage?: number | undefined;
+                    AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
                     Symbol?: string | undefined;
@@ -4401,9 +4401,9 @@ export declare const Assets: {
                 EquityDetails?: {
                     ExchangeTickerSymbol?: string | undefined;
                     Exchange?: string | undefined;
-                    MinTransactionAmount?: string | undefined;
-                    ExtraPercentage?: string | undefined;
-                    AssetMarginPercentage?: string | undefined;
+                    MinTransactionAmount?: number | undefined;
+                    TradingMarginPercentage?: number | undefined;
+                    AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
                     Symbol?: string | undefined;
@@ -4595,9 +4595,9 @@ export declare const Assets: {
                 EquityDetails?: {
                     ExchangeTickerSymbol?: string | undefined;
                     Exchange?: string | undefined;
-                    MinTransactionAmount?: string | undefined;
-                    ExtraPercentage?: string | undefined;
-                    AssetMarginPercentage?: string | undefined;
+                    MinTransactionAmount?: number | undefined;
+                    TradingMarginPercentage?: number | undefined;
+                    AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
                     Symbol?: string | undefined;
@@ -4789,9 +4789,9 @@ export declare const Assets: {
                 EquityDetails?: {
                     ExchangeTickerSymbol?: string | undefined;
                     Exchange?: string | undefined;
-                    MinTransactionAmount?: string | undefined;
-                    ExtraPercentage?: string | undefined;
-                    AssetMarginPercentage?: string | undefined;
+                    MinTransactionAmount?: number | undefined;
+                    TradingMarginPercentage?: number | undefined;
+                    AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
                     Symbol?: string | undefined;
@@ -5037,15 +5037,15 @@ export declare const Assets: {
                 EquityDetails?: ({
                     ExchangeTickerSymbol?: string | undefined;
                     Exchange?: string | undefined;
-                    MinTransactionAmount?: string | undefined;
-                    ExtraPercentage?: string | undefined;
-                    AssetMarginPercentage?: string | undefined;
+                    MinTransactionAmount?: number | undefined;
+                    TradingMarginPercentage?: number | undefined;
+                    AssetMarginPercentage?: number | undefined;
                 } & {
                     ExchangeTickerSymbol?: string | undefined;
                     Exchange?: string | undefined;
-                    MinTransactionAmount?: string | undefined;
-                    ExtraPercentage?: string | undefined;
-                    AssetMarginPercentage?: string | undefined;
+                    MinTransactionAmount?: number | undefined;
+                    TradingMarginPercentage?: number | undefined;
+                    AssetMarginPercentage?: number | undefined;
                 } & { [K_48 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["EquityDetails"], keyof Equity>]: never; }) | undefined;
                 FinancialProperties?: ({
                     Symbol?: string | undefined;
@@ -5337,9 +5337,9 @@ export declare const Assets: {
                 EquityDetails?: {
                     ExchangeTickerSymbol?: string | undefined;
                     Exchange?: string | undefined;
-                    MinTransactionAmount?: string | undefined;
-                    ExtraPercentage?: string | undefined;
-                    AssetMarginPercentage?: string | undefined;
+                    MinTransactionAmount?: number | undefined;
+                    TradingMarginPercentage?: number | undefined;
+                    AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
                     Symbol?: string | undefined;
@@ -6010,28 +6010,28 @@ export declare const Equity: {
     create<I extends {
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: string | undefined;
-        MinTransactionAmount?: string | undefined;
-        ExtraPercentage?: string | undefined;
-        AssetMarginPercentage?: string | undefined;
+        MinTransactionAmount?: number | undefined;
+        TradingMarginPercentage?: number | undefined;
+        AssetMarginPercentage?: number | undefined;
     } & {
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: string | undefined;
-        MinTransactionAmount?: string | undefined;
-        ExtraPercentage?: string | undefined;
-        AssetMarginPercentage?: string | undefined;
+        MinTransactionAmount?: number | undefined;
+        TradingMarginPercentage?: number | undefined;
+        AssetMarginPercentage?: number | undefined;
     } & { [K in Exclude<keyof I, keyof Equity>]: never; }>(base?: I | undefined): Equity;
     fromPartial<I_1 extends {
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: string | undefined;
-        MinTransactionAmount?: string | undefined;
-        ExtraPercentage?: string | undefined;
-        AssetMarginPercentage?: string | undefined;
+        MinTransactionAmount?: number | undefined;
+        TradingMarginPercentage?: number | undefined;
+        AssetMarginPercentage?: number | undefined;
     } & {
         ExchangeTickerSymbol?: string | undefined;
         Exchange?: string | undefined;
-        MinTransactionAmount?: string | undefined;
-        ExtraPercentage?: string | undefined;
-        AssetMarginPercentage?: string | undefined;
+        MinTransactionAmount?: number | undefined;
+        TradingMarginPercentage?: number | undefined;
+        AssetMarginPercentage?: number | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof Equity>]: never; }>(object: I_1): Equity;
 };
 export declare const FinancialProperties: {

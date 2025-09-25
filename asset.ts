@@ -522,9 +522,9 @@ export interface InvestmentFund {
 export interface Equity {
   ExchangeTickerSymbol?: string | undefined;
   Exchange?: string | undefined;
-  MinTransactionAmount: string;
-  ExtraPercentage: string;
-  AssetMarginPercentage: string;
+  MinTransactionAmount: number;
+  TradingMarginPercentage: number;
+  AssetMarginPercentage: number;
 }
 
 export interface FinancialProperties {
@@ -2839,9 +2839,9 @@ function createBaseEquity(): Equity {
   return {
     ExchangeTickerSymbol: undefined,
     Exchange: undefined,
-    MinTransactionAmount: "",
-    ExtraPercentage: "",
-    AssetMarginPercentage: "",
+    MinTransactionAmount: 0,
+    TradingMarginPercentage: 0,
+    AssetMarginPercentage: 0,
   };
 }
 
@@ -2853,14 +2853,14 @@ export const Equity = {
     if (message.Exchange !== undefined) {
       writer.uint32(18).string(message.Exchange);
     }
-    if (message.MinTransactionAmount !== "") {
-      writer.uint32(26).string(message.MinTransactionAmount);
+    if (message.MinTransactionAmount !== 0) {
+      writer.uint32(29).float(message.MinTransactionAmount);
     }
-    if (message.ExtraPercentage !== "") {
-      writer.uint32(34).string(message.ExtraPercentage);
+    if (message.TradingMarginPercentage !== 0) {
+      writer.uint32(37).float(message.TradingMarginPercentage);
     }
-    if (message.AssetMarginPercentage !== "") {
-      writer.uint32(42).string(message.AssetMarginPercentage);
+    if (message.AssetMarginPercentage !== 0) {
+      writer.uint32(45).float(message.AssetMarginPercentage);
     }
     return writer;
   },
@@ -2887,25 +2887,25 @@ export const Equity = {
           message.Exchange = reader.string();
           continue;
         case 3:
-          if (tag !== 26) {
+          if (tag !== 29) {
             break;
           }
 
-          message.MinTransactionAmount = reader.string();
+          message.MinTransactionAmount = reader.float();
           continue;
         case 4:
-          if (tag !== 34) {
+          if (tag !== 37) {
             break;
           }
 
-          message.ExtraPercentage = reader.string();
+          message.TradingMarginPercentage = reader.float();
           continue;
         case 5:
-          if (tag !== 42) {
+          if (tag !== 45) {
             break;
           }
 
-          message.AssetMarginPercentage = reader.string();
+          message.AssetMarginPercentage = reader.float();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -2922,9 +2922,11 @@ export const Equity = {
         ? globalThis.String(object.ExchangeTickerSymbol)
         : undefined,
       Exchange: isSet(object.Exchange) ? globalThis.String(object.Exchange) : undefined,
-      MinTransactionAmount: isSet(object.MinTransactionAmount) ? globalThis.String(object.MinTransactionAmount) : "",
-      ExtraPercentage: isSet(object.ExtraPercentage) ? globalThis.String(object.ExtraPercentage) : "",
-      AssetMarginPercentage: isSet(object.AssetMarginPercentage) ? globalThis.String(object.AssetMarginPercentage) : "",
+      MinTransactionAmount: isSet(object.MinTransactionAmount) ? globalThis.Number(object.MinTransactionAmount) : 0,
+      TradingMarginPercentage: isSet(object.TradingMarginPercentage)
+        ? globalThis.Number(object.TradingMarginPercentage)
+        : 0,
+      AssetMarginPercentage: isSet(object.AssetMarginPercentage) ? globalThis.Number(object.AssetMarginPercentage) : 0,
     };
   },
 
@@ -2936,13 +2938,13 @@ export const Equity = {
     if (message.Exchange !== undefined) {
       obj.Exchange = message.Exchange;
     }
-    if (message.MinTransactionAmount !== "") {
+    if (message.MinTransactionAmount !== 0) {
       obj.MinTransactionAmount = message.MinTransactionAmount;
     }
-    if (message.ExtraPercentage !== "") {
-      obj.ExtraPercentage = message.ExtraPercentage;
+    if (message.TradingMarginPercentage !== 0) {
+      obj.TradingMarginPercentage = message.TradingMarginPercentage;
     }
-    if (message.AssetMarginPercentage !== "") {
+    if (message.AssetMarginPercentage !== 0) {
       obj.AssetMarginPercentage = message.AssetMarginPercentage;
     }
     return obj;
@@ -2955,9 +2957,9 @@ export const Equity = {
     const message = createBaseEquity();
     message.ExchangeTickerSymbol = object.ExchangeTickerSymbol ?? undefined;
     message.Exchange = object.Exchange ?? undefined;
-    message.MinTransactionAmount = object.MinTransactionAmount ?? "";
-    message.ExtraPercentage = object.ExtraPercentage ?? "";
-    message.AssetMarginPercentage = object.AssetMarginPercentage ?? "";
+    message.MinTransactionAmount = object.MinTransactionAmount ?? 0;
+    message.TradingMarginPercentage = object.TradingMarginPercentage ?? 0;
+    message.AssetMarginPercentage = object.AssetMarginPercentage ?? 0;
     return message;
   },
 };

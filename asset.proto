@@ -157,9 +157,9 @@ message InvestmentFund {
 message Equity {
     optional string ExchangeTickerSymbol = 1;
     optional string Exchange = 2;
-    string MinTransactionAmount = 3; 
-    string ExtraPercentage = 4;
-    string AssetMarginPercentage = 5;
+    float MinTransactionAmount = 3; 
+    float TradingMarginPercentage = 4;
+    float AssetMarginPercentage = 5;
 }
 
 // ---------------- FinancialProperties ----------------
