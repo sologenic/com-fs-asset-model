@@ -279,8 +279,8 @@ enum UserAssetStatus {
     NOT_WHITELISTED = 1;
     WHITELISTED = 2;
     BLACKLISTED = 3;
-    SELL_ONLY = 4;
-    BUY_ONLY = 5;
+    UNBLACKLISTED = 4;
+    SELL_ONLY = 5;
     OUTDATED_VERSION = 6;
 }
 

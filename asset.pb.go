@@ -330,8 +330,8 @@ const (
 	UserAssetStatus_NOT_WHITELISTED              UserAssetStatus = 1
 	UserAssetStatus_WHITELISTED                  UserAssetStatus = 2
 	UserAssetStatus_BLACKLISTED                  UserAssetStatus = 3
-	UserAssetStatus_SELL_ONLY                    UserAssetStatus = 4
-	UserAssetStatus_BUY_ONLY                     UserAssetStatus = 5
+	UserAssetStatus_UNBLACKLISTED                UserAssetStatus = 4
+	UserAssetStatus_SELL_ONLY                    UserAssetStatus = 5
 	UserAssetStatus_OUTDATED_VERSION             UserAssetStatus = 6
 )
 
@@ -342,8 +342,8 @@ var (
 		1: "NOT_WHITELISTED",
 		2: "WHITELISTED",
 		3: "BLACKLISTED",
-		4: "SELL_ONLY",
-		5: "BUY_ONLY",
+		4: "UNBLACKLISTED",
+		5: "SELL_ONLY",
 		6: "OUTDATED_VERSION",
 	}
 	UserAssetStatus_value = map[string]int32{
@@ -351,8 +351,8 @@ var (
 		"NOT_WHITELISTED":              1,
 		"WHITELISTED":                  2,
 		"BLACKLISTED":                  3,
-		"SELL_ONLY":                    4,
-		"BUY_ONLY":                     5,
+		"UNBLACKLISTED":                4,
+		"SELL_ONLY":                    5,
 		"OUTDATED_VERSION":             6,
 	}
 )
@@ -2810,14 +2810,14 @@ const file_asset_proto_rawDesc = "" +
 	"\x15INTELLECTUAL_PROPERTY\x10\a\x12\x0f\n" +
 	"\vREAL_ESTATE\x10\b\x12\n" +
 	"\n" +
-	"\x06EQUITY\x10\t*\x9d\x01\n" +
+	"\x06EQUITY\x10\t*\xa2\x01\n" +
 	"\x0fUserAssetStatus\x12 \n" +
 	"\x1cUSER_ASSET_STATUS_DO_NOT_USE\x10\x00\x12\x13\n" +
 	"\x0fNOT_WHITELISTED\x10\x01\x12\x0f\n" +
 	"\vWHITELISTED\x10\x02\x12\x0f\n" +
-	"\vBLACKLISTED\x10\x03\x12\r\n" +
-	"\tSELL_ONLY\x10\x04\x12\f\n" +
-	"\bBUY_ONLY\x10\x05\x12\x14\n" +
+	"\vBLACKLISTED\x10\x03\x12\x11\n" +
+	"\rUNBLACKLISTED\x10\x04\x12\r\n" +
+	"\tSELL_ONLY\x10\x05\x12\x14\n" +
 	"\x10OUTDATED_VERSION\x10\x06B/Z-github.com/sologenic/com-fs-asset-model;assetb\x06proto3"
 
 var (
