@@ -306,11 +306,11 @@ export var UserAssetStatus;
 (function (UserAssetStatus) {
     UserAssetStatus[UserAssetStatus["USER_ASSET_STATUS_DO_NOT_USE"] = 0] = "USER_ASSET_STATUS_DO_NOT_USE";
     UserAssetStatus[UserAssetStatus["NOT_WHITELISTED"] = 1] = "NOT_WHITELISTED";
-    UserAssetStatus[UserAssetStatus["WHITELISTING_REQUESTED"] = 2] = "WHITELISTING_REQUESTED";
-    UserAssetStatus[UserAssetStatus["WHITELISTED"] = 3] = "WHITELISTED";
-    UserAssetStatus[UserAssetStatus["OUTDATED_VERSION"] = 4] = "OUTDATED_VERSION";
-    UserAssetStatus[UserAssetStatus["BLACKLISTED"] = 5] = "BLACKLISTED";
-    UserAssetStatus[UserAssetStatus["SELL_ONLY"] = 6] = "SELL_ONLY";
+    UserAssetStatus[UserAssetStatus["WHITELISTED"] = 2] = "WHITELISTED";
+    UserAssetStatus[UserAssetStatus["BLACKLISTED"] = 3] = "BLACKLISTED";
+    UserAssetStatus[UserAssetStatus["SELL_ONLY"] = 4] = "SELL_ONLY";
+    UserAssetStatus[UserAssetStatus["BUY_ONLY"] = 5] = "BUY_ONLY";
+    UserAssetStatus[UserAssetStatus["OUTDATED_VERSION"] = 6] = "OUTDATED_VERSION";
     UserAssetStatus[UserAssetStatus["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
 })(UserAssetStatus || (UserAssetStatus = {}));
 export function userAssetStatusFromJSON(object) {
@@ -322,20 +322,20 @@ export function userAssetStatusFromJSON(object) {
         case "NOT_WHITELISTED":
             return UserAssetStatus.NOT_WHITELISTED;
         case 2:
-        case "WHITELISTING_REQUESTED":
-            return UserAssetStatus.WHITELISTING_REQUESTED;
-        case 3:
         case "WHITELISTED":
             return UserAssetStatus.WHITELISTED;
-        case 4:
-        case "OUTDATED_VERSION":
-            return UserAssetStatus.OUTDATED_VERSION;
-        case 5:
+        case 3:
         case "BLACKLISTED":
             return UserAssetStatus.BLACKLISTED;
-        case 6:
+        case 4:
         case "SELL_ONLY":
             return UserAssetStatus.SELL_ONLY;
+        case 5:
+        case "BUY_ONLY":
+            return UserAssetStatus.BUY_ONLY;
+        case 6:
+        case "OUTDATED_VERSION":
+            return UserAssetStatus.OUTDATED_VERSION;
         case -1:
         case "UNRECOGNIZED":
         default:
@@ -348,16 +348,16 @@ export function userAssetStatusToJSON(object) {
             return "USER_ASSET_STATUS_DO_NOT_USE";
         case UserAssetStatus.NOT_WHITELISTED:
             return "NOT_WHITELISTED";
-        case UserAssetStatus.WHITELISTING_REQUESTED:
-            return "WHITELISTING_REQUESTED";
         case UserAssetStatus.WHITELISTED:
             return "WHITELISTED";
-        case UserAssetStatus.OUTDATED_VERSION:
-            return "OUTDATED_VERSION";
         case UserAssetStatus.BLACKLISTED:
             return "BLACKLISTED";
         case UserAssetStatus.SELL_ONLY:
             return "SELL_ONLY";
+        case UserAssetStatus.BUY_ONLY:
+            return "BUY_ONLY";
+        case UserAssetStatus.OUTDATED_VERSION:
+            return "OUTDATED_VERSION";
         case UserAssetStatus.UNRECOGNIZED:
         default:
             return "UNRECOGNIZED";

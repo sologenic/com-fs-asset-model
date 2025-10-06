@@ -64,11 +64,11 @@ export declare function assetTypeToJSON(object: AssetType): string;
 export declare enum UserAssetStatus {
     USER_ASSET_STATUS_DO_NOT_USE = 0,
     NOT_WHITELISTED = 1,
-    WHITELISTING_REQUESTED = 2,
-    WHITELISTED = 3,
-    OUTDATED_VERSION = 4,
-    BLACKLISTED = 5,
-    SELL_ONLY = 6,
+    WHITELISTED = 2,
+    BLACKLISTED = 3,
+    SELL_ONLY = 4,
+    BUY_ONLY = 5,
+    OUTDATED_VERSION = 6,
     UNRECOGNIZED = -1
 }
 export declare function userAssetStatusFromJSON(object: any): UserAssetStatus;

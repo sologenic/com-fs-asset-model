@@ -328,11 +328,11 @@ type UserAssetStatus int32
 const (
 	UserAssetStatus_USER_ASSET_STATUS_DO_NOT_USE UserAssetStatus = 0
 	UserAssetStatus_NOT_WHITELISTED              UserAssetStatus = 1
-	UserAssetStatus_WHITELISTING_REQUESTED       UserAssetStatus = 2
-	UserAssetStatus_WHITELISTED                  UserAssetStatus = 3
-	UserAssetStatus_OUTDATED_VERSION             UserAssetStatus = 4
-	UserAssetStatus_BLACKLISTED                  UserAssetStatus = 5
-	UserAssetStatus_SELL_ONLY                    UserAssetStatus = 6
+	UserAssetStatus_WHITELISTED                  UserAssetStatus = 2
+	UserAssetStatus_BLACKLISTED                  UserAssetStatus = 3
+	UserAssetStatus_SELL_ONLY                    UserAssetStatus = 4
+	UserAssetStatus_BUY_ONLY                     UserAssetStatus = 5
+	UserAssetStatus_OUTDATED_VERSION             UserAssetStatus = 6
 )
 
 // Enum value maps for UserAssetStatus.
@@ -340,20 +340,20 @@ var (
 	UserAssetStatus_name = map[int32]string{
 		0: "USER_ASSET_STATUS_DO_NOT_USE",
 		1: "NOT_WHITELISTED",
-		2: "WHITELISTING_REQUESTED",
-		3: "WHITELISTED",
-		4: "OUTDATED_VERSION",
-		5: "BLACKLISTED",
-		6: "SELL_ONLY",
+		2: "WHITELISTED",
+		3: "BLACKLISTED",
+		4: "SELL_ONLY",
+		5: "BUY_ONLY",
+		6: "OUTDATED_VERSION",
 	}
 	UserAssetStatus_value = map[string]int32{
 		"USER_ASSET_STATUS_DO_NOT_USE": 0,
 		"NOT_WHITELISTED":              1,
-		"WHITELISTING_REQUESTED":       2,
-		"WHITELISTED":                  3,
-		"OUTDATED_VERSION":             4,
-		"BLACKLISTED":                  5,
-		"SELL_ONLY":                    6,
+		"WHITELISTED":                  2,
+		"BLACKLISTED":                  3,
+		"SELL_ONLY":                    4,
+		"BUY_ONLY":                     5,
+		"OUTDATED_VERSION":             6,
 	}
 )
 
@@ -2810,15 +2810,15 @@ const file_asset_proto_rawDesc = "" +
 	"\x15INTELLECTUAL_PROPERTY\x10\a\x12\x0f\n" +
 	"\vREAL_ESTATE\x10\b\x12\n" +
 	"\n" +
-	"\x06EQUITY\x10\t*\xab\x01\n" +
+	"\x06EQUITY\x10\t*\x9d\x01\n" +
 	"\x0fUserAssetStatus\x12 \n" +
 	"\x1cUSER_ASSET_STATUS_DO_NOT_USE\x10\x00\x12\x13\n" +
-	"\x0fNOT_WHITELISTED\x10\x01\x12\x1a\n" +
-	"\x16WHITELISTING_REQUESTED\x10\x02\x12\x0f\n" +
-	"\vWHITELISTED\x10\x03\x12\x14\n" +
-	"\x10OUTDATED_VERSION\x10\x04\x12\x0f\n" +
-	"\vBLACKLISTED\x10\x05\x12\r\n" +
-	"\tSELL_ONLY\x10\x06B/Z-github.com/sologenic/com-fs-asset-model;assetb\x06proto3"
+	"\x0fNOT_WHITELISTED\x10\x01\x12\x0f\n" +
+	"\vWHITELISTED\x10\x02\x12\x0f\n" +
+	"\vBLACKLISTED\x10\x03\x12\r\n" +
+	"\tSELL_ONLY\x10\x04\x12\f\n" +
+	"\bBUY_ONLY\x10\x05\x12\x14\n" +
+	"\x10OUTDATED_VERSION\x10\x06B/Z-github.com/sologenic/com-fs-asset-model;assetb\x06proto3"
 
 var (
 	file_asset_proto_rawDescOnce sync.Once

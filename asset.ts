@@ -323,11 +323,11 @@ export function assetTypeToJSON(object: AssetType): string {
 export enum UserAssetStatus {
   USER_ASSET_STATUS_DO_NOT_USE = 0,
   NOT_WHITELISTED = 1,
-  WHITELISTING_REQUESTED = 2,
-  WHITELISTED = 3,
-  OUTDATED_VERSION = 4,
-  BLACKLISTED = 5,
-  SELL_ONLY = 6,
+  WHITELISTED = 2,
+  BLACKLISTED = 3,
+  SELL_ONLY = 4,
+  BUY_ONLY = 5,
+  OUTDATED_VERSION = 6,
   UNRECOGNIZED = -1,
 }
 
@@ -340,20 +340,20 @@ export function userAssetStatusFromJSON(object: any): UserAssetStatus {
     case "NOT_WHITELISTED":
       return UserAssetStatus.NOT_WHITELISTED;
     case 2:
-    case "WHITELISTING_REQUESTED":
-      return UserAssetStatus.WHITELISTING_REQUESTED;
-    case 3:
     case "WHITELISTED":
       return UserAssetStatus.WHITELISTED;
-    case 4:
-    case "OUTDATED_VERSION":
-      return UserAssetStatus.OUTDATED_VERSION;
-    case 5:
+    case 3:
     case "BLACKLISTED":
       return UserAssetStatus.BLACKLISTED;
-    case 6:
+    case 4:
     case "SELL_ONLY":
       return UserAssetStatus.SELL_ONLY;
+    case 5:
+    case "BUY_ONLY":
+      return UserAssetStatus.BUY_ONLY;
+    case 6:
+    case "OUTDATED_VERSION":
+      return UserAssetStatus.OUTDATED_VERSION;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -367,16 +367,16 @@ export function userAssetStatusToJSON(object: UserAssetStatus): string {
       return "USER_ASSET_STATUS_DO_NOT_USE";
     case UserAssetStatus.NOT_WHITELISTED:
       return "NOT_WHITELISTED";
-    case UserAssetStatus.WHITELISTING_REQUESTED:
-      return "WHITELISTING_REQUESTED";
     case UserAssetStatus.WHITELISTED:
       return "WHITELISTED";
-    case UserAssetStatus.OUTDATED_VERSION:
-      return "OUTDATED_VERSION";
     case UserAssetStatus.BLACKLISTED:
       return "BLACKLISTED";
     case UserAssetStatus.SELL_ONLY:
       return "SELL_ONLY";
+    case UserAssetStatus.BUY_ONLY:
+      return "BUY_ONLY";
+    case UserAssetStatus.OUTDATED_VERSION:
+      return "OUTDATED_VERSION";
     case UserAssetStatus.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
