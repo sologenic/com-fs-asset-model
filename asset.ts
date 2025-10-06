@@ -322,9 +322,9 @@ export function assetTypeToJSON(object: AssetType): string {
 
 export enum UserAssetStatus {
   USER_ASSET_STATUS_DO_NOT_USE = 0,
-  NOT_WHITELISTED = 1,
-  WHITELISTING_REQUESTED = 2,
-  WHITELISTED = 3,
+  WHITELISTED = 1,
+  BLACKLISTED = 2,
+  SELL_ONLY = 3,
   OUTDATED_VERSION = 4,
   UNRECOGNIZED = -1,
 }
@@ -335,14 +335,14 @@ export function userAssetStatusFromJSON(object: any): UserAssetStatus {
     case "USER_ASSET_STATUS_DO_NOT_USE":
       return UserAssetStatus.USER_ASSET_STATUS_DO_NOT_USE;
     case 1:
-    case "NOT_WHITELISTED":
-      return UserAssetStatus.NOT_WHITELISTED;
-    case 2:
-    case "WHITELISTING_REQUESTED":
-      return UserAssetStatus.WHITELISTING_REQUESTED;
-    case 3:
     case "WHITELISTED":
       return UserAssetStatus.WHITELISTED;
+    case 2:
+    case "BLACKLISTED":
+      return UserAssetStatus.BLACKLISTED;
+    case 3:
+    case "SELL_ONLY":
+      return UserAssetStatus.SELL_ONLY;
     case 4:
     case "OUTDATED_VERSION":
       return UserAssetStatus.OUTDATED_VERSION;
@@ -357,12 +357,12 @@ export function userAssetStatusToJSON(object: UserAssetStatus): string {
   switch (object) {
     case UserAssetStatus.USER_ASSET_STATUS_DO_NOT_USE:
       return "USER_ASSET_STATUS_DO_NOT_USE";
-    case UserAssetStatus.NOT_WHITELISTED:
-      return "NOT_WHITELISTED";
-    case UserAssetStatus.WHITELISTING_REQUESTED:
-      return "WHITELISTING_REQUESTED";
     case UserAssetStatus.WHITELISTED:
       return "WHITELISTED";
+    case UserAssetStatus.BLACKLISTED:
+      return "BLACKLISTED";
+    case UserAssetStatus.SELL_ONLY:
+      return "SELL_ONLY";
     case UserAssetStatus.OUTDATED_VERSION:
       return "OUTDATED_VERSION";
     case UserAssetStatus.UNRECOGNIZED:
@@ -423,6 +423,7 @@ export interface UserAssetList {
   Status: UserAssetStatus;
   MetaData: MetaData | undefined;
   Visible: boolean;
+  OrganizationID: string;
 }
 
 export interface UserAssetLists {
@@ -1190,7 +1191,15 @@ export const Assets = {
 };
 
 function createBaseUserAssetList(): UserAssetList {
-  return { AccountID: "", Wallet: "", AssetKey: "", Status: 0, MetaData: undefined, Visible: false };
+  return {
+    AccountID: "",
+    Wallet: "",
+    AssetKey: "",
+    Status: 0,
+    MetaData: undefined,
+    Visible: false,
+    OrganizationID: "",
+  };
 }
 
 export const UserAssetList = {
@@ -1212,6 +1221,9 @@ export const UserAssetList = {
     }
     if (message.Visible !== false) {
       writer.uint32(48).bool(message.Visible);
+    }
+    if (message.OrganizationID !== "") {
+      writer.uint32(58).string(message.OrganizationID);
     }
     return writer;
   },
@@ -1265,6 +1277,13 @@ export const UserAssetList = {
 
           message.Visible = reader.bool();
           continue;
+        case 7:
+          if (tag !== 58) {
+            break;
+          }
+
+          message.OrganizationID = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -1282,6 +1301,7 @@ export const UserAssetList = {
       Status: isSet(object.Status) ? userAssetStatusFromJSON(object.Status) : 0,
       MetaData: isSet(object.MetaData) ? MetaData.fromJSON(object.MetaData) : undefined,
       Visible: isSet(object.Visible) ? globalThis.Boolean(object.Visible) : false,
+      OrganizationID: isSet(object.OrganizationID) ? globalThis.String(object.OrganizationID) : "",
     };
   },
 
@@ -1305,6 +1325,9 @@ export const UserAssetList = {
     if (message.Visible !== false) {
       obj.Visible = message.Visible;
     }
+    if (message.OrganizationID !== "") {
+      obj.OrganizationID = message.OrganizationID;
+    }
     return obj;
   },
 
@@ -1321,6 +1344,7 @@ export const UserAssetList = {
       ? MetaData.fromPartial(object.MetaData)
       : undefined;
     message.Visible = object.Visible ?? false;
+    message.OrganizationID = object.OrganizationID ?? "";
     return message;
   },
 };

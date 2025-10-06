@@ -56,6 +56,7 @@ message UserAssetList {
     UserAssetStatus Status = 4;
     metadata.MetaData MetaData = 5;
     bool Visible = 6;
+    string OrganizationID = 7;
 }
 
 message UserAssetLists {
@@ -275,9 +276,9 @@ enum AssetType {
 
 enum UserAssetStatus {
     USER_ASSET_STATUS_DO_NOT_USE = 0;
-    NOT_WHITELISTED = 1;
-    WHITELISTING_REQUESTED = 2;
-    WHITELISTED = 3;
+    WHITELISTED = 1;
+    BLACKLISTED = 2;
+    SELL_ONLY = 3;
     OUTDATED_VERSION = 4;
 }
 
