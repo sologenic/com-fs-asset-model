@@ -3,254 +3,82 @@ syntax = "proto3";
 package asset;
 
 import "sologenic/com-fs-asset-model/domain/denom/denom.proto";
-import "sologenic/com-fs-utils-lib/models/audit/audit.proto";
 import "sologenic/com-fs-utils-lib/models/metadata/metadata.proto";
+import "sologenic/com-fs-utils-lib/models/audit/audit.proto";
 
 option go_package = "github.com/sologenic/com-fs-asset-model;asset";
 
-// ---------------- AssetDetails ----------------
-
 message AssetDetails {
+    // Key combination: Currency_OrganizationID_SmartContractIssuerAddr e.g "appl_1_72c4c072-2fe4-4f72-ae9d-d9d52a05fd71_testcore1et29c..."
     string ID = 1; // Key string to prevent composing the key all the time and reduce errors
-    string OrganizationID = 2; 
+    string OrganizationID = 2; // External entity (broker) that owns this asset 
     AssetStatus Status = 3;
     optional Reason Reason = 4;
+    repeated string JurisdictionIDs = 5; // list of jurisdictionIDs where this asset is allowed to be traded
     AssetType Type = 6;
 
-    denom.Denom Denom = 17; 
-    bool IsIssuedInSmartContract = 18; 
-    string SmartContractIssuerAddr = 19; 
-
-    optional RealEstate RealEstateDetails = 20;
-    optional StableCoin StableCoinDetails = 21;
-    optional Commodity CommodityDetails = 22;
-    optional Collectible CollectibleDetails = 23;
-    optional Vehicle VehicleDetails = 24;
-    optional IntellectualProperty IntellectualPropertyDetails = 25;
-    optional InvestmentFund InvestmentFundDetails = 26;
-    optional Equity EquityDetails = 29;
-
-    optional FinancialProperties FinancialProperties = 27; // Financial-specific properties
-    optional Description Description = 28;                 // Human-readable descriptive properties
-    optional ExternalResources ExternalResources = 30;     // External links and resources
+    // Asset specific properties
+    string Name = 7;
+    string ExchangeTickerSymbol = 8;
+    Exchange Exchange = 9;
+    string InternalDescription = 10; // Description for internal use, not for on-chain 
+    double MinTransactionAmount = 11;
+    // TradingMarginPercentage is required additional margin as a percentage of the order value that buyers must provide.
+    // Value should be between 0.0 and 1.0 (0% to 100%)
+    // Example: If TradingMarginPercentage = 0.1 (10%) and order value is $100:
+    //  - Buyer must provide $110 total ($100 asset cost + $10 margin)
+    //  - $5 (5%, cost) is kept for transaction costs
+    //  - $5 (5%, refundable) is returned to the buyer after execution
+    double TradingMarginPercentage = 12;
+    LogoFile LogoFile = 13;
+    Industry Industry = 14; // Global Industry Classification Standard (GICS®) sector
+    // Margin percentage specific to the asset. This is the asset's individual margin percentage used to calculate buying power.
+    // Buying Power = AvailableFunds(On-chain) + (Σ Assets(non-stablecoin)  × AssetMarginPercentage)
+    // Asset Margin Percentage: represents the collateral value of the asset (e.g., 50% → 10,000BTC → 10,000BTC → 5,000 buying power contribution)
+    double AssetMarginPercentage = 15; 
+    // On-chain properties
+    denom.Denom Denom = 17; // {subunit}-{issuer} where Subunit is su{Currency}. e.g., suappl_1-testcore1et29c...
+    bool IsIssuedInSmartContract = 18; // Flag to indicate if the asset is issued in the smart contract
+    string SmartContractIssuerAddr = 19; // Issuer address of the smart contract (distinct from Denom.Issuer which is the smart contract address that minted the token)
 }
-
-// ---------------- Existing Messages ----------------
 
 message Asset {
     AssetDetails AssetDetails = 1;
     metadata.MetaData MetaData = 2;
     audit.Audit Audit = 3;
-    IssuerDetails IssuerDetails = 4;
 }
 
 message Assets {
     repeated Asset Assets = 1;
-    optional int32 Offset = 2; // If there is more data, this is the offset to pass to the next call
+}
+
+message LogoFile {
+    string Reference = 1; // The reference to the file
+    string Extension = 2;
+    optional string Name = 3; // User defined name of the file, used as a "description" and not to reference the file
 }
 
 message UserAssetList {
-    string AccountID = 1;
-    string Wallet = 2;
-    string AssetKey = 3;
-    UserAssetStatus Status = 4;
-    metadata.MetaData MetaData = 5;
-    bool Visible = 6;
-    string OrganizationID = 7;
+  // Key combination: Currency-OrganizationID-AccountID-Wallet (AssetKey-AccountID-Wallet)
+  string AccountID = 1;
+  string Wallet = 2;
+  string AssetKey = 3;
+  UserAssetStatus Status = 4;
+  metadata.MetaData MetaData = 5;
+  bool Visible = 6;
+  string OrganizationID = 7;
 }
 
 message UserAssetLists {
     repeated UserAssetList UserAssetLists = 1;
 }
 
-// ---------------- New Category Messages ----------------
-
-message RealEstate {
-    string Address = 1;                 
-    optional int32 Bathrooms = 2;       
-    optional int32 Bedrooms = 3;        
-    float Latitude = 4;                 
-    float Longitude = 5;                
-    optional string OwnershipType = 6;  
-    string PropertyType = 7;            
-    optional string RiskRating = 8;     
-    optional float SquareFootage = 9;   
-    optional string TenancyStatus = 10; 
-    optional int32 YearBuilt = 11;      
-    repeated float YieldPercent = 12;   
-}
-
-message StableCoin {
-    optional string Version = 1;
-    optional string PegType = 2;
-    optional float PegRatio = 3;
-    optional string BackingAsset = 4;
-    optional string ExchangeTickerSymbol = 5;
-    optional string Exchange = 6;
-    optional float MinTransactionAmount = 7;
-    optional float TradingMarginPercentage = 8;
-    optional float AssetMarginPercentage = 9;
-}
-
-message Commodity {
-    string Category = 1;                       
-    optional string Quality = 2;               
-    string UnitOfMeasure = 3;                  
-    optional float Quantity = 4;               
-    optional string OriginCountry = 5;         
-    optional string ExchangeTickerSymbol = 6;  
-    optional string Exchange = 7;              
-    optional float MinTransactionAmount = 8;   
-    optional string StorageLocation = 9;       
-    optional string ContractType = 10;         
-    optional string DeliveryDate = 11;         
-}
-
-message Collectible {
-    string Category = 1;                          
-    optional string CollectionName = 2;           
-    optional string TokenStandard = 3;            
-    optional string TokenID = 4;                  
-    optional string MetadataURI = 5;              
-    optional string Creator = 6;                  
-    repeated string OwnershipHistory = 7;        
-    string CurrentOwner = 8;                      
-}
-
-message Vehicle {
-    string Category = 1;               
-    string Manufacturer = 2;           
-    string Model = 3;                  
-    string SerialNumber = 4;           
-    optional int32 Year = 5;           
-    optional string Specifications = 6;
-    optional string FuelType = 7;      
-    optional float UsageHours = 8;     
-    optional float Mileage = 9;        
-    string Condition = 10;             
-    string CurrentOwner = 11;          
-    optional string Location = 12;     
-}
-
-message IntellectualProperty {
-    string Category = 1;                        
-    string Owner = 2;                           
-    optional string RegistrationNumber = 3;     
-    optional string FilingDate = 4;             
-    optional string ExpirationDate = 5;         
-    repeated string IPJurisdictionIDs = 6;      
-    optional string LicenseType = 7;            
-    optional string LicenseTerms = 8;           
-    optional float Value = 9;                   
-}
-
-message InvestmentFund {
-    string FundType = 1;                
-    string Exchange = 2;                
-    optional string ISIN = 3;           
-    optional float NAV = 4;             
-    optional string InceptionDate = 5;  
-    optional string Manager = 6;        
-    optional float ExpenseRatio = 7;    
-    repeated string Holdings = 8;       
-}
-
-message Equity {
-    optional string ExchangeTickerSymbol = 1;
-    optional string Exchange = 2;
-    float MinTransactionAmount = 3; 
-    float TradingMarginPercentage = 4;
-    float AssetMarginPercentage = 5;
-}
-
-// ---------------- FinancialProperties ----------------
-
-message FinancialProperties {
-    string Symbol = 1;                        
-    string Issuer = 2;                        
-    repeated string JurisdictionIDs = 3;      
-    optional string JurisdictionRestrictions = 4; 
-    optional string RedemptionTerms = 5;      
-    optional bool ComplianceRequired = 6;     
-    string Type = 7;                          
-    repeated string TradeAllowances = 8;      
-    bool Transferable = 9;                    
-    string Platform = 10;                     
-    string PlatformType = 11;                 
-    optional string ContractAddress = 12;     
-    bool Fractional = 13;                     
-    optional int32 TotalSupply = 14;                   
-    optional string Subunit = 15;             
-    optional float Price = 16;                
-    int32 DecimalPlacesPrice = 17;            
-    string Currency = 18;                     
-    float InitialValuation = 19;              
-    float CurrentValuation = 20;              
-    optional string ValuationDate = 21;       
-    metadata.Network Network = 22;                      
-    string Status = 23;
-}
-
-// ---------------- Description ----------------
-
-message Description {
-    string Name = 1;                         
-    string Description = 2;                  
-    LogoFile Logo = 3;               
-    string AssetID = 4;                      
-    string URL = 5;                          
-    repeated string Country = 6;                      
-    repeated string Documents = 7;           
-    repeated string Images = 8;              
-    string Vertical = 9;                     
-    optional string CreatedAt = 10;          
-    optional string UpdatedAt = 11;          
-}
-
-// ---------------- ExternalResources ----------------
-
-message ExternalResources {
-  repeated Link Links = 1;                 // Flexible list of links with type and URL
-  repeated SocialMedia Socials = 2;        // Flexible list of social media with type and URL
-}
-
-message Link {
-  LinkType Type = 1;                       // Type of link (e.g., "website", "github", "whitepaper", "docs", "explorer", "governance", etc.)
-  string URL = 2;                          // The actual URL
-}
-
-message SocialMedia {
-  SocialMediaType Type = 1;                // Type of social media (e.g., "twitter", "telegram", "discord", "medium", "linkedin", etc.)
-  string URL = 2;                          // The actual URL
-}
-
-// ---------------- Enums ----------------
-
-enum LinkType {
-    LINK_TYPE_DO_NOT_USE = 0;
-    WEBSITE = 1;
-    GITHUB = 2;
-    WHITEPAPER = 3;
-    DOCS = 4;
-    EXPLORER = 5;
-    GOVERNANCE = 6;
-}
-
-enum SocialMediaType {
-    SOCIAL_MEDIA_TYPE_DO_NOT_USE = 0;
-    TWITTER = 1;
-    TELEGRAM = 2;
-    DISCORD = 3;
-    MEDIUM = 4;
-    LINKEDIN = 5;
-}
-
 enum AssetStatus {
     ASSET_STATUS_DO_NOT_USE = 0;
-    DO_NOT_LIST = 1; 
-    REQUEST_LISTING = 2; 
-    LISTED = 3; 
-    ORGANIZATION_ADMIN_DO_NOT_LIST = 4; 
+    DO_NOT_LIST = 1; // BROKER_ASSET_ADMINISTRATOR only
+    REQUEST_LISTING = 2; // BROKER_ASSET_ADMINISTRATOR only
+    LISTED = 3; // ORGANIZATION_ASSET_ADMINISTRATOR only
+    ORGANIZATION_ADMIN_DO_NOT_LIST = 4; // ORGANIZATION_ASSET_ADMINISTRATOR only
     OUTDATED_ASSET_VERSION = 5;
 }
 
@@ -261,52 +89,46 @@ enum Reason {
     UNSTABLE_ASSET = 3;
 }
 
+// TODO: to have shared between order
 enum AssetType {
     ASSET_TYPE_DO_NOT_USE = 0;
-    FUNDS_AND_INVESTMENT_PRODUCT = 1;
-    COMMODITY = 2;
-    WRAPPED_STABLECOIN = 3;
+    STOCKS = 1;
+    BONDS = 2;
+    WRAPPED_STABLECOIN = 3; // Represents a stablecoin that is wrapped for internal use within the system, such as WUSDC.
     CRYPTO = 4;
-    COLLECTIBLE = 5;
-    VEHICLE_INDUSTRIAL_EQUIPMENT = 6;
-    INTELLECTUAL_PROPERTY = 7;
-    REAL_ESTATE = 8;
-    EQUITY = 9;
+    FOREX = 5;
+    FUTURES = 6;
+    OPTIONS = 7;
 }
 
 enum UserAssetStatus {
-    USER_ASSET_STATUS_DO_NOT_USE = 0;
-    NOT_WHITELISTED = 1;
-    WHITELISTED = 2;
-    BLACKLISTED = 3;
-    SELL_ONLY = 4;
-    OUTDATED_VERSION = 5;
+  USER_ASSET_STATUS_DO_NOT_USE = 0;
+  WHITELISTED = 1;
+  BLACKLISTED = 2;
+  SELL_ONLY = 3;
+  OUTDATED_VERSION = 4;
 }
 
-message IssuerDetails {
-  string Name = 1;                       
-  string Description = 2;                
-  string Image = 3;                      
-  string ExternalUrl = 4;                
-  string AddressLine1 = 5;               
-  optional string AddressLine2 = 6;      
-  string City = 7;                       
-  optional string Region = 8;            
-  optional string PostalCode = 9;        
-  string Country = 10;                   
-  int32 YearFounded = 11;                
-  bool Licensed = 12;                    
-  optional string LicenseCountry = 13;   
-  optional string LicenseNumber = 14;    
-  optional string Phone = 15;            
-  optional string Email = 16;            
-  repeated string SocialMediaLinks = 17; 
-  optional string KeyClients = 18;       
-  optional string Press = 19;            
+enum Exchange {
+    EXCHANGE_DO_NOT_USE = 0;
+    NASDAQ = 1;
+    NYSE = 2;
+    ONCHAIN = 3; // On‑chain token/cryptocurrency markets, e.g. wrapped USDC
 }
 
-message LogoFile {
-    string Reference = 1; // The reference to the file
-    string Extension = 2;
-    optional string Name = 3; // User defined name of the file, used as a "description" and not to reference the file
+// Global Industry Classification Standard (GICS®) 11 sectors
+// Source: https://www.msci.com/our-solutions/indexes/gics
+enum Industry {
+    INDUSTRY_DO_NOT_USE = 0;
+    ENERGY = 1;
+    MATERIALS = 2;
+    INDUSTRIALS = 3;
+    CONSUMER_DISCRETIONARY = 4;
+    CONSUMER_STAPLES = 5;
+    HEALTH_CARE = 6;
+    FINANCIALS = 7;
+    INFORMATION_TECHNOLOGY = 8;
+    COMMUNICATION_SERVICES = 9;
+    UTILITIES = 10;
+    REAL_ESTATE = 11;
 }
