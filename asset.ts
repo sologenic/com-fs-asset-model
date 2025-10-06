@@ -325,9 +325,8 @@ export enum UserAssetStatus {
   NOT_WHITELISTED = 1,
   WHITELISTED = 2,
   BLACKLISTED = 3,
-  UNBLACKLISTED = 4,
-  SELL_ONLY = 5,
-  OUTDATED_VERSION = 6,
+  SELL_ONLY = 4,
+  OUTDATED_VERSION = 5,
   UNRECOGNIZED = -1,
 }
 
@@ -346,12 +345,9 @@ export function userAssetStatusFromJSON(object: any): UserAssetStatus {
     case "BLACKLISTED":
       return UserAssetStatus.BLACKLISTED;
     case 4:
-    case "UNBLACKLISTED":
-      return UserAssetStatus.UNBLACKLISTED;
-    case 5:
     case "SELL_ONLY":
       return UserAssetStatus.SELL_ONLY;
-    case 6:
+    case 5:
     case "OUTDATED_VERSION":
       return UserAssetStatus.OUTDATED_VERSION;
     case -1:
@@ -371,8 +367,6 @@ export function userAssetStatusToJSON(object: UserAssetStatus): string {
       return "WHITELISTED";
     case UserAssetStatus.BLACKLISTED:
       return "BLACKLISTED";
-    case UserAssetStatus.UNBLACKLISTED:
-      return "UNBLACKLISTED";
     case UserAssetStatus.SELL_ONLY:
       return "SELL_ONLY";
     case UserAssetStatus.OUTDATED_VERSION:

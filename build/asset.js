@@ -308,9 +308,8 @@ export var UserAssetStatus;
     UserAssetStatus[UserAssetStatus["NOT_WHITELISTED"] = 1] = "NOT_WHITELISTED";
     UserAssetStatus[UserAssetStatus["WHITELISTED"] = 2] = "WHITELISTED";
     UserAssetStatus[UserAssetStatus["BLACKLISTED"] = 3] = "BLACKLISTED";
-    UserAssetStatus[UserAssetStatus["UNBLACKLISTED"] = 4] = "UNBLACKLISTED";
-    UserAssetStatus[UserAssetStatus["SELL_ONLY"] = 5] = "SELL_ONLY";
-    UserAssetStatus[UserAssetStatus["OUTDATED_VERSION"] = 6] = "OUTDATED_VERSION";
+    UserAssetStatus[UserAssetStatus["SELL_ONLY"] = 4] = "SELL_ONLY";
+    UserAssetStatus[UserAssetStatus["OUTDATED_VERSION"] = 5] = "OUTDATED_VERSION";
     UserAssetStatus[UserAssetStatus["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
 })(UserAssetStatus || (UserAssetStatus = {}));
 export function userAssetStatusFromJSON(object) {
@@ -328,12 +327,9 @@ export function userAssetStatusFromJSON(object) {
         case "BLACKLISTED":
             return UserAssetStatus.BLACKLISTED;
         case 4:
-        case "UNBLACKLISTED":
-            return UserAssetStatus.UNBLACKLISTED;
-        case 5:
         case "SELL_ONLY":
             return UserAssetStatus.SELL_ONLY;
-        case 6:
+        case 5:
         case "OUTDATED_VERSION":
             return UserAssetStatus.OUTDATED_VERSION;
         case -1:
@@ -352,8 +348,6 @@ export function userAssetStatusToJSON(object) {
             return "WHITELISTED";
         case UserAssetStatus.BLACKLISTED:
             return "BLACKLISTED";
-        case UserAssetStatus.UNBLACKLISTED:
-            return "UNBLACKLISTED";
         case UserAssetStatus.SELL_ONLY:
             return "SELL_ONLY";
         case UserAssetStatus.OUTDATED_VERSION:
