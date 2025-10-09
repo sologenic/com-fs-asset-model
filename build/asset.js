@@ -236,6 +236,7 @@ export var AssetType;
     AssetType[AssetType["INTELLECTUAL_PROPERTY"] = 7] = "INTELLECTUAL_PROPERTY";
     AssetType[AssetType["REAL_ESTATE"] = 8] = "REAL_ESTATE";
     AssetType[AssetType["EQUITY"] = 9] = "EQUITY";
+    AssetType[AssetType["CROWDFUND"] = 10] = "CROWDFUND";
     AssetType[AssetType["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
 })(AssetType || (AssetType = {}));
 export function assetTypeFromJSON(object) {
@@ -270,6 +271,9 @@ export function assetTypeFromJSON(object) {
         case 9:
         case "EQUITY":
             return AssetType.EQUITY;
+        case 10:
+        case "CROWDFUND":
+            return AssetType.CROWDFUND;
         case -1:
         case "UNRECOGNIZED":
         default:
@@ -298,6 +302,8 @@ export function assetTypeToJSON(object) {
             return "REAL_ESTATE";
         case AssetType.EQUITY:
             return "EQUITY";
+        case AssetType.CROWDFUND:
+            return "CROWDFUND";
         case AssetType.UNRECOGNIZED:
         default:
             return "UNRECOGNIZED";
