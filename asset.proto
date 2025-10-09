@@ -33,6 +33,7 @@ message AssetDetails {
     optional FinancialProperties FinancialProperties = 27; // Financial-specific properties
     optional Description Description = 28;                 // Human-readable descriptive properties
     optional ExternalResources ExternalResources = 30;     // External links and resources
+    optional Crowdfund CrowdfundDetails = 31;
 }
 
 // ---------------- Existing Messages ----------------
@@ -130,6 +131,26 @@ message Vehicle {
     string Condition = 10;             
     string CurrentOwner = 11;          
     optional string Location = 12;     
+}
+
+message DecCoin {
+    string Denom = 1;
+    string Amount = 2;
+}
+
+
+message Crowdfund {
+    string QuantityStep = 1;
+    repeated DecCoin PricesPerSubunit = 2;
+    string SellDenom = 3;
+    string MinAmount = 4;
+    int64 StartDate = 5;
+    int64 EndDate = 6;
+    string MinThreshold = 7;
+    string MaxThreshold = 8;
+    bool AllowOrderCancellation = 9;
+    string ComplianceManagerContractAddr = 10;
+    string OrderHubContractAddr = 11;
 }
 
 message IntellectualProperty {
