@@ -2197,6 +2197,9 @@ function createBaseCrowdfund() {
         ComplianceManagerContractAddr: "",
         OrderHubContractAddr: "",
         CrowdfundContractAddr: undefined,
+        AssetRegistryContractAddr: "",
+        AssetExtensionCode: "",
+        AssetExtensionContractAddr: undefined,
     };
 }
 export const Crowdfund = {
@@ -2236,6 +2239,15 @@ export const Crowdfund = {
         }
         if (message.CrowdfundContractAddr !== undefined) {
             writer.uint32(98).string(message.CrowdfundContractAddr);
+        }
+        if (message.AssetRegistryContractAddr !== "") {
+            writer.uint32(106).string(message.AssetRegistryContractAddr);
+        }
+        if (message.AssetExtensionCode !== "") {
+            writer.uint32(114).string(message.AssetExtensionCode);
+        }
+        if (message.AssetExtensionContractAddr !== undefined) {
+            writer.uint32(122).string(message.AssetExtensionContractAddr);
         }
         return writer;
     },
@@ -2318,6 +2330,24 @@ export const Crowdfund = {
                     }
                     message.CrowdfundContractAddr = reader.string();
                     continue;
+                case 13:
+                    if (tag !== 106) {
+                        break;
+                    }
+                    message.AssetRegistryContractAddr = reader.string();
+                    continue;
+                case 14:
+                    if (tag !== 114) {
+                        break;
+                    }
+                    message.AssetExtensionCode = reader.string();
+                    continue;
+                case 15:
+                    if (tag !== 122) {
+                        break;
+                    }
+                    message.AssetExtensionContractAddr = reader.string();
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -2347,6 +2377,13 @@ export const Crowdfund = {
             OrderHubContractAddr: isSet(object.OrderHubContractAddr) ? globalThis.String(object.OrderHubContractAddr) : "",
             CrowdfundContractAddr: isSet(object.CrowdfundContractAddr)
                 ? globalThis.String(object.CrowdfundContractAddr)
+                : undefined,
+            AssetRegistryContractAddr: isSet(object.AssetRegistryContractAddr)
+                ? globalThis.String(object.AssetRegistryContractAddr)
+                : "",
+            AssetExtensionCode: isSet(object.AssetExtensionCode) ? globalThis.String(object.AssetExtensionCode) : "",
+            AssetExtensionContractAddr: isSet(object.AssetExtensionContractAddr)
+                ? globalThis.String(object.AssetExtensionContractAddr)
                 : undefined,
         };
     },
@@ -2389,13 +2426,22 @@ export const Crowdfund = {
         if (message.CrowdfundContractAddr !== undefined) {
             obj.CrowdfundContractAddr = message.CrowdfundContractAddr;
         }
+        if (message.AssetRegistryContractAddr !== "") {
+            obj.AssetRegistryContractAddr = message.AssetRegistryContractAddr;
+        }
+        if (message.AssetExtensionCode !== "") {
+            obj.AssetExtensionCode = message.AssetExtensionCode;
+        }
+        if (message.AssetExtensionContractAddr !== undefined) {
+            obj.AssetExtensionContractAddr = message.AssetExtensionContractAddr;
+        }
         return obj;
     },
     create(base) {
         return Crowdfund.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
         const message = createBaseCrowdfund();
         message.QuantityStep = (_a = object.QuantityStep) !== null && _a !== void 0 ? _a : "";
         message.PricesPerSubunit = ((_b = object.PricesPerSubunit) === null || _b === void 0 ? void 0 : _b.map((e) => DecCoin.fromPartial(e))) || [];
@@ -2409,6 +2455,9 @@ export const Crowdfund = {
         message.ComplianceManagerContractAddr = (_k = object.ComplianceManagerContractAddr) !== null && _k !== void 0 ? _k : "";
         message.OrderHubContractAddr = (_l = object.OrderHubContractAddr) !== null && _l !== void 0 ? _l : "";
         message.CrowdfundContractAddr = (_m = object.CrowdfundContractAddr) !== null && _m !== void 0 ? _m : undefined;
+        message.AssetRegistryContractAddr = (_o = object.AssetRegistryContractAddr) !== null && _o !== void 0 ? _o : "";
+        message.AssetExtensionCode = (_p = object.AssetExtensionCode) !== null && _p !== void 0 ? _p : "";
+        message.AssetExtensionContractAddr = (_q = object.AssetExtensionContractAddr) !== null && _q !== void 0 ? _q : undefined;
         return message;
     },
 };

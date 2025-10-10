@@ -152,6 +152,9 @@ message Crowdfund {
     string ComplianceManagerContractAddr = 10;
     string OrderHubContractAddr = 11;
     optional string CrowdfundContractAddr = 12;
+    string AssetRegistryContractAddr = 13;
+    string AssetExtensionCode = 14;
+    optional string AssetExtensionContractAddr = 15;
 }
 
 message IntellectualProperty {

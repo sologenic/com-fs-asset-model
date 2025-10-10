@@ -1495,6 +1495,9 @@ type Crowdfund struct {
 	ComplianceManagerContractAddr string                 `protobuf:"bytes,10,opt,name=ComplianceManagerContractAddr,proto3" json:"ComplianceManagerContractAddr,omitempty"`
 	OrderHubContractAddr          string                 `protobuf:"bytes,11,opt,name=OrderHubContractAddr,proto3" json:"OrderHubContractAddr,omitempty"`
 	CrowdfundContractAddr         *string                `protobuf:"bytes,12,opt,name=CrowdfundContractAddr,proto3,oneof" json:"CrowdfundContractAddr,omitempty"`
+	AssetRegistryContractAddr     string                 `protobuf:"bytes,13,opt,name=AssetRegistryContractAddr,proto3" json:"AssetRegistryContractAddr,omitempty"`
+	AssetExtensionCode            string                 `protobuf:"bytes,14,opt,name=AssetExtensionCode,proto3" json:"AssetExtensionCode,omitempty"`
+	AssetExtensionContractAddr    *string                `protobuf:"bytes,15,opt,name=AssetExtensionContractAddr,proto3,oneof" json:"AssetExtensionContractAddr,omitempty"`
 	unknownFields                 protoimpl.UnknownFields
 	sizeCache                     protoimpl.SizeCache
 }
@@ -1609,6 +1612,27 @@ func (x *Crowdfund) GetOrderHubContractAddr() string {
 func (x *Crowdfund) GetCrowdfundContractAddr() string {
 	if x != nil && x.CrowdfundContractAddr != nil {
 		return *x.CrowdfundContractAddr
+	}
+	return ""
+}
+
+func (x *Crowdfund) GetAssetRegistryContractAddr() string {
+	if x != nil {
+		return x.AssetRegistryContractAddr
+	}
+	return ""
+}
+
+func (x *Crowdfund) GetAssetExtensionCode() string {
+	if x != nil {
+		return x.AssetExtensionCode
+	}
+	return ""
+}
+
+func (x *Crowdfund) GetAssetExtensionContractAddr() string {
+	if x != nil && x.AssetExtensionContractAddr != nil {
+		return *x.AssetExtensionContractAddr
 	}
 	return ""
 }
@@ -2816,7 +2840,7 @@ const file_asset_proto_rawDesc = "" +
 	"\t_Location\"7\n" +
 	"\aDecCoin\x12\x14\n" +
 	"\x05Denom\x18\x01 \x01(\tR\x05Denom\x12\x16\n" +
-	"\x06Amount\x18\x02 \x01(\tR\x06Amount\"\xae\x04\n" +
+	"\x06Amount\x18\x02 \x01(\tR\x06Amount\"\x80\x06\n" +
 	"\tCrowdfund\x12\"\n" +
 	"\fQuantityStep\x18\x01 \x01(\tR\fQuantityStep\x12:\n" +
 	"\x10PricesPerSubunit\x18\x02 \x03(\v2\x0e.asset.DecCoinR\x10PricesPerSubunit\x12\x1c\n" +
@@ -2830,8 +2854,12 @@ const file_asset_proto_rawDesc = "" +
 	"\x1dComplianceManagerContractAddr\x18\n" +
 	" \x01(\tR\x1dComplianceManagerContractAddr\x122\n" +
 	"\x14OrderHubContractAddr\x18\v \x01(\tR\x14OrderHubContractAddr\x129\n" +
-	"\x15CrowdfundContractAddr\x18\f \x01(\tH\x00R\x15CrowdfundContractAddr\x88\x01\x01B\x18\n" +
-	"\x16_CrowdfundContractAddr\"\xcc\x03\n" +
+	"\x15CrowdfundContractAddr\x18\f \x01(\tH\x00R\x15CrowdfundContractAddr\x88\x01\x01\x12<\n" +
+	"\x19AssetRegistryContractAddr\x18\r \x01(\tR\x19AssetRegistryContractAddr\x12.\n" +
+	"\x12AssetExtensionCode\x18\x0e \x01(\tR\x12AssetExtensionCode\x12C\n" +
+	"\x1aAssetExtensionContractAddr\x18\x0f \x01(\tH\x01R\x1aAssetExtensionContractAddr\x88\x01\x01B\x18\n" +
+	"\x16_CrowdfundContractAddrB\x1d\n" +
+	"\x1b_AssetExtensionContractAddr\"\xcc\x03\n" +
 	"\x14IntellectualProperty\x12\x1a\n" +
 	"\bCategory\x18\x01 \x01(\tR\bCategory\x12\x14\n" +
 	"\x05Owner\x18\x02 \x01(\tR\x05Owner\x123\n" +
