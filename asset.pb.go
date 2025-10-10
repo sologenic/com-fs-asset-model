@@ -1494,6 +1494,7 @@ type Crowdfund struct {
 	AllowOrderCancellation        bool                   `protobuf:"varint,9,opt,name=AllowOrderCancellation,proto3" json:"AllowOrderCancellation,omitempty"`
 	ComplianceManagerContractAddr string                 `protobuf:"bytes,10,opt,name=ComplianceManagerContractAddr,proto3" json:"ComplianceManagerContractAddr,omitempty"`
 	OrderHubContractAddr          string                 `protobuf:"bytes,11,opt,name=OrderHubContractAddr,proto3" json:"OrderHubContractAddr,omitempty"`
+	CrowdfundContractAddr         *string                `protobuf:"bytes,12,opt,name=CrowdfundContractAddr,proto3,oneof" json:"CrowdfundContractAddr,omitempty"`
 	unknownFields                 protoimpl.UnknownFields
 	sizeCache                     protoimpl.SizeCache
 }
@@ -1601,6 +1602,13 @@ func (x *Crowdfund) GetComplianceManagerContractAddr() string {
 func (x *Crowdfund) GetOrderHubContractAddr() string {
 	if x != nil {
 		return x.OrderHubContractAddr
+	}
+	return ""
+}
+
+func (x *Crowdfund) GetCrowdfundContractAddr() string {
+	if x != nil && x.CrowdfundContractAddr != nil {
+		return *x.CrowdfundContractAddr
 	}
 	return ""
 }
@@ -2808,7 +2816,7 @@ const file_asset_proto_rawDesc = "" +
 	"\t_Location\"7\n" +
 	"\aDecCoin\x12\x14\n" +
 	"\x05Denom\x18\x01 \x01(\tR\x05Denom\x12\x16\n" +
-	"\x06Amount\x18\x02 \x01(\tR\x06Amount\"\xd9\x03\n" +
+	"\x06Amount\x18\x02 \x01(\tR\x06Amount\"\xae\x04\n" +
 	"\tCrowdfund\x12\"\n" +
 	"\fQuantityStep\x18\x01 \x01(\tR\fQuantityStep\x12:\n" +
 	"\x10PricesPerSubunit\x18\x02 \x03(\v2\x0e.asset.DecCoinR\x10PricesPerSubunit\x12\x1c\n" +
@@ -2821,7 +2829,9 @@ const file_asset_proto_rawDesc = "" +
 	"\x16AllowOrderCancellation\x18\t \x01(\bR\x16AllowOrderCancellation\x12D\n" +
 	"\x1dComplianceManagerContractAddr\x18\n" +
 	" \x01(\tR\x1dComplianceManagerContractAddr\x122\n" +
-	"\x14OrderHubContractAddr\x18\v \x01(\tR\x14OrderHubContractAddr\"\xcc\x03\n" +
+	"\x14OrderHubContractAddr\x18\v \x01(\tR\x14OrderHubContractAddr\x129\n" +
+	"\x15CrowdfundContractAddr\x18\f \x01(\tH\x00R\x15CrowdfundContractAddr\x88\x01\x01B\x18\n" +
+	"\x16_CrowdfundContractAddr\"\xcc\x03\n" +
 	"\x14IntellectualProperty\x12\x1a\n" +
 	"\bCategory\x18\x01 \x01(\tR\bCategory\x12\x14\n" +
 	"\x05Owner\x18\x02 \x01(\tR\x05Owner\x123\n" +
@@ -3117,6 +3127,7 @@ func file_asset_proto_init() {
 	file_asset_proto_msgTypes[7].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[8].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[9].OneofWrappers = []any{}
+	file_asset_proto_msgTypes[11].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[12].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[13].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[14].OneofWrappers = []any{}

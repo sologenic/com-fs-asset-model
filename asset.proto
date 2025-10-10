@@ -151,6 +151,7 @@ message Crowdfund {
     bool AllowOrderCancellation = 9;
     string ComplianceManagerContractAddr = 10;
     string OrderHubContractAddr = 11;
+    optional string CrowdfundContractAddr = 12;
 }
 
 message IntellectualProperty {

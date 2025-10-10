@@ -522,6 +522,7 @@ export interface Crowdfund {
   AllowOrderCancellation: boolean;
   ComplianceManagerContractAddr: string;
   OrderHubContractAddr: string;
+  CrowdfundContractAddr?: string | undefined;
 }
 
 export interface IntellectualProperty {
@@ -2627,6 +2628,7 @@ function createBaseCrowdfund(): Crowdfund {
     AllowOrderCancellation: false,
     ComplianceManagerContractAddr: "",
     OrderHubContractAddr: "",
+    CrowdfundContractAddr: undefined,
   };
 }
 
@@ -2664,6 +2666,9 @@ export const Crowdfund = {
     }
     if (message.OrderHubContractAddr !== "") {
       writer.uint32(90).string(message.OrderHubContractAddr);
+    }
+    if (message.CrowdfundContractAddr !== undefined) {
+      writer.uint32(98).string(message.CrowdfundContractAddr);
     }
     return writer;
   },
@@ -2752,6 +2757,13 @@ export const Crowdfund = {
 
           message.OrderHubContractAddr = reader.string();
           continue;
+        case 12:
+          if (tag !== 98) {
+            break;
+          }
+
+          message.CrowdfundContractAddr = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -2780,6 +2792,9 @@ export const Crowdfund = {
         ? globalThis.String(object.ComplianceManagerContractAddr)
         : "",
       OrderHubContractAddr: isSet(object.OrderHubContractAddr) ? globalThis.String(object.OrderHubContractAddr) : "",
+      CrowdfundContractAddr: isSet(object.CrowdfundContractAddr)
+        ? globalThis.String(object.CrowdfundContractAddr)
+        : undefined,
     };
   },
 
@@ -2818,6 +2833,9 @@ export const Crowdfund = {
     if (message.OrderHubContractAddr !== "") {
       obj.OrderHubContractAddr = message.OrderHubContractAddr;
     }
+    if (message.CrowdfundContractAddr !== undefined) {
+      obj.CrowdfundContractAddr = message.CrowdfundContractAddr;
+    }
     return obj;
   },
 
@@ -2837,6 +2855,7 @@ export const Crowdfund = {
     message.AllowOrderCancellation = object.AllowOrderCancellation ?? false;
     message.ComplianceManagerContractAddr = object.ComplianceManagerContractAddr ?? "";
     message.OrderHubContractAddr = object.OrderHubContractAddr ?? "";
+    message.CrowdfundContractAddr = object.CrowdfundContractAddr ?? undefined;
     return message;
   },
 };

@@ -2196,6 +2196,7 @@ function createBaseCrowdfund() {
         AllowOrderCancellation: false,
         ComplianceManagerContractAddr: "",
         OrderHubContractAddr: "",
+        CrowdfundContractAddr: undefined,
     };
 }
 export const Crowdfund = {
@@ -2232,6 +2233,9 @@ export const Crowdfund = {
         }
         if (message.OrderHubContractAddr !== "") {
             writer.uint32(90).string(message.OrderHubContractAddr);
+        }
+        if (message.CrowdfundContractAddr !== undefined) {
+            writer.uint32(98).string(message.CrowdfundContractAddr);
         }
         return writer;
     },
@@ -2308,6 +2312,12 @@ export const Crowdfund = {
                     }
                     message.OrderHubContractAddr = reader.string();
                     continue;
+                case 12:
+                    if (tag !== 98) {
+                        break;
+                    }
+                    message.CrowdfundContractAddr = reader.string();
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -2335,6 +2345,9 @@ export const Crowdfund = {
                 ? globalThis.String(object.ComplianceManagerContractAddr)
                 : "",
             OrderHubContractAddr: isSet(object.OrderHubContractAddr) ? globalThis.String(object.OrderHubContractAddr) : "",
+            CrowdfundContractAddr: isSet(object.CrowdfundContractAddr)
+                ? globalThis.String(object.CrowdfundContractAddr)
+                : undefined,
         };
     },
     toJSON(message) {
@@ -2373,13 +2386,16 @@ export const Crowdfund = {
         if (message.OrderHubContractAddr !== "") {
             obj.OrderHubContractAddr = message.OrderHubContractAddr;
         }
+        if (message.CrowdfundContractAddr !== undefined) {
+            obj.CrowdfundContractAddr = message.CrowdfundContractAddr;
+        }
         return obj;
     },
     create(base) {
         return Crowdfund.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
         const message = createBaseCrowdfund();
         message.QuantityStep = (_a = object.QuantityStep) !== null && _a !== void 0 ? _a : "";
         message.PricesPerSubunit = ((_b = object.PricesPerSubunit) === null || _b === void 0 ? void 0 : _b.map((e) => DecCoin.fromPartial(e))) || [];
@@ -2392,6 +2408,7 @@ export const Crowdfund = {
         message.AllowOrderCancellation = (_j = object.AllowOrderCancellation) !== null && _j !== void 0 ? _j : false;
         message.ComplianceManagerContractAddr = (_k = object.ComplianceManagerContractAddr) !== null && _k !== void 0 ? _k : "";
         message.OrderHubContractAddr = (_l = object.OrderHubContractAddr) !== null && _l !== void 0 ? _l : "";
+        message.CrowdfundContractAddr = (_m = object.CrowdfundContractAddr) !== null && _m !== void 0 ? _m : undefined;
         return message;
     },
 };
