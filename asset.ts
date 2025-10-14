@@ -18,6 +18,45 @@ import {
 
 export const protobufPackage = "asset";
 
+export enum DistributionType {
+  DISTRIBUTION_TYPE_DO_NOT_USE = 0,
+  DISTRIBUTION_TYPE_CROWDFUND = 1,
+  DISTRIBUTION_TYPE_PRICESUPPLY = 2,
+  UNRECOGNIZED = -1,
+}
+
+export function distributionTypeFromJSON(object: any): DistributionType {
+  switch (object) {
+    case 0:
+    case "DISTRIBUTION_TYPE_DO_NOT_USE":
+      return DistributionType.DISTRIBUTION_TYPE_DO_NOT_USE;
+    case 1:
+    case "DISTRIBUTION_TYPE_CROWDFUND":
+      return DistributionType.DISTRIBUTION_TYPE_CROWDFUND;
+    case 2:
+    case "DISTRIBUTION_TYPE_PRICESUPPLY":
+      return DistributionType.DISTRIBUTION_TYPE_PRICESUPPLY;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return DistributionType.UNRECOGNIZED;
+  }
+}
+
+export function distributionTypeToJSON(object: DistributionType): string {
+  switch (object) {
+    case DistributionType.DISTRIBUTION_TYPE_DO_NOT_USE:
+      return "DISTRIBUTION_TYPE_DO_NOT_USE";
+    case DistributionType.DISTRIBUTION_TYPE_CROWDFUND:
+      return "DISTRIBUTION_TYPE_CROWDFUND";
+    case DistributionType.DISTRIBUTION_TYPE_PRICESUPPLY:
+      return "DISTRIBUTION_TYPE_PRICESUPPLY";
+    case DistributionType.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
 export enum LinkType {
   LINK_TYPE_DO_NOT_USE = 0,
   WEBSITE = 1,
@@ -402,7 +441,7 @@ export interface AssetDetails {
     | undefined;
   /** External links and resources */
   ExternalResources?: ExternalResources | undefined;
-  CrowdfundDetails?: Crowdfund | undefined;
+  DistributionDetails?: Distribution | undefined;
 }
 
 export interface Asset {
@@ -502,6 +541,15 @@ export interface Vehicle {
 export interface DecCoin {
   Denom: string;
   Amount: string;
+}
+
+export interface Distribution {
+  Type: DistributionType;
+  CrowdfundDetails?: Crowdfund | undefined;
+  PriceSupplyDetails?: PriceSupply | undefined;
+}
+
+export interface PriceSupply {
 }
 
 export interface Crowdfund {
@@ -665,7 +713,7 @@ function createBaseAssetDetails(): AssetDetails {
     FinancialProperties: undefined,
     Description: undefined,
     ExternalResources: undefined,
-    CrowdfundDetails: undefined,
+    DistributionDetails: undefined,
   };
 }
 
@@ -728,8 +776,8 @@ export const AssetDetails = {
     if (message.ExternalResources !== undefined) {
       ExternalResources.encode(message.ExternalResources, writer.uint32(242).fork()).ldelim();
     }
-    if (message.CrowdfundDetails !== undefined) {
-      Crowdfund.encode(message.CrowdfundDetails, writer.uint32(250).fork()).ldelim();
+    if (message.DistributionDetails !== undefined) {
+      Distribution.encode(message.DistributionDetails, writer.uint32(250).fork()).ldelim();
     }
     return writer;
   },
@@ -879,7 +927,7 @@ export const AssetDetails = {
             break;
           }
 
-          message.CrowdfundDetails = Crowdfund.decode(reader, reader.uint32());
+          message.DistributionDetails = Distribution.decode(reader, reader.uint32());
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -925,7 +973,9 @@ export const AssetDetails = {
       ExternalResources: isSet(object.ExternalResources)
         ? ExternalResources.fromJSON(object.ExternalResources)
         : undefined,
-      CrowdfundDetails: isSet(object.CrowdfundDetails) ? Crowdfund.fromJSON(object.CrowdfundDetails) : undefined,
+      DistributionDetails: isSet(object.DistributionDetails)
+        ? Distribution.fromJSON(object.DistributionDetails)
+        : undefined,
     };
   },
 
@@ -988,8 +1038,8 @@ export const AssetDetails = {
     if (message.ExternalResources !== undefined) {
       obj.ExternalResources = ExternalResources.toJSON(message.ExternalResources);
     }
-    if (message.CrowdfundDetails !== undefined) {
-      obj.CrowdfundDetails = Crowdfund.toJSON(message.CrowdfundDetails);
+    if (message.DistributionDetails !== undefined) {
+      obj.DistributionDetails = Distribution.toJSON(message.DistributionDetails);
     }
     return obj;
   },
@@ -1042,8 +1092,8 @@ export const AssetDetails = {
     message.ExternalResources = (object.ExternalResources !== undefined && object.ExternalResources !== null)
       ? ExternalResources.fromPartial(object.ExternalResources)
       : undefined;
-    message.CrowdfundDetails = (object.CrowdfundDetails !== undefined && object.CrowdfundDetails !== null)
-      ? Crowdfund.fromPartial(object.CrowdfundDetails)
+    message.DistributionDetails = (object.DistributionDetails !== undefined && object.DistributionDetails !== null)
+      ? Distribution.fromPartial(object.DistributionDetails)
       : undefined;
     return message;
   },
@@ -2608,6 +2658,144 @@ export const DecCoin = {
     const message = createBaseDecCoin();
     message.Denom = object.Denom ?? "";
     message.Amount = object.Amount ?? "";
+    return message;
+  },
+};
+
+function createBaseDistribution(): Distribution {
+  return { Type: 0, CrowdfundDetails: undefined, PriceSupplyDetails: undefined };
+}
+
+export const Distribution = {
+  encode(message: Distribution, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.Type !== 0) {
+      writer.uint32(8).int32(message.Type);
+    }
+    if (message.CrowdfundDetails !== undefined) {
+      Crowdfund.encode(message.CrowdfundDetails, writer.uint32(18).fork()).ldelim();
+    }
+    if (message.PriceSupplyDetails !== undefined) {
+      PriceSupply.encode(message.PriceSupplyDetails, writer.uint32(26).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): Distribution {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDistribution();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.Type = reader.int32() as any;
+          continue;
+        case 2:
+          if (tag !== 18) {
+            break;
+          }
+
+          message.CrowdfundDetails = Crowdfund.decode(reader, reader.uint32());
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.PriceSupplyDetails = PriceSupply.decode(reader, reader.uint32());
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): Distribution {
+    return {
+      Type: isSet(object.Type) ? distributionTypeFromJSON(object.Type) : 0,
+      CrowdfundDetails: isSet(object.CrowdfundDetails) ? Crowdfund.fromJSON(object.CrowdfundDetails) : undefined,
+      PriceSupplyDetails: isSet(object.PriceSupplyDetails)
+        ? PriceSupply.fromJSON(object.PriceSupplyDetails)
+        : undefined,
+    };
+  },
+
+  toJSON(message: Distribution): unknown {
+    const obj: any = {};
+    if (message.Type !== 0) {
+      obj.Type = distributionTypeToJSON(message.Type);
+    }
+    if (message.CrowdfundDetails !== undefined) {
+      obj.CrowdfundDetails = Crowdfund.toJSON(message.CrowdfundDetails);
+    }
+    if (message.PriceSupplyDetails !== undefined) {
+      obj.PriceSupplyDetails = PriceSupply.toJSON(message.PriceSupplyDetails);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<Distribution>, I>>(base?: I): Distribution {
+    return Distribution.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<Distribution>, I>>(object: I): Distribution {
+    const message = createBaseDistribution();
+    message.Type = object.Type ?? 0;
+    message.CrowdfundDetails = (object.CrowdfundDetails !== undefined && object.CrowdfundDetails !== null)
+      ? Crowdfund.fromPartial(object.CrowdfundDetails)
+      : undefined;
+    message.PriceSupplyDetails = (object.PriceSupplyDetails !== undefined && object.PriceSupplyDetails !== null)
+      ? PriceSupply.fromPartial(object.PriceSupplyDetails)
+      : undefined;
+    return message;
+  },
+};
+
+function createBasePriceSupply(): PriceSupply {
+  return {};
+}
+
+export const PriceSupply = {
+  encode(_: PriceSupply, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): PriceSupply {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBasePriceSupply();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(_: any): PriceSupply {
+    return {};
+  },
+
+  toJSON(_: PriceSupply): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<PriceSupply>, I>>(base?: I): PriceSupply {
+    return PriceSupply.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<PriceSupply>, I>>(_: I): PriceSupply {
+    const message = createBasePriceSupply();
     return message;
   },
 };

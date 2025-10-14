@@ -33,7 +33,8 @@ message AssetDetails {
     optional FinancialProperties FinancialProperties = 27; // Financial-specific properties
     optional Description Description = 28;                 // Human-readable descriptive properties
     optional ExternalResources ExternalResources = 30;     // External links and resources
-    optional Crowdfund CrowdfundDetails = 31;
+    
+    optional Distribution DistributionDetails = 31;
 }
 
 // ---------------- Existing Messages ----------------
@@ -138,6 +139,20 @@ message DecCoin {
     string Amount = 2;
 }
 
+message Distribution {
+    DistributionType Type = 1;
+    optional Crowdfund CrowdfundDetails = 2;
+    optional PriceSupply PriceSupplyDetails = 3;
+}
+
+enum DistributionType {
+    DISTRIBUTION_TYPE_DO_NOT_USE = 0;
+    DISTRIBUTION_TYPE_CROWDFUND = 1;
+    DISTRIBUTION_TYPE_PRICESUPPLY = 2;
+}
+
+message PriceSupply {
+}
 
 message Crowdfund {
     string QuantityStep = 1;

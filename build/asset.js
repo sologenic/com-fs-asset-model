@@ -10,6 +10,43 @@ import { Denom } from "./sologenic/com-fs-asset-model/domain/denom/denom";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
 import { MetaData, networkFromJSON, networkToJSON, } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 export const protobufPackage = "asset";
+export var DistributionType;
+(function (DistributionType) {
+    DistributionType[DistributionType["DISTRIBUTION_TYPE_DO_NOT_USE"] = 0] = "DISTRIBUTION_TYPE_DO_NOT_USE";
+    DistributionType[DistributionType["DISTRIBUTION_TYPE_CROWDFUND"] = 1] = "DISTRIBUTION_TYPE_CROWDFUND";
+    DistributionType[DistributionType["DISTRIBUTION_TYPE_PRICESUPPLY"] = 2] = "DISTRIBUTION_TYPE_PRICESUPPLY";
+    DistributionType[DistributionType["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
+})(DistributionType || (DistributionType = {}));
+export function distributionTypeFromJSON(object) {
+    switch (object) {
+        case 0:
+        case "DISTRIBUTION_TYPE_DO_NOT_USE":
+            return DistributionType.DISTRIBUTION_TYPE_DO_NOT_USE;
+        case 1:
+        case "DISTRIBUTION_TYPE_CROWDFUND":
+            return DistributionType.DISTRIBUTION_TYPE_CROWDFUND;
+        case 2:
+        case "DISTRIBUTION_TYPE_PRICESUPPLY":
+            return DistributionType.DISTRIBUTION_TYPE_PRICESUPPLY;
+        case -1:
+        case "UNRECOGNIZED":
+        default:
+            return DistributionType.UNRECOGNIZED;
+    }
+}
+export function distributionTypeToJSON(object) {
+    switch (object) {
+        case DistributionType.DISTRIBUTION_TYPE_DO_NOT_USE:
+            return "DISTRIBUTION_TYPE_DO_NOT_USE";
+        case DistributionType.DISTRIBUTION_TYPE_CROWDFUND:
+            return "DISTRIBUTION_TYPE_CROWDFUND";
+        case DistributionType.DISTRIBUTION_TYPE_PRICESUPPLY:
+            return "DISTRIBUTION_TYPE_PRICESUPPLY";
+        case DistributionType.UNRECOGNIZED:
+        default:
+            return "UNRECOGNIZED";
+    }
+}
 export var LinkType;
 (function (LinkType) {
     LinkType[LinkType["LINK_TYPE_DO_NOT_USE"] = 0] = "LINK_TYPE_DO_NOT_USE";
@@ -373,7 +410,7 @@ function createBaseAssetDetails() {
         FinancialProperties: undefined,
         Description: undefined,
         ExternalResources: undefined,
-        CrowdfundDetails: undefined,
+        DistributionDetails: undefined,
     };
 }
 export const AssetDetails = {
@@ -435,8 +472,8 @@ export const AssetDetails = {
         if (message.ExternalResources !== undefined) {
             ExternalResources.encode(message.ExternalResources, writer.uint32(242).fork()).ldelim();
         }
-        if (message.CrowdfundDetails !== undefined) {
-            Crowdfund.encode(message.CrowdfundDetails, writer.uint32(250).fork()).ldelim();
+        if (message.DistributionDetails !== undefined) {
+            Distribution.encode(message.DistributionDetails, writer.uint32(250).fork()).ldelim();
         }
         return writer;
     },
@@ -565,7 +602,7 @@ export const AssetDetails = {
                     if (tag !== 250) {
                         break;
                     }
-                    message.CrowdfundDetails = Crowdfund.decode(reader, reader.uint32());
+                    message.DistributionDetails = Distribution.decode(reader, reader.uint32());
                     continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
@@ -610,7 +647,9 @@ export const AssetDetails = {
             ExternalResources: isSet(object.ExternalResources)
                 ? ExternalResources.fromJSON(object.ExternalResources)
                 : undefined,
-            CrowdfundDetails: isSet(object.CrowdfundDetails) ? Crowdfund.fromJSON(object.CrowdfundDetails) : undefined,
+            DistributionDetails: isSet(object.DistributionDetails)
+                ? Distribution.fromJSON(object.DistributionDetails)
+                : undefined,
         };
     },
     toJSON(message) {
@@ -672,8 +711,8 @@ export const AssetDetails = {
         if (message.ExternalResources !== undefined) {
             obj.ExternalResources = ExternalResources.toJSON(message.ExternalResources);
         }
-        if (message.CrowdfundDetails !== undefined) {
-            obj.CrowdfundDetails = Crowdfund.toJSON(message.CrowdfundDetails);
+        if (message.DistributionDetails !== undefined) {
+            obj.DistributionDetails = Distribution.toJSON(message.DistributionDetails);
         }
         return obj;
     },
@@ -726,8 +765,8 @@ export const AssetDetails = {
         message.ExternalResources = (object.ExternalResources !== undefined && object.ExternalResources !== null)
             ? ExternalResources.fromPartial(object.ExternalResources)
             : undefined;
-        message.CrowdfundDetails = (object.CrowdfundDetails !== undefined && object.CrowdfundDetails !== null)
-            ? Crowdfund.fromPartial(object.CrowdfundDetails)
+        message.DistributionDetails = (object.DistributionDetails !== undefined && object.DistributionDetails !== null)
+            ? Distribution.fromPartial(object.DistributionDetails)
             : undefined;
         return message;
     },
@@ -2174,6 +2213,130 @@ export const DecCoin = {
         const message = createBaseDecCoin();
         message.Denom = (_a = object.Denom) !== null && _a !== void 0 ? _a : "";
         message.Amount = (_b = object.Amount) !== null && _b !== void 0 ? _b : "";
+        return message;
+    },
+};
+function createBaseDistribution() {
+    return { Type: 0, CrowdfundDetails: undefined, PriceSupplyDetails: undefined };
+}
+export const Distribution = {
+    encode(message, writer = _m0.Writer.create()) {
+        if (message.Type !== 0) {
+            writer.uint32(8).int32(message.Type);
+        }
+        if (message.CrowdfundDetails !== undefined) {
+            Crowdfund.encode(message.CrowdfundDetails, writer.uint32(18).fork()).ldelim();
+        }
+        if (message.PriceSupplyDetails !== undefined) {
+            PriceSupply.encode(message.PriceSupplyDetails, writer.uint32(26).fork()).ldelim();
+        }
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseDistribution();
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    if (tag !== 8) {
+                        break;
+                    }
+                    message.Type = reader.int32();
+                    continue;
+                case 2:
+                    if (tag !== 18) {
+                        break;
+                    }
+                    message.CrowdfundDetails = Crowdfund.decode(reader, reader.uint32());
+                    continue;
+                case 3:
+                    if (tag !== 26) {
+                        break;
+                    }
+                    message.PriceSupplyDetails = PriceSupply.decode(reader, reader.uint32());
+                    continue;
+            }
+            if ((tag & 7) === 4 || tag === 0) {
+                break;
+            }
+            reader.skipType(tag & 7);
+        }
+        return message;
+    },
+    fromJSON(object) {
+        return {
+            Type: isSet(object.Type) ? distributionTypeFromJSON(object.Type) : 0,
+            CrowdfundDetails: isSet(object.CrowdfundDetails) ? Crowdfund.fromJSON(object.CrowdfundDetails) : undefined,
+            PriceSupplyDetails: isSet(object.PriceSupplyDetails)
+                ? PriceSupply.fromJSON(object.PriceSupplyDetails)
+                : undefined,
+        };
+    },
+    toJSON(message) {
+        const obj = {};
+        if (message.Type !== 0) {
+            obj.Type = distributionTypeToJSON(message.Type);
+        }
+        if (message.CrowdfundDetails !== undefined) {
+            obj.CrowdfundDetails = Crowdfund.toJSON(message.CrowdfundDetails);
+        }
+        if (message.PriceSupplyDetails !== undefined) {
+            obj.PriceSupplyDetails = PriceSupply.toJSON(message.PriceSupplyDetails);
+        }
+        return obj;
+    },
+    create(base) {
+        return Distribution.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial(object) {
+        var _a;
+        const message = createBaseDistribution();
+        message.Type = (_a = object.Type) !== null && _a !== void 0 ? _a : 0;
+        message.CrowdfundDetails = (object.CrowdfundDetails !== undefined && object.CrowdfundDetails !== null)
+            ? Crowdfund.fromPartial(object.CrowdfundDetails)
+            : undefined;
+        message.PriceSupplyDetails = (object.PriceSupplyDetails !== undefined && object.PriceSupplyDetails !== null)
+            ? PriceSupply.fromPartial(object.PriceSupplyDetails)
+            : undefined;
+        return message;
+    },
+};
+function createBasePriceSupply() {
+    return {};
+}
+export const PriceSupply = {
+    encode(_, writer = _m0.Writer.create()) {
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBasePriceSupply();
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+            }
+            if ((tag & 7) === 4 || tag === 0) {
+                break;
+            }
+            reader.skipType(tag & 7);
+        }
+        return message;
+    },
+    fromJSON(_) {
+        return {};
+    },
+    toJSON(_) {
+        const obj = {};
+        return obj;
+    },
+    create(base) {
+        return PriceSupply.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial(_) {
+        const message = createBasePriceSupply();
         return message;
     },
 };
