@@ -266,23 +266,21 @@ const (
 	AssetType_INTELLECTUAL_PROPERTY        AssetType = 7
 	AssetType_REAL_ESTATE                  AssetType = 8
 	AssetType_EQUITY                       AssetType = 9
-	AssetType_CROWDFUND                    AssetType = 10
 )
 
 // Enum value maps for AssetType.
 var (
 	AssetType_name = map[int32]string{
-		0:  "ASSET_TYPE_DO_NOT_USE",
-		1:  "FUNDS_AND_INVESTMENT_PRODUCT",
-		2:  "COMMODITY",
-		3:  "WRAPPED_STABLECOIN",
-		4:  "CRYPTO",
-		5:  "COLLECTIBLE",
-		6:  "VEHICLE_INDUSTRIAL_EQUIPMENT",
-		7:  "INTELLECTUAL_PROPERTY",
-		8:  "REAL_ESTATE",
-		9:  "EQUITY",
-		10: "CROWDFUND",
+		0: "ASSET_TYPE_DO_NOT_USE",
+		1: "FUNDS_AND_INVESTMENT_PRODUCT",
+		2: "COMMODITY",
+		3: "WRAPPED_STABLECOIN",
+		4: "CRYPTO",
+		5: "COLLECTIBLE",
+		6: "VEHICLE_INDUSTRIAL_EQUIPMENT",
+		7: "INTELLECTUAL_PROPERTY",
+		8: "REAL_ESTATE",
+		9: "EQUITY",
 	}
 	AssetType_value = map[string]int32{
 		"ASSET_TYPE_DO_NOT_USE":        0,
@@ -295,7 +293,6 @@ var (
 		"INTELLECTUAL_PROPERTY":        7,
 		"REAL_ESTATE":                  8,
 		"EQUITY":                       9,
-		"CROWDFUND":                    10,
 	}
 )
 
@@ -3033,7 +3030,7 @@ const file_asset_proto_rawDesc = "" +
 	"\x11REASON_DO_NOT_USE\x10\x00\x12\r\n" +
 	"\tDUPLICATE\x10\x01\x12\x12\n" +
 	"\x0eUNWANTED_ASSET\x10\x02\x12\x12\n" +
-	"\x0eUNSTABLE_ASSET\x10\x03*\xf5\x01\n" +
+	"\x0eUNSTABLE_ASSET\x10\x03*\xe6\x01\n" +
 	"\tAssetType\x12\x19\n" +
 	"\x15ASSET_TYPE_DO_NOT_USE\x10\x00\x12 \n" +
 	"\x1cFUNDS_AND_INVESTMENT_PRODUCT\x10\x01\x12\r\n" +
@@ -3046,9 +3043,7 @@ const file_asset_proto_rawDesc = "" +
 	"\x15INTELLECTUAL_PROPERTY\x10\a\x12\x0f\n" +
 	"\vREAL_ESTATE\x10\b\x12\n" +
 	"\n" +
-	"\x06EQUITY\x10\t\x12\r\n" +
-	"\tCROWDFUND\x10\n" +
-	"*z\n" +
+	"\x06EQUITY\x10\t*z\n" +
 	"\x0fUserAssetStatus\x12 \n" +
 	"\x1cUSER_ASSET_STATUS_DO_NOT_USE\x10\x00\x12\x0f\n" +
 	"\vWHITELISTED\x10\x01\x12\x0f\n" +

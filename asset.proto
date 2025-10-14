@@ -297,7 +297,6 @@ enum AssetType {
     INTELLECTUAL_PROPERTY = 7;
     REAL_ESTATE = 8;
     EQUITY = 9;
-    CROWDFUND = 10;
 }
 
 enum UserAssetStatus {

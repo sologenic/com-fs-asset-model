@@ -251,7 +251,6 @@ export enum AssetType {
   INTELLECTUAL_PROPERTY = 7,
   REAL_ESTATE = 8,
   EQUITY = 9,
-  CROWDFUND = 10,
   UNRECOGNIZED = -1,
 }
 
@@ -287,9 +286,6 @@ export function assetTypeFromJSON(object: any): AssetType {
     case 9:
     case "EQUITY":
       return AssetType.EQUITY;
-    case 10:
-    case "CROWDFUND":
-      return AssetType.CROWDFUND;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -319,8 +315,6 @@ export function assetTypeToJSON(object: AssetType): string {
       return "REAL_ESTATE";
     case AssetType.EQUITY:
       return "EQUITY";
-    case AssetType.CROWDFUND:
-      return "CROWDFUND";
     case AssetType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
