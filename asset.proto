@@ -68,18 +68,37 @@ message UserAssetLists {
 // ---------------- New Category Messages ----------------
 
 message RealEstate {
-    string Address = 1;                 
-    optional int32 Bathrooms = 2;       
-    optional int32 Bedrooms = 3;        
-    float Latitude = 4;                 
-    float Longitude = 5;                
-    optional string OwnershipType = 6;  
-    string PropertyType = 7;            
-    optional string RiskRating = 8;     
-    optional float SquareFootage = 9;   
-    optional string TenancyStatus = 10; 
-    optional int32 YearBuilt = 11;      
-    repeated float YieldPercent = 12;   
+    string Address = 1;
+    optional int32 Bathrooms = 2;
+    optional int32 Bedrooms = 3;
+    float Latitude = 4;
+    float Longitude = 5;
+    optional string OwnershipType = 6;
+    string PropertyType = 7;
+    optional string RiskRating = 8;
+    optional float SquareFootage = 9;
+    optional string TenancyStatus = 10;
+    optional int32 YearBuilt = 11;
+    repeated float YieldPercent = 12;
+
+    optional int32 Floors = 13;
+    optional float HeightMeters = 14;
+    optional int32 Units = 15;
+    optional int32 AvailableUnits = 16;
+    optional int32 ParkingSpaces = 17;
+    optional int32 Elevators = 18;
+    optional string Classification = 19;
+    optional int32 YearRenovated = 20;
+    optional float LotSize = 21;
+    optional string ZoningType = 22;
+
+    optional float CapRate = 23;
+    optional float NetOperatingIncome = 24;
+
+    repeated string KeyHighlights = 25;
+    repeated string Amenities = 26;
+
+    string PropertyDescription = 27;
 }
 
 message StableCoin {
