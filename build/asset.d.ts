@@ -6,7 +6,7 @@ export declare const protobufPackage = "asset";
 export declare enum DistributionType {
     DISTRIBUTION_TYPE_DO_NOT_USE = 0,
     DISTRIBUTION_TYPE_CROWDFUND = 1,
-    DISTRIBUTION_TYPE_PRICESUPPLY = 2,
+    DISTRIBUTION_TYPE_TOKENSALE = 2,
     UNRECOGNIZED = -1
 }
 export declare function distributionTypeFromJSON(object: any): DistributionType;
@@ -212,25 +212,66 @@ export interface DecCoin {
 export interface Distribution {
     Type: DistributionType;
     CrowdfundDetails?: Crowdfund | undefined;
-    PriceSupplyDetails?: PriceSupply | undefined;
+    TokenSaleDetails?: TokenSale | undefined;
 }
-export interface PriceSupply {
+export interface TokenSale {
+    /** The smallest allowable step for the base_denom */
+    QuantityStep: string;
+    /** Price to purchase the tokenized asset with, per subunit */
+    SellPricesPerSubunit: DecCoin[];
+    /** Should be pre-issued (even with zero total supply) */
+    BaseDenom: string;
+    /** Minimum amount of base_denom to purchase */
+    MinAmount: string;
+    /** Timestamp of when the token sale starts */
+    StartDate: number;
+    /** Timestamp of when the token sale ends */
+    EndDate: number;
+    /** Address of compliance manager contract. That contract is called to check if transfers are allowed or not */
+    ComplianceManagerContractAddr: string;
+    /** Buy prices per subunit. If empty, buy is not allowed for this token sale */
+    BuyPricesPerSubunit: DecCoin[];
+    /** Address of the asset registry contract */
+    AssetRegistryContractAddr: string;
+    /** Code of the asset extension */
+    AssetExtensionCode: string;
+    /** Address of the asset extension contract */
+    AssetExtensionContractAddr?: string | undefined;
+    /** Address of the order hub contract */
+    OrderHubContractAddr: string;
+    /** Address of the token sale contract */
+    TokenSaleContractAddr?: string | undefined;
 }
 export interface Crowdfund {
+    /** The smallest allowable step for the base_denom */
     QuantityStep: string;
+    /** Price to purchase the tokenized asset with, per subunit */
     PricesPerSubunit: DecCoin[];
-    SellDenom: string;
+    /** Should be pre-issued (even with zero total supply) */
+    BaseDenom: string;
+    /** Minimum amount of base_denom to purchase */
     MinAmount: string;
+    /** Timestamp of when the token sale starts */
     StartDate: number;
+    /** Timestamp of when the token sale ends */
     EndDate: number;
+    /** Minimum threshold for the token sale */
     MinThreshold: string;
+    /** Maximum threshold for the token sale */
     MaxThreshold: string;
+    /** Allow order cancellation */
     AllowOrderCancellation: boolean;
+    /** Address of the compliance manager contract */
     ComplianceManagerContractAddr: string;
+    /** Address of the order hub contract */
     OrderHubContractAddr: string;
+    /** Address of the crowdfund contract */
     CrowdfundContractAddr?: string | undefined;
+    /** Address of the asset registry contract */
     AssetRegistryContractAddr: string;
+    /** Code of the asset extension */
     AssetExtensionCode: string;
+    /** Address of the asset extension contract */
     AssetExtensionContractAddr?: string | undefined;
 }
 export interface IntellectualProperty {
@@ -533,7 +574,7 @@ export declare const AssetDetails: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
                 }[] | undefined;
-                SellDenom?: string | undefined;
+                BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
                 StartDate?: number | undefined;
                 EndDate?: number | undefined;
@@ -547,7 +588,27 @@ export declare const AssetDetails: {
                 AssetExtensionCode?: string | undefined;
                 AssetExtensionContractAddr?: string | undefined;
             } | undefined;
-            PriceSupplyDetails?: {} | undefined;
+            TokenSaleDetails?: {
+                QuantityStep?: string | undefined;
+                SellPricesPerSubunit?: {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[] | undefined;
+                BaseDenom?: string | undefined;
+                MinAmount?: string | undefined;
+                StartDate?: number | undefined;
+                EndDate?: number | undefined;
+                ComplianceManagerContractAddr?: string | undefined;
+                BuyPricesPerSubunit?: {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[] | undefined;
+                AssetRegistryContractAddr?: string | undefined;
+                AssetExtensionCode?: string | undefined;
+                AssetExtensionContractAddr?: string | undefined;
+                OrderHubContractAddr?: string | undefined;
+                TokenSaleContractAddr?: string | undefined;
+            } | undefined;
         } | undefined;
     } & {
         ID?: string | undefined;
@@ -912,7 +973,7 @@ export declare const AssetDetails: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
                 }[] | undefined;
-                SellDenom?: string | undefined;
+                BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
                 StartDate?: number | undefined;
                 EndDate?: number | undefined;
@@ -926,7 +987,27 @@ export declare const AssetDetails: {
                 AssetExtensionCode?: string | undefined;
                 AssetExtensionContractAddr?: string | undefined;
             } | undefined;
-            PriceSupplyDetails?: {} | undefined;
+            TokenSaleDetails?: {
+                QuantityStep?: string | undefined;
+                SellPricesPerSubunit?: {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[] | undefined;
+                BaseDenom?: string | undefined;
+                MinAmount?: string | undefined;
+                StartDate?: number | undefined;
+                EndDate?: number | undefined;
+                ComplianceManagerContractAddr?: string | undefined;
+                BuyPricesPerSubunit?: {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[] | undefined;
+                AssetRegistryContractAddr?: string | undefined;
+                AssetExtensionCode?: string | undefined;
+                AssetExtensionContractAddr?: string | undefined;
+                OrderHubContractAddr?: string | undefined;
+                TokenSaleContractAddr?: string | undefined;
+            } | undefined;
         } & {
             Type?: DistributionType | undefined;
             CrowdfundDetails?: ({
@@ -935,7 +1016,7 @@ export declare const AssetDetails: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
                 }[] | undefined;
-                SellDenom?: string | undefined;
+                BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
                 StartDate?: number | undefined;
                 EndDate?: number | undefined;
@@ -963,7 +1044,7 @@ export declare const AssetDetails: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
                 }[]>]: never; }) | undefined;
-                SellDenom?: string | undefined;
+                BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
                 StartDate?: number | undefined;
                 EndDate?: number | undefined;
@@ -976,10 +1057,75 @@ export declare const AssetDetails: {
                 AssetRegistryContractAddr?: string | undefined;
                 AssetExtensionCode?: string | undefined;
                 AssetExtensionContractAddr?: string | undefined;
+<<<<<<< Updated upstream
             } & { [K_31 in Exclude<keyof I["DistributionDetails"]["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
             PriceSupplyDetails?: ({} & {} & { [K_32 in Exclude<keyof I["DistributionDetails"]["PriceSupplyDetails"], never>]: never; }) | undefined;
         } & { [K_33 in Exclude<keyof I["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
     } & { [K_34 in Exclude<keyof I, keyof AssetDetails>]: never; }>(base?: I | undefined): AssetDetails;
+=======
+            } & { [K_29 in Exclude<keyof I["DistributionDetails"]["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
+            TokenSaleDetails?: ({
+                QuantityStep?: string | undefined;
+                SellPricesPerSubunit?: {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[] | undefined;
+                BaseDenom?: string | undefined;
+                MinAmount?: string | undefined;
+                StartDate?: number | undefined;
+                EndDate?: number | undefined;
+                ComplianceManagerContractAddr?: string | undefined;
+                BuyPricesPerSubunit?: {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[] | undefined;
+                AssetRegistryContractAddr?: string | undefined;
+                AssetExtensionCode?: string | undefined;
+                AssetExtensionContractAddr?: string | undefined;
+                OrderHubContractAddr?: string | undefined;
+                TokenSaleContractAddr?: string | undefined;
+            } & {
+                QuantityStep?: string | undefined;
+                SellPricesPerSubunit?: ({
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[] & ({
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                } & {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                } & { [K_30 in Exclude<keyof I["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_31 in Exclude<keyof I["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[]>]: never; }) | undefined;
+                BaseDenom?: string | undefined;
+                MinAmount?: string | undefined;
+                StartDate?: number | undefined;
+                EndDate?: number | undefined;
+                ComplianceManagerContractAddr?: string | undefined;
+                BuyPricesPerSubunit?: ({
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[] & ({
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                } & {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                } & { [K_32 in Exclude<keyof I["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_33 in Exclude<keyof I["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[]>]: never; }) | undefined;
+                AssetRegistryContractAddr?: string | undefined;
+                AssetExtensionCode?: string | undefined;
+                AssetExtensionContractAddr?: string | undefined;
+                OrderHubContractAddr?: string | undefined;
+                TokenSaleContractAddr?: string | undefined;
+            } & { [K_34 in Exclude<keyof I["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
+        } & { [K_35 in Exclude<keyof I["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
+    } & { [K_36 in Exclude<keyof I, keyof AssetDetails>]: never; }>(base?: I | undefined): AssetDetails;
+>>>>>>> Stashed changes
     fromPartial<I_1 extends {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -1163,7 +1309,7 @@ export declare const AssetDetails: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
                 }[] | undefined;
-                SellDenom?: string | undefined;
+                BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
                 StartDate?: number | undefined;
                 EndDate?: number | undefined;
@@ -1177,7 +1323,27 @@ export declare const AssetDetails: {
                 AssetExtensionCode?: string | undefined;
                 AssetExtensionContractAddr?: string | undefined;
             } | undefined;
-            PriceSupplyDetails?: {} | undefined;
+            TokenSaleDetails?: {
+                QuantityStep?: string | undefined;
+                SellPricesPerSubunit?: {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[] | undefined;
+                BaseDenom?: string | undefined;
+                MinAmount?: string | undefined;
+                StartDate?: number | undefined;
+                EndDate?: number | undefined;
+                ComplianceManagerContractAddr?: string | undefined;
+                BuyPricesPerSubunit?: {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[] | undefined;
+                AssetRegistryContractAddr?: string | undefined;
+                AssetExtensionCode?: string | undefined;
+                AssetExtensionContractAddr?: string | undefined;
+                OrderHubContractAddr?: string | undefined;
+                TokenSaleContractAddr?: string | undefined;
+            } | undefined;
         } | undefined;
     } & {
         ID?: string | undefined;
@@ -1201,12 +1367,20 @@ export declare const AssetDetails: {
             } & {
                 Symbol?: string | undefined;
                 Version?: string | undefined;
+<<<<<<< Updated upstream
             } & { [K_35 in Exclude<keyof I_1["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
+=======
+            } & { [K_37 in Exclude<keyof I_1["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
+>>>>>>> Stashed changes
             Subunit?: string | undefined;
             Issuer?: string | undefined;
             Precision?: number | undefined;
             Description?: string | undefined;
+<<<<<<< Updated upstream
         } & { [K_36 in Exclude<keyof I_1["Denom"], keyof Denom>]: never; }) | undefined;
+=======
+        } & { [K_38 in Exclude<keyof I_1["Denom"], keyof Denom>]: never; }) | undefined;
+>>>>>>> Stashed changes
         IsIssuedInSmartContract?: boolean | undefined;
         SmartContractIssuerAddr?: string | undefined;
         RealEstateDetails?: ({
@@ -1249,6 +1423,7 @@ export declare const AssetDetails: {
             SquareFootage?: number | undefined;
             TenancyStatus?: string | undefined;
             YearBuilt?: number | undefined;
+<<<<<<< Updated upstream
             YieldPercent?: (number[] & number[] & { [K_37 in Exclude<keyof I_1["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
             Floors?: number | undefined;
             HeightMeters?: number | undefined;
@@ -1265,6 +1440,9 @@ export declare const AssetDetails: {
             KeyHighlights?: (string[] & string[] & { [K_38 in Exclude<keyof I_1["RealEstateDetails"]["KeyHighlights"], keyof string[]>]: never; }) | undefined;
             Amenities?: (string[] & string[] & { [K_39 in Exclude<keyof I_1["RealEstateDetails"]["Amenities"], keyof string[]>]: never; }) | undefined;
             PropertyDescription?: string | undefined;
+=======
+            YieldPercent?: (number[] & number[] & { [K_39 in Exclude<keyof I_1["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
+>>>>>>> Stashed changes
         } & { [K_40 in Exclude<keyof I_1["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
         StableCoinDetails?: ({
             Version?: string | undefined;
@@ -1542,7 +1720,7 @@ export declare const AssetDetails: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
                 }[] | undefined;
-                SellDenom?: string | undefined;
+                BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
                 StartDate?: number | undefined;
                 EndDate?: number | undefined;
@@ -1556,7 +1734,27 @@ export declare const AssetDetails: {
                 AssetExtensionCode?: string | undefined;
                 AssetExtensionContractAddr?: string | undefined;
             } | undefined;
-            PriceSupplyDetails?: {} | undefined;
+            TokenSaleDetails?: {
+                QuantityStep?: string | undefined;
+                SellPricesPerSubunit?: {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[] | undefined;
+                BaseDenom?: string | undefined;
+                MinAmount?: string | undefined;
+                StartDate?: number | undefined;
+                EndDate?: number | undefined;
+                ComplianceManagerContractAddr?: string | undefined;
+                BuyPricesPerSubunit?: {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[] | undefined;
+                AssetRegistryContractAddr?: string | undefined;
+                AssetExtensionCode?: string | undefined;
+                AssetExtensionContractAddr?: string | undefined;
+                OrderHubContractAddr?: string | undefined;
+                TokenSaleContractAddr?: string | undefined;
+            } | undefined;
         } & {
             Type?: DistributionType | undefined;
             CrowdfundDetails?: ({
@@ -1565,7 +1763,7 @@ export declare const AssetDetails: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
                 }[] | undefined;
-                SellDenom?: string | undefined;
+                BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
                 StartDate?: number | undefined;
                 EndDate?: number | undefined;
@@ -1593,7 +1791,7 @@ export declare const AssetDetails: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
                 }[]>]: never; }) | undefined;
-                SellDenom?: string | undefined;
+                BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
                 StartDate?: number | undefined;
                 EndDate?: number | undefined;
@@ -1607,9 +1805,73 @@ export declare const AssetDetails: {
                 AssetExtensionCode?: string | undefined;
                 AssetExtensionContractAddr?: string | undefined;
             } & { [K_66 in Exclude<keyof I_1["DistributionDetails"]["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
+<<<<<<< Updated upstream
             PriceSupplyDetails?: ({} & {} & { [K_67 in Exclude<keyof I_1["DistributionDetails"]["PriceSupplyDetails"], never>]: never; }) | undefined;
         } & { [K_68 in Exclude<keyof I_1["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
     } & { [K_69 in Exclude<keyof I_1, keyof AssetDetails>]: never; }>(object: I_1): AssetDetails;
+=======
+            TokenSaleDetails?: ({
+                QuantityStep?: string | undefined;
+                SellPricesPerSubunit?: {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[] | undefined;
+                BaseDenom?: string | undefined;
+                MinAmount?: string | undefined;
+                StartDate?: number | undefined;
+                EndDate?: number | undefined;
+                ComplianceManagerContractAddr?: string | undefined;
+                BuyPricesPerSubunit?: {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[] | undefined;
+                AssetRegistryContractAddr?: string | undefined;
+                AssetExtensionCode?: string | undefined;
+                AssetExtensionContractAddr?: string | undefined;
+                OrderHubContractAddr?: string | undefined;
+                TokenSaleContractAddr?: string | undefined;
+            } & {
+                QuantityStep?: string | undefined;
+                SellPricesPerSubunit?: ({
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[] & ({
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                } & {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                } & { [K_67 in Exclude<keyof I_1["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_68 in Exclude<keyof I_1["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[]>]: never; }) | undefined;
+                BaseDenom?: string | undefined;
+                MinAmount?: string | undefined;
+                StartDate?: number | undefined;
+                EndDate?: number | undefined;
+                ComplianceManagerContractAddr?: string | undefined;
+                BuyPricesPerSubunit?: ({
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[] & ({
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                } & {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                } & { [K_69 in Exclude<keyof I_1["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_70 in Exclude<keyof I_1["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
+                    Denom?: string | undefined;
+                    Amount?: string | undefined;
+                }[]>]: never; }) | undefined;
+                AssetRegistryContractAddr?: string | undefined;
+                AssetExtensionCode?: string | undefined;
+                AssetExtensionContractAddr?: string | undefined;
+                OrderHubContractAddr?: string | undefined;
+                TokenSaleContractAddr?: string | undefined;
+            } & { [K_71 in Exclude<keyof I_1["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
+        } & { [K_72 in Exclude<keyof I_1["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
+    } & { [K_73 in Exclude<keyof I_1, keyof AssetDetails>]: never; }>(object: I_1): AssetDetails;
+>>>>>>> Stashed changes
 };
 export declare const Asset: {
     encode(message: Asset, writer?: _m0.Writer): _m0.Writer;
@@ -1800,7 +2062,7 @@ export declare const Asset: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
                     }[] | undefined;
-                    SellDenom?: string | undefined;
+                    BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
                     StartDate?: number | undefined;
                     EndDate?: number | undefined;
@@ -1814,7 +2076,27 @@ export declare const Asset: {
                     AssetExtensionCode?: string | undefined;
                     AssetExtensionContractAddr?: string | undefined;
                 } | undefined;
-                PriceSupplyDetails?: {} | undefined;
+                TokenSaleDetails?: {
+                    QuantityStep?: string | undefined;
+                    SellPricesPerSubunit?: {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] | undefined;
+                    BaseDenom?: string | undefined;
+                    MinAmount?: string | undefined;
+                    StartDate?: number | undefined;
+                    EndDate?: number | undefined;
+                    ComplianceManagerContractAddr?: string | undefined;
+                    BuyPricesPerSubunit?: {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] | undefined;
+                    AssetRegistryContractAddr?: string | undefined;
+                    AssetExtensionCode?: string | undefined;
+                    AssetExtensionContractAddr?: string | undefined;
+                    OrderHubContractAddr?: string | undefined;
+                    TokenSaleContractAddr?: string | undefined;
+                } | undefined;
             } | undefined;
         } | undefined;
         MetaData?: {
@@ -2033,7 +2315,7 @@ export declare const Asset: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
                     }[] | undefined;
-                    SellDenom?: string | undefined;
+                    BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
                     StartDate?: number | undefined;
                     EndDate?: number | undefined;
@@ -2047,7 +2329,27 @@ export declare const Asset: {
                     AssetExtensionCode?: string | undefined;
                     AssetExtensionContractAddr?: string | undefined;
                 } | undefined;
-                PriceSupplyDetails?: {} | undefined;
+                TokenSaleDetails?: {
+                    QuantityStep?: string | undefined;
+                    SellPricesPerSubunit?: {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] | undefined;
+                    BaseDenom?: string | undefined;
+                    MinAmount?: string | undefined;
+                    StartDate?: number | undefined;
+                    EndDate?: number | undefined;
+                    ComplianceManagerContractAddr?: string | undefined;
+                    BuyPricesPerSubunit?: {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] | undefined;
+                    AssetRegistryContractAddr?: string | undefined;
+                    AssetExtensionCode?: string | undefined;
+                    AssetExtensionContractAddr?: string | undefined;
+                    OrderHubContractAddr?: string | undefined;
+                    TokenSaleContractAddr?: string | undefined;
+                } | undefined;
             } | undefined;
         } & {
             ID?: string | undefined;
@@ -2412,7 +2714,7 @@ export declare const Asset: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
                     }[] | undefined;
-                    SellDenom?: string | undefined;
+                    BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
                     StartDate?: number | undefined;
                     EndDate?: number | undefined;
@@ -2426,7 +2728,27 @@ export declare const Asset: {
                     AssetExtensionCode?: string | undefined;
                     AssetExtensionContractAddr?: string | undefined;
                 } | undefined;
-                PriceSupplyDetails?: {} | undefined;
+                TokenSaleDetails?: {
+                    QuantityStep?: string | undefined;
+                    SellPricesPerSubunit?: {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] | undefined;
+                    BaseDenom?: string | undefined;
+                    MinAmount?: string | undefined;
+                    StartDate?: number | undefined;
+                    EndDate?: number | undefined;
+                    ComplianceManagerContractAddr?: string | undefined;
+                    BuyPricesPerSubunit?: {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] | undefined;
+                    AssetRegistryContractAddr?: string | undefined;
+                    AssetExtensionCode?: string | undefined;
+                    AssetExtensionContractAddr?: string | undefined;
+                    OrderHubContractAddr?: string | undefined;
+                    TokenSaleContractAddr?: string | undefined;
+                } | undefined;
             } & {
                 Type?: DistributionType | undefined;
                 CrowdfundDetails?: ({
@@ -2435,7 +2757,7 @@ export declare const Asset: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
                     }[] | undefined;
-                    SellDenom?: string | undefined;
+                    BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
                     StartDate?: number | undefined;
                     EndDate?: number | undefined;
@@ -2463,7 +2785,7 @@ export declare const Asset: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
                     }[]>]: never; }) | undefined;
-                    SellDenom?: string | undefined;
+                    BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
                     StartDate?: number | undefined;
                     EndDate?: number | undefined;
@@ -2476,10 +2798,75 @@ export declare const Asset: {
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
                     AssetExtensionContractAddr?: string | undefined;
+<<<<<<< Updated upstream
                 } & { [K_31 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
                 PriceSupplyDetails?: ({} & {} & { [K_32 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["PriceSupplyDetails"], never>]: never; }) | undefined;
             } & { [K_33 in Exclude<keyof I["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
         } & { [K_34 in Exclude<keyof I["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+=======
+                } & { [K_29 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
+                TokenSaleDetails?: ({
+                    QuantityStep?: string | undefined;
+                    SellPricesPerSubunit?: {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] | undefined;
+                    BaseDenom?: string | undefined;
+                    MinAmount?: string | undefined;
+                    StartDate?: number | undefined;
+                    EndDate?: number | undefined;
+                    ComplianceManagerContractAddr?: string | undefined;
+                    BuyPricesPerSubunit?: {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] | undefined;
+                    AssetRegistryContractAddr?: string | undefined;
+                    AssetExtensionCode?: string | undefined;
+                    AssetExtensionContractAddr?: string | undefined;
+                    OrderHubContractAddr?: string | undefined;
+                    TokenSaleContractAddr?: string | undefined;
+                } & {
+                    QuantityStep?: string | undefined;
+                    SellPricesPerSubunit?: ({
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] & ({
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    } & {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    } & { [K_30 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_31 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[]>]: never; }) | undefined;
+                    BaseDenom?: string | undefined;
+                    MinAmount?: string | undefined;
+                    StartDate?: number | undefined;
+                    EndDate?: number | undefined;
+                    ComplianceManagerContractAddr?: string | undefined;
+                    BuyPricesPerSubunit?: ({
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] & ({
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    } & {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    } & { [K_32 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_33 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[]>]: never; }) | undefined;
+                    AssetRegistryContractAddr?: string | undefined;
+                    AssetExtensionCode?: string | undefined;
+                    AssetExtensionContractAddr?: string | undefined;
+                    OrderHubContractAddr?: string | undefined;
+                    TokenSaleContractAddr?: string | undefined;
+                } & { [K_34 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
+            } & { [K_35 in Exclude<keyof I["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
+        } & { [K_36 in Exclude<keyof I["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+>>>>>>> Stashed changes
         MetaData?: ({
             Network?: Network | undefined;
             UpdatedAt?: Date | undefined;
@@ -2490,7 +2877,11 @@ export declare const Asset: {
             UpdatedAt?: Date | undefined;
             CreatedAt?: Date | undefined;
             UpdatedByAccount?: string | undefined;
+<<<<<<< Updated upstream
         } & { [K_35 in Exclude<keyof I["MetaData"], keyof MetaData>]: never; }) | undefined;
+=======
+        } & { [K_37 in Exclude<keyof I["MetaData"], keyof MetaData>]: never; }) | undefined;
+>>>>>>> Stashed changes
         Audit?: ({
             ChangedBy?: string | undefined;
             ChangedAt?: Date | undefined;
@@ -2499,7 +2890,11 @@ export declare const Asset: {
             ChangedBy?: string | undefined;
             ChangedAt?: Date | undefined;
             Reason?: string | undefined;
+<<<<<<< Updated upstream
         } & { [K_36 in Exclude<keyof I["Audit"], keyof Audit>]: never; }) | undefined;
+=======
+        } & { [K_38 in Exclude<keyof I["Audit"], keyof Audit>]: never; }) | undefined;
+>>>>>>> Stashed changes
         IssuerDetails?: ({
             Name?: string | undefined;
             Description?: string | undefined;
@@ -2537,11 +2932,19 @@ export declare const Asset: {
             LicenseNumber?: string | undefined;
             Phone?: string | undefined;
             Email?: string | undefined;
+<<<<<<< Updated upstream
             SocialMediaLinks?: (string[] & string[] & { [K_37 in Exclude<keyof I["IssuerDetails"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
             KeyClients?: string | undefined;
             Press?: string | undefined;
         } & { [K_38 in Exclude<keyof I["IssuerDetails"], keyof IssuerDetails>]: never; }) | undefined;
     } & { [K_39 in Exclude<keyof I, keyof Asset>]: never; }>(base?: I | undefined): Asset;
+=======
+            SocialMediaLinks?: (string[] & string[] & { [K_39 in Exclude<keyof I["IssuerDetails"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
+            KeyClients?: string | undefined;
+            Press?: string | undefined;
+        } & { [K_40 in Exclude<keyof I["IssuerDetails"], keyof IssuerDetails>]: never; }) | undefined;
+    } & { [K_41 in Exclude<keyof I, keyof Asset>]: never; }>(base?: I | undefined): Asset;
+>>>>>>> Stashed changes
     fromPartial<I_1 extends {
         AssetDetails?: {
             ID?: string | undefined;
@@ -2726,7 +3129,7 @@ export declare const Asset: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
                     }[] | undefined;
-                    SellDenom?: string | undefined;
+                    BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
                     StartDate?: number | undefined;
                     EndDate?: number | undefined;
@@ -2740,7 +3143,27 @@ export declare const Asset: {
                     AssetExtensionCode?: string | undefined;
                     AssetExtensionContractAddr?: string | undefined;
                 } | undefined;
-                PriceSupplyDetails?: {} | undefined;
+                TokenSaleDetails?: {
+                    QuantityStep?: string | undefined;
+                    SellPricesPerSubunit?: {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] | undefined;
+                    BaseDenom?: string | undefined;
+                    MinAmount?: string | undefined;
+                    StartDate?: number | undefined;
+                    EndDate?: number | undefined;
+                    ComplianceManagerContractAddr?: string | undefined;
+                    BuyPricesPerSubunit?: {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] | undefined;
+                    AssetRegistryContractAddr?: string | undefined;
+                    AssetExtensionCode?: string | undefined;
+                    AssetExtensionContractAddr?: string | undefined;
+                    OrderHubContractAddr?: string | undefined;
+                    TokenSaleContractAddr?: string | undefined;
+                } | undefined;
             } | undefined;
         } | undefined;
         MetaData?: {
@@ -2959,7 +3382,7 @@ export declare const Asset: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
                     }[] | undefined;
-                    SellDenom?: string | undefined;
+                    BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
                     StartDate?: number | undefined;
                     EndDate?: number | undefined;
@@ -2973,7 +3396,27 @@ export declare const Asset: {
                     AssetExtensionCode?: string | undefined;
                     AssetExtensionContractAddr?: string | undefined;
                 } | undefined;
-                PriceSupplyDetails?: {} | undefined;
+                TokenSaleDetails?: {
+                    QuantityStep?: string | undefined;
+                    SellPricesPerSubunit?: {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] | undefined;
+                    BaseDenom?: string | undefined;
+                    MinAmount?: string | undefined;
+                    StartDate?: number | undefined;
+                    EndDate?: number | undefined;
+                    ComplianceManagerContractAddr?: string | undefined;
+                    BuyPricesPerSubunit?: {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] | undefined;
+                    AssetRegistryContractAddr?: string | undefined;
+                    AssetExtensionCode?: string | undefined;
+                    AssetExtensionContractAddr?: string | undefined;
+                    OrderHubContractAddr?: string | undefined;
+                    TokenSaleContractAddr?: string | undefined;
+                } | undefined;
             } | undefined;
         } & {
             ID?: string | undefined;
@@ -2997,12 +3440,20 @@ export declare const Asset: {
                 } & {
                     Symbol?: string | undefined;
                     Version?: string | undefined;
+<<<<<<< Updated upstream
                 } & { [K_40 in Exclude<keyof I_1["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
+=======
+                } & { [K_42 in Exclude<keyof I_1["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
+>>>>>>> Stashed changes
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
                 Precision?: number | undefined;
                 Description?: string | undefined;
+<<<<<<< Updated upstream
             } & { [K_41 in Exclude<keyof I_1["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
+=======
+            } & { [K_43 in Exclude<keyof I_1["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
+>>>>>>> Stashed changes
             IsIssuedInSmartContract?: boolean | undefined;
             SmartContractIssuerAddr?: string | undefined;
             RealEstateDetails?: ({
@@ -3045,6 +3496,7 @@ export declare const Asset: {
                 SquareFootage?: number | undefined;
                 TenancyStatus?: string | undefined;
                 YearBuilt?: number | undefined;
+<<<<<<< Updated upstream
                 YieldPercent?: (number[] & number[] & { [K_42 in Exclude<keyof I_1["AssetDetails"]["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
                 Floors?: number | undefined;
                 HeightMeters?: number | undefined;
@@ -3061,6 +3513,9 @@ export declare const Asset: {
                 KeyHighlights?: (string[] & string[] & { [K_43 in Exclude<keyof I_1["AssetDetails"]["RealEstateDetails"]["KeyHighlights"], keyof string[]>]: never; }) | undefined;
                 Amenities?: (string[] & string[] & { [K_44 in Exclude<keyof I_1["AssetDetails"]["RealEstateDetails"]["Amenities"], keyof string[]>]: never; }) | undefined;
                 PropertyDescription?: string | undefined;
+=======
+                YieldPercent?: (number[] & number[] & { [K_44 in Exclude<keyof I_1["AssetDetails"]["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
+>>>>>>> Stashed changes
             } & { [K_45 in Exclude<keyof I_1["AssetDetails"]["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
             StableCoinDetails?: ({
                 Version?: string | undefined;
@@ -3338,7 +3793,7 @@ export declare const Asset: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
                     }[] | undefined;
-                    SellDenom?: string | undefined;
+                    BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
                     StartDate?: number | undefined;
                     EndDate?: number | undefined;
@@ -3352,7 +3807,27 @@ export declare const Asset: {
                     AssetExtensionCode?: string | undefined;
                     AssetExtensionContractAddr?: string | undefined;
                 } | undefined;
-                PriceSupplyDetails?: {} | undefined;
+                TokenSaleDetails?: {
+                    QuantityStep?: string | undefined;
+                    SellPricesPerSubunit?: {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] | undefined;
+                    BaseDenom?: string | undefined;
+                    MinAmount?: string | undefined;
+                    StartDate?: number | undefined;
+                    EndDate?: number | undefined;
+                    ComplianceManagerContractAddr?: string | undefined;
+                    BuyPricesPerSubunit?: {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] | undefined;
+                    AssetRegistryContractAddr?: string | undefined;
+                    AssetExtensionCode?: string | undefined;
+                    AssetExtensionContractAddr?: string | undefined;
+                    OrderHubContractAddr?: string | undefined;
+                    TokenSaleContractAddr?: string | undefined;
+                } | undefined;
             } & {
                 Type?: DistributionType | undefined;
                 CrowdfundDetails?: ({
@@ -3361,7 +3836,7 @@ export declare const Asset: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
                     }[] | undefined;
-                    SellDenom?: string | undefined;
+                    BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
                     StartDate?: number | undefined;
                     EndDate?: number | undefined;
@@ -3389,7 +3864,7 @@ export declare const Asset: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
                     }[]>]: never; }) | undefined;
-                    SellDenom?: string | undefined;
+                    BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
                     StartDate?: number | undefined;
                     EndDate?: number | undefined;
@@ -3403,9 +3878,73 @@ export declare const Asset: {
                     AssetExtensionCode?: string | undefined;
                     AssetExtensionContractAddr?: string | undefined;
                 } & { [K_71 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
+<<<<<<< Updated upstream
                 PriceSupplyDetails?: ({} & {} & { [K_72 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["PriceSupplyDetails"], never>]: never; }) | undefined;
             } & { [K_73 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
         } & { [K_74 in Exclude<keyof I_1["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+=======
+                TokenSaleDetails?: ({
+                    QuantityStep?: string | undefined;
+                    SellPricesPerSubunit?: {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] | undefined;
+                    BaseDenom?: string | undefined;
+                    MinAmount?: string | undefined;
+                    StartDate?: number | undefined;
+                    EndDate?: number | undefined;
+                    ComplianceManagerContractAddr?: string | undefined;
+                    BuyPricesPerSubunit?: {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] | undefined;
+                    AssetRegistryContractAddr?: string | undefined;
+                    AssetExtensionCode?: string | undefined;
+                    AssetExtensionContractAddr?: string | undefined;
+                    OrderHubContractAddr?: string | undefined;
+                    TokenSaleContractAddr?: string | undefined;
+                } & {
+                    QuantityStep?: string | undefined;
+                    SellPricesPerSubunit?: ({
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] & ({
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    } & {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    } & { [K_72 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_73 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[]>]: never; }) | undefined;
+                    BaseDenom?: string | undefined;
+                    MinAmount?: string | undefined;
+                    StartDate?: number | undefined;
+                    EndDate?: number | undefined;
+                    ComplianceManagerContractAddr?: string | undefined;
+                    BuyPricesPerSubunit?: ({
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[] & ({
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    } & {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    } & { [K_74 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_75 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
+                        Denom?: string | undefined;
+                        Amount?: string | undefined;
+                    }[]>]: never; }) | undefined;
+                    AssetRegistryContractAddr?: string | undefined;
+                    AssetExtensionCode?: string | undefined;
+                    AssetExtensionContractAddr?: string | undefined;
+                    OrderHubContractAddr?: string | undefined;
+                    TokenSaleContractAddr?: string | undefined;
+                } & { [K_76 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
+            } & { [K_77 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
+        } & { [K_78 in Exclude<keyof I_1["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+>>>>>>> Stashed changes
         MetaData?: ({
             Network?: Network | undefined;
             UpdatedAt?: Date | undefined;
@@ -3416,7 +3955,11 @@ export declare const Asset: {
             UpdatedAt?: Date | undefined;
             CreatedAt?: Date | undefined;
             UpdatedByAccount?: string | undefined;
+<<<<<<< Updated upstream
         } & { [K_75 in Exclude<keyof I_1["MetaData"], keyof MetaData>]: never; }) | undefined;
+=======
+        } & { [K_79 in Exclude<keyof I_1["MetaData"], keyof MetaData>]: never; }) | undefined;
+>>>>>>> Stashed changes
         Audit?: ({
             ChangedBy?: string | undefined;
             ChangedAt?: Date | undefined;
@@ -3425,7 +3968,11 @@ export declare const Asset: {
             ChangedBy?: string | undefined;
             ChangedAt?: Date | undefined;
             Reason?: string | undefined;
+<<<<<<< Updated upstream
         } & { [K_76 in Exclude<keyof I_1["Audit"], keyof Audit>]: never; }) | undefined;
+=======
+        } & { [K_80 in Exclude<keyof I_1["Audit"], keyof Audit>]: never; }) | undefined;
+>>>>>>> Stashed changes
         IssuerDetails?: ({
             Name?: string | undefined;
             Description?: string | undefined;
@@ -3463,11 +4010,19 @@ export declare const Asset: {
             LicenseNumber?: string | undefined;
             Phone?: string | undefined;
             Email?: string | undefined;
+<<<<<<< Updated upstream
             SocialMediaLinks?: (string[] & string[] & { [K_77 in Exclude<keyof I_1["IssuerDetails"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
             KeyClients?: string | undefined;
             Press?: string | undefined;
         } & { [K_78 in Exclude<keyof I_1["IssuerDetails"], keyof IssuerDetails>]: never; }) | undefined;
     } & { [K_79 in Exclude<keyof I_1, keyof Asset>]: never; }>(object: I_1): Asset;
+=======
+            SocialMediaLinks?: (string[] & string[] & { [K_81 in Exclude<keyof I_1["IssuerDetails"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
+            KeyClients?: string | undefined;
+            Press?: string | undefined;
+        } & { [K_82 in Exclude<keyof I_1["IssuerDetails"], keyof IssuerDetails>]: never; }) | undefined;
+    } & { [K_83 in Exclude<keyof I_1, keyof Asset>]: never; }>(object: I_1): Asset;
+>>>>>>> Stashed changes
 };
 export declare const Assets: {
     encode(message: Assets, writer?: _m0.Writer): _m0.Writer;
@@ -3659,7 +4214,7 @@ export declare const Assets: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
                         }[] | undefined;
-                        SellDenom?: string | undefined;
+                        BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
                         StartDate?: number | undefined;
                         EndDate?: number | undefined;
@@ -3673,7 +4228,27 @@ export declare const Assets: {
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
                     } | undefined;
-                    PriceSupplyDetails?: {} | undefined;
+                    TokenSaleDetails?: {
+                        QuantityStep?: string | undefined;
+                        SellPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        BaseDenom?: string | undefined;
+                        MinAmount?: string | undefined;
+                        StartDate?: number | undefined;
+                        EndDate?: number | undefined;
+                        ComplianceManagerContractAddr?: string | undefined;
+                        BuyPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        AssetRegistryContractAddr?: string | undefined;
+                        AssetExtensionCode?: string | undefined;
+                        AssetExtensionContractAddr?: string | undefined;
+                        OrderHubContractAddr?: string | undefined;
+                        TokenSaleContractAddr?: string | undefined;
+                    } | undefined;
                 } | undefined;
             } | undefined;
             MetaData?: {
@@ -3895,7 +4470,7 @@ export declare const Assets: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
                         }[] | undefined;
-                        SellDenom?: string | undefined;
+                        BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
                         StartDate?: number | undefined;
                         EndDate?: number | undefined;
@@ -3909,7 +4484,27 @@ export declare const Assets: {
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
                     } | undefined;
-                    PriceSupplyDetails?: {} | undefined;
+                    TokenSaleDetails?: {
+                        QuantityStep?: string | undefined;
+                        SellPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        BaseDenom?: string | undefined;
+                        MinAmount?: string | undefined;
+                        StartDate?: number | undefined;
+                        EndDate?: number | undefined;
+                        ComplianceManagerContractAddr?: string | undefined;
+                        BuyPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        AssetRegistryContractAddr?: string | undefined;
+                        AssetExtensionCode?: string | undefined;
+                        AssetExtensionContractAddr?: string | undefined;
+                        OrderHubContractAddr?: string | undefined;
+                        TokenSaleContractAddr?: string | undefined;
+                    } | undefined;
                 } | undefined;
             } | undefined;
             MetaData?: {
@@ -4128,7 +4723,7 @@ export declare const Assets: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
                         }[] | undefined;
-                        SellDenom?: string | undefined;
+                        BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
                         StartDate?: number | undefined;
                         EndDate?: number | undefined;
@@ -4142,7 +4737,27 @@ export declare const Assets: {
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
                     } | undefined;
-                    PriceSupplyDetails?: {} | undefined;
+                    TokenSaleDetails?: {
+                        QuantityStep?: string | undefined;
+                        SellPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        BaseDenom?: string | undefined;
+                        MinAmount?: string | undefined;
+                        StartDate?: number | undefined;
+                        EndDate?: number | undefined;
+                        ComplianceManagerContractAddr?: string | undefined;
+                        BuyPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        AssetRegistryContractAddr?: string | undefined;
+                        AssetExtensionCode?: string | undefined;
+                        AssetExtensionContractAddr?: string | undefined;
+                        OrderHubContractAddr?: string | undefined;
+                        TokenSaleContractAddr?: string | undefined;
+                    } | undefined;
                 } | undefined;
             } | undefined;
             MetaData?: {
@@ -4361,7 +4976,7 @@ export declare const Assets: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
                         }[] | undefined;
-                        SellDenom?: string | undefined;
+                        BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
                         StartDate?: number | undefined;
                         EndDate?: number | undefined;
@@ -4375,7 +4990,27 @@ export declare const Assets: {
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
                     } | undefined;
-                    PriceSupplyDetails?: {} | undefined;
+                    TokenSaleDetails?: {
+                        QuantityStep?: string | undefined;
+                        SellPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        BaseDenom?: string | undefined;
+                        MinAmount?: string | undefined;
+                        StartDate?: number | undefined;
+                        EndDate?: number | undefined;
+                        ComplianceManagerContractAddr?: string | undefined;
+                        BuyPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        AssetRegistryContractAddr?: string | undefined;
+                        AssetExtensionCode?: string | undefined;
+                        AssetExtensionContractAddr?: string | undefined;
+                        OrderHubContractAddr?: string | undefined;
+                        TokenSaleContractAddr?: string | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 ID?: string | undefined;
@@ -4740,7 +5375,7 @@ export declare const Assets: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
                         }[] | undefined;
-                        SellDenom?: string | undefined;
+                        BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
                         StartDate?: number | undefined;
                         EndDate?: number | undefined;
@@ -4754,7 +5389,27 @@ export declare const Assets: {
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
                     } | undefined;
-                    PriceSupplyDetails?: {} | undefined;
+                    TokenSaleDetails?: {
+                        QuantityStep?: string | undefined;
+                        SellPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        BaseDenom?: string | undefined;
+                        MinAmount?: string | undefined;
+                        StartDate?: number | undefined;
+                        EndDate?: number | undefined;
+                        ComplianceManagerContractAddr?: string | undefined;
+                        BuyPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        AssetRegistryContractAddr?: string | undefined;
+                        AssetExtensionCode?: string | undefined;
+                        AssetExtensionContractAddr?: string | undefined;
+                        OrderHubContractAddr?: string | undefined;
+                        TokenSaleContractAddr?: string | undefined;
+                    } | undefined;
                 } & {
                     Type?: DistributionType | undefined;
                     CrowdfundDetails?: ({
@@ -4763,7 +5418,7 @@ export declare const Assets: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
                         }[] | undefined;
-                        SellDenom?: string | undefined;
+                        BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
                         StartDate?: number | undefined;
                         EndDate?: number | undefined;
@@ -4791,7 +5446,7 @@ export declare const Assets: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
                         }[]>]: never; }) | undefined;
-                        SellDenom?: string | undefined;
+                        BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
                         StartDate?: number | undefined;
                         EndDate?: number | undefined;
@@ -4804,10 +5459,75 @@ export declare const Assets: {
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
+<<<<<<< Updated upstream
                     } & { [K_31 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
                     PriceSupplyDetails?: ({} & {} & { [K_32 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["PriceSupplyDetails"], never>]: never; }) | undefined;
                 } & { [K_33 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
             } & { [K_34 in Exclude<keyof I["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+=======
+                    } & { [K_29 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
+                    TokenSaleDetails?: ({
+                        QuantityStep?: string | undefined;
+                        SellPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        BaseDenom?: string | undefined;
+                        MinAmount?: string | undefined;
+                        StartDate?: number | undefined;
+                        EndDate?: number | undefined;
+                        ComplianceManagerContractAddr?: string | undefined;
+                        BuyPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        AssetRegistryContractAddr?: string | undefined;
+                        AssetExtensionCode?: string | undefined;
+                        AssetExtensionContractAddr?: string | undefined;
+                        OrderHubContractAddr?: string | undefined;
+                        TokenSaleContractAddr?: string | undefined;
+                    } & {
+                        QuantityStep?: string | undefined;
+                        SellPricesPerSubunit?: ({
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] & ({
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        } & {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        } & { [K_30 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_31 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[]>]: never; }) | undefined;
+                        BaseDenom?: string | undefined;
+                        MinAmount?: string | undefined;
+                        StartDate?: number | undefined;
+                        EndDate?: number | undefined;
+                        ComplianceManagerContractAddr?: string | undefined;
+                        BuyPricesPerSubunit?: ({
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] & ({
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        } & {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        } & { [K_32 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_33 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[]>]: never; }) | undefined;
+                        AssetRegistryContractAddr?: string | undefined;
+                        AssetExtensionCode?: string | undefined;
+                        AssetExtensionContractAddr?: string | undefined;
+                        OrderHubContractAddr?: string | undefined;
+                        TokenSaleContractAddr?: string | undefined;
+                    } & { [K_34 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
+                } & { [K_35 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
+            } & { [K_36 in Exclude<keyof I["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+>>>>>>> Stashed changes
             MetaData?: ({
                 Network?: Network | undefined;
                 UpdatedAt?: Date | undefined;
@@ -4818,7 +5538,11 @@ export declare const Assets: {
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
+<<<<<<< Updated upstream
             } & { [K_35 in Exclude<keyof I["Assets"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
+=======
+            } & { [K_37 in Exclude<keyof I["Assets"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
+>>>>>>> Stashed changes
             Audit?: ({
                 ChangedBy?: string | undefined;
                 ChangedAt?: Date | undefined;
@@ -4827,7 +5551,11 @@ export declare const Assets: {
                 ChangedBy?: string | undefined;
                 ChangedAt?: Date | undefined;
                 Reason?: string | undefined;
+<<<<<<< Updated upstream
             } & { [K_36 in Exclude<keyof I["Assets"][number]["Audit"], keyof Audit>]: never; }) | undefined;
+=======
+            } & { [K_38 in Exclude<keyof I["Assets"][number]["Audit"], keyof Audit>]: never; }) | undefined;
+>>>>>>> Stashed changes
             IssuerDetails?: ({
                 Name?: string | undefined;
                 Description?: string | undefined;
@@ -4865,11 +5593,19 @@ export declare const Assets: {
                 LicenseNumber?: string | undefined;
                 Phone?: string | undefined;
                 Email?: string | undefined;
+<<<<<<< Updated upstream
                 SocialMediaLinks?: (string[] & string[] & { [K_37 in Exclude<keyof I["Assets"][number]["IssuerDetails"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
                 KeyClients?: string | undefined;
                 Press?: string | undefined;
             } & { [K_38 in Exclude<keyof I["Assets"][number]["IssuerDetails"], keyof IssuerDetails>]: never; }) | undefined;
         } & { [K_39 in Exclude<keyof I["Assets"][number], keyof Asset>]: never; })[] & { [K_40 in Exclude<keyof I["Assets"], keyof {
+=======
+                SocialMediaLinks?: (string[] & string[] & { [K_39 in Exclude<keyof I["Assets"][number]["IssuerDetails"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
+            } & { [K_40 in Exclude<keyof I["Assets"][number]["IssuerDetails"], keyof IssuerDetails>]: never; }) | undefined;
+        } & { [K_41 in Exclude<keyof I["Assets"][number], keyof Asset>]: never; })[] & { [K_42 in Exclude<keyof I["Assets"], keyof {
+>>>>>>> Stashed changes
             AssetDetails?: {
                 ID?: string | undefined;
                 OrganizationID?: string | undefined;
@@ -5053,7 +5789,7 @@ export declare const Assets: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
                         }[] | undefined;
-                        SellDenom?: string | undefined;
+                        BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
                         StartDate?: number | undefined;
                         EndDate?: number | undefined;
@@ -5067,7 +5803,27 @@ export declare const Assets: {
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
                     } | undefined;
-                    PriceSupplyDetails?: {} | undefined;
+                    TokenSaleDetails?: {
+                        QuantityStep?: string | undefined;
+                        SellPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        BaseDenom?: string | undefined;
+                        MinAmount?: string | undefined;
+                        StartDate?: number | undefined;
+                        EndDate?: number | undefined;
+                        ComplianceManagerContractAddr?: string | undefined;
+                        BuyPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        AssetRegistryContractAddr?: string | undefined;
+                        AssetExtensionCode?: string | undefined;
+                        AssetExtensionContractAddr?: string | undefined;
+                        OrderHubContractAddr?: string | undefined;
+                        TokenSaleContractAddr?: string | undefined;
+                    } | undefined;
                 } | undefined;
             } | undefined;
             MetaData?: {
@@ -5104,7 +5860,11 @@ export declare const Assets: {
             } | undefined;
         }[]>]: never; }) | undefined;
         Offset?: number | undefined;
+<<<<<<< Updated upstream
     } & { [K_41 in Exclude<keyof I, keyof Assets>]: never; }>(base?: I | undefined): Assets;
+=======
+    } & { [K_43 in Exclude<keyof I, keyof Assets>]: never; }>(base?: I | undefined): Assets;
+>>>>>>> Stashed changes
     fromPartial<I_1 extends {
         Assets?: {
             AssetDetails?: {
@@ -5290,7 +6050,7 @@ export declare const Assets: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
                         }[] | undefined;
-                        SellDenom?: string | undefined;
+                        BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
                         StartDate?: number | undefined;
                         EndDate?: number | undefined;
@@ -5304,7 +6064,27 @@ export declare const Assets: {
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
                     } | undefined;
-                    PriceSupplyDetails?: {} | undefined;
+                    TokenSaleDetails?: {
+                        QuantityStep?: string | undefined;
+                        SellPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        BaseDenom?: string | undefined;
+                        MinAmount?: string | undefined;
+                        StartDate?: number | undefined;
+                        EndDate?: number | undefined;
+                        ComplianceManagerContractAddr?: string | undefined;
+                        BuyPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        AssetRegistryContractAddr?: string | undefined;
+                        AssetExtensionCode?: string | undefined;
+                        AssetExtensionContractAddr?: string | undefined;
+                        OrderHubContractAddr?: string | undefined;
+                        TokenSaleContractAddr?: string | undefined;
+                    } | undefined;
                 } | undefined;
             } | undefined;
             MetaData?: {
@@ -5526,7 +6306,7 @@ export declare const Assets: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
                         }[] | undefined;
-                        SellDenom?: string | undefined;
+                        BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
                         StartDate?: number | undefined;
                         EndDate?: number | undefined;
@@ -5540,7 +6320,27 @@ export declare const Assets: {
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
                     } | undefined;
-                    PriceSupplyDetails?: {} | undefined;
+                    TokenSaleDetails?: {
+                        QuantityStep?: string | undefined;
+                        SellPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        BaseDenom?: string | undefined;
+                        MinAmount?: string | undefined;
+                        StartDate?: number | undefined;
+                        EndDate?: number | undefined;
+                        ComplianceManagerContractAddr?: string | undefined;
+                        BuyPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        AssetRegistryContractAddr?: string | undefined;
+                        AssetExtensionCode?: string | undefined;
+                        AssetExtensionContractAddr?: string | undefined;
+                        OrderHubContractAddr?: string | undefined;
+                        TokenSaleContractAddr?: string | undefined;
+                    } | undefined;
                 } | undefined;
             } | undefined;
             MetaData?: {
@@ -5759,7 +6559,7 @@ export declare const Assets: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
                         }[] | undefined;
-                        SellDenom?: string | undefined;
+                        BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
                         StartDate?: number | undefined;
                         EndDate?: number | undefined;
@@ -5773,7 +6573,27 @@ export declare const Assets: {
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
                     } | undefined;
-                    PriceSupplyDetails?: {} | undefined;
+                    TokenSaleDetails?: {
+                        QuantityStep?: string | undefined;
+                        SellPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        BaseDenom?: string | undefined;
+                        MinAmount?: string | undefined;
+                        StartDate?: number | undefined;
+                        EndDate?: number | undefined;
+                        ComplianceManagerContractAddr?: string | undefined;
+                        BuyPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        AssetRegistryContractAddr?: string | undefined;
+                        AssetExtensionCode?: string | undefined;
+                        AssetExtensionContractAddr?: string | undefined;
+                        OrderHubContractAddr?: string | undefined;
+                        TokenSaleContractAddr?: string | undefined;
+                    } | undefined;
                 } | undefined;
             } | undefined;
             MetaData?: {
@@ -5992,7 +6812,7 @@ export declare const Assets: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
                         }[] | undefined;
-                        SellDenom?: string | undefined;
+                        BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
                         StartDate?: number | undefined;
                         EndDate?: number | undefined;
@@ -6006,7 +6826,27 @@ export declare const Assets: {
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
                     } | undefined;
-                    PriceSupplyDetails?: {} | undefined;
+                    TokenSaleDetails?: {
+                        QuantityStep?: string | undefined;
+                        SellPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        BaseDenom?: string | undefined;
+                        MinAmount?: string | undefined;
+                        StartDate?: number | undefined;
+                        EndDate?: number | undefined;
+                        ComplianceManagerContractAddr?: string | undefined;
+                        BuyPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        AssetRegistryContractAddr?: string | undefined;
+                        AssetExtensionCode?: string | undefined;
+                        AssetExtensionContractAddr?: string | undefined;
+                        OrderHubContractAddr?: string | undefined;
+                        TokenSaleContractAddr?: string | undefined;
+                    } | undefined;
                 } | undefined;
             } & {
                 ID?: string | undefined;
@@ -6030,12 +6870,20 @@ export declare const Assets: {
                     } & {
                         Symbol?: string | undefined;
                         Version?: string | undefined;
+<<<<<<< Updated upstream
                     } & { [K_42 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
+=======
+                    } & { [K_44 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
+>>>>>>> Stashed changes
                     Subunit?: string | undefined;
                     Issuer?: string | undefined;
                     Precision?: number | undefined;
                     Description?: string | undefined;
+<<<<<<< Updated upstream
                 } & { [K_43 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
+=======
+                } & { [K_45 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Denom"], keyof Denom>]: never; }) | undefined;
+>>>>>>> Stashed changes
                 IsIssuedInSmartContract?: boolean | undefined;
                 SmartContractIssuerAddr?: string | undefined;
                 RealEstateDetails?: ({
@@ -6078,6 +6926,7 @@ export declare const Assets: {
                     SquareFootage?: number | undefined;
                     TenancyStatus?: string | undefined;
                     YearBuilt?: number | undefined;
+<<<<<<< Updated upstream
                     YieldPercent?: (number[] & number[] & { [K_44 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
                     Floors?: number | undefined;
                     HeightMeters?: number | undefined;
@@ -6094,6 +6943,9 @@ export declare const Assets: {
                     KeyHighlights?: (string[] & string[] & { [K_45 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["RealEstateDetails"]["KeyHighlights"], keyof string[]>]: never; }) | undefined;
                     Amenities?: (string[] & string[] & { [K_46 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["RealEstateDetails"]["Amenities"], keyof string[]>]: never; }) | undefined;
                     PropertyDescription?: string | undefined;
+=======
+                    YieldPercent?: (number[] & number[] & { [K_46 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["RealEstateDetails"]["YieldPercent"], keyof number[]>]: never; }) | undefined;
+>>>>>>> Stashed changes
                 } & { [K_47 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["RealEstateDetails"], keyof RealEstate>]: never; }) | undefined;
                 StableCoinDetails?: ({
                     Version?: string | undefined;
@@ -6371,7 +7223,7 @@ export declare const Assets: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
                         }[] | undefined;
-                        SellDenom?: string | undefined;
+                        BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
                         StartDate?: number | undefined;
                         EndDate?: number | undefined;
@@ -6385,7 +7237,27 @@ export declare const Assets: {
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
                     } | undefined;
-                    PriceSupplyDetails?: {} | undefined;
+                    TokenSaleDetails?: {
+                        QuantityStep?: string | undefined;
+                        SellPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        BaseDenom?: string | undefined;
+                        MinAmount?: string | undefined;
+                        StartDate?: number | undefined;
+                        EndDate?: number | undefined;
+                        ComplianceManagerContractAddr?: string | undefined;
+                        BuyPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        AssetRegistryContractAddr?: string | undefined;
+                        AssetExtensionCode?: string | undefined;
+                        AssetExtensionContractAddr?: string | undefined;
+                        OrderHubContractAddr?: string | undefined;
+                        TokenSaleContractAddr?: string | undefined;
+                    } | undefined;
                 } & {
                     Type?: DistributionType | undefined;
                     CrowdfundDetails?: ({
@@ -6394,7 +7266,7 @@ export declare const Assets: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
                         }[] | undefined;
-                        SellDenom?: string | undefined;
+                        BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
                         StartDate?: number | undefined;
                         EndDate?: number | undefined;
@@ -6422,7 +7294,7 @@ export declare const Assets: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
                         }[]>]: never; }) | undefined;
-                        SellDenom?: string | undefined;
+                        BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
                         StartDate?: number | undefined;
                         EndDate?: number | undefined;
@@ -6436,9 +7308,73 @@ export declare const Assets: {
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
                     } & { [K_73 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
+<<<<<<< Updated upstream
                     PriceSupplyDetails?: ({} & {} & { [K_74 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["PriceSupplyDetails"], never>]: never; }) | undefined;
                 } & { [K_75 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
             } & { [K_76 in Exclude<keyof I_1["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+=======
+                    TokenSaleDetails?: ({
+                        QuantityStep?: string | undefined;
+                        SellPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        BaseDenom?: string | undefined;
+                        MinAmount?: string | undefined;
+                        StartDate?: number | undefined;
+                        EndDate?: number | undefined;
+                        ComplianceManagerContractAddr?: string | undefined;
+                        BuyPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        AssetRegistryContractAddr?: string | undefined;
+                        AssetExtensionCode?: string | undefined;
+                        AssetExtensionContractAddr?: string | undefined;
+                        OrderHubContractAddr?: string | undefined;
+                        TokenSaleContractAddr?: string | undefined;
+                    } & {
+                        QuantityStep?: string | undefined;
+                        SellPricesPerSubunit?: ({
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] & ({
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        } & {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        } & { [K_74 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_75 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[]>]: never; }) | undefined;
+                        BaseDenom?: string | undefined;
+                        MinAmount?: string | undefined;
+                        StartDate?: number | undefined;
+                        EndDate?: number | undefined;
+                        ComplianceManagerContractAddr?: string | undefined;
+                        BuyPricesPerSubunit?: ({
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] & ({
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        } & {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        } & { [K_76 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_77 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[]>]: never; }) | undefined;
+                        AssetRegistryContractAddr?: string | undefined;
+                        AssetExtensionCode?: string | undefined;
+                        AssetExtensionContractAddr?: string | undefined;
+                        OrderHubContractAddr?: string | undefined;
+                        TokenSaleContractAddr?: string | undefined;
+                    } & { [K_78 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
+                } & { [K_79 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
+            } & { [K_80 in Exclude<keyof I_1["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
+>>>>>>> Stashed changes
             MetaData?: ({
                 Network?: Network | undefined;
                 UpdatedAt?: Date | undefined;
@@ -6449,7 +7385,11 @@ export declare const Assets: {
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
+<<<<<<< Updated upstream
             } & { [K_77 in Exclude<keyof I_1["Assets"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
+=======
+            } & { [K_81 in Exclude<keyof I_1["Assets"][number]["MetaData"], keyof MetaData>]: never; }) | undefined;
+>>>>>>> Stashed changes
             Audit?: ({
                 ChangedBy?: string | undefined;
                 ChangedAt?: Date | undefined;
@@ -6458,7 +7398,11 @@ export declare const Assets: {
                 ChangedBy?: string | undefined;
                 ChangedAt?: Date | undefined;
                 Reason?: string | undefined;
+<<<<<<< Updated upstream
             } & { [K_78 in Exclude<keyof I_1["Assets"][number]["Audit"], keyof Audit>]: never; }) | undefined;
+=======
+            } & { [K_82 in Exclude<keyof I_1["Assets"][number]["Audit"], keyof Audit>]: never; }) | undefined;
+>>>>>>> Stashed changes
             IssuerDetails?: ({
                 Name?: string | undefined;
                 Description?: string | undefined;
@@ -6496,11 +7440,19 @@ export declare const Assets: {
                 LicenseNumber?: string | undefined;
                 Phone?: string | undefined;
                 Email?: string | undefined;
+<<<<<<< Updated upstream
                 SocialMediaLinks?: (string[] & string[] & { [K_79 in Exclude<keyof I_1["Assets"][number]["IssuerDetails"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
                 KeyClients?: string | undefined;
                 Press?: string | undefined;
             } & { [K_80 in Exclude<keyof I_1["Assets"][number]["IssuerDetails"], keyof IssuerDetails>]: never; }) | undefined;
         } & { [K_81 in Exclude<keyof I_1["Assets"][number], keyof Asset>]: never; })[] & { [K_82 in Exclude<keyof I_1["Assets"], keyof {
+=======
+                SocialMediaLinks?: (string[] & string[] & { [K_83 in Exclude<keyof I_1["Assets"][number]["IssuerDetails"]["SocialMediaLinks"], keyof string[]>]: never; }) | undefined;
+                KeyClients?: string | undefined;
+                Press?: string | undefined;
+            } & { [K_84 in Exclude<keyof I_1["Assets"][number]["IssuerDetails"], keyof IssuerDetails>]: never; }) | undefined;
+        } & { [K_85 in Exclude<keyof I_1["Assets"][number], keyof Asset>]: never; })[] & { [K_86 in Exclude<keyof I_1["Assets"], keyof {
+>>>>>>> Stashed changes
             AssetDetails?: {
                 ID?: string | undefined;
                 OrganizationID?: string | undefined;
@@ -6684,7 +7636,7 @@ export declare const Assets: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
                         }[] | undefined;
-                        SellDenom?: string | undefined;
+                        BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
                         StartDate?: number | undefined;
                         EndDate?: number | undefined;
@@ -6698,7 +7650,27 @@ export declare const Assets: {
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
                     } | undefined;
-                    PriceSupplyDetails?: {} | undefined;
+                    TokenSaleDetails?: {
+                        QuantityStep?: string | undefined;
+                        SellPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        BaseDenom?: string | undefined;
+                        MinAmount?: string | undefined;
+                        StartDate?: number | undefined;
+                        EndDate?: number | undefined;
+                        ComplianceManagerContractAddr?: string | undefined;
+                        BuyPricesPerSubunit?: {
+                            Denom?: string | undefined;
+                            Amount?: string | undefined;
+                        }[] | undefined;
+                        AssetRegistryContractAddr?: string | undefined;
+                        AssetExtensionCode?: string | undefined;
+                        AssetExtensionContractAddr?: string | undefined;
+                        OrderHubContractAddr?: string | undefined;
+                        TokenSaleContractAddr?: string | undefined;
+                    } | undefined;
                 } | undefined;
             } | undefined;
             MetaData?: {
@@ -6735,7 +7707,11 @@ export declare const Assets: {
             } | undefined;
         }[]>]: never; }) | undefined;
         Offset?: number | undefined;
+<<<<<<< Updated upstream
     } & { [K_83 in Exclude<keyof I_1, keyof Assets>]: never; }>(object: I_1): Assets;
+=======
+    } & { [K_87 in Exclude<keyof I_1, keyof Assets>]: never; }>(object: I_1): Assets;
+>>>>>>> Stashed changes
 };
 export declare const UserAssetList: {
     encode(message: UserAssetList, writer?: _m0.Writer): _m0.Writer;
@@ -7324,7 +8300,7 @@ export declare const Distribution: {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
             }[] | undefined;
-            SellDenom?: string | undefined;
+            BaseDenom?: string | undefined;
             MinAmount?: string | undefined;
             StartDate?: number | undefined;
             EndDate?: number | undefined;
@@ -7338,7 +8314,27 @@ export declare const Distribution: {
             AssetExtensionCode?: string | undefined;
             AssetExtensionContractAddr?: string | undefined;
         } | undefined;
-        PriceSupplyDetails?: {} | undefined;
+        TokenSaleDetails?: {
+            QuantityStep?: string | undefined;
+            SellPricesPerSubunit?: {
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            }[] | undefined;
+            BaseDenom?: string | undefined;
+            MinAmount?: string | undefined;
+            StartDate?: number | undefined;
+            EndDate?: number | undefined;
+            ComplianceManagerContractAddr?: string | undefined;
+            BuyPricesPerSubunit?: {
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            }[] | undefined;
+            AssetRegistryContractAddr?: string | undefined;
+            AssetExtensionCode?: string | undefined;
+            AssetExtensionContractAddr?: string | undefined;
+            OrderHubContractAddr?: string | undefined;
+            TokenSaleContractAddr?: string | undefined;
+        } | undefined;
     } & {
         Type?: DistributionType | undefined;
         CrowdfundDetails?: ({
@@ -7347,7 +8343,7 @@ export declare const Distribution: {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
             }[] | undefined;
-            SellDenom?: string | undefined;
+            BaseDenom?: string | undefined;
             MinAmount?: string | undefined;
             StartDate?: number | undefined;
             EndDate?: number | undefined;
@@ -7375,7 +8371,7 @@ export declare const Distribution: {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
             }[]>]: never; }) | undefined;
-            SellDenom?: string | undefined;
+            BaseDenom?: string | undefined;
             MinAmount?: string | undefined;
             StartDate?: number | undefined;
             EndDate?: number | undefined;
@@ -7389,8 +8385,66 @@ export declare const Distribution: {
             AssetExtensionCode?: string | undefined;
             AssetExtensionContractAddr?: string | undefined;
         } & { [K_2 in Exclude<keyof I["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
-        PriceSupplyDetails?: ({} & {} & { [K_3 in Exclude<keyof I["PriceSupplyDetails"], never>]: never; }) | undefined;
-    } & { [K_4 in Exclude<keyof I, keyof Distribution>]: never; }>(base?: I | undefined): Distribution;
+        TokenSaleDetails?: ({
+            QuantityStep?: string | undefined;
+            SellPricesPerSubunit?: {
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            }[] | undefined;
+            BaseDenom?: string | undefined;
+            MinAmount?: string | undefined;
+            StartDate?: number | undefined;
+            EndDate?: number | undefined;
+            ComplianceManagerContractAddr?: string | undefined;
+            BuyPricesPerSubunit?: {
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            }[] | undefined;
+            AssetRegistryContractAddr?: string | undefined;
+            AssetExtensionCode?: string | undefined;
+            AssetExtensionContractAddr?: string | undefined;
+            OrderHubContractAddr?: string | undefined;
+            TokenSaleContractAddr?: string | undefined;
+        } & {
+            QuantityStep?: string | undefined;
+            SellPricesPerSubunit?: ({
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            }[] & ({
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            } & {
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            } & { [K_3 in Exclude<keyof I["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_4 in Exclude<keyof I["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            }[]>]: never; }) | undefined;
+            BaseDenom?: string | undefined;
+            MinAmount?: string | undefined;
+            StartDate?: number | undefined;
+            EndDate?: number | undefined;
+            ComplianceManagerContractAddr?: string | undefined;
+            BuyPricesPerSubunit?: ({
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            }[] & ({
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            } & {
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            } & { [K_5 in Exclude<keyof I["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_6 in Exclude<keyof I["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            }[]>]: never; }) | undefined;
+            AssetRegistryContractAddr?: string | undefined;
+            AssetExtensionCode?: string | undefined;
+            AssetExtensionContractAddr?: string | undefined;
+            OrderHubContractAddr?: string | undefined;
+            TokenSaleContractAddr?: string | undefined;
+        } & { [K_7 in Exclude<keyof I["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
+    } & { [K_8 in Exclude<keyof I, keyof Distribution>]: never; }>(base?: I | undefined): Distribution;
     fromPartial<I_1 extends {
         Type?: DistributionType | undefined;
         CrowdfundDetails?: {
@@ -7399,7 +8453,7 @@ export declare const Distribution: {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
             }[] | undefined;
-            SellDenom?: string | undefined;
+            BaseDenom?: string | undefined;
             MinAmount?: string | undefined;
             StartDate?: number | undefined;
             EndDate?: number | undefined;
@@ -7413,7 +8467,27 @@ export declare const Distribution: {
             AssetExtensionCode?: string | undefined;
             AssetExtensionContractAddr?: string | undefined;
         } | undefined;
-        PriceSupplyDetails?: {} | undefined;
+        TokenSaleDetails?: {
+            QuantityStep?: string | undefined;
+            SellPricesPerSubunit?: {
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            }[] | undefined;
+            BaseDenom?: string | undefined;
+            MinAmount?: string | undefined;
+            StartDate?: number | undefined;
+            EndDate?: number | undefined;
+            ComplianceManagerContractAddr?: string | undefined;
+            BuyPricesPerSubunit?: {
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            }[] | undefined;
+            AssetRegistryContractAddr?: string | undefined;
+            AssetExtensionCode?: string | undefined;
+            AssetExtensionContractAddr?: string | undefined;
+            OrderHubContractAddr?: string | undefined;
+            TokenSaleContractAddr?: string | undefined;
+        } | undefined;
     } & {
         Type?: DistributionType | undefined;
         CrowdfundDetails?: ({
@@ -7422,7 +8496,7 @@ export declare const Distribution: {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
             }[] | undefined;
-            SellDenom?: string | undefined;
+            BaseDenom?: string | undefined;
             MinAmount?: string | undefined;
             StartDate?: number | undefined;
             EndDate?: number | undefined;
@@ -7446,11 +8520,11 @@ export declare const Distribution: {
             } & {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
-            } & { [K_5 in Exclude<keyof I_1["CrowdfundDetails"]["PricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_6 in Exclude<keyof I_1["CrowdfundDetails"]["PricesPerSubunit"], keyof {
+            } & { [K_9 in Exclude<keyof I_1["CrowdfundDetails"]["PricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_10 in Exclude<keyof I_1["CrowdfundDetails"]["PricesPerSubunit"], keyof {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
             }[]>]: never; }) | undefined;
-            SellDenom?: string | undefined;
+            BaseDenom?: string | undefined;
             MinAmount?: string | undefined;
             StartDate?: number | undefined;
             EndDate?: number | undefined;
@@ -7463,17 +8537,191 @@ export declare const Distribution: {
             AssetRegistryContractAddr?: string | undefined;
             AssetExtensionCode?: string | undefined;
             AssetExtensionContractAddr?: string | undefined;
-        } & { [K_7 in Exclude<keyof I_1["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
-        PriceSupplyDetails?: ({} & {} & { [K_8 in Exclude<keyof I_1["PriceSupplyDetails"], never>]: never; }) | undefined;
-    } & { [K_9 in Exclude<keyof I_1, keyof Distribution>]: never; }>(object: I_1): Distribution;
+        } & { [K_11 in Exclude<keyof I_1["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
+        TokenSaleDetails?: ({
+            QuantityStep?: string | undefined;
+            SellPricesPerSubunit?: {
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            }[] | undefined;
+            BaseDenom?: string | undefined;
+            MinAmount?: string | undefined;
+            StartDate?: number | undefined;
+            EndDate?: number | undefined;
+            ComplianceManagerContractAddr?: string | undefined;
+            BuyPricesPerSubunit?: {
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            }[] | undefined;
+            AssetRegistryContractAddr?: string | undefined;
+            AssetExtensionCode?: string | undefined;
+            AssetExtensionContractAddr?: string | undefined;
+            OrderHubContractAddr?: string | undefined;
+            TokenSaleContractAddr?: string | undefined;
+        } & {
+            QuantityStep?: string | undefined;
+            SellPricesPerSubunit?: ({
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            }[] & ({
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            } & {
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            } & { [K_12 in Exclude<keyof I_1["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_13 in Exclude<keyof I_1["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            }[]>]: never; }) | undefined;
+            BaseDenom?: string | undefined;
+            MinAmount?: string | undefined;
+            StartDate?: number | undefined;
+            EndDate?: number | undefined;
+            ComplianceManagerContractAddr?: string | undefined;
+            BuyPricesPerSubunit?: ({
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            }[] & ({
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            } & {
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            } & { [K_14 in Exclude<keyof I_1["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_15 in Exclude<keyof I_1["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
+                Denom?: string | undefined;
+                Amount?: string | undefined;
+            }[]>]: never; }) | undefined;
+            AssetRegistryContractAddr?: string | undefined;
+            AssetExtensionCode?: string | undefined;
+            AssetExtensionContractAddr?: string | undefined;
+            OrderHubContractAddr?: string | undefined;
+            TokenSaleContractAddr?: string | undefined;
+        } & { [K_16 in Exclude<keyof I_1["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
+    } & { [K_17 in Exclude<keyof I_1, keyof Distribution>]: never; }>(object: I_1): Distribution;
 };
-export declare const PriceSupply: {
-    encode(_: PriceSupply, writer?: _m0.Writer): _m0.Writer;
-    decode(input: _m0.Reader | Uint8Array, length?: number): PriceSupply;
-    fromJSON(_: any): PriceSupply;
-    toJSON(_: PriceSupply): unknown;
-    create<I extends {} & {} & { [K in Exclude<keyof I, never>]: never; }>(base?: I | undefined): PriceSupply;
-    fromPartial<I_1 extends {} & {} & { [K_1 in Exclude<keyof I_1, never>]: never; }>(_: I_1): PriceSupply;
+export declare const TokenSale: {
+    encode(message: TokenSale, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): TokenSale;
+    fromJSON(object: any): TokenSale;
+    toJSON(message: TokenSale): unknown;
+    create<I extends {
+        QuantityStep?: string | undefined;
+        SellPricesPerSubunit?: {
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        }[] | undefined;
+        BaseDenom?: string | undefined;
+        MinAmount?: string | undefined;
+        StartDate?: number | undefined;
+        EndDate?: number | undefined;
+        ComplianceManagerContractAddr?: string | undefined;
+        BuyPricesPerSubunit?: {
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        }[] | undefined;
+        AssetRegistryContractAddr?: string | undefined;
+        AssetExtensionCode?: string | undefined;
+        AssetExtensionContractAddr?: string | undefined;
+        OrderHubContractAddr?: string | undefined;
+        TokenSaleContractAddr?: string | undefined;
+    } & {
+        QuantityStep?: string | undefined;
+        SellPricesPerSubunit?: ({
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        }[] & ({
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        } & {
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        } & { [K in Exclude<keyof I["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_1 in Exclude<keyof I["SellPricesPerSubunit"], keyof {
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        }[]>]: never; }) | undefined;
+        BaseDenom?: string | undefined;
+        MinAmount?: string | undefined;
+        StartDate?: number | undefined;
+        EndDate?: number | undefined;
+        ComplianceManagerContractAddr?: string | undefined;
+        BuyPricesPerSubunit?: ({
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        }[] & ({
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        } & {
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        } & { [K_2 in Exclude<keyof I["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_3 in Exclude<keyof I["BuyPricesPerSubunit"], keyof {
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        }[]>]: never; }) | undefined;
+        AssetRegistryContractAddr?: string | undefined;
+        AssetExtensionCode?: string | undefined;
+        AssetExtensionContractAddr?: string | undefined;
+        OrderHubContractAddr?: string | undefined;
+        TokenSaleContractAddr?: string | undefined;
+    } & { [K_4 in Exclude<keyof I, keyof TokenSale>]: never; }>(base?: I | undefined): TokenSale;
+    fromPartial<I_1 extends {
+        QuantityStep?: string | undefined;
+        SellPricesPerSubunit?: {
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        }[] | undefined;
+        BaseDenom?: string | undefined;
+        MinAmount?: string | undefined;
+        StartDate?: number | undefined;
+        EndDate?: number | undefined;
+        ComplianceManagerContractAddr?: string | undefined;
+        BuyPricesPerSubunit?: {
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        }[] | undefined;
+        AssetRegistryContractAddr?: string | undefined;
+        AssetExtensionCode?: string | undefined;
+        AssetExtensionContractAddr?: string | undefined;
+        OrderHubContractAddr?: string | undefined;
+        TokenSaleContractAddr?: string | undefined;
+    } & {
+        QuantityStep?: string | undefined;
+        SellPricesPerSubunit?: ({
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        }[] & ({
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        } & {
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        } & { [K_5 in Exclude<keyof I_1["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_6 in Exclude<keyof I_1["SellPricesPerSubunit"], keyof {
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        }[]>]: never; }) | undefined;
+        BaseDenom?: string | undefined;
+        MinAmount?: string | undefined;
+        StartDate?: number | undefined;
+        EndDate?: number | undefined;
+        ComplianceManagerContractAddr?: string | undefined;
+        BuyPricesPerSubunit?: ({
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        }[] & ({
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        } & {
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        } & { [K_7 in Exclude<keyof I_1["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_8 in Exclude<keyof I_1["BuyPricesPerSubunit"], keyof {
+            Denom?: string | undefined;
+            Amount?: string | undefined;
+        }[]>]: never; }) | undefined;
+        AssetRegistryContractAddr?: string | undefined;
+        AssetExtensionCode?: string | undefined;
+        AssetExtensionContractAddr?: string | undefined;
+        OrderHubContractAddr?: string | undefined;
+        TokenSaleContractAddr?: string | undefined;
+    } & { [K_9 in Exclude<keyof I_1, keyof TokenSale>]: never; }>(object: I_1): TokenSale;
 };
 export declare const Crowdfund: {
     encode(message: Crowdfund, writer?: _m0.Writer): _m0.Writer;
@@ -7486,7 +8734,7 @@ export declare const Crowdfund: {
             Denom?: string | undefined;
             Amount?: string | undefined;
         }[] | undefined;
-        SellDenom?: string | undefined;
+        BaseDenom?: string | undefined;
         MinAmount?: string | undefined;
         StartDate?: number | undefined;
         EndDate?: number | undefined;
@@ -7514,7 +8762,7 @@ export declare const Crowdfund: {
             Denom?: string | undefined;
             Amount?: string | undefined;
         }[]>]: never; }) | undefined;
-        SellDenom?: string | undefined;
+        BaseDenom?: string | undefined;
         MinAmount?: string | undefined;
         StartDate?: number | undefined;
         EndDate?: number | undefined;
@@ -7534,7 +8782,7 @@ export declare const Crowdfund: {
             Denom?: string | undefined;
             Amount?: string | undefined;
         }[] | undefined;
-        SellDenom?: string | undefined;
+        BaseDenom?: string | undefined;
         MinAmount?: string | undefined;
         StartDate?: number | undefined;
         EndDate?: number | undefined;
@@ -7562,7 +8810,7 @@ export declare const Crowdfund: {
             Denom?: string | undefined;
             Amount?: string | undefined;
         }[]>]: never; }) | undefined;
-        SellDenom?: string | undefined;
+        BaseDenom?: string | undefined;
         MinAmount?: string | undefined;
         StartDate?: number | undefined;
         EndDate?: number | undefined;

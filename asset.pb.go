@@ -27,9 +27,9 @@ const (
 type DistributionType int32
 
 const (
-	DistributionType_DISTRIBUTION_TYPE_DO_NOT_USE  DistributionType = 0
-	DistributionType_DISTRIBUTION_TYPE_CROWDFUND   DistributionType = 1
-	DistributionType_DISTRIBUTION_TYPE_PRICESUPPLY DistributionType = 2
+	DistributionType_DISTRIBUTION_TYPE_DO_NOT_USE DistributionType = 0
+	DistributionType_DISTRIBUTION_TYPE_CROWDFUND  DistributionType = 1
+	DistributionType_DISTRIBUTION_TYPE_TOKENSALE  DistributionType = 2
 )
 
 // Enum value maps for DistributionType.
@@ -37,12 +37,12 @@ var (
 	DistributionType_name = map[int32]string{
 		0: "DISTRIBUTION_TYPE_DO_NOT_USE",
 		1: "DISTRIBUTION_TYPE_CROWDFUND",
-		2: "DISTRIBUTION_TYPE_PRICESUPPLY",
+		2: "DISTRIBUTION_TYPE_TOKENSALE",
 	}
 	DistributionType_value = map[string]int32{
-		"DISTRIBUTION_TYPE_DO_NOT_USE":  0,
-		"DISTRIBUTION_TYPE_CROWDFUND":   1,
-		"DISTRIBUTION_TYPE_PRICESUPPLY": 2,
+		"DISTRIBUTION_TYPE_DO_NOT_USE": 0,
+		"DISTRIBUTION_TYPE_CROWDFUND":  1,
+		"DISTRIBUTION_TYPE_TOKENSALE":  2,
 	}
 )
 
@@ -1648,12 +1648,12 @@ func (x *DecCoin) GetAmount() string {
 }
 
 type Distribution struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	Type               DistributionType       `protobuf:"varint,1,opt,name=Type,proto3,enum=asset.DistributionType" json:"Type,omitempty"`
-	CrowdfundDetails   *Crowdfund             `protobuf:"bytes,2,opt,name=CrowdfundDetails,proto3,oneof" json:"CrowdfundDetails,omitempty"`
-	PriceSupplyDetails *PriceSupply           `protobuf:"bytes,3,opt,name=PriceSupplyDetails,proto3,oneof" json:"PriceSupplyDetails,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Type             DistributionType       `protobuf:"varint,1,opt,name=Type,proto3,enum=asset.DistributionType" json:"Type,omitempty"`
+	CrowdfundDetails *Crowdfund             `protobuf:"bytes,2,opt,name=CrowdfundDetails,proto3,oneof" json:"CrowdfundDetails,omitempty"`
+	TokenSaleDetails *TokenSale             `protobuf:"bytes,3,opt,name=TokenSaleDetails,proto3,oneof" json:"TokenSaleDetails,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *Distribution) Reset() {
@@ -1700,33 +1700,59 @@ func (x *Distribution) GetCrowdfundDetails() *Crowdfund {
 	return nil
 }
 
-func (x *Distribution) GetPriceSupplyDetails() *PriceSupply {
+func (x *Distribution) GetTokenSaleDetails() *TokenSale {
 	if x != nil {
-		return x.PriceSupplyDetails
+		return x.TokenSaleDetails
 	}
 	return nil
 }
 
-type PriceSupply struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+type TokenSale struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The smallest allowable step for the base_denom
+	QuantityStep string `protobuf:"bytes,1,opt,name=QuantityStep,proto3" json:"QuantityStep,omitempty"`
+	// Price to purchase the tokenized asset with, per subunit
+	SellPricesPerSubunit []*DecCoin `protobuf:"bytes,2,rep,name=SellPricesPerSubunit,proto3" json:"SellPricesPerSubunit,omitempty"`
+	// Should be pre-issued (even with zero total supply)
+	BaseDenom string `protobuf:"bytes,3,opt,name=BaseDenom,proto3" json:"BaseDenom,omitempty"` // Base denom (RWA tokens)
+	// Minimum amount of base_denom to purchase
+	MinAmount string `protobuf:"bytes,4,opt,name=MinAmount,proto3" json:"MinAmount,omitempty"`
+	// Timestamp of when the token sale starts
+	StartDate int64 `protobuf:"varint,5,opt,name=StartDate,proto3" json:"StartDate,omitempty"`
+	// Timestamp of when the token sale ends
+	EndDate int64 `protobuf:"varint,6,opt,name=EndDate,proto3" json:"EndDate,omitempty"`
+	// Address of compliance manager contract. That contract is called to check if transfers are allowed or not
+	ComplianceManagerContractAddr string `protobuf:"bytes,7,opt,name=ComplianceManagerContractAddr,proto3" json:"ComplianceManagerContractAddr,omitempty"`
+	// Buy prices per subunit. If empty, buy is not allowed for this token sale
+	BuyPricesPerSubunit []*DecCoin `protobuf:"bytes,8,rep,name=BuyPricesPerSubunit,proto3" json:"BuyPricesPerSubunit,omitempty"`
+	// Address of the asset registry contract
+	AssetRegistryContractAddr string `protobuf:"bytes,9,opt,name=AssetRegistryContractAddr,proto3" json:"AssetRegistryContractAddr,omitempty"`
+	// Code of the asset extension
+	AssetExtensionCode string `protobuf:"bytes,10,opt,name=AssetExtensionCode,proto3" json:"AssetExtensionCode,omitempty"`
+	// Address of the asset extension contract
+	AssetExtensionContractAddr *string `protobuf:"bytes,11,opt,name=AssetExtensionContractAddr,proto3,oneof" json:"AssetExtensionContractAddr,omitempty"`
+	// Address of the order hub contract
+	OrderHubContractAddr string `protobuf:"bytes,12,opt,name=OrderHubContractAddr,proto3" json:"OrderHubContractAddr,omitempty"`
+	// Address of the token sale contract
+	TokenSaleContractAddr *string `protobuf:"bytes,13,opt,name=TokenSaleContractAddr,proto3,oneof" json:"TokenSaleContractAddr,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
-func (x *PriceSupply) Reset() {
-	*x = PriceSupply{}
+func (x *TokenSale) Reset() {
+	*x = TokenSale{}
 	mi := &file_asset_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *PriceSupply) String() string {
+func (x *TokenSale) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*PriceSupply) ProtoMessage() {}
+func (*TokenSale) ProtoMessage() {}
 
-func (x *PriceSupply) ProtoReflect() protoreflect.Message {
+func (x *TokenSale) ProtoReflect() protoreflect.Message {
 	mi := &file_asset_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1738,30 +1764,136 @@ func (x *PriceSupply) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use PriceSupply.ProtoReflect.Descriptor instead.
-func (*PriceSupply) Descriptor() ([]byte, []int) {
+// Deprecated: Use TokenSale.ProtoReflect.Descriptor instead.
+func (*TokenSale) Descriptor() ([]byte, []int) {
 	return file_asset_proto_rawDescGZIP(), []int{12}
 }
 
+func (x *TokenSale) GetQuantityStep() string {
+	if x != nil {
+		return x.QuantityStep
+	}
+	return ""
+}
+
+func (x *TokenSale) GetSellPricesPerSubunit() []*DecCoin {
+	if x != nil {
+		return x.SellPricesPerSubunit
+	}
+	return nil
+}
+
+func (x *TokenSale) GetBaseDenom() string {
+	if x != nil {
+		return x.BaseDenom
+	}
+	return ""
+}
+
+func (x *TokenSale) GetMinAmount() string {
+	if x != nil {
+		return x.MinAmount
+	}
+	return ""
+}
+
+func (x *TokenSale) GetStartDate() int64 {
+	if x != nil {
+		return x.StartDate
+	}
+	return 0
+}
+
+func (x *TokenSale) GetEndDate() int64 {
+	if x != nil {
+		return x.EndDate
+	}
+	return 0
+}
+
+func (x *TokenSale) GetComplianceManagerContractAddr() string {
+	if x != nil {
+		return x.ComplianceManagerContractAddr
+	}
+	return ""
+}
+
+func (x *TokenSale) GetBuyPricesPerSubunit() []*DecCoin {
+	if x != nil {
+		return x.BuyPricesPerSubunit
+	}
+	return nil
+}
+
+func (x *TokenSale) GetAssetRegistryContractAddr() string {
+	if x != nil {
+		return x.AssetRegistryContractAddr
+	}
+	return ""
+}
+
+func (x *TokenSale) GetAssetExtensionCode() string {
+	if x != nil {
+		return x.AssetExtensionCode
+	}
+	return ""
+}
+
+func (x *TokenSale) GetAssetExtensionContractAddr() string {
+	if x != nil && x.AssetExtensionContractAddr != nil {
+		return *x.AssetExtensionContractAddr
+	}
+	return ""
+}
+
+func (x *TokenSale) GetOrderHubContractAddr() string {
+	if x != nil {
+		return x.OrderHubContractAddr
+	}
+	return ""
+}
+
+func (x *TokenSale) GetTokenSaleContractAddr() string {
+	if x != nil && x.TokenSaleContractAddr != nil {
+		return *x.TokenSaleContractAddr
+	}
+	return ""
+}
+
 type Crowdfund struct {
-	state                         protoimpl.MessageState `protogen:"open.v1"`
-	QuantityStep                  string                 `protobuf:"bytes,1,opt,name=QuantityStep,proto3" json:"QuantityStep,omitempty"`
-	PricesPerSubunit              []*DecCoin             `protobuf:"bytes,2,rep,name=PricesPerSubunit,proto3" json:"PricesPerSubunit,omitempty"`
-	SellDenom                     string                 `protobuf:"bytes,3,opt,name=SellDenom,proto3" json:"SellDenom,omitempty"`
-	MinAmount                     string                 `protobuf:"bytes,4,opt,name=MinAmount,proto3" json:"MinAmount,omitempty"`
-	StartDate                     int64                  `protobuf:"varint,5,opt,name=StartDate,proto3" json:"StartDate,omitempty"`
-	EndDate                       int64                  `protobuf:"varint,6,opt,name=EndDate,proto3" json:"EndDate,omitempty"`
-	MinThreshold                  string                 `protobuf:"bytes,7,opt,name=MinThreshold,proto3" json:"MinThreshold,omitempty"`
-	MaxThreshold                  string                 `protobuf:"bytes,8,opt,name=MaxThreshold,proto3" json:"MaxThreshold,omitempty"`
-	AllowOrderCancellation        bool                   `protobuf:"varint,9,opt,name=AllowOrderCancellation,proto3" json:"AllowOrderCancellation,omitempty"`
-	ComplianceManagerContractAddr string                 `protobuf:"bytes,10,opt,name=ComplianceManagerContractAddr,proto3" json:"ComplianceManagerContractAddr,omitempty"`
-	OrderHubContractAddr          string                 `protobuf:"bytes,11,opt,name=OrderHubContractAddr,proto3" json:"OrderHubContractAddr,omitempty"`
-	CrowdfundContractAddr         *string                `protobuf:"bytes,12,opt,name=CrowdfundContractAddr,proto3,oneof" json:"CrowdfundContractAddr,omitempty"`
-	AssetRegistryContractAddr     string                 `protobuf:"bytes,13,opt,name=AssetRegistryContractAddr,proto3" json:"AssetRegistryContractAddr,omitempty"`
-	AssetExtensionCode            string                 `protobuf:"bytes,14,opt,name=AssetExtensionCode,proto3" json:"AssetExtensionCode,omitempty"`
-	AssetExtensionContractAddr    *string                `protobuf:"bytes,15,opt,name=AssetExtensionContractAddr,proto3,oneof" json:"AssetExtensionContractAddr,omitempty"`
-	unknownFields                 protoimpl.UnknownFields
-	sizeCache                     protoimpl.SizeCache
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The smallest allowable step for the base_denom
+	QuantityStep string `protobuf:"bytes,1,opt,name=QuantityStep,proto3" json:"QuantityStep,omitempty"`
+	// Price to purchase the tokenized asset with, per subunit
+	PricesPerSubunit []*DecCoin `protobuf:"bytes,2,rep,name=PricesPerSubunit,proto3" json:"PricesPerSubunit,omitempty"`
+	// Should be pre-issued (even with zero total supply)
+	BaseDenom string `protobuf:"bytes,3,opt,name=BaseDenom,proto3" json:"BaseDenom,omitempty"` // Base denom (RWA tokens)
+	// Minimum amount of base_denom to purchase
+	MinAmount string `protobuf:"bytes,4,opt,name=MinAmount,proto3" json:"MinAmount,omitempty"`
+	// Timestamp of when the token sale starts
+	StartDate int64 `protobuf:"varint,5,opt,name=StartDate,proto3" json:"StartDate,omitempty"`
+	// Timestamp of when the token sale ends
+	EndDate int64 `protobuf:"varint,6,opt,name=EndDate,proto3" json:"EndDate,omitempty"`
+	// Minimum threshold for the token sale
+	MinThreshold string `protobuf:"bytes,7,opt,name=MinThreshold,proto3" json:"MinThreshold,omitempty"`
+	// Maximum threshold for the token sale
+	MaxThreshold string `protobuf:"bytes,8,opt,name=MaxThreshold,proto3" json:"MaxThreshold,omitempty"`
+	// Allow order cancellation
+	AllowOrderCancellation bool `protobuf:"varint,9,opt,name=AllowOrderCancellation,proto3" json:"AllowOrderCancellation,omitempty"`
+	// Address of the compliance manager contract
+	ComplianceManagerContractAddr string `protobuf:"bytes,10,opt,name=ComplianceManagerContractAddr,proto3" json:"ComplianceManagerContractAddr,omitempty"`
+	// Address of the order hub contract
+	OrderHubContractAddr string `protobuf:"bytes,11,opt,name=OrderHubContractAddr,proto3" json:"OrderHubContractAddr,omitempty"`
+	// Address of the crowdfund contract
+	CrowdfundContractAddr *string `protobuf:"bytes,12,opt,name=CrowdfundContractAddr,proto3,oneof" json:"CrowdfundContractAddr,omitempty"`
+	// Address of the asset registry contract
+	AssetRegistryContractAddr string `protobuf:"bytes,13,opt,name=AssetRegistryContractAddr,proto3" json:"AssetRegistryContractAddr,omitempty"`
+	// Code of the asset extension
+	AssetExtensionCode string `protobuf:"bytes,14,opt,name=AssetExtensionCode,proto3" json:"AssetExtensionCode,omitempty"`
+	// Address of the asset extension contract
+	AssetExtensionContractAddr *string `protobuf:"bytes,15,opt,name=AssetExtensionContractAddr,proto3,oneof" json:"AssetExtensionContractAddr,omitempty"`
+	unknownFields              protoimpl.UnknownFields
+	sizeCache                  protoimpl.SizeCache
 }
 
 func (x *Crowdfund) Reset() {
@@ -1808,9 +1940,9 @@ func (x *Crowdfund) GetPricesPerSubunit() []*DecCoin {
 	return nil
 }
 
-func (x *Crowdfund) GetSellDenom() string {
+func (x *Crowdfund) GetBaseDenom() string {
 	if x != nil {
-		return x.SellDenom
+		return x.BaseDenom
 	}
 	return ""
 }
@@ -3136,18 +3268,34 @@ const file_asset_proto_rawDesc = "" +
 	"\t_Location\"7\n" +
 	"\aDecCoin\x12\x14\n" +
 	"\x05Denom\x18\x01 \x01(\tR\x05Denom\x12\x16\n" +
-	"\x06Amount\x18\x02 \x01(\tR\x06Amount\"\xf3\x01\n" +
+	"\x06Amount\x18\x02 \x01(\tR\x06Amount\"\xeb\x01\n" +
 	"\fDistribution\x12+\n" +
 	"\x04Type\x18\x01 \x01(\x0e2\x17.asset.DistributionTypeR\x04Type\x12A\n" +
-	"\x10CrowdfundDetails\x18\x02 \x01(\v2\x10.asset.CrowdfundH\x00R\x10CrowdfundDetails\x88\x01\x01\x12G\n" +
-	"\x12PriceSupplyDetails\x18\x03 \x01(\v2\x12.asset.PriceSupplyH\x01R\x12PriceSupplyDetails\x88\x01\x01B\x13\n" +
-	"\x11_CrowdfundDetailsB\x15\n" +
-	"\x13_PriceSupplyDetails\"\r\n" +
-	"\vPriceSupply\"\x80\x06\n" +
+	"\x10CrowdfundDetails\x18\x02 \x01(\v2\x10.asset.CrowdfundH\x00R\x10CrowdfundDetails\x88\x01\x01\x12A\n" +
+	"\x10TokenSaleDetails\x18\x03 \x01(\v2\x10.asset.TokenSaleH\x01R\x10TokenSaleDetails\x88\x01\x01B\x13\n" +
+	"\x11_CrowdfundDetailsB\x13\n" +
+	"\x11_TokenSaleDetails\"\xca\x05\n" +
+	"\tTokenSale\x12\"\n" +
+	"\fQuantityStep\x18\x01 \x01(\tR\fQuantityStep\x12B\n" +
+	"\x14SellPricesPerSubunit\x18\x02 \x03(\v2\x0e.asset.DecCoinR\x14SellPricesPerSubunit\x12\x1c\n" +
+	"\tBaseDenom\x18\x03 \x01(\tR\tBaseDenom\x12\x1c\n" +
+	"\tMinAmount\x18\x04 \x01(\tR\tMinAmount\x12\x1c\n" +
+	"\tStartDate\x18\x05 \x01(\x03R\tStartDate\x12\x18\n" +
+	"\aEndDate\x18\x06 \x01(\x03R\aEndDate\x12D\n" +
+	"\x1dComplianceManagerContractAddr\x18\a \x01(\tR\x1dComplianceManagerContractAddr\x12@\n" +
+	"\x13BuyPricesPerSubunit\x18\b \x03(\v2\x0e.asset.DecCoinR\x13BuyPricesPerSubunit\x12<\n" +
+	"\x19AssetRegistryContractAddr\x18\t \x01(\tR\x19AssetRegistryContractAddr\x12.\n" +
+	"\x12AssetExtensionCode\x18\n" +
+	" \x01(\tR\x12AssetExtensionCode\x12C\n" +
+	"\x1aAssetExtensionContractAddr\x18\v \x01(\tH\x00R\x1aAssetExtensionContractAddr\x88\x01\x01\x122\n" +
+	"\x14OrderHubContractAddr\x18\f \x01(\tR\x14OrderHubContractAddr\x129\n" +
+	"\x15TokenSaleContractAddr\x18\r \x01(\tH\x01R\x15TokenSaleContractAddr\x88\x01\x01B\x1d\n" +
+	"\x1b_AssetExtensionContractAddrB\x18\n" +
+	"\x16_TokenSaleContractAddr\"\x80\x06\n" +
 	"\tCrowdfund\x12\"\n" +
 	"\fQuantityStep\x18\x01 \x01(\tR\fQuantityStep\x12:\n" +
 	"\x10PricesPerSubunit\x18\x02 \x03(\v2\x0e.asset.DecCoinR\x10PricesPerSubunit\x12\x1c\n" +
-	"\tSellDenom\x18\x03 \x01(\tR\tSellDenom\x12\x1c\n" +
+	"\tBaseDenom\x18\x03 \x01(\tR\tBaseDenom\x12\x1c\n" +
 	"\tMinAmount\x18\x04 \x01(\tR\tMinAmount\x12\x1c\n" +
 	"\tStartDate\x18\x05 \x01(\x03R\tStartDate\x12\x18\n" +
 	"\aEndDate\x18\x06 \x01(\x03R\aEndDate\x12\"\n" +
@@ -3304,11 +3452,11 @@ const file_asset_proto_rawDesc = "" +
 	"\tReference\x18\x01 \x01(\tR\tReference\x12\x1c\n" +
 	"\tExtension\x18\x02 \x01(\tR\tExtension\x12\x17\n" +
 	"\x04Name\x18\x03 \x01(\tH\x00R\x04Name\x88\x01\x01B\a\n" +
-	"\x05_Name*x\n" +
+	"\x05_Name*v\n" +
 	"\x10DistributionType\x12 \n" +
 	"\x1cDISTRIBUTION_TYPE_DO_NOT_USE\x10\x00\x12\x1f\n" +
-	"\x1bDISTRIBUTION_TYPE_CROWDFUND\x10\x01\x12!\n" +
-	"\x1dDISTRIBUTION_TYPE_PRICESUPPLY\x10\x02*u\n" +
+	"\x1bDISTRIBUTION_TYPE_CROWDFUND\x10\x01\x12\x1f\n" +
+	"\x1bDISTRIBUTION_TYPE_TOKENSALE\x10\x02*u\n" +
 	"\bLinkType\x12\x18\n" +
 	"\x14LINK_TYPE_DO_NOT_USE\x10\x00\x12\v\n" +
 	"\aWEBSITE\x10\x01\x12\n" +
@@ -3395,7 +3543,7 @@ var file_asset_proto_goTypes = []any{
 	(*Vehicle)(nil),              // 16: asset.Vehicle
 	(*DecCoin)(nil),              // 17: asset.DecCoin
 	(*Distribution)(nil),         // 18: asset.Distribution
-	(*PriceSupply)(nil),          // 19: asset.PriceSupply
+	(*TokenSale)(nil),            // 19: asset.TokenSale
 	(*Crowdfund)(nil),            // 20: asset.Crowdfund
 	(*IntellectualProperty)(nil), // 21: asset.IntellectualProperty
 	(*InvestmentFund)(nil),       // 22: asset.InvestmentFund
@@ -3439,19 +3587,21 @@ var file_asset_proto_depIdxs = []int32{
 	10, // 23: asset.UserAssetLists.UserAssetLists:type_name -> asset.UserAssetList
 	0,  // 24: asset.Distribution.Type:type_name -> asset.DistributionType
 	20, // 25: asset.Distribution.CrowdfundDetails:type_name -> asset.Crowdfund
-	19, // 26: asset.Distribution.PriceSupplyDetails:type_name -> asset.PriceSupply
-	17, // 27: asset.Crowdfund.PricesPerSubunit:type_name -> asset.DecCoin
-	34, // 28: asset.FinancialProperties.Network:type_name -> metadata.Network
-	30, // 29: asset.Description.Logo:type_name -> asset.LogoFile
-	27, // 30: asset.ExternalResources.Links:type_name -> asset.Link
-	28, // 31: asset.ExternalResources.Socials:type_name -> asset.SocialMedia
-	1,  // 32: asset.Link.Type:type_name -> asset.LinkType
-	2,  // 33: asset.SocialMedia.Type:type_name -> asset.SocialMediaType
-	34, // [34:34] is the sub-list for method output_type
-	34, // [34:34] is the sub-list for method input_type
-	34, // [34:34] is the sub-list for extension type_name
-	34, // [34:34] is the sub-list for extension extendee
-	0,  // [0:34] is the sub-list for field type_name
+	19, // 26: asset.Distribution.TokenSaleDetails:type_name -> asset.TokenSale
+	17, // 27: asset.TokenSale.SellPricesPerSubunit:type_name -> asset.DecCoin
+	17, // 28: asset.TokenSale.BuyPricesPerSubunit:type_name -> asset.DecCoin
+	17, // 29: asset.Crowdfund.PricesPerSubunit:type_name -> asset.DecCoin
+	34, // 30: asset.FinancialProperties.Network:type_name -> metadata.Network
+	30, // 31: asset.Description.Logo:type_name -> asset.LogoFile
+	27, // 32: asset.ExternalResources.Links:type_name -> asset.Link
+	28, // 33: asset.ExternalResources.Socials:type_name -> asset.SocialMedia
+	1,  // 34: asset.Link.Type:type_name -> asset.LinkType
+	2,  // 35: asset.SocialMedia.Type:type_name -> asset.SocialMediaType
+	36, // [36:36] is the sub-list for method output_type
+	36, // [36:36] is the sub-list for method input_type
+	36, // [36:36] is the sub-list for extension type_name
+	36, // [36:36] is the sub-list for extension extendee
+	0,  // [0:36] is the sub-list for field type_name
 }
 
 func init() { file_asset_proto_init() }
@@ -3467,6 +3617,7 @@ func file_asset_proto_init() {
 	file_asset_proto_msgTypes[8].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[9].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[11].OneofWrappers = []any{}
+	file_asset_proto_msgTypes[12].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[13].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[14].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[15].OneofWrappers = []any{}

@@ -161,33 +161,74 @@ message DecCoin {
 message Distribution {
     DistributionType Type = 1;
     optional Crowdfund CrowdfundDetails = 2;
-    optional PriceSupply PriceSupplyDetails = 3;
+    optional TokenSale TokenSaleDetails = 3;
 }
 
 enum DistributionType {
     DISTRIBUTION_TYPE_DO_NOT_USE = 0;
     DISTRIBUTION_TYPE_CROWDFUND = 1;
-    DISTRIBUTION_TYPE_PRICESUPPLY = 2;
+    DISTRIBUTION_TYPE_TOKENSALE = 2;
 }
 
-message PriceSupply {
+message TokenSale {
+    // The smallest allowable step for the base_denom
+    string QuantityStep = 1;
+    // Price to purchase the tokenized asset with, per subunit
+    repeated DecCoin SellPricesPerSubunit = 2;
+    // Should be pre-issued (even with zero total supply)
+    string BaseDenom = 3; // Base denom (RWA tokens)
+    // Minimum amount of base_denom to purchase
+    string MinAmount = 4;
+    // Timestamp of when the token sale starts
+    int64 StartDate = 5;
+    // Timestamp of when the token sale ends
+    int64 EndDate = 6;
+    // Address of compliance manager contract. That contract is called to check if transfers are allowed or not
+    string ComplianceManagerContractAddr = 7;
+    // Buy prices per subunit. If empty, buy is not allowed for this token sale
+    repeated DecCoin BuyPricesPerSubunit = 8;
+    // Address of the asset registry contract
+    string AssetRegistryContractAddr = 9;
+    // Code of the asset extension
+    string AssetExtensionCode = 10;
+    // Address of the asset extension contract
+    optional string AssetExtensionContractAddr = 11;
+    // Address of the order hub contract
+    string OrderHubContractAddr = 12;
+    // Address of the token sale contract
+    optional string TokenSaleContractAddr = 13;
 }
 
 message Crowdfund {
+    // The smallest allowable step for the base_denom   
     string QuantityStep = 1;
+    // Price to purchase the tokenized asset with, per subunit
     repeated DecCoin PricesPerSubunit = 2;
-    string SellDenom = 3;
+    // Should be pre-issued (even with zero total supply)
+    string BaseDenom = 3; // Base denom (RWA tokens)
+    // Minimum amount of base_denom to purchase
     string MinAmount = 4;
+    // Timestamp of when the token sale starts
     int64 StartDate = 5;
+    // Timestamp of when the token sale ends
     int64 EndDate = 6;
+    // Minimum threshold for the token sale
     string MinThreshold = 7;
+    // Maximum threshold for the token sale
     string MaxThreshold = 8;
+    // Allow order cancellation
     bool AllowOrderCancellation = 9;
+    // Address of the compliance manager contract
     string ComplianceManagerContractAddr = 10;
+    // Address of the order hub contract
     string OrderHubContractAddr = 11;
+    // Address of the crowdfund contract
     optional string CrowdfundContractAddr = 12;
+    // Address of the asset registry contract
     string AssetRegistryContractAddr = 13;
+    // Code of the asset extension
     string AssetExtensionCode = 14;
+    // Address of the asset extension contract
     optional string AssetExtensionContractAddr = 15;
 }
 
