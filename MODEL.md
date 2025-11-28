@@ -27,6 +27,8 @@
     - [ExternalResources](#externalresources)
     - [Link](#link)
     - [SocialMedia](#socialmedia)
+    - [IssuerDetails](#issuerdetails)
+    - [LogoFile](#logofile)
   - [Enums](#enums)
     - [DistributionType](#distributiontype)
     - [LinkType](#linktype)
@@ -36,14 +38,14 @@
 
 ## Overview
 
-The Asset provides a comprehensive data structure for managing asset within the system. This model supports pagination support: provides offset-based pagination for collections, identification: provides unique identifiers for asset, status management: tracks status for administrative control, and more. 
+The Asset provides a comprehensive data structure for managing asset within the system. This model supports identification: provides unique identifiers for asset, organizational context: links items to organizations via organizationid, status management: tracks status for administrative control, and more. 
 
 Key features of the {model_name.lower()} model include:
-- **Pagination Support**: Provides offset-based pagination for collections
 - **Identification**: Provides unique identifiers for asset
+- **Organizational Context**: Links items to organizations via OrganizationID
 - **Status Management**: Tracks status for administrative control
 - **Metadata and Audit**: Includes metadata and audit trails for tracking changes
-- **Organizational Context**: Links items to organizations via OrganizationID
+- **Pagination Support**: Provides offset-based pagination for collections
 
 ## asset.proto
 
@@ -66,6 +68,15 @@ The `AssetDetails` message contains all the core information about a asset, incl
 
 | Field Name | Type | Required/Optional | Description |
 |------------|------|-------------------|-------------|
+| ID | `string` | Required | Key string to prevent composing the key all the time and reduce errors |
+| OrganizationID | `string` | Required | UUID of the organization this item belongs to |
+| Status | `AssetStatus` | Required | Current status of this item (see related enum) |
+| Reason | `Reason` | Optional | Reason field |
+| Type | `AssetType` | Required | Type classification for this item (see related enum) |
+| Denom | `denom.Denom` | Required | Denom field |
+| IsIssuedInSmartContract | `bool` | Required | IsIssuedInSmartContract field |
+| SmartContractIssuerAddr | `string` | Required | SmartContractIssuerAddr value |
+| RealEstateDetails | `RealEstate` | Optional | RealEstateDetails field |
 | StableCoinDetails | `StableCoin` | Optional | StableCoinDetails field |
 | CommodityDetails | `Commodity` | Optional | CommodityDetails field |
 | CollectibleDetails | `Collectible` | Optional | CollectibleDetails field |
@@ -81,9 +92,13 @@ The `AssetDetails` message contains all the core information about a asset, incl
 **Use Cases:**
 - Creating new asset records with complete information
 - Updating asset information
+- Associating items with specific organizations
+- Tracking status for administrative purposes
 
 **Important Notes:**
-- This message provides the assetdetails representation
+- The `ID` field must match a valid identifier format
+- The `OrganizationID` must be a valid UUID format
+- The `Status` field determines the current state of this item
 
 #### Asset {#asset}
 
@@ -93,6 +108,8 @@ The `Asset` message provides asset data and operations.
 
 | Field Name | Type | Required/Optional | Description |
 |------------|------|-------------------|-------------|
+| AssetDetails | `AssetDetails` | Required | AssetDetails field |
+| MetaData | `metadata.MetaData` | Required | Metadata information including network and version details |
 | Audit | `audit.Audit` | Required | Audit trail information for tracking changes and access |
 | IssuerDetails | `IssuerDetails` | Required | IssuerDetails field |
 
@@ -179,6 +196,8 @@ The `RealEstate` message provides realestate data and operations.
 
 | Field Name | Type | Required/Optional | Description |
 |------------|------|-------------------|-------------|
+| Address | `string` | Required | Address value |
+| Bathrooms | `int32` | Optional | Bathrooms field |
 | Bedrooms | `int32` | Optional | Bedrooms field |
 | Latitude | `float` | Required | Latitude field |
 | Longitude | `float` | Required | Longitude field |
@@ -369,6 +388,7 @@ The `TokenSale` message provides tokensale data and operations.
 
 | Field Name | Type | Required/Optional | Description |
 |------------|------|-------------------|-------------|
+| QuantityStep | `string` | Required | QuantityStep value |
 | SellPricesPerSubunit | `DecCoin` | Optional | SellPricesPerSubunit field |
 | BaseDenom | `string` | Required | Base denom (RWA tokens) |
 | MinAmount | `string` | Required | MinAmount value |
@@ -503,6 +523,8 @@ The `FinancialProperties` message represents a collection of financialpropertie 
 
 | Field Name | Type | Required/Optional | Description |
 |------------|------|-------------------|-------------|
+| Symbol | `string` | Required | Symbol value |
+| Issuer | `string` | Required | Issuer value |
 | JurisdictionIDs | `string` | Optional | Unique identifier for the jurisdictions |
 | JurisdictionRestrictions | `string` | Optional | JurisdictionRestrictions value |
 | RedemptionTerms | `string` | Optional | RedemptionTerms value |
@@ -543,7 +565,8 @@ The `Description` message provides description data and operations.
 
 | Field Name | Type | Required/Optional | Description |
 |------------|------|-------------------|-------------|
-| Description | `tring` | Required | Additional descriptive information about this item |
+| Name | `string` | Required | The name of this item |
+| Description | `string` | Required | Additional descriptive information about this item |
 | Logo | `LogoFile` | Required | Logo field |
 | AssetID | `string` | Required | Unique identifier for the asset |
 | URL | `string` | Required | URL value |
@@ -570,6 +593,7 @@ The `ExternalResources` message represents a collection of externalresource with
 
 | Field Name | Type | Required/Optional | Description |
 |------------|------|-------------------|-------------|
+| Links | `Link` | Optional | Flexible list of links with type and URL |
 | Socials | `SocialMedia` | Optional | Flexible list of social media with type and URL |
 
 **Use Cases:**
@@ -617,6 +641,61 @@ The `SocialMedia` message provides socialmedia data and operations.
 
 **Important Notes:**
 - This message provides the socialmedia representation
+
+#### IssuerDetails {#issuerdetails}
+
+The `IssuerDetails` message contains all the core information about a issuer, including essential details and metadata.
+
+**Field Table:**
+
+| Field Name | Type | Required/Optional | Description |
+|------------|------|-------------------|-------------|
+| Name | `string` | Required | The name of this item |
+| Description | `string` | Required | Additional descriptive information about this item |
+| Image | `string` | Required | Image value |
+| ExternalUrl | `string` | Required | ExternalUrl value |
+| AddressLine1 | `string` | Required | AddressLine1 value |
+| AddressLine2 | `string` | Optional | AddressLine2 value |
+| City | `string` | Required | City value |
+| Region | `string` | Optional | Region value |
+| PostalCode | `string` | Optional | PostalCode value |
+| Country | `string` | Required | Country value |
+| YearFounded | `int32` | Required | YearFounded field |
+| Licensed | `bool` | Required | Licensed field |
+| LicenseCountry | `string` | Optional | LicenseCountry value |
+| LicenseNumber | `string` | Optional | LicenseNumber value |
+| Phone | `string` | Optional | Phone value |
+| Email | `string` | Optional | Email value |
+| SocialMediaLinks | `string` | Optional | SocialMediaLinks value |
+| KeyClients | `string` | Optional | KeyClients value |
+| Press | `string` | Optional | Press value |
+
+**Use Cases:**
+- Creating new issuer records with complete information
+- Updating issuer information
+
+**Important Notes:**
+- This message provides the issuerdetails representation
+
+#### LogoFile {#logofile}
+
+The `LogoFile` message provides logofile data and operations.
+
+**Field Table:**
+
+| Field Name | Type | Required/Optional | Description |
+|------------|------|-------------------|-------------|
+| Reference | `string` | Required | The reference to the file |
+| Extension | `string` | Required | Extension value |
+| Name | `string` | Optional | User defined name of the file, used as a "description" and not to reference the file |
+
+**Use Cases:**
+- Creating new logofile records
+- Retrieving logofile information
+- Updating logofile data
+
+**Important Notes:**
+- This message provides the logofile representation
 
 ### Enums
 
