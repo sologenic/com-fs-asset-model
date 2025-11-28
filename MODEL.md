@@ -36,10 +36,9 @@
 
 ## Overview
 
-The Asset provides a comprehensive data structure for managing asset within the system. This model supports pagination support: provides offset-based pagination for collections, identification: provides unique identifiers for asset, status management: tracks status for administrative control, and more. 
+The Asset provides a comprehensive data structure for managing asset within the system. This model supports identification: provides unique identifiers for asset, status management: tracks status for administrative control, metadata and audit: includes metadata and audit trails for tracking changes, and more. 
 
 Key features of the {model_name.lower()} model include:
-- **Pagination Support**: Provides offset-based pagination for collections
 - **Identification**: Provides unique identifiers for asset
 - **Status Management**: Tracks status for administrative control
 - **Metadata and Audit**: Includes metadata and audit trails for tracking changes
@@ -73,9 +72,6 @@ The `AssetDetails` message contains all the core information about a asset, incl
 | IntellectualPropertyDetails | `IntellectualProperty` | Optional | IntellectualPropertyDetails field |
 | InvestmentFundDetails | `InvestmentFund` | Optional | InvestmentFundDetails field |
 | EquityDetails | `Equity` | Optional | EquityDetails field |
-| FinancialProperties | `FinancialProperties` | Optional | FinancialProperties field |
-| Description | `Description` | Optional | Additional descriptive information about this item |
-| ExternalResources | `ExternalResources` | Optional | ExternalResources field |
 | DistributionDetails | `Distribution` | Optional | DistributionDetails field |
 
 **Use Cases:**
@@ -113,17 +109,14 @@ The `Assets` message represents a collection of asset with pagination support fo
 | Field Name | Type | Required/Optional | Description |
 |------------|------|-------------------|-------------|
 | Assets | `Asset` | Optional | Assets field |
-| Offset | `int32` | Optional | Offset field |
 
 **Use Cases:**
 - Returning paginated lists of asset from queries or searches
 - Implementing pagination in asset listing APIs
 - Handling large assets efficiently
-- Providing continuation tokens for subsequent page requests
 
 **Important Notes:**
-- If `Offset` is not set (or is 0), it indicates that all available items have been returned
-- Clients should use the `Offset` value in subsequent requests to retrieve the next page of results
+- This message provides the assets representation
 
 #### UserAssetList {#userassetlist}
 
@@ -370,7 +363,6 @@ The `TokenSale` message provides tokensale data and operations.
 | Field Name | Type | Required/Optional | Description |
 |------------|------|-------------------|-------------|
 | SellPricesPerSubunit | `DecCoin` | Optional | SellPricesPerSubunit field |
-| BaseDenom | `string` | Required | BaseDenom value |
 | MinAmount | `string` | Required | MinAmount value |
 | StartDate | `int64` | Required | StartDate field |
 | EndDate | `int64` | Required | EndDate field |
@@ -400,7 +392,6 @@ The `Crowdfund` message provides crowdfund data and operations.
 |------------|------|-------------------|-------------|
 | QuantityStep | `string` | Required | QuantityStep value |
 | PricesPerSubunit | `DecCoin` | Optional | PricesPerSubunit field |
-| BaseDenom | `string` | Required | BaseDenom value |
 | MinAmount | `string` | Required | MinAmount value |
 | StartDate | `int64` | Required | StartDate field |
 | EndDate | `int64` | Required | EndDate field |
@@ -566,57 +557,13 @@ The `Description` message provides description data and operations.
 
 The `ExternalResources` message represents a collection of externalresource with pagination support for handling large result sets.
 
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Socials | `SocialMedia` | Optional | Socials field |
-
-**Use Cases:**
-- Returning paginated lists of externalresource from queries or searches
-- Implementing pagination in externalresource listing APIs
-- Handling large externalresources efficiently
-
-**Important Notes:**
-- This message provides the externalresources representation
-
 #### Link {#link}
 
 The `Link` message provides link data and operations.
 
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Type | `LinkType` | Required | Type classification for this item (see related enum) |
-| URL | `string` | Required | URL value |
-
-**Use Cases:**
-- Creating new link records
-- Retrieving link information
-- Updating link data
-
-**Important Notes:**
-- This message provides the link representation
-
 #### SocialMedia {#socialmedia}
 
 The `SocialMedia` message provides socialmedia data and operations.
-
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Type | `SocialMediaType` | Required | Type classification for this item (see related enum) |
-| URL | `string` | Required | URL value |
-
-**Use Cases:**
-- Creating new socialmedia records
-- Retrieving socialmedia information
-- Updating socialmedia data
-
-**Important Notes:**
-- This message provides the socialmedia representation
 
 ### Enums
 
