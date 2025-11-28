@@ -32,6 +32,10 @@
   - [Enums](#enums)
     - [DistributionType](#distributiontype)
     - [LinkType](#linktype)
+    - [SocialMediaType](#socialmediatype)
+    - [AssetStatus](#assetstatus)
+    - [Reason](#reason)
+    - [AssetType](#assettype)
     - [UserAssetStatus](#userassetstatus)
 - [Version Information](#version-information)
 - [Support](#support)
@@ -707,11 +711,9 @@ The `DistributionType` enum defines the possible states or types for asset, allo
 
 | Value Name | Number | Description |
 |------------|--------|-------------|
-| Documents | 7 | Documents value |
-| Images | 8 | Images value |
-| Vertical | 9 | Vertical value |
-| CreatedAt | 10 | CreatedAt value |
-| UpdatedAt | 11 | UpdatedAt value |
+| DISTRIBUTION_TYPE_DO_NOT_USE | 0 | Default/unused value (protobuf convention) |
+| DISTRIBUTION_TYPE_CROWDFUND | 1 | Distribution Type Crowdfund state or type |
+| DISTRIBUTION_TYPE_TOKENSALE | 2 | Distribution Type Tokensale state or type |
 
 **Use Cases:**
 - Setting distributiontype for items
@@ -719,6 +721,7 @@ The `DistributionType` enum defines the possible states or types for asset, allo
 - Enforcing business logic based on distributiontype
 
 **Important Notes:**
+- Values with `NOT_USED` prefix or number 0 follow protobuf conventions for default enum values and should not be actively used
 - Only valid distributiontype values should be used in production code
 - DistributionType changes should be tracked in audit trails for compliance purposes
 
@@ -730,11 +733,13 @@ The `LinkType` enum defines the possible states or types for asset, allowing for
 
 | Value Name | Number | Description |
 |------------|--------|-------------|
-| E | 5 | E state or type |
-| VEHICLE_INDUSTRIAL_EQUIPMENT | 6 | Vehicle Industrial Equipment state or type |
-| INTELLECTUAL_PROPERTY | 7 | Intellectual Property state or type |
-| REAL_ESTATE | 8 | Real Estate state or type |
-| EQUITY | 9 | Equity state or type |
+| LINK_TYPE_DO_NOT_USE | 0 | Default/unused value (protobuf convention) |
+| WEBSITE | 1 | Website state or type |
+| GITHUB | 2 | Github state or type |
+| WHITEPAPER | 3 | Whitepaper state or type |
+| DOCS | 4 | Docs state or type |
+| EXPLORER | 5 | Explorer state or type |
+| GOVERNANCE | 6 | Governance state or type |
 
 **Use Cases:**
 - Setting linktype for items
@@ -742,8 +747,111 @@ The `LinkType` enum defines the possible states or types for asset, allowing for
 - Enforcing business logic based on linktype
 
 **Important Notes:**
+- Values with `NOT_USED` prefix or number 0 follow protobuf conventions for default enum values and should not be actively used
 - Only valid linktype values should be used in production code
 - LinkType changes should be tracked in audit trails for compliance purposes
+
+#### SocialMediaType {#socialmediatype}
+
+The `SocialMediaType` enum defines the possible states or types for asset, allowing for classification and state management.
+
+**Value Table:**
+
+| Value Name | Number | Description |
+|------------|--------|-------------|
+| SOCIAL_MEDIA_TYPE_DO_NOT_USE | 0 | Default/unused value (protobuf convention) |
+| TWITTER | 1 | Twitter state or type |
+| TELEGRAM | 2 | Telegram state or type |
+| DISCORD | 3 | Discord state or type |
+| MEDIUM | 4 | Medium state or type |
+| LINKEDIN | 5 | Linkedin state or type |
+
+**Use Cases:**
+- Setting socialmediatype for items
+- Filtering items by socialmediatype in queries
+- Enforcing business logic based on socialmediatype
+
+**Important Notes:**
+- Values with `NOT_USED` prefix or number 0 follow protobuf conventions for default enum values and should not be actively used
+- Only valid socialmediatype values should be used in production code
+- SocialMediaType changes should be tracked in audit trails for compliance purposes
+
+#### AssetStatus {#assetstatus}
+
+The `AssetStatus` enum defines the possible states or types for asset, allowing for classification and state management.
+
+**Value Table:**
+
+| Value Name | Number | Description |
+|------------|--------|-------------|
+| ASSET_STATUS_DO_NOT_USE | 0 | Default/unused value (protobuf convention) |
+| DO_NOT_LIST | 1 | Do Not List state or type |
+| REQUEST_LISTING | 2 | Request Listing state or type |
+| LISTED | 3 | Listed state or type |
+| ORGANIZATION_ADMIN_DO_NOT_LIST | 4 | Organization Admin Do Not List state or type |
+| OUTDATED_ASSET_VERSION | 5 | Outdated Asset Version state or type |
+
+**Use Cases:**
+- Setting assetstatus for items
+- Filtering items by assetstatus in queries
+- Enforcing business logic based on assetstatus
+
+**Important Notes:**
+- Values with `NOT_USED` prefix or number 0 follow protobuf conventions for default enum values and should not be actively used
+- Only valid assetstatus values should be used in production code
+- AssetStatus changes should be tracked in audit trails for compliance purposes
+
+#### Reason {#reason}
+
+The `Reason` enum defines the possible states or types for asset, allowing for classification and state management.
+
+**Value Table:**
+
+| Value Name | Number | Description |
+|------------|--------|-------------|
+| REASON_DO_NOT_USE | 0 | Default/unused value (protobuf convention) |
+| DUPLICATE | 1 | Duplicate state or type |
+| UNWANTED_ASSET | 2 | Unwanted Asset state or type |
+| UNSTABLE_ASSET | 3 | Unstable Asset state or type |
+
+**Use Cases:**
+- Setting reason for items
+- Filtering items by reason in queries
+- Enforcing business logic based on reason
+
+**Important Notes:**
+- Values with `NOT_USED` prefix or number 0 follow protobuf conventions for default enum values and should not be actively used
+- Only valid reason values should be used in production code
+- Reason changes should be tracked in audit trails for compliance purposes
+
+#### AssetType {#assettype}
+
+The `AssetType` enum defines the possible states or types for asset, allowing for classification and state management.
+
+**Value Table:**
+
+| Value Name | Number | Description |
+|------------|--------|-------------|
+| ASSET_TYPE_DO_NOT_USE | 0 | Default/unused value (protobuf convention) |
+| FUNDS_AND_INVESTMENT_PRODUCT | 1 | Funds And Investment Product state or type |
+| COMMODITY | 2 | Commodity state or type |
+| WRAPPED_STABLECOIN | 3 | Wrapped Stablecoin state or type |
+| CRYPTO | 4 | Crypto state or type |
+| COLLECTIBLE | 5 | Collectible state or type |
+| VEHICLE_INDUSTRIAL_EQUIPMENT | 6 | Vehicle Industrial Equipment state or type |
+| INTELLECTUAL_PROPERTY | 7 | Intellectual Property state or type |
+| REAL_ESTATE | 8 | Real Estate state or type |
+| EQUITY | 9 | Equity state or type |
+
+**Use Cases:**
+- Setting assettype for items
+- Filtering items by assettype in queries
+- Enforcing business logic based on assettype
+
+**Important Notes:**
+- Values with `NOT_USED` prefix or number 0 follow protobuf conventions for default enum values and should not be actively used
+- Only valid assettype values should be used in production code
+- AssetType changes should be tracked in audit trails for compliance purposes
 
 #### UserAssetStatus {#userassetstatus}
 
