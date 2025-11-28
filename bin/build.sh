@@ -6,7 +6,6 @@ rd=$(git rev-parse --show-toplevel)
 
 # Handle dependencies
 lib_dirs=(
-    "../com-fs-asset-model"
     "../com-fs-utils-lib"
 )
 
