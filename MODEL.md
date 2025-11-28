@@ -40,7 +40,7 @@
 
 The Asset provides a comprehensive data structure for managing asset within the system. This model supports identification: provides unique identifiers for asset, organizational context: links items to organizations via organizationid, status management: tracks status for administrative control, and more. 
 
-Key features of the {model_name.lower()} model include:
+Key features of the asset model include:
 - **Identification**: Provides unique identifiers for asset
 - **Organizational Context**: Links items to organizations via OrganizationID
 - **Status Management**: Tracks status for administrative control
@@ -73,7 +73,7 @@ The `AssetDetails` message contains all the core information about a asset, incl
 | Status | `AssetStatus` | Required | Current status of this item (see related enum) |
 | Reason | `Reason` | Optional | Reason field |
 | Type | `AssetType` | Required | Type classification for this item (see related enum) |
-| Denom | `denom.Denom` | Required | Denom field |
+| Denom | `denom.Denom` | Required | Denom information |
 | IsIssuedInSmartContract | `bool` | Required | IsIssuedInSmartContract field |
 | SmartContractIssuerAddr | `string` | Required | SmartContractIssuerAddr value |
 | RealEstateDetails | `RealEstate` | Optional | RealEstateDetails field |
