@@ -2,891 +2,1136 @@
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [asset.proto](#asset)
-  - [Messages](#messages)
-    - [AssetDetails](#assetdetails)
-    - [Asset](#asset)
-    - [Assets](#assets)
-    - [UserAssetList](#userassetlist)
-    - [UserAssetLists](#userassetlists)
-    - [RealEstate](#realestate)
-    - [StableCoin](#stablecoin)
-    - [Commodity](#commodity)
-    - [Collectible](#collectible)
-    - [Vehicle](#vehicle)
-    - [DecCoin](#deccoin)
-    - [Distribution](#distribution)
-    - [TokenSale](#tokensale)
-    - [Crowdfund](#crowdfund)
-    - [IntellectualProperty](#intellectualproperty)
-    - [InvestmentFund](#investmentfund)
-    - [Equity](#equity)
-    - [FinancialProperties](#financialproperties)
-    - [Description](#description)
-    - [ExternalResources](#externalresources)
-    - [Link](#link)
-    - [SocialMedia](#socialmedia)
-    - [IssuerDetails](#issuerdetails)
-    - [LogoFile](#logofile)
-  - [Enums](#enums)
-    - [DistributionType](#distributiontype)
-    - [LinkType](#linktype)
-    - [SocialMediaType](#socialmediatype)
-    - [AssetStatus](#assetstatus)
-    - [Reason](#reason)
-    - [AssetType](#assettype)
-    - [UserAssetStatus](#userassetstatus)
-- [Version Information](#version-information)
-- [Support](#support)
+1. [Overview](#overview)
+2. [asset.proto - Core Asset Model](#asset-proto---core-asset-model)
+3. [asset-grpc.proto - Asset gRPC Service](#asset-grpc-proto---asset-grpc-service)
+4. [domain/currency/currency.proto - Currency Definitions](#domaincurrencycurrency-proto---currency-definitions)
+5. [domain/denom/denom.proto - Denomination Definitions](#domaindenomdenomproto---denomination-definitions)
+6. [domain/symbol/symbol.proto - Symbol Definitions](#domainsymbolsymbolproto---symbol-definitions)
+7. [Version Information](#version-information)
+8. [Support](#support)
 
 ## Overview
 
-The Asset provides a comprehensive data structure for managing asset within the system. This model supports identification: provides unique identifiers for asset, organizational context: links items to organizations via organizationid, status management: tracks status for administrative control, and more. 
+The com-fs-asset-model repository defines the Protocol Buffer schemas for a comprehensive asset management and tokenization system. This model supports multiple asset types including real world assets (RWA), digital assets, commodities, real estate, collectibles, and various financial instruments.
 
-Key features of the asset model include:
-- **Identification**: Provides unique identifiers for asset
-- **Organizational Context**: Links items to organizations via OrganizationID
-- **Status Management**: Tracks status for administrative control
-- **Metadata and Audit**: Includes metadata and audit trails for tracking changes
-- **Pagination Support**: Provides offset-based pagination for collections
+### Key Features
 
-## asset.proto
+- **Multi-Asset Support**: Comprehensive definitions for real estate, commodities, stablecoins, collectibles, vehicles, intellectual property, investment funds, and equity assets
+- **Tokenization Framework**: Built-in support for asset tokenization with denomination and currency management
+- **Distribution Mechanisms**: Support for crowdfunding and token sale distribution methods
+- **Compliance Integration**: Jurisdiction-based compliance and regulatory framework support
+- **gRPC Services**: Complete service definitions for asset management operations
+- **Audit and Metadata**: Integrated audit trails and metadata management
+- **Financial Properties**: Detailed financial attributes and valuation tracking
 
-### Package Information
+The system is designed to handle complex asset structures while maintaining flexibility for various tokenization scenarios and regulatory requirements across different jurisdictions.
 
-- **Package Name**: `asset`
-- **Go Package Path**: `github.com/sologenic/com-fs-asset-model;asset`
+## asset.proto - Core Asset Model
+
+**Package:** `asset`  
+**Go Package Path:** `github.com/sologenic/com-fs-asset-model;asset`
 
 ### Overview
 
-The `asset.proto` file defines the core asset model for asset management. It provides message types for representing asset data and operations. The file integrates with external utility libraries: `denom.proto`, `audit.proto`, `metadata.proto`.
+The asset.proto file contains the core asset model definitions, including the main Asset message structure and all asset-specific details. This file defines comprehensive schemas for various asset types, financial properties, and distribution mechanisms.
 
 ### Messages
 
-#### AssetDetails {#assetdetails}
+#### Asset
 
-The `AssetDetails` message contains all the core information about a asset, including essential details and metadata.
+The primary asset message that combines all asset-related information.
 
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| ID | `string` | Required | Key string to prevent composing the key all the time and reduce errors |
-| OrganizationID | `string` | Required | UUID of the organization this item belongs to |
-| Status | `AssetStatus` | Required | Current status of this item (see related enum) |
-| Reason | `Reason` | Optional | Reason field |
-| Type | `AssetType` | Required | Type classification for this item (see related enum) |
-| Denom | `denom.Denom` | Required | Denom information |
-| IsIssuedInSmartContract | `bool` | Required | IsIssuedInSmartContract field |
-| SmartContractIssuerAddr | `string` | Required | SmartContractIssuerAddr value |
-| RealEstateDetails | `RealEstate` | Optional | RealEstateDetails field |
-| StableCoinDetails | `StableCoin` | Optional | StableCoinDetails field |
-| CommodityDetails | `Commodity` | Optional | CommodityDetails field |
-| CollectibleDetails | `Collectible` | Optional | CollectibleDetails field |
-| VehicleDetails | `Vehicle` | Optional | VehicleDetails field |
-| IntellectualPropertyDetails | `IntellectualProperty` | Optional | IntellectualPropertyDetails field |
-| InvestmentFundDetails | `InvestmentFund` | Optional | InvestmentFundDetails field |
-| EquityDetails | `Equity` | Optional | EquityDetails field |
-| FinancialProperties | `FinancialProperties` | Optional | Financial-specific properties |
-| Description | `Description` | Optional | Human-readable descriptive properties |
-| ExternalResources | `ExternalResources` | Optional | External links and resources |
-| DistributionDetails | `Distribution` | Optional | DistributionDetails field |
+| Field         | Type              | Required/Optional | Description                                                                   |
+| ------------- | ----------------- | ----------------- | ----------------------------------------------------------------------------- |
+| AssetDetails  | AssetDetails      | Required          | Core asset information including ID, status, type, and asset-specific details |
+| MetaData      | metadata.MetaData | Required          | System metadata for the asset                                                 |
+| Audit         | audit.Audit       | Required          | Audit trail information                                                       |
+| IssuerDetails | IssuerDetails     | Required          | Information about the asset issuer                                            |
 
 **Use Cases:**
-- Creating new asset records with complete information
-- Updating asset information
-- Associating items with specific organizations
-- Tracking status for administrative purposes
 
-**Important Notes:**
-- The `ID` field must match a valid identifier format
-- The `OrganizationID` must be a valid UUID format
-- The `Status` field determines the current state of this item
+- Complete asset representation for storage and retrieval
+- Asset transfer and ownership management
+- Regulatory compliance and audit purposes
 
-#### Asset {#asset}
+#### AssetDetails
 
-The `Asset` message provides asset data and operations.
+Contains the core details and properties of an asset. Key string to prevent composing the key all the time and reduce errors.
 
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| AssetDetails | `AssetDetails` | Required | AssetDetails field |
-| MetaData | `metadata.MetaData` | Required | Metadata information including network and version details |
-| Audit | `audit.Audit` | Required | Audit trail information for tracking changes and access |
-| IssuerDetails | `IssuerDetails` | Required | IssuerDetails field |
-
-**Use Cases:**
-- Creating new asset records
-- Retrieving asset information
-- Updating asset data
-
-**Important Notes:**
-- This message provides the asset representation
-
-#### Assets {#assets}
-
-The `Assets` message represents a collection of asset with pagination support for handling large result sets.
-
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Assets | `Asset` | Optional | Assets field |
-| Offset | `int32` | Optional | If there is more data, this is the offset to pass to the next call |
+| Field                       | Type                 | Required/Optional | Description                                                      |
+| --------------------------- | -------------------- | ----------------- | ---------------------------------------------------------------- |
+| ID                          | string               | Required          | Unique key string to prevent composition errors                  |
+| OrganizationID              | string               | Required          | Organization that manages the asset                              |
+| Status                      | AssetStatus          | Required          | Current status of the asset (DO_NOT_LIST, REQUEST_LISTING, etc.) |
+| Reason                      | Reason               | Optional          | Reason for certain status changes                                |
+| Type                        | AssetType            | Required          | Type of asset (REAL_ESTATE, COMMODITY, CRYPTO, etc.)             |
+| Denom                       | denom.Denom          | Required          | On-chain denomination information                                |
+| IsIssuedInSmartContract     | bool                 | Required          | Whether the asset is issued via smart contract                   |
+| SmartContractIssuerAddr     | string               | Required          | Address of the smart contract issuer                             |
+| RealEstateDetails           | RealEstate           | Optional          | Real estate specific properties                                  |
+| StableCoinDetails           | StableCoin           | Optional          | Stablecoin specific properties                                   |
+| CommodityDetails            | Commodity            | Optional          | Commodity specific properties                                    |
+| CollectibleDetails          | Collectible          | Optional          | Collectible (NFT) specific properties                            |
+| VehicleDetails              | Vehicle              | Optional          | Vehicle/equipment specific properties                            |
+| IntellectualPropertyDetails | IntellectualProperty | Optional          | IP asset specific properties                                     |
+| InvestmentFundDetails       | InvestmentFund       | Optional          | Investment fund specific properties                              |
+| EquityDetails               | Equity               | Optional          | Equity asset specific properties                                 |
+| FinancialProperties         | FinancialProperties  | Optional          | Financial-specific properties                                    |
+| Description                 | Description          | Optional          | Human-readable descriptive properties                            |
+| ExternalResources           | ExternalResources    | Optional          | External links and resources                                     |
+| DistributionDetails         | Distribution         | Optional          | Distribution method details                                      |
 
 **Use Cases:**
-- Returning paginated lists of asset from queries or searches
-- Implementing pagination in asset listing APIs
-- Handling large assets efficiently
-- Providing continuation tokens for subsequent page requests
+
+- Asset creation and modification
+- Asset categorization and filtering
+- Regulatory compliance checks
 
 **Important Notes:**
-- If `Offset` is not set (or is 0), it indicates that all available items have been returned
-- Clients should use the `Offset` value in subsequent requests to retrieve the next page of results
 
-#### UserAssetList {#userassetlist}
+- The ID field is a key string designed to prevent composing the key all the time and reduce errors
+- Only one asset type detail should be populated based on the Type field
+- FinancialProperties, Description, and ExternalResources are optional but commonly used for complete asset information
 
-The `UserAssetList` message represents a collection of userassetlist with pagination support for handling large result sets.
+#### Assets
 
-**Field Table:**
+Container for multiple assets with pagination support.
 
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| AccountID | `string` | Required | Unique identifier for the account |
-| Wallet | `string` | Required | Wallet value |
-| AssetKey | `string` | Required | AssetKey value |
-| Status | `UserAssetStatus` | Required | Current status of this item (see related enum) |
-| MetaData | `metadata.MetaData` | Required | Metadata information including network and version details |
-| Visible | `bool` | Required | Visible field |
-| OrganizationID | `string` | Required | UUID of the organization this item belongs to |
+| Field  | Type           | Required/Optional | Description                                                        |
+| ------ | -------------- | ----------------- | ------------------------------------------------------------------ |
+| Assets | repeated Asset | Required          | List of assets                                                     |
+| Offset | int32          | Optional          | If there is more data, this is the offset to pass to the next call |
 
 **Use Cases:**
-- Returning paginated lists of userassetlist from queries or searches
-- Implementing pagination in userassetlist listing APIs
-- Handling large userassetlist efficiently
-- Tracking status for administrative purposes
-- Associating items with specific organizations
 
-**Important Notes:**
-- The `AccountID` field must match a valid identifier format
-- The `Status` field determines the current state of this item
-- The `OrganizationID` must be a valid UUID format
+- Paginated asset retrieval
+- Bulk asset operations
+- Asset listing endpoints
 
-#### UserAssetLists {#userassetlists}
+#### UserAssetList
 
-The `UserAssetLists` message represents a collection of userassetlist with pagination support for handling large result sets.
+Represents a user's relationship with a specific asset, including permissions and visibility settings.
 
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| UserAssetLists | `UserAssetList` | Optional | UserAssetLists field |
+| Field          | Type              | Required/Optional | Description                              |
+| -------------- | ----------------- | ----------------- | ---------------------------------------- |
+| AccountID      | string            | Required          | User's account identifier                |
+| Wallet         | string            | Required          | Wallet address                           |
+| AssetKey       | string            | Required          | Reference to the asset                   |
+| Status         | UserAssetStatus   | Required          | User's permission status for the asset   |
+| MetaData       | metadata.MetaData | Required          | System metadata                          |
+| Visible        | bool              | Required          | Whether the asset is visible to the user |
+| OrganizationID | string            | Required          | Associated organization                  |
 
 **Use Cases:**
-- Returning paginated lists of userassetlist from queries or searches
-- Implementing pagination in userassetlist listing APIs
-- Handling large userassetlists efficiently
 
-**Important Notes:**
-- This message provides the userassetlists representation
+- User portfolio management
+- Asset permission control
+- Compliance and whitelisting
+- User-specific asset visibility
 
-#### RealEstate {#realestate}
+#### UserAssetLists
 
-The `RealEstate` message provides realestate data and operations.
+Container for multiple user asset list entries.
 
-**Field Table:**
+| Field          | Type                   | Required/Optional | Description                      |
+| -------------- | ---------------------- | ----------------- | -------------------------------- |
+| UserAssetLists | repeated UserAssetList | Required          | List of user asset relationships |
 
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Address | `string` | Required | Address value |
-| Bathrooms | `int32` | Optional | Bathrooms field |
-| Bedrooms | `int32` | Optional | Bedrooms field |
-| Latitude | `float` | Required | Latitude field |
-| Longitude | `float` | Required | Longitude field |
-| OwnershipType | `string` | Optional | Type classification for this item (see related enum) |
-| PropertyType | `string` | Required | Type classification for this item (see related enum) |
-| RiskRating | `string` | Optional | RiskRating value |
-| SquareFootage | `float` | Optional | SquareFootage field |
-| TenancyStatus | `string` | Optional | Current status of this item (see related enum) |
-| YearBuilt | `int32` | Optional | YearBuilt field |
-| YieldPercent | `float` | Optional | YieldPercent field |
-| Floors | `int32` | Optional | Floors field |
-| HeightMeters | `float` | Optional | HeightMeters field |
-| Units | `int32` | Optional | Units field |
-| AvailableUnits | `int32` | Optional | AvailableUnits field |
-| ParkingSpaces | `int32` | Optional | ParkingSpaces field |
-| Elevators | `int32` | Optional | Elevators field |
-| Classification | `string` | Optional | Classification value |
-| YearRenovated | `int32` | Optional | YearRenovated field |
-| LotSize | `float` | Optional | LotSize field |
-| ZoningType | `string` | Optional | Type classification for this item (see related enum) |
-| CapRate | `float` | Optional | CapRate field |
-| NetOperatingIncome | `float` | Optional | NetOperatingIncome field |
-| KeyHighlights | `string` | Optional | KeyHighlights value |
-| Amenities | `string` | Optional | Amenities value |
-| PropertyDescription | `string` | Required | Additional descriptive information about this item |
+### Asset Type Specific Messages
 
-**Use Cases:**
-- Creating new realestate records
-- Retrieving realestate information
-- Updating realestate data
-- Tracking status for administrative purposes
+#### RealEstate
 
-**Important Notes:**
-- The `TenancyStatus` field determines the current state of this item
+Defines properties for real estate assets including residential, commercial, and mixed-use properties.
 
-#### StableCoin {#stablecoin}
-
-The `StableCoin` message provides stablecoin data and operations.
-
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Version | `string` | Optional | Version value |
-| PegType | `string` | Optional | Type classification for this item (see related enum) |
-| PegRatio | `float` | Optional | PegRatio field |
-| BackingAsset | `string` | Optional | BackingAsset value |
-| ExchangeTickerSymbol | `string` | Optional | ExchangeTickerSymbol value |
-| Exchange | `string` | Optional | Exchange value |
-| MinTransactionAmount | `float` | Optional | MinTransactionAmount field |
-| TradingMarginPercentage | `float` | Optional | TradingMarginPercentage field |
-| AssetMarginPercentage | `float` | Optional | AssetMarginPercentage field |
+| Field               | Type            | Required/Optional | Description                                      |
+| ------------------- | --------------- | ----------------- | ------------------------------------------------ |
+| Address             | string          | Required          | Property address                                 |
+| Bathrooms           | int32           | Optional          | Number of bathrooms                              |
+| Bedrooms            | int32           | Optional          | Number of bedrooms                               |
+| Latitude            | float           | Required          | Geographic latitude                              |
+| Longitude           | float           | Required          | Geographic longitude                             |
+| OwnershipType       | string          | Optional          | Type of ownership (freehold, leasehold, etc.)    |
+| PropertyType        | string          | Required          | Type of property (residential, commercial, etc.) |
+| RiskRating          | string          | Optional          | Investment risk assessment                       |
+| SquareFootage       | float           | Optional          | Total area in square feet                        |
+| TenancyStatus       | string          | Optional          | Current occupancy status                         |
+| YearBuilt           | int32           | Optional          | Year of construction                             |
+| YieldPercent        | repeated float  | Optional          | Historical yield percentages                     |
+| Floors              | int32           | Optional          | Number of floors                                 |
+| HeightMeters        | float           | Optional          | Height in meters                                 |
+| Units               | int32           | Optional          | Total number of units                            |
+| AvailableUnits      | int32           | Optional          | Currently available units                        |
+| ParkingSpaces       | int32           | Optional          | Number of parking spaces                         |
+| Elevators           | int32           | Optional          | Number of elevators                              |
+| Classification      | string          | Optional          | Property classification                          |
+| YearRenovated       | int32           | Optional          | Year of last renovation                          |
+| LotSize             | float           | Optional          | Lot size                                         |
+| ZoningType          | string          | Optional          | Zoning classification                            |
+| CapRate             | float           | Optional          | Capitalization rate                              |
+| NetOperatingIncome  | float           | Optional          | Annual NOI                                       |
+| KeyHighlights       | repeated string | Optional          | Property highlights                              |
+| Amenities           | repeated string | Optional          | Available amenities                              |
+| PropertyDescription | string          | Required          | Detailed property description                    |
 
 **Use Cases:**
-- Creating new stablecoin records
-- Retrieving stablecoin information
-- Updating stablecoin data
 
-**Important Notes:**
-- This message provides the stablecoin representation
+- Real estate tokenization
+- Property investment analysis
+- Real estate portfolio management
+- Property valuation and assessment
 
-#### Commodity {#commodity}
+#### StableCoin
 
-The `Commodity` message provides commodity data and operations.
+Defines properties for stablecoin assets with pegging mechanisms and exchange information.
 
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Category | `string` | Required | Category value |
-| Quality | `string` | Optional | Quality value |
-| UnitOfMeasure | `string` | Required | UnitOfMeasure value |
-| Quantity | `float` | Optional | Quantity field |
-| OriginCountry | `string` | Optional | OriginCountry value |
-| ExchangeTickerSymbol | `string` | Optional | ExchangeTickerSymbol value |
-| Exchange | `string` | Optional | Exchange value |
-| MinTransactionAmount | `float` | Optional | MinTransactionAmount field |
-| StorageLocation | `string` | Optional | StorageLocation value |
-| ContractType | `string` | Optional | Type classification for this item (see related enum) |
-| DeliveryDate | `string` | Optional | DeliveryDate value |
+| Field                   | Type   | Required/Optional | Description                           |
+| ----------------------- | ------ | ----------------- | ------------------------------------- |
+| Version                 | string | Optional          | Stablecoin version                    |
+| PegType                 | string | Optional          | Type of peg (fiat, crypto, commodity) |
+| PegRatio                | float  | Optional          | Ratio of peg (e.g., 1:1)              |
+| BackingAsset            | string | Optional          | Asset backing the stablecoin          |
+| ExchangeTickerSymbol    | string | Optional          | Trading symbol on exchanges           |
+| Exchange                | string | Optional          | Primary exchange for trading          |
+| MinTransactionAmount    | float  | Optional          | Minimum transaction amount            |
+| TradingMarginPercentage | float  | Optional          | Trading margin requirement            |
+| AssetMarginPercentage   | float  | Optional          | Asset margin requirement              |
 
 **Use Cases:**
-- Creating new commodity records
-- Retrieving commodity information
-- Updating commodity data
 
-**Important Notes:**
-- This message provides the commodity representation
+- Stablecoin issuance and management
+- Exchange integration
+- Trading margin calculations
+- Peg mechanism tracking
 
-#### Collectible {#collectible}
+#### Commodity
 
-The `Collectible` message provides collectible data and operations.
+Defines properties for commodity assets including metals, energy, agriculture, and other physical commodities.
 
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Category | `string` | Required | Category value |
-| CollectionName | `string` | Optional | The collectionname of this item |
-| TokenStandard | `string` | Optional | TokenStandard value |
-| TokenID | `string` | Optional | Unique identifier for the token |
-| MetadataURI | `string` | Optional | Metadata information including network and version details |
-| Creator | `string` | Optional | Creator value |
-| OwnershipHistory | `string` | Optional | OwnershipHistory value |
-| CurrentOwner | `string` | Required | CurrentOwner value |
-
-**Use Cases:**
-- Creating new collectible records
-- Retrieving collectible information
-- Updating collectible data
-
-**Important Notes:**
-- The `TokenID` field must match a valid identifier format
-
-#### Vehicle {#vehicle}
-
-The `Vehicle` message provides vehicle data and operations.
-
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Category | `string` | Required | Category value |
-| Manufacturer | `string` | Required | Manufacturer value |
-| Model | `string` | Required | Model value |
-| SerialNumber | `string` | Required | SerialNumber value |
-| Year | `int32` | Optional | Year field |
-| Specifications | `string` | Optional | Specifications value |
-| FuelType | `string` | Optional | Type classification for this item (see related enum) |
-| UsageHours | `float` | Optional | UsageHours field |
-| Mileage | `float` | Optional | Mileage field |
-| Condition | `string` | Required | Condition value |
-| CurrentOwner | `string` | Required | CurrentOwner value |
-| Location | `string` | Optional | Location value |
+| Field                | Type   | Required/Optional | Description                                            |
+| -------------------- | ------ | ----------------- | ------------------------------------------------------ |
+| Category             | string | Required          | Commodity category (metals, energy, agriculture, etc.) |
+| Quality              | string | Optional          | Quality grade or specification                         |
+| UnitOfMeasure        | string | Required          | Unit of measurement (tons, barrels, ounces, etc.)      |
+| Quantity             | float  | Optional          | Total quantity available                               |
+| OriginCountry        | string | Optional          | Country of origin                                      |
+| ExchangeTickerSymbol | string | Optional          | Trading symbol                                         |
+| Exchange             | string | Optional          | Primary exchange                                       |
+| MinTransactionAmount | float  | Optional          | Minimum transaction amount                             |
+| StorageLocation      | string | Optional          | Physical storage location                              |
+| ContractType         | string | Optional          | Contract type (spot, futures, etc.)                    |
+| DeliveryDate         | string | Optional          | Expected delivery date                                 |
 
 **Use Cases:**
-- Creating new vehicle records
-- Retrieving vehicle information
-- Updating vehicle data
 
-**Important Notes:**
-- This message provides the vehicle representation
+- Commodity tokenization
+- Physical asset tracking
+- Exchange trading integration
+- Supply chain management
 
-#### DecCoin {#deccoin}
+#### Collectible
 
-The `DecCoin` message provides deccoin data and operations.
+Defines properties for collectible/NFT assets including art, sports memorabilia, gaming items, and digital collectibles.
 
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Denom | `string` | Required | Denom value |
-| Amount | `string` | Required | Amount value |
-
-**Use Cases:**
-- Creating new deccoin records
-- Retrieving deccoin information
-- Updating deccoin data
-
-**Important Notes:**
-- This message provides the deccoin representation
-
-#### Distribution {#distribution}
-
-The `Distribution` message provides distribution data and operations.
-
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Type | `DistributionType` | Required | Type classification for this item (see related enum) |
-| CrowdfundDetails | `Crowdfund` | Optional | CrowdfundDetails field |
-| TokenSaleDetails | `TokenSale` | Optional | TokenSaleDetails field |
+| Field            | Type            | Required/Optional | Description                                         |
+| ---------------- | --------------- | ----------------- | --------------------------------------------------- |
+| Category         | string          | Required          | Category of collectible (art, sports, gaming, etc.) |
+| CollectionName   | string          | Optional          | Name of the collection                              |
+| TokenStandard    | string          | Optional          | Token standard (ERC-721, ERC-1155, etc.)            |
+| TokenID          | string          | Optional          | Unique token identifier                             |
+| MetadataURI      | string          | Optional          | URI to metadata                                     |
+| Creator          | string          | Optional          | Original creator                                    |
+| OwnershipHistory | repeated string | Optional          | Historical ownership chain                          |
+| CurrentOwner     | string          | Required          | Current owner                                       |
 
 **Use Cases:**
-- Creating new distribution records
-- Retrieving distribution information
-- Updating distribution data
 
-**Important Notes:**
-- This message provides the distribution representation
+- NFT tokenization
+- Collectible provenance tracking
+- Digital art management
+- Gaming asset tokenization
 
-#### TokenSale {#tokensale}
+#### Vehicle
 
-The `TokenSale` message provides tokensale data and operations.
+Defines properties for vehicle and industrial equipment assets including cars, trucks, aircraft, and machinery.
 
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| QuantityStep | `string` | Required | QuantityStep value |
-| SellPricesPerSubunit | `DecCoin` | Optional | SellPricesPerSubunit field |
-| BaseDenom | `string` | Required | Base denom (RWA tokens) |
-| MinAmount | `string` | Required | MinAmount value |
-| StartDate | `int64` | Required | StartDate field |
-| EndDate | `int64` | Required | EndDate field |
-| ComplianceManagerContractAddr | `string` | Required | ComplianceManagerContractAddr value |
-| BuyPricesPerSubunit | `DecCoin` | Optional | BuyPricesPerSubunit field |
-| AssetRegistryContractAddr | `string` | Required | AssetRegistryContractAddr value |
-| AssetExtensionCode | `string` | Required | AssetExtensionCode value |
-| AssetExtensionContractAddr | `string` | Optional | AssetExtensionContractAddr value |
-| OrderHubContractAddr | `string` | Required | OrderHubContractAddr value |
-| TokenSaleContractAddr | `string` | Optional | TokenSaleContractAddr value |
+| Field          | Type   | Required/Optional | Description                                   |
+| -------------- | ------ | ----------------- | --------------------------------------------- |
+| Category       | string | Required          | Vehicle category (car, truck, aircraft, etc.) |
+| Manufacturer   | string | Required          | Vehicle manufacturer                          |
+| Model          | string | Required          | Vehicle model                                 |
+| SerialNumber   | string | Required          | Serial or VIN number                          |
+| Year           | int32  | Optional          | Manufacturing year                            |
+| Specifications | string | Optional          | Technical specifications                      |
+| FuelType       | string | Optional          | Fuel type (gasoline, electric, diesel, etc.)  |
+| UsageHours     | float  | Optional          | Total usage hours                             |
+| Mileage        | float  | Optional          | Total mileage                                 |
+| Condition      | string | Required          | Current condition assessment                  |
+| CurrentOwner   | string | Required          | Current owner                                 |
+| Location       | string | Optional          | Current location                              |
 
 **Use Cases:**
-- Creating new tokensale records
-- Retrieving tokensale information
-- Updating tokensale data
 
-**Important Notes:**
-- This message provides the tokensale representation
+- Vehicle tokenization
+- Equipment financing
+- Fleet management
+- Asset tracking and valuation
 
-#### Crowdfund {#crowdfund}
+#### IntellectualProperty
 
-The `Crowdfund` message provides crowdfund data and operations.
+Defines properties for intellectual property assets including patents, trademarks, copyrights, and licenses.
 
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| QuantityStep | `string` | Required | QuantityStep value |
-| PricesPerSubunit | `DecCoin` | Optional | PricesPerSubunit field |
-| BaseDenom | `string` | Required | Base denom (RWA tokens) |
-| MinAmount | `string` | Required | MinAmount value |
-| StartDate | `int64` | Required | StartDate field |
-| EndDate | `int64` | Required | EndDate field |
-| MinThreshold | `string` | Required | MinThreshold value |
-| MaxThreshold | `string` | Required | MaxThreshold value |
-| AllowOrderCancellation | `bool` | Required | AllowOrderCancellation field |
-| ComplianceManagerContractAddr | `string` | Required | ComplianceManagerContractAddr value |
-| OrderHubContractAddr | `string` | Required | OrderHubContractAddr value |
-| CrowdfundContractAddr | `string` | Optional | CrowdfundContractAddr value |
-| AssetRegistryContractAddr | `string` | Required | AssetRegistryContractAddr value |
-| AssetExtensionCode | `string` | Required | AssetExtensionCode value |
-| AssetExtensionContractAddr | `string` | Optional | AssetExtensionContractAddr value |
+| Field              | Type            | Required/Optional | Description                                      |
+| ------------------ | --------------- | ----------------- | ------------------------------------------------ |
+| Category           | string          | Required          | IP category (patent, trademark, copyright, etc.) |
+| Owner              | string          | Required          | IP rights holder                                 |
+| RegistrationNumber | string          | Optional          | Official registration number                     |
+| FilingDate         | string          | Optional          | Original filing date                             |
+| ExpirationDate     | string          | Optional          | Rights expiration date                           |
+| IPJurisdictionIDs  | repeated string | Optional          | Jurisdictions where IP is valid                  |
+| LicenseType        | string          | Optional          | Type of license available                        |
+| LicenseTerms       | string          | Optional          | License terms and conditions                     |
+| Value              | float           | Optional          | Estimated IP value                               |
 
 **Use Cases:**
-- Creating new crowdfund records
-- Retrieving crowdfund information
-- Updating crowdfund data
 
-**Important Notes:**
-- This message provides the crowdfund representation
+- IP tokenization
+- License management
+- IP portfolio tracking
+- Royalty distribution
 
-#### IntellectualProperty {#intellectualproperty}
+#### InvestmentFund
 
-The `IntellectualProperty` message provides intellectualproperty data and operations.
+Defines properties for investment fund assets including ETFs, mutual funds, and hedge funds.
 
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Category | `string` | Required | Category value |
-| Owner | `string` | Required | Owner value |
-| RegistrationNumber | `string` | Optional | RegistrationNumber value |
-| FilingDate | `string` | Optional | FilingDate value |
-| ExpirationDate | `string` | Optional | ExpirationDate value |
-| IPJurisdictionIDs | `string` | Optional | Unique identifier for the ipjurisdictions |
-| LicenseType | `string` | Optional | Type classification for this item (see related enum) |
-| LicenseTerms | `string` | Optional | LicenseTerms value |
-| Value | `float` | Optional | Value field |
+| Field         | Type            | Required/Optional | Description                                       |
+| ------------- | --------------- | ----------------- | ------------------------------------------------- |
+| FundType      | string          | Required          | Type of fund (ETF, mutual fund, hedge fund, etc.) |
+| Exchange      | string          | Required          | Primary exchange                                  |
+| ISIN          | string          | Optional          | International Securities Identification Number    |
+| NAV           | float           | Optional          | Net Asset Value                                   |
+| InceptionDate | string          | Optional          | Fund inception date                               |
+| Manager       | string          | Optional          | Fund manager                                      |
+| ExpenseRatio  | float           | Optional          | Annual expense ratio                              |
+| Holdings      | repeated string | Optional          | Major fund holdings                               |
 
 **Use Cases:**
-- Creating new intellectualproperty records
-- Retrieving intellectualproperty information
-- Updating intellectualproperty data
 
-**Important Notes:**
-- The `IPJurisdictionIDs` field must match a valid identifier format
+- Fund tokenization
+- Portfolio management
+- Fund performance tracking
+- Investment product distribution
 
-#### InvestmentFund {#investmentfund}
+#### Equity
 
-The `InvestmentFund` message provides investmentfund data and operations.
+Defines properties for equity assets including stocks and equity securities.
 
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| FundType | `string` | Required | Type classification for this item (see related enum) |
-| Exchange | `string` | Required | Exchange value |
-| ISIN | `string` | Optional | ISIN value |
-| NAV | `float` | Optional | NAV field |
-| InceptionDate | `string` | Optional | InceptionDate value |
-| Manager | `string` | Optional | Manager value |
-| ExpenseRatio | `float` | Optional | ExpenseRatio field |
-| Holdings | `string` | Optional | Holdings value |
+| Field                   | Type   | Required/Optional | Description                |
+| ----------------------- | ------ | ----------------- | -------------------------- |
+| ExchangeTickerSymbol    | string | Optional          | Stock ticker symbol        |
+| Exchange                | string | Optional          | Primary exchange           |
+| MinTransactionAmount    | float  | Required          | Minimum transaction amount |
+| TradingMarginPercentage | float  | Required          | Trading margin requirement |
+| AssetMarginPercentage   | float  | Required          | Asset margin requirement   |
 
 **Use Cases:**
-- Creating new investmentfund records
-- Retrieving investmentfund information
-- Updating investmentfund data
 
-**Important Notes:**
-- This message provides the investmentfund representation
+- Equity tokenization
+- Stock trading integration
+- Margin calculation
+- Exchange compliance
 
-#### Equity {#equity}
+### Financial and Descriptive Properties
 
-The `Equity` message provides equity data and operations.
+#### FinancialProperties
 
-**Field Table:**
+Contains general financial information applicable to any asset. Financial-specific properties.
 
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| ExchangeTickerSymbol | `string` | Optional | ExchangeTickerSymbol value |
-| Exchange | `string` | Optional | Exchange value |
-| MinTransactionAmount | `float` | Required | MinTransactionAmount field |
-| TradingMarginPercentage | `float` | Required | TradingMarginPercentage field |
-| AssetMarginPercentage | `float` | Required | AssetMarginPercentage field |
-
-**Use Cases:**
-- Creating new equity records
-- Retrieving equity information
-- Updating equity data
-
-**Important Notes:**
-- This message provides the equity representation
-
-#### FinancialProperties {#financialproperties}
-
-The `FinancialProperties` message represents a collection of financialpropertie with pagination support for handling large result sets.
-
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Symbol | `string` | Required | Symbol value |
-| Issuer | `string` | Required | Issuer value |
-| JurisdictionIDs | `string` | Optional | Unique identifier for the jurisdictions |
-| JurisdictionRestrictions | `string` | Optional | JurisdictionRestrictions value |
-| RedemptionTerms | `string` | Optional | RedemptionTerms value |
-| ComplianceRequired | `bool` | Optional | ComplianceRequired field |
-| Type | `string` | Required | Type classification for this item (see related enum) |
-| TradeAllowances | `string` | Optional | TradeAllowances value |
-| Transferable | `bool` | Required | Transferable field |
-| Platform | `string` | Required | Platform value |
-| PlatformType | `string` | Required | Type classification for this item (see related enum) |
-| ContractAddress | `string` | Optional | ContractAddress value |
-| Fractional | `bool` | Required | Fractional field |
-| TotalSupply | `int32` | Optional | TotalSupply field |
-| Subunit | `string` | Optional | Subunit value |
-| Price | `float` | Optional | Price field |
-| DecimalPlacesPrice | `int32` | Required | DecimalPlacesPrice field |
-| Currency | `string` | Required | Currency value |
-| InitialValuation | `float` | Required | InitialValuation field |
-| CurrentValuation | `float` | Required | CurrentValuation field |
-| ValuationDate | `string` | Optional | ValuationDate value |
-| Network | `metadata.Network` | Required | Metadata information including network and version details |
-| Status | `string` | Required | Current status of this item (see related enum) |
+| Field                    | Type             | Required/Optional | Description                             |
+| ------------------------ | ---------------- | ----------------- | --------------------------------------- |
+| Symbol                   | string           | Required          | Asset symbol/ticker                     |
+| Issuer                   | string           | Required          | Asset issuer                            |
+| JurisdictionIDs          | repeated string  | Optional          | Applicable jurisdictions                |
+| JurisdictionRestrictions | string           | Optional          | Jurisdiction-based restrictions         |
+| RedemptionTerms          | string           | Optional          | Terms for asset redemption              |
+| ComplianceRequired       | bool             | Optional          | Whether compliance checks are required  |
+| Type                     | string           | Required          | Financial asset type                    |
+| TradeAllowances          | repeated string  | Optional          | Allowed trading operations              |
+| Transferable             | bool             | Required          | Whether the asset can be transferred    |
+| Platform                 | string           | Required          | Issuing platform                        |
+| PlatformType             | string           | Required          | Type of platform                        |
+| ContractAddress          | string           | Optional          | Smart contract address                  |
+| Fractional               | bool             | Required          | Whether fractional ownership is allowed |
+| TotalSupply              | int32            | Optional          | Total supply of the asset               |
+| Subunit                  | string           | Optional          | Smallest tradeable unit                 |
+| Price                    | float            | Optional          | Current price                           |
+| DecimalPlacesPrice       | int32            | Required          | Decimal places for price precision      |
+| Currency                 | string           | Required          | Price currency                          |
+| InitialValuation         | float            | Required          | Initial asset valuation                 |
+| CurrentValuation         | float            | Required          | Current asset valuation                 |
+| ValuationDate            | string           | Optional          | Date of last valuation                  |
+| Network                  | metadata.Network | Required          | Blockchain network                      |
+| Status                   | string           | Required          | Financial status                        |
 
 **Use Cases:**
-- Returning paginated lists of financialpropertie from queries or searches
-- Implementing pagination in financialpropertie listing APIs
-- Handling large financialproperties efficiently
-- Tracking status for administrative purposes
 
-**Important Notes:**
-- The `JurisdictionIDs` field must match a valid identifier format
-- The `Status` field determines the current state of this item
+- Financial asset management
+- Trading configuration
+- Compliance tracking
+- Valuation management
 
-#### Description {#description}
+#### Description
 
-The `Description` message provides description data and operations.
+Contains human-readable descriptive information. Human-readable descriptive properties.
 
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Name | `string` | Required | The name of this item |
-| Description | `string` | Required | Additional descriptive information about this item |
-| Logo | `LogoFile` | Required | Logo field |
-| AssetID | `string` | Required | Unique identifier for the asset |
-| URL | `string` | Required | URL value |
-| Country | `string` | Optional | Country value |
-| Documents | `string` | Optional | Documents value |
-| Images | `string` | Optional | Images value |
-| Vertical | `string` | Required | Vertical value |
-| CreatedAt | `string` | Optional | CreatedAt value |
-| UpdatedAt | `string` | Optional | UpdatedAt value |
+| Field       | Type            | Required/Optional | Description                 |
+| ----------- | --------------- | ----------------- | --------------------------- |
+| Name        | string          | Required          | Asset name                  |
+| Description | string          | Required          | Detailed description        |
+| Logo        | LogoFile        | Required          | Asset logo/image            |
+| AssetID     | string          | Required          | Asset identifier            |
+| URL         | string          | Required          | Official website URL        |
+| Country     | repeated string | Optional          | Countries of operation      |
+| Documents   | repeated string | Optional          | Related document references |
+| Images      | repeated string | Optional          | Additional image references |
+| Vertical    | string          | Required          | Business vertical/sector    |
+| CreatedAt   | string          | Optional          | Creation timestamp          |
+| UpdatedAt   | string          | Optional          | Last update timestamp       |
 
 **Use Cases:**
-- Creating new description records
-- Retrieving description information
-- Updating description data
 
-**Important Notes:**
-- The `AssetID` field must match a valid identifier format
+- User-facing asset information
+- Asset presentation and marketing
+- Documentation management
+- Asset discovery and browsing
 
-#### ExternalResources {#externalresources}
+#### ExternalResources
 
-The `ExternalResources` message represents a collection of externalresource with pagination support for handling large result sets.
+Contains external links and social media information. External links and resources.
 
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Links | `Link` | Optional | Flexible list of links with type and URL |
-| Socials | `SocialMedia` | Optional | Flexible list of social media with type and URL |
+| Field   | Type                 | Required/Optional | Description                                     |
+| ------- | -------------------- | ----------------- | ----------------------------------------------- |
+| Links   | repeated Link        | Optional          | Flexible list of links with type and URL        |
+| Socials | repeated SocialMedia | Optional          | Flexible list of social media with type and URL |
 
 **Use Cases:**
-- Returning paginated lists of externalresource from queries or searches
-- Implementing pagination in externalresource listing APIs
-- Handling large externalresources efficiently
 
-**Important Notes:**
-- This message provides the externalresources representation
+- Asset marketing and promotion
+- Community engagement
+- Documentation and resources
+- Social media presence
 
-#### Link {#link}
+#### Link
 
-The `Link` message provides link data and operations.
+Represents an external link with type classification. Type of link (e.g., "website", "github", "whitepaper", "docs", "explorer", "governance", etc.)
 
-**Field Table:**
+| Field | Type     | Required/Optional | Description                                      |
+| ----- | -------- | ----------------- | ------------------------------------------------ |
+| Type  | LinkType | Required          | Type of link (WEBSITE, GITHUB, WHITEPAPER, etc.) |
+| URL   | string   | Required          | The actual URL                                   |
 
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Type | `LinkType` | Required | Type of link (e.g., "website", "github", "whitepaper", "docs", "explorer", "governance", etc.) |
-| URL | `string` | Required | The actual URL |
+#### SocialMedia
 
-**Use Cases:**
-- Creating new link records
-- Retrieving link information
-- Updating link data
+Represents a social media profile with type classification. Type of social media (e.g., "twitter", "telegram", "discord", "medium", "linkedin", etc.)
 
-**Important Notes:**
-- This message provides the link representation
+| Field | Type            | Required/Optional | Description                                    |
+| ----- | --------------- | ----------------- | ---------------------------------------------- |
+| Type  | SocialMediaType | Required          | Type of social media (TWITTER, TELEGRAM, etc.) |
+| URL   | string          | Required          | Profile URL                                    |
 
-#### SocialMedia {#socialmedia}
+### Distribution Mechanisms
 
-The `SocialMedia` message provides socialmedia data and operations.
+#### Distribution
 
-**Field Table:**
+Defines how an asset is distributed to investors through various mechanisms.
 
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Type | `SocialMediaType` | Required | Type of social media (e.g., "twitter", "telegram", "discord", "medium", "linkedin", etc.) |
-| URL | `string` | Required | The actual URL |
-
-**Use Cases:**
-- Creating new socialmedia records
-- Retrieving socialmedia information
-- Updating socialmedia data
-
-**Important Notes:**
-- This message provides the socialmedia representation
-
-#### IssuerDetails {#issuerdetails}
-
-The `IssuerDetails` message contains all the core information about a issuer, including essential details and metadata.
-
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Name | `string` | Required | The name of this item |
-| Description | `string` | Required | Additional descriptive information about this item |
-| Image | `string` | Required | Image value |
-| ExternalUrl | `string` | Required | ExternalUrl value |
-| AddressLine1 | `string` | Required | AddressLine1 value |
-| AddressLine2 | `string` | Optional | AddressLine2 value |
-| City | `string` | Required | City value |
-| Region | `string` | Optional | Region value |
-| PostalCode | `string` | Optional | PostalCode value |
-| Country | `string` | Required | Country value |
-| YearFounded | `int32` | Required | YearFounded field |
-| Licensed | `bool` | Required | Licensed field |
-| LicenseCountry | `string` | Optional | LicenseCountry value |
-| LicenseNumber | `string` | Optional | LicenseNumber value |
-| Phone | `string` | Optional | Phone value |
-| Email | `string` | Optional | Email value |
-| SocialMediaLinks | `string` | Optional | SocialMediaLinks value |
-| KeyClients | `string` | Optional | KeyClients value |
-| Press | `string` | Optional | Press value |
+| Field            | Type             | Required/Optional | Description                                |
+| ---------------- | ---------------- | ----------------- | ------------------------------------------ |
+| Type             | DistributionType | Required          | Distribution method (CROWDFUND, TOKENSALE) |
+| CrowdfundDetails | Crowdfund        | Optional          | Crowdfunding specific details              |
+| TokenSaleDetails | TokenSale        | Optional          | Token sale specific details                |
 
 **Use Cases:**
-- Creating new issuer records with complete information
-- Updating issuer information
 
-**Important Notes:**
-- This message provides the issuerdetails representation
+- Asset tokenization campaigns
+- Investment distribution
+- Fundraising mechanisms
+- Token sale management
 
-#### LogoFile {#logofile}
+#### TokenSale
 
-The `LogoFile` message provides logofile data and operations.
+Defines a token sale distribution mechanism. Should be pre-issued (even with zero total supply). Base denom (RWA tokens). Address of compliance manager contract. That contract is called to check if transfers are allowed or not. Buy prices per subunit. If empty, buy is not allowed for this token sale.
 
-**Field Table:**
-
-| Field Name | Type | Required/Optional | Description |
-|------------|------|-------------------|-------------|
-| Reference | `string` | Required | The reference to the file |
-| Extension | `string` | Required | Extension value |
-| Name | `string` | Optional | User defined name of the file, used as a "description" and not to reference the file |
+| Field                         | Type             | Required/Optional | Description                                                                                              |
+| ----------------------------- | ---------------- | ----------------- | -------------------------------------------------------------------------------------------------------- |
+| QuantityStep                  | string           | Required          | The smallest allowable step for the base_denom                                                           |
+| SellPricesPerSubunit          | repeated DecCoin | Required          | Price to purchase the tokenized asset with, per subunit                                                  |
+| BaseDenom                     | string           | Required          | Base denom (RWA tokens). Should be pre-issued (even with zero total supply)                              |
+| MinAmount                     | string           | Required          | Minimum amount of base_denom to purchase                                                                 |
+| StartDate                     | int64            | Required          | Timestamp (in seconds) of when the token sale starts                                                     |
+| EndDate                       | int64            | Required          | Timestamp (in seconds) of when the token sale ends                                                       |
+| ComplianceManagerContractAddr | string           | Required          | Address of compliance manager contract. That contract is called to check if transfers are allowed or not |
+| BuyPricesPerSubunit           | repeated DecCoin | Optional          | Buy prices per subunit. If empty, buy is not allowed for this token sale                                 |
+| AssetRegistryContractAddr     | string           | Required          | Address of the asset registry contract                                                                   |
+| AssetExtensionCode            | string           | Required          | Code of the asset extension                                                                              |
+| AssetExtensionContractAddr    | string           | Optional          | Address of the asset extension contract                                                                  |
+| OrderHubContractAddr          | string           | Required          | Address of the order hub contract                                                                        |
+| TokenSaleContractAddr         | string           | Optional          | Address of the token sale contract                                                                       |
 
 **Use Cases:**
-- Creating new logofile records
-- Retrieving logofile information
-- Updating logofile data
 
-**Important Notes:**
-- This message provides the logofile representation
+- Token sale campaigns
+- Asset tokenization launches
+- Investment distribution
+- Compliance-enabled token sales
+
+#### Crowdfund
+
+Defines a crowdfunding distribution mechanism. Should be pre-issued (even with zero total supply). Base denom (RWA tokens). Timestamp (in seconds) of when the token sale starts. Timestamp (in seconds) of when the token sale ends. Address of the compliance manager contract.
+
+| Field                         | Type             | Required/Optional | Description                                                                 |
+| ----------------------------- | ---------------- | ----------------- | --------------------------------------------------------------------------- |
+| QuantityStep                  | string           | Required          | The smallest allowable step for the base_denom                              |
+| PricesPerSubunit              | repeated DecCoin | Required          | Price to purchase the tokenized asset with, per subunit                     |
+| BaseDenom                     | string           | Required          | Base denom (RWA tokens). Should be pre-issued (even with zero total supply) |
+| MinAmount                     | string           | Required          | Minimum amount of base_denom to purchase                                    |
+| StartDate                     | int64            | Required          | Timestamp (in seconds) of when the token sale starts                        |
+| EndDate                       | int64            | Required          | Timestamp (in seconds) of when the token sale ends                          |
+| MinThreshold                  | string           | Required          | Minimum threshold for the token sale                                        |
+| MaxThreshold                  | string           | Required          | Maximum threshold for the token sale                                        |
+| AllowOrderCancellation        | bool             | Required          | Allow order cancellation                                                    |
+| ComplianceManagerContractAddr | string           | Required          | Address of the compliance manager contract                                  |
+| OrderHubContractAddr          | string           | Required          | Address of the order hub contract                                           |
+| CrowdfundContractAddr         | string           | Optional          | Address of the crowdfund contract                                           |
+| AssetRegistryContractAddr     | string           | Required          | Address of the asset registry contract                                      |
+| AssetExtensionCode            | string           | Required          | Code of the asset extension                                                 |
+| AssetExtensionContractAddr    | string           | Optional          | Address of the asset extension contract                                     |
+
+**Use Cases:**
+
+- Crowdfunding campaigns
+- Threshold-based fundraising
+- Community investment projects
+- Flexible investment distribution
+
+#### DecCoin
+
+Represents a decimal coin with denomination and amount, used for pricing in distribution mechanisms.
+
+| Field  | Type   | Required/Optional | Description                  |
+| ------ | ------ | ----------------- | ---------------------------- |
+| Denom  | string | Required          | Coin denomination            |
+| Amount | string | Required          | Coin amount (decimal string) |
+
+**Use Cases:**
+
+- Price representation in token sales
+- Crowdfunding pricing
+- Multi-currency support
+- Precise decimal calculations
+
+#### IssuerDetails
+
+Contains detailed information about the asset issuer including company information, licensing, and contact details.
+
+| Field            | Type            | Required/Optional | Description                     |
+| ---------------- | --------------- | ----------------- | ------------------------------- |
+| Name             | string          | Required          | Issuer company name             |
+| Description      | string          | Required          | Company description             |
+| Image            | string          | Required          | Company logo/image reference    |
+| ExternalUrl      | string          | Required          | Official website                |
+| AddressLine1     | string          | Required          | Primary address                 |
+| AddressLine2     | string          | Optional          | Secondary address line          |
+| City             | string          | Required          | City                            |
+| Region           | string          | Optional          | State/region                    |
+| PostalCode       | string          | Optional          | Postal/zip code                 |
+| Country          | string          | Required          | Country                         |
+| YearFounded      | int32           | Required          | Year company was founded        |
+| Licensed         | bool            | Required          | Whether the company is licensed |
+| LicenseCountry   | string          | Optional          | Country of license              |
+| LicenseNumber    | string          | Optional          | License number                  |
+| Phone            | string          | Optional          | Contact phone number            |
+| Email            | string          | Optional          | Contact email                   |
+| SocialMediaLinks | repeated string | Optional          | Social media profiles           |
+| KeyClients       | string          | Optional          | Notable clients                 |
+| Press            | string          | Optional          | Press mentions or coverage      |
+
+**Use Cases:**
+
+- Issuer verification
+- Compliance documentation
+- Investor due diligence
+- Company profile display
+
+#### LogoFile
+
+Represents a file reference for logos and images. The reference to the file. User defined name of the file, used as a "description" and not to reference the file.
+
+| Field     | Type   | Required/Optional | Description                                                                          |
+| --------- | ------ | ----------------- | ------------------------------------------------------------------------------------ |
+| Reference | string | Required          | The reference to the file                                                            |
+| Extension | string | Required          | File extension                                                                       |
+| Name      | string | Optional          | User defined name of the file, used as a "description" and not to reference the file |
+
+**Use Cases:**
+
+- Asset logo storage
+- Image file management
+- Brand asset representation
 
 ### Enums
 
-#### DistributionType {#distributiontype}
+#### AssetStatus
 
-The `DistributionType` enum defines the possible states or types for asset, allowing for classification and state management.
+Defines the status of an asset in the system.
 
-**Value Table:**
-
-| Value Name | Number | Description |
-|------------|--------|-------------|
-| DISTRIBUTION_TYPE_DO_NOT_USE | 0 | Default/unused value (protobuf convention) |
-| DISTRIBUTION_TYPE_CROWDFUND | 1 | Distribution Type Crowdfund state or type |
-| DISTRIBUTION_TYPE_TOKENSALE | 2 | Distribution Type Tokensale state or type |
-
-**Use Cases:**
-- Setting distributiontype for items
-- Filtering items by distributiontype in queries
-- Enforcing business logic based on distributiontype
-
-**Important Notes:**
-- Values with `NOT_USED` prefix or number 0 follow protobuf conventions for default enum values and should not be actively used
-- Only valid distributiontype values should be used in production code
-- DistributionType changes should be tracked in audit trails for compliance purposes
-
-#### LinkType {#linktype}
-
-The `LinkType` enum defines the possible states or types for asset, allowing for classification and state management.
-
-**Value Table:**
-
-| Value Name | Number | Description |
-|------------|--------|-------------|
-| LINK_TYPE_DO_NOT_USE | 0 | Default/unused value (protobuf convention) |
-| WEBSITE | 1 | Website state or type |
-| GITHUB | 2 | Github state or type |
-| WHITEPAPER | 3 | Whitepaper state or type |
-| DOCS | 4 | Docs state or type |
-| EXPLORER | 5 | Explorer state or type |
-| GOVERNANCE | 6 | Governance state or type |
+| Value                          | Number | Description                        |
+| ------------------------------ | ------ | ---------------------------------- |
+| ASSET_STATUS_DO_NOT_USE        | 0      | Reserved value, do not use         |
+| DO_NOT_LIST                    | 1      | Asset should not be listed         |
+| REQUEST_LISTING                | 2      | Asset is requesting to be listed   |
+| LISTED                         | 3      | Asset is actively listed           |
+| ORGANIZATION_ADMIN_DO_NOT_LIST | 4      | Organization admin blocked listing |
+| OUTDATED_ASSET_VERSION         | 5      | Asset version is outdated          |
 
 **Use Cases:**
-- Setting linktype for items
-- Filtering items by linktype in queries
-- Enforcing business logic based on linktype
 
-**Important Notes:**
-- Values with `NOT_USED` prefix or number 0 follow protobuf conventions for default enum values and should not be actively used
-- Only valid linktype values should be used in production code
-- LinkType changes should be tracked in audit trails for compliance purposes
+- Asset lifecycle management
+- Listing approval workflows
+- Version control
+- Administrative controls
 
-#### SocialMediaType {#socialmediatype}
+#### Reason
 
-The `SocialMediaType` enum defines the possible states or types for asset, allowing for classification and state management.
+Provides reasons for certain asset status changes.
 
-**Value Table:**
-
-| Value Name | Number | Description |
-|------------|--------|-------------|
-| SOCIAL_MEDIA_TYPE_DO_NOT_USE | 0 | Default/unused value (protobuf convention) |
-| TWITTER | 1 | Twitter state or type |
-| TELEGRAM | 2 | Telegram state or type |
-| DISCORD | 3 | Discord state or type |
-| MEDIUM | 4 | Medium state or type |
-| LINKEDIN | 5 | Linkedin state or type |
+| Value             | Number | Description                       |
+| ----------------- | ------ | --------------------------------- |
+| REASON_DO_NOT_USE | 0      | Reserved value, do not use        |
+| DUPLICATE         | 1      | Asset is a duplicate              |
+| UNWANTED_ASSET    | 2      | Asset is not wanted in the system |
+| UNSTABLE_ASSET    | 3      | Asset is considered unstable      |
 
 **Use Cases:**
-- Setting socialmediatype for items
-- Filtering items by socialmediatype in queries
-- Enforcing business logic based on socialmediatype
 
-**Important Notes:**
-- Values with `NOT_USED` prefix or number 0 follow protobuf conventions for default enum values and should not be actively used
-- Only valid socialmediatype values should be used in production code
-- SocialMediaType changes should be tracked in audit trails for compliance purposes
+- Status change documentation
+- Audit trail maintenance
+- Asset rejection reasons
+- Quality control
 
-#### AssetStatus {#assetstatus}
+#### AssetType
 
-The `AssetStatus` enum defines the possible states or types for asset, allowing for classification and state management.
+Defines the category of an asset.
 
-**Value Table:**
-
-| Value Name | Number | Description |
-|------------|--------|-------------|
-| ASSET_STATUS_DO_NOT_USE | 0 | Default/unused value (protobuf convention) |
-| DO_NOT_LIST | 1 | Do Not List state or type |
-| REQUEST_LISTING | 2 | Request Listing state or type |
-| LISTED | 3 | Listed state or type |
-| ORGANIZATION_ADMIN_DO_NOT_LIST | 4 | Organization Admin Do Not List state or type |
-| OUTDATED_ASSET_VERSION | 5 | Outdated Asset Version state or type |
-
-**Use Cases:**
-- Setting assetstatus for items
-- Filtering items by assetstatus in queries
-- Enforcing business logic based on assetstatus
-
-**Important Notes:**
-- Values with `NOT_USED` prefix or number 0 follow protobuf conventions for default enum values and should not be actively used
-- Only valid assetstatus values should be used in production code
-- AssetStatus changes should be tracked in audit trails for compliance purposes
-
-#### Reason {#reason}
-
-The `Reason` enum defines the possible states or types for asset, allowing for classification and state management.
-
-**Value Table:**
-
-| Value Name | Number | Description |
-|------------|--------|-------------|
-| REASON_DO_NOT_USE | 0 | Default/unused value (protobuf convention) |
-| DUPLICATE | 1 | Duplicate state or type |
-| UNWANTED_ASSET | 2 | Unwanted Asset state or type |
-| UNSTABLE_ASSET | 3 | Unstable Asset state or type |
+| Value                        | Number | Description                       |
+| ---------------------------- | ------ | --------------------------------- |
+| ASSET_TYPE_DO_NOT_USE        | 0      | Reserved value, do not use        |
+| FUNDS_AND_INVESTMENT_PRODUCT | 1      | Investment funds and products     |
+| COMMODITY                    | 2      | Physical commodities              |
+| WRAPPED_STABLECOIN           | 3      | Wrapped stablecoin assets         |
+| CRYPTO                       | 4      | Cryptocurrency assets             |
+| COLLECTIBLE                  | 5      | Collectibles and NFTs             |
+| VEHICLE_INDUSTRIAL_EQUIPMENT | 6      | Vehicles and industrial equipment |
+| INTELLECTUAL_PROPERTY        | 7      | Intellectual property assets      |
+| REAL_ESTATE                  | 8      | Real estate properties            |
+| EQUITY                       | 9      | Equity securities                 |
 
 **Use Cases:**
-- Setting reason for items
-- Filtering items by reason in queries
-- Enforcing business logic based on reason
 
-**Important Notes:**
-- Values with `NOT_USED` prefix or number 0 follow protobuf conventions for default enum values and should not be actively used
-- Only valid reason values should be used in production code
-- Reason changes should be tracked in audit trails for compliance purposes
+- Asset categorization
+- Type-specific validation
+- Filtering and search
+- Regulatory classification
 
-#### AssetType {#assettype}
+#### UserAssetStatus
 
-The `AssetType` enum defines the possible states or types for asset, allowing for classification and state management.
+Defines a user's permission status for an asset.
 
-**Value Table:**
-
-| Value Name | Number | Description |
-|------------|--------|-------------|
-| ASSET_TYPE_DO_NOT_USE | 0 | Default/unused value (protobuf convention) |
-| FUNDS_AND_INVESTMENT_PRODUCT | 1 | Funds And Investment Product state or type |
-| COMMODITY | 2 | Commodity state or type |
-| WRAPPED_STABLECOIN | 3 | Wrapped Stablecoin state or type |
-| CRYPTO | 4 | Crypto state or type |
-| COLLECTIBLE | 5 | Collectible state or type |
-| VEHICLE_INDUSTRIAL_EQUIPMENT | 6 | Vehicle Industrial Equipment state or type |
-| INTELLECTUAL_PROPERTY | 7 | Intellectual Property state or type |
-| REAL_ESTATE | 8 | Real Estate state or type |
-| EQUITY | 9 | Equity state or type |
+| Value                        | Number | Description                        |
+| ---------------------------- | ------ | ---------------------------------- |
+| USER_ASSET_STATUS_DO_NOT_USE | 0      | Reserved value, do not use         |
+| WHITELISTED                  | 1      | User is whitelisted for the asset  |
+| BLACKLISTED                  | 2      | User is blacklisted from the asset |
+| SELL_ONLY                    | 3      | User can only sell, not buy        |
+| OUTDATED_VERSION             | 4      | User has outdated version          |
 
 **Use Cases:**
-- Setting assettype for items
-- Filtering items by assettype in queries
-- Enforcing business logic based on assettype
 
-**Important Notes:**
-- Values with `NOT_USED` prefix or number 0 follow protobuf conventions for default enum values and should not be actively used
-- Only valid assettype values should be used in production code
-- AssetType changes should be tracked in audit trails for compliance purposes
+- User permission management
+- Compliance controls
+- Access restrictions
+- Version synchronization
 
-#### UserAssetStatus {#userassetstatus}
+#### DistributionType
 
-The `UserAssetStatus` enum defines the possible states or types for asset, allowing for classification and state management.
+Defines the type of distribution mechanism.
 
-**Value Table:**
-
-| Value Name | Number | Description |
-|------------|--------|-------------|
-| USER_ASSET_STATUS_DO_NOT_USE | 0 | Default/unused value (protobuf convention) |
-| WHITELISTED | 1 | Whitelisted state or type |
-| BLACKLISTED | 2 | Blacklisted state or type |
-| SELL_ONLY | 3 | Sell Only state or type |
-| OUTDATED_VERSION | 4 | Outdated Version state or type |
+| Value                        | Number | Description                |
+| ---------------------------- | ------ | -------------------------- |
+| DISTRIBUTION_TYPE_DO_NOT_USE | 0      | Reserved value, do not use |
+| DISTRIBUTION_TYPE_CROWDFUND  | 1      | Crowdfunding distribution  |
+| DISTRIBUTION_TYPE_TOKENSALE  | 2      | Token sale distribution    |
 
 **Use Cases:**
-- Setting userassetstatus for items
-- Filtering items by userassetstatus in queries
-- Enforcing business logic based on userassetstatus
+
+- Distribution method selection
+- Campaign type configuration
+- Investment mechanism identification
+
+#### LinkType
+
+Defines types of external links.
+
+| Value                | Number | Description                |
+| -------------------- | ------ | -------------------------- |
+| LINK_TYPE_DO_NOT_USE | 0      | Reserved value, do not use |
+| WEBSITE              | 1      | Official website           |
+| GITHUB               | 2      | GitHub repository          |
+| WHITEPAPER           | 3      | Project whitepaper         |
+| DOCS                 | 4      | Documentation              |
+| EXPLORER             | 5      | Blockchain explorer        |
+| GOVERNANCE           | 6      | Governance platform        |
+
+**Use Cases:**
+
+- Link categorization
+- Resource organization
+- External reference management
+
+#### SocialMediaType
+
+Defines types of social media platforms.
+
+| Value                        | Number | Description                |
+| ---------------------------- | ------ | -------------------------- |
+| SOCIAL_MEDIA_TYPE_DO_NOT_USE | 0      | Reserved value, do not use |
+| TWITTER                      | 1      | Twitter/X profile          |
+| TELEGRAM                     | 2      | Telegram channel/group     |
+| DISCORD                      | 3      | Discord server             |
+| MEDIUM                       | 4      | Medium publication         |
+| LINKEDIN                     | 5      | LinkedIn profile           |
+
+**Use Cases:**
+
+- Social media link organization
+- Community platform identification
+- Marketing resource management
+
+## asset-grpc.proto - Asset gRPC Service
+
+**Package:** `asset`  
+**Go Package Path:** `github.com/sologenic/com-fs-asset-model;asset`
+
+### Overview
+
+The asset-grpc.proto file defines the gRPC service interface for asset management operations. It provides comprehensive CRUD operations for both assets and user asset lists with support for filtering, pagination, and compliance checks.
+
+### Services
+
+#### AssetListService
+
+The main gRPC service for asset management operations.
+
+**Methods:**
+
+##### UpsertAsset
+
+Upsert on Asset. Creates or updates an asset in the system.
+
+**Request:** `Asset`  
+**Response:** `AssetKey`
+
+**Behavior:**
+
+- Creates a new asset if it doesn't exist
+- Updates existing asset if it already exists
+- Returns the asset key for reference
+- Validates asset data and compliance requirements
+
+**Use Cases:**
+
+- Initial asset onboarding
+- Asset information updates
+- Status changes
+
+**Error Conditions:**
+
+- Invalid asset data
+- Compliance violations
+- Duplicate asset conflicts
+
+##### GetAsset
+
+Get Asset by Key. Retrieves a single asset by its key.
+
+**Request:** `AssetKey`  
+**Response:** `Asset`
+
+**Behavior:**
+
+- Returns complete asset information including details, metadata, and audit trail
+- Includes issuer information
+- May apply jurisdiction-based filtering
+
+**Use Cases:**
+
+- Asset detail views
+- Asset verification
+- Compliance checks
+
+**Error Conditions:**
+
+- Asset not found
+- Access denied due to jurisdiction restrictions
+
+##### GetAssets
+
+Get all Assets for a given filter. Retrieves multiple assets based on filter criteria.
+
+**Request:** `AssetQuery`  
+**Response:** `Assets`
+
+**Behavior:**
+
+- Supports pagination via offset and limit
+- Applies multiple filters simultaneously
+- Returns assets matching all specified criteria
+- Includes compliance filtering by jurisdiction
+
+**Use Cases:**
+
+- Asset listing and browsing
+- Portfolio management
+- Compliance reporting
+- Asset discovery
+
+**Error Conditions:**
+
+- Invalid query parameters
+- Pagination errors
+- Jurisdiction access violations
+
+##### UpsertUserAssetList
+
+Upsert on UserAssetList. Creates or updates a user's relationship with an asset.
+
+**Request:** `UserAssetList`  
+**Response:** `UserAssetListKey`
+
+**Behavior:**
+
+- Manages user-specific asset permissions and visibility
+- Handles whitelist/blacklist status
+- Updates asset visibility preferences
+- Maintains audit trail of changes
+
+**Use Cases:**
+
+- User asset permissions management
+- Portfolio customization
+- Compliance status updates
+
+**Error Conditions:**
+
+- Invalid user or asset references
+- Permission conflicts
+- Status validation errors
+
+##### GetUserAssetList
+
+Get UserAssetList by Key. Retrieves a single user asset list entry by key.
+
+**Request:** `UserAssetListKey`  
+**Response:** `UserAssetList`
+
+**Behavior:**
+
+- Returns user-specific asset relationship data
+- Includes current status and visibility settings
+- Provides metadata and audit information
+
+**Use Cases:**
+
+- User permission verification
+- Portfolio status checks
+- Compliance auditing
+
+**Error Conditions:**
+
+- Entry not found
+- Access denied
+
+##### GetUserAssetLists
+
+Get all UserAssetList for a given filter. Retrieves multiple user asset list entries based on filter criteria.
+
+**Request:** `UserAssetListQuery`  
+**Response:** `UserAssetLists`
+
+**Behavior:**
+
+- Supports filtering by user, asset, status, and organization
+- Includes pagination support
+- Returns comprehensive relationship data
+
+**Use Cases:**
+
+- User portfolio management
+- Bulk permission updates
+- Organization asset management
+- Compliance reporting
+
+**Error Conditions:**
+
+- Invalid query parameters
+- Access permission violations
+
+### Message Definitions
+
+#### AssetKey
+
+Simple key wrapper for asset identification.
+
+| Field | Type   | Required/Optional | Description             |
+| ----- | ------ | ----------------- | ----------------------- |
+| Key   | string | Required          | Unique asset identifier |
+
+#### AssetQuery
+
+Query parameters for asset filtering and retrieval. Compliance filter: list assets allowed in these jurisdictions. On-chain issuer address (distinct from Denom.Issuer).
+
+| Field                   | Type             | Required/Optional | Description                                                   |
+| ----------------------- | ---------------- | ----------------- | ------------------------------------------------------------- |
+| Network                 | metadata.Network | Required          | Blockchain network filter                                     |
+| Offset                  | int32            | Optional          | Pagination offset                                             |
+| JurisdictionIDs         | repeated string  | Optional          | Compliance filter: list assets allowed in these jurisdictions |
+| OrganizationID          | string           | Optional          | Organization filter                                           |
+| Status                  | AssetStatus      | Optional          | Asset status filter                                           |
+| AssetType               | AssetType        | Optional          | Asset type filter                                             |
+| SmartContractIssuerAddr | string           | Optional          | On-chain issuer address (distinct from Denom.Issuer)          |
+| Limit                   | int32            | Optional          | Maximum results to return                                     |
+
+**Use Cases:**
+
+- Asset discovery and browsing
+- Compliance-filtered asset listings
+- Organization-specific asset management
+- Type-based asset categorization
 
 **Important Notes:**
-- Values with `NOT_USED` prefix or number 0 follow protobuf conventions for default enum values and should not be actively used
-- Only valid userassetstatus values should be used in production code
-- UserAssetStatus changes should be tracked in audit trails for compliance purposes
+
+- JurisdictionIDs filter ensures compliance by only returning assets allowed in specified jurisdictions
+- SmartContractIssuerAddr is distinct from Denom.Issuer and refers to the on-chain contract issuer
+
+#### UserAssetListKey
+
+Simple key wrapper for user asset list identification.
+
+| Field | Type   | Required/Optional | Description                       |
+| ----- | ------ | ----------------- | --------------------------------- |
+| Key   | string | Required          | Unique user asset list identifier |
+
+#### UserAssetListQuery
+
+Query parameters for user asset list filtering and retrieval.
+
+| Field          | Type             | Required/Optional | Description               |
+| -------------- | ---------------- | ----------------- | ------------------------- |
+| Network        | metadata.Network | Required          | Blockchain network filter |
+| Offset         | int32            | Optional          | Pagination offset         |
+| AccountID      | string           | Optional          | User account filter       |
+| Wallet         | string           | Optional          | Wallet address filter     |
+| AssetKey       | string           | Optional          | Specific asset filter     |
+| Status         | UserAssetStatus  | Optional          | Permission status filter  |
+| Visible        | bool             | Optional          | Visibility filter         |
+| OrganizationID | string           | Optional          | Organization filter       |
+
+**Use Cases:**
+
+- User portfolio management
+- Permission status queries
+- Organization user management
+- Asset visibility management
+
+## domain/currency/currency.proto - Currency Definitions
+
+**Package:** `currency`  
+**Go Package Path:** `github.com/sologenic/com-fs-asset-model/domain/currency;currency`
+
+### Overview
+
+The currency.proto file defines the basic currency structure used throughout the asset model. It provides a simple but robust system for currency identification with versioning support.
+
+### Messages
+
+#### Currency
+
+Represents a currency with symbol and version information. User-entered ticker with format:[a-zA-Z0-9]{1,45}. e.g., APPL, PLTR, MSFT. Auto-incremented version (no leading zeros) with max length 3 characters (values 1 to 999).
+
+| Field   | Type   | Required/Optional | Description                                                                                |
+| ------- | ------ | ----------------- | ------------------------------------------------------------------------------------------ |
+| Symbol  | string | Required          | User-entered ticker with format:[a-zA-Z0-9]{1,45}. e.g., APPL, PLTR, MSFT                  |
+| Version | string | Required          | Auto-incremented version (no leading zeros) with max length 3 characters (values 1 to 999) |
+
+**Use Cases:**
+
+- Currency identification in asset denominations
+- Version management for currency updates
+- Asset tokenization with currency backing
+
+**Important Notes:**
+
+- Symbol format must match regex: `[a-zA-Z0-9]{1,45}`
+- Examples: "AAPL", "PLTR", "MSFT", "BTC-USD"
+- Version is auto-incremented and limited to 3 characters (values 1 to 999)
+- No leading zeros allowed in version numbers
+
+**Constraints:**
+
+- Symbol must be unique within the system for a given version
+- Version management ensures backward compatibility
+- Used as a component in denomination construction
+
+## domain/denom/denom.proto - Denomination Definitions
+
+**Package:** `denom`  
+**Go Package Path:** `github.com/sologenic/com-fs-asset-model/domain/denom;denom`
+
+### Overview
+
+The denom.proto file defines the on-chain denomination structure that combines currency information with issuer details and precision settings. This is a critical component for tokenization as it establishes the complete on-chain identity of a token.
+
+### Messages
+
+#### Denom
+
+Defines the on-chain denomination of a token and include on-chain data such as the issuer, precision, and description. It is constructed according to the following conventions:
+
+1. Currency: {lowercase(symbol)}\_{version}
+   - Example: "aapl_1", "btc-usd_2"
+2. Subunit: su{currency}
+   - Example: "suaapl_1"
+3. Denom: {subunit}-{issuer}
+   - Example: "suaapl_1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
+
+| Field       | Type              | Required/Optional | Description                                                                                            |
+| ----------- | ----------------- | ----------------- | ------------------------------------------------------------------------------------------------------ |
+| Currency    | currency.Currency | Required          | Format: {symbol}\_{version}                                                                            |
+| Subunit     | string            | Required          | Format: su{currency}                                                                                   |
+| Issuer      | string            | Required          | On-chain issuer address                                                                                |
+| Precision   | int64             | Required          | Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares. |
+| Description | string            | Required          | On-chain description                                                                                   |
+
+**Use Cases:**
+
+- On-chain token identification
+- Asset tokenization with precise denomination
+- Cross-chain asset representation
+- Fractional ownership implementation
+
+**Important Notes and Conventions:**
+
+The denomination follows a specific construction pattern:
+
+1. **Currency Format:** `{lowercase(symbol)}_{version}`
+
+   - Example: "aapl_1", "btc-usd_2"
+
+2. **Subunit Format:** `su{currency}`
+
+   - Example: "suaapl_1"
+
+3. **Denom Format:** `{subunit}-{issuer}`
+   - Example: "suaapl_1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
+
+**Precision Usage:**
+
+- Defines decimal places for the smallest tradeable unit
+- Example: precision of 6 means smallest unit represents 0.000001 shares
+- Enables fractional asset ownership
+- Critical for financial calculations and token economics
+
+**Constraints:**
+
+- Issuer must be a valid blockchain address
+- Precision must be non-negative
+- Subunit format is strictly enforced
+- Description should be human-readable for on-chain visibility
+
+## domain/symbol/symbol.proto - Symbol Definitions
+
+**Package:** `symbol`  
+**Go Package Path:** `github.com/sologenic/com-fs-asset-model/domain/symbol;symbol`
+
+### Overview
+
+The symbol.proto file defines trading symbols as pairs of denominations, enabling the representation of trading pairs for asset exchanges and price discovery.
+
+### Messages
+
+#### Symbol
+
+Represents a trading symbol as a pair of base and quote denominations.
+
+| Field | Type        | Required/Optional | Description                            |
+| ----- | ----------- | ----------------- | -------------------------------------- |
+| Base  | denom.Denom | Required          | Base denomination of the trading pair  |
+| Quote | denom.Denom | Required          | Quote denomination of the trading pair |
+
+**Use Cases:**
+
+- Trading pair definition for exchanges
+- Price discovery and market data
+- Asset exchange rate calculation
+- Multi-asset portfolio valuation
+
+**Important Notes:**
+
+- Base represents the asset being traded
+- Quote represents the currency/asset used for pricing
+- Both denominations must be valid and properly formatted
+- Enables complex trading scenarios with multiple asset types
+
+**Examples:**
+
+- Real estate token (base) priced in USD stablecoin (quote)
+- Commodity token (base) priced in native blockchain token (quote)
+- Equity token (base) priced in fiat-backed stablecoin (quote)
+
+**Constraints:**
+
+- Both base and quote must reference valid denominations
+- Base and quote should be different to avoid circular references
+- Symbol pairs should be unique within the trading system
 
 ## Version Information
 
-This documentation corresponds to the Protocol Buffer definitions in `asset.proto`. The proto file(s) use `proto3` syntax. When referencing this documentation, ensure that the version of the proto files matches the version of the generated code and API implementations you are using.
+This documentation corresponds to the current version of the Protocol Buffer definitions in the com-fs-asset-model repository. The schemas are designed to be backward compatible, with version management built into the currency and denomination systems.
+
+**Key Version Considerations:**
+
+- Currency versions are auto-incremented (1-999)
+- Asset schema changes maintain backward compatibility
+- gRPC service versions may be extended with new methods
+- Enum values are additive only (existing values never change)
 
 ## Support
 
-For additional information and support:
-- See `README.md` for project setup, installation, and usage instructions
-- Refer to the Protocol Buffer definitions in `asset.proto` for the authoritative source of truth
-- Check the imported utility libraries for details on related types:
-  - `sologenic/com-fs-asset-model/domain/denom/denom.proto`
-  - `sologenic/com-fs-utils-lib/models/audit/audit.proto`
-  - `sologenic/com-fs-utils-lib/models/metadata/metadata.proto`
+For additional information about this asset model:
+
+- See the [README.md](README.md) file for build instructions and usage examples
+- Review the Protocol Buffer files directly for the most up-to-date field definitions
+- Check the `client/` directory for Go client implementation examples
+- Examine the `build/` directory for generated TypeScript definitions
+
+**Generated Files:**
+
+- Go: `*.pb.go` files contain generated Go structs and gRPC services
+- TypeScript: `build/` directory contains TypeScript definitions and JavaScript implementations
+- The build process is automated via shell scripts in `bin/` directories
+
+**Development Notes:**
+
+- All Protocol Buffer files use proto3 syntax
+- Import dependencies are managed through the sologenic namespace structure
+- Build scripts generate both server and client code for multiple languages

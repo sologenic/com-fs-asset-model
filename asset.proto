@@ -179,9 +179,9 @@ message TokenSale {
     string BaseDenom = 3; // Base denom (RWA tokens)
     // Minimum amount of base_denom to purchase
     string MinAmount = 4;
-    // Timestamp of when the token sale starts
+    // Timestamp (in seconds) of when the token sale starts
     int64 StartDate = 5;
-    // Timestamp of when the token sale ends
+    // Timestamp (in seconds) of when the token sale ends
     int64 EndDate = 6;
     // Address of compliance manager contract. That contract is called to check if transfers are allowed or not
     string ComplianceManagerContractAddr = 7;
@@ -208,9 +208,9 @@ message Crowdfund {
     string BaseDenom = 3; // Base denom (RWA tokens)
     // Minimum amount of base_denom to purchase
     string MinAmount = 4;
-    // Timestamp of when the token sale starts
+    // Timestamp (in seconds) of when the token sale starts
     int64 StartDate = 5;
-    // Timestamp of when the token sale ends
+    // Timestamp (in seconds) of when the token sale ends
     int64 EndDate = 6;
     // Minimum threshold for the token sale
     string MinThreshold = 7;

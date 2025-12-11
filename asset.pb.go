@@ -1870,9 +1870,9 @@ type Crowdfund struct {
 	BaseDenom string `protobuf:"bytes,3,opt,name=BaseDenom,proto3" json:"BaseDenom,omitempty"` // Base denom (RWA tokens)
 	// Minimum amount of base_denom to purchase
 	MinAmount string `protobuf:"bytes,4,opt,name=MinAmount,proto3" json:"MinAmount,omitempty"`
-	// Timestamp of when the token sale starts
+	// Timestamp (in seconds) of when the token sale starts
 	StartDate int64 `protobuf:"varint,5,opt,name=StartDate,proto3" json:"StartDate,omitempty"`
-	// Timestamp of when the token sale ends
+	// Timestamp (in seconds) of when the token sale ends
 	EndDate int64 `protobuf:"varint,6,opt,name=EndDate,proto3" json:"EndDate,omitempty"`
 	// Minimum threshold for the token sale
 	MinThreshold string `protobuf:"bytes,7,opt,name=MinThreshold,proto3" json:"MinThreshold,omitempty"`

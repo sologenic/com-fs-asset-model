@@ -604,9 +604,9 @@ export interface Crowdfund {
   BaseDenom: string;
   /** Minimum amount of base_denom to purchase */
   MinAmount: string;
-  /** Timestamp of when the token sale starts */
+  /** Timestamp (in seconds) of when the token sale starts */
   StartDate: number;
-  /** Timestamp of when the token sale ends */
+  /** Timestamp (in seconds) of when the token sale ends */
   EndDate: number;
   /** Minimum threshold for the token sale */
   MinThreshold: string;
