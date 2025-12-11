@@ -1717,9 +1717,9 @@ type TokenSale struct {
 	BaseDenom string `protobuf:"bytes,3,opt,name=BaseDenom,proto3" json:"BaseDenom,omitempty"` // Base denom (RWA tokens)
 	// Minimum amount of base_denom to purchase
 	MinAmount string `protobuf:"bytes,4,opt,name=MinAmount,proto3" json:"MinAmount,omitempty"`
-	// Timestamp of when the token sale starts
+	// Timestamp (in seconds) of when the token sale starts
 	StartDate int64 `protobuf:"varint,5,opt,name=StartDate,proto3" json:"StartDate,omitempty"`
-	// Timestamp of when the token sale ends
+	// Timestamp (in seconds) of when the token sale ends
 	EndDate int64 `protobuf:"varint,6,opt,name=EndDate,proto3" json:"EndDate,omitempty"`
 	// Address of compliance manager contract. That contract is called to check if transfers are allowed or not
 	ComplianceManagerContractAddr string `protobuf:"bytes,7,opt,name=ComplianceManagerContractAddr,proto3" json:"ComplianceManagerContractAddr,omitempty"`
@@ -1735,8 +1735,11 @@ type TokenSale struct {
 	OrderHubContractAddr string `protobuf:"bytes,12,opt,name=OrderHubContractAddr,proto3" json:"OrderHubContractAddr,omitempty"`
 	// Address of the token sale contract
 	TokenSaleContractAddr *string `protobuf:"bytes,13,opt,name=TokenSaleContractAddr,proto3,oneof" json:"TokenSaleContractAddr,omitempty"`
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
+	// Distribution supply (in subunits) -
+	// To mint at the moment of registring the sale to the Smart Contract.
+	DistributionSupply string `protobuf:"bytes,14,opt,name=DistributionSupply,proto3" json:"DistributionSupply,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *TokenSale) Reset() {
@@ -1860,6 +1863,13 @@ func (x *TokenSale) GetTokenSaleContractAddr() string {
 	return ""
 }
 
+func (x *TokenSale) GetDistributionSupply() string {
+	if x != nil {
+		return x.DistributionSupply
+	}
+	return ""
+}
+
 type Crowdfund struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The smallest allowable step for the base_denom
@@ -1892,8 +1902,10 @@ type Crowdfund struct {
 	AssetExtensionCode string `protobuf:"bytes,14,opt,name=AssetExtensionCode,proto3" json:"AssetExtensionCode,omitempty"`
 	// Address of the asset extension contract
 	AssetExtensionContractAddr *string `protobuf:"bytes,15,opt,name=AssetExtensionContractAddr,proto3,oneof" json:"AssetExtensionContractAddr,omitempty"`
-	unknownFields              protoimpl.UnknownFields
-	sizeCache                  protoimpl.SizeCache
+	// Distribution supply (in subunits) - To mint after the crowdfund is successful
+	DistributionSupply string `protobuf:"bytes,16,opt,name=DistributionSupply,proto3" json:"DistributionSupply,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *Crowdfund) Reset() {
@@ -2027,6 +2039,13 @@ func (x *Crowdfund) GetAssetExtensionCode() string {
 func (x *Crowdfund) GetAssetExtensionContractAddr() string {
 	if x != nil && x.AssetExtensionContractAddr != nil {
 		return *x.AssetExtensionContractAddr
+	}
+	return ""
+}
+
+func (x *Crowdfund) GetDistributionSupply() string {
+	if x != nil {
+		return x.DistributionSupply
 	}
 	return ""
 }
@@ -3274,7 +3293,7 @@ const file_asset_proto_rawDesc = "" +
 	"\x10CrowdfundDetails\x18\x02 \x01(\v2\x10.asset.CrowdfundH\x00R\x10CrowdfundDetails\x88\x01\x01\x12A\n" +
 	"\x10TokenSaleDetails\x18\x03 \x01(\v2\x10.asset.TokenSaleH\x01R\x10TokenSaleDetails\x88\x01\x01B\x13\n" +
 	"\x11_CrowdfundDetailsB\x13\n" +
-	"\x11_TokenSaleDetails\"\xca\x05\n" +
+	"\x11_TokenSaleDetails\"\xfa\x05\n" +
 	"\tTokenSale\x12\"\n" +
 	"\fQuantityStep\x18\x01 \x01(\tR\fQuantityStep\x12B\n" +
 	"\x14SellPricesPerSubunit\x18\x02 \x03(\v2\x0e.asset.DecCoinR\x14SellPricesPerSubunit\x12\x1c\n" +
@@ -3289,9 +3308,10 @@ const file_asset_proto_rawDesc = "" +
 	" \x01(\tR\x12AssetExtensionCode\x12C\n" +
 	"\x1aAssetExtensionContractAddr\x18\v \x01(\tH\x00R\x1aAssetExtensionContractAddr\x88\x01\x01\x122\n" +
 	"\x14OrderHubContractAddr\x18\f \x01(\tR\x14OrderHubContractAddr\x129\n" +
-	"\x15TokenSaleContractAddr\x18\r \x01(\tH\x01R\x15TokenSaleContractAddr\x88\x01\x01B\x1d\n" +
+	"\x15TokenSaleContractAddr\x18\r \x01(\tH\x01R\x15TokenSaleContractAddr\x88\x01\x01\x12.\n" +
+	"\x12DistributionSupply\x18\x0e \x01(\tR\x12DistributionSupplyB\x1d\n" +
 	"\x1b_AssetExtensionContractAddrB\x18\n" +
-	"\x16_TokenSaleContractAddr\"\x80\x06\n" +
+	"\x16_TokenSaleContractAddr\"\xb0\x06\n" +
 	"\tCrowdfund\x12\"\n" +
 	"\fQuantityStep\x18\x01 \x01(\tR\fQuantityStep\x12:\n" +
 	"\x10PricesPerSubunit\x18\x02 \x03(\v2\x0e.asset.DecCoinR\x10PricesPerSubunit\x12\x1c\n" +
@@ -3308,7 +3328,8 @@ const file_asset_proto_rawDesc = "" +
 	"\x15CrowdfundContractAddr\x18\f \x01(\tH\x00R\x15CrowdfundContractAddr\x88\x01\x01\x12<\n" +
 	"\x19AssetRegistryContractAddr\x18\r \x01(\tR\x19AssetRegistryContractAddr\x12.\n" +
 	"\x12AssetExtensionCode\x18\x0e \x01(\tR\x12AssetExtensionCode\x12C\n" +
-	"\x1aAssetExtensionContractAddr\x18\x0f \x01(\tH\x01R\x1aAssetExtensionContractAddr\x88\x01\x01B\x18\n" +
+	"\x1aAssetExtensionContractAddr\x18\x0f \x01(\tH\x01R\x1aAssetExtensionContractAddr\x88\x01\x01\x12.\n" +
+	"\x12DistributionSupply\x18\x10 \x01(\tR\x12DistributionSupplyB\x18\n" +
 	"\x16_CrowdfundContractAddrB\x1d\n" +
 	"\x1b_AssetExtensionContractAddr\"\xcc\x03\n" +
 	"\x14IntellectualProperty\x12\x1a\n" +

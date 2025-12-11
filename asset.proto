@@ -197,6 +197,9 @@ message TokenSale {
     string OrderHubContractAddr = 12;
     // Address of the token sale contract
     optional string TokenSaleContractAddr = 13;
+    // Distribution supply (in subunits) - 
+    //To mint at the moment of registring the sale to the Smart Contract.
+    string DistributionSupply = 14;
 }
 
 message Crowdfund {
@@ -230,6 +233,8 @@ message Crowdfund {
     string AssetExtensionCode = 14;
     // Address of the asset extension contract
     optional string AssetExtensionContractAddr = 15;
+    // Distribution supply (in subunits) - To mint after the crowdfund is successful
+    string DistributionSupply = 16;
 }
 
 message IntellectualProperty {

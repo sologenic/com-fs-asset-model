@@ -477,6 +477,7 @@ Defines a token sale distribution mechanism. Should be pre-issued (even with zer
 | AssetExtensionContractAddr    | string           | Optional          | Address of the asset extension contract                                                                  |
 | OrderHubContractAddr          | string           | Required          | Address of the order hub contract                                                                        |
 | TokenSaleContractAddr         | string           | Optional          | Address of the token sale contract                                                                       |
+| DistributionSupply            | string           | Required          | Distribution supply (in subunits). To mint at the moment of registering the sale to the Smart Contract. |
 
 **Use Cases:**
 
@@ -506,6 +507,7 @@ Defines a crowdfunding distribution mechanism. Should be pre-issued (even with z
 | AssetRegistryContractAddr     | string           | Required          | Address of the asset registry contract                                      |
 | AssetExtensionCode            | string           | Required          | Code of the asset extension                                                 |
 | AssetExtensionContractAddr    | string           | Optional          | Address of the asset extension contract                                     |
+| DistributionSupply            | string           | Required          | Distribution supply (in subunits). To mint after the crowdfund is successful. |
 
 **Use Cases:**
 

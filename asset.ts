@@ -573,9 +573,9 @@ export interface TokenSale {
   BaseDenom: string;
   /** Minimum amount of base_denom to purchase */
   MinAmount: string;
-  /** Timestamp of when the token sale starts */
+  /** Timestamp (in seconds) of when the token sale starts */
   StartDate: number;
-  /** Timestamp of when the token sale ends */
+  /** Timestamp (in seconds) of when the token sale ends */
   EndDate: number;
   /** Address of compliance manager contract. That contract is called to check if transfers are allowed or not */
   ComplianceManagerContractAddr: string;
@@ -592,7 +592,14 @@ export interface TokenSale {
   /** Address of the order hub contract */
   OrderHubContractAddr: string;
   /** Address of the token sale contract */
-  TokenSaleContractAddr?: string | undefined;
+  TokenSaleContractAddr?:
+    | string
+    | undefined;
+  /**
+   * Distribution supply (in subunits) -
+   * To mint at the moment of registring the sale to the Smart Contract.
+   */
+  DistributionSupply: string;
 }
 
 export interface Crowdfund {
@@ -627,7 +634,11 @@ export interface Crowdfund {
   /** Code of the asset extension */
   AssetExtensionCode: string;
   /** Address of the asset extension contract */
-  AssetExtensionContractAddr?: string | undefined;
+  AssetExtensionContractAddr?:
+    | string
+    | undefined;
+  /** Distribution supply (in subunits) - To mint after the crowdfund is successful */
+  DistributionSupply: string;
 }
 
 export interface IntellectualProperty {
@@ -3074,6 +3085,7 @@ function createBaseTokenSale(): TokenSale {
     AssetExtensionContractAddr: undefined,
     OrderHubContractAddr: "",
     TokenSaleContractAddr: undefined,
+    DistributionSupply: "",
   };
 }
 
@@ -3117,6 +3129,9 @@ export const TokenSale = {
     }
     if (message.TokenSaleContractAddr !== undefined) {
       writer.uint32(106).string(message.TokenSaleContractAddr);
+    }
+    if (message.DistributionSupply !== "") {
+      writer.uint32(114).string(message.DistributionSupply);
     }
     return writer;
   },
@@ -3219,6 +3234,13 @@ export const TokenSale = {
 
           message.TokenSaleContractAddr = reader.string();
           continue;
+        case 14:
+          if (tag !== 114) {
+            break;
+          }
+
+          message.DistributionSupply = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3255,6 +3277,7 @@ export const TokenSale = {
       TokenSaleContractAddr: isSet(object.TokenSaleContractAddr)
         ? globalThis.String(object.TokenSaleContractAddr)
         : undefined,
+      DistributionSupply: isSet(object.DistributionSupply) ? globalThis.String(object.DistributionSupply) : "",
     };
   },
 
@@ -3299,6 +3322,9 @@ export const TokenSale = {
     if (message.TokenSaleContractAddr !== undefined) {
       obj.TokenSaleContractAddr = message.TokenSaleContractAddr;
     }
+    if (message.DistributionSupply !== "") {
+      obj.DistributionSupply = message.DistributionSupply;
+    }
     return obj;
   },
 
@@ -3320,6 +3346,7 @@ export const TokenSale = {
     message.AssetExtensionContractAddr = object.AssetExtensionContractAddr ?? undefined;
     message.OrderHubContractAddr = object.OrderHubContractAddr ?? "";
     message.TokenSaleContractAddr = object.TokenSaleContractAddr ?? undefined;
+    message.DistributionSupply = object.DistributionSupply ?? "";
     return message;
   },
 };
@@ -3341,6 +3368,7 @@ function createBaseCrowdfund(): Crowdfund {
     AssetRegistryContractAddr: "",
     AssetExtensionCode: "",
     AssetExtensionContractAddr: undefined,
+    DistributionSupply: "",
   };
 }
 
@@ -3390,6 +3418,9 @@ export const Crowdfund = {
     }
     if (message.AssetExtensionContractAddr !== undefined) {
       writer.uint32(122).string(message.AssetExtensionContractAddr);
+    }
+    if (message.DistributionSupply !== "") {
+      writer.uint32(130).string(message.DistributionSupply);
     }
     return writer;
   },
@@ -3506,6 +3537,13 @@ export const Crowdfund = {
 
           message.AssetExtensionContractAddr = reader.string();
           continue;
+        case 16:
+          if (tag !== 130) {
+            break;
+          }
+
+          message.DistributionSupply = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3544,6 +3582,7 @@ export const Crowdfund = {
       AssetExtensionContractAddr: isSet(object.AssetExtensionContractAddr)
         ? globalThis.String(object.AssetExtensionContractAddr)
         : undefined,
+      DistributionSupply: isSet(object.DistributionSupply) ? globalThis.String(object.DistributionSupply) : "",
     };
   },
 
@@ -3594,6 +3633,9 @@ export const Crowdfund = {
     if (message.AssetExtensionContractAddr !== undefined) {
       obj.AssetExtensionContractAddr = message.AssetExtensionContractAddr;
     }
+    if (message.DistributionSupply !== "") {
+      obj.DistributionSupply = message.DistributionSupply;
+    }
     return obj;
   },
 
@@ -3617,6 +3659,7 @@ export const Crowdfund = {
     message.AssetRegistryContractAddr = object.AssetRegistryContractAddr ?? "";
     message.AssetExtensionCode = object.AssetExtensionCode ?? "";
     message.AssetExtensionContractAddr = object.AssetExtensionContractAddr ?? undefined;
+    message.DistributionSupply = object.DistributionSupply ?? "";
     return message;
   },
 };

@@ -2545,6 +2545,7 @@ function createBaseTokenSale() {
         AssetExtensionContractAddr: undefined,
         OrderHubContractAddr: "",
         TokenSaleContractAddr: undefined,
+        DistributionSupply: "",
     };
 }
 export const TokenSale = {
@@ -2587,6 +2588,9 @@ export const TokenSale = {
         }
         if (message.TokenSaleContractAddr !== undefined) {
             writer.uint32(106).string(message.TokenSaleContractAddr);
+        }
+        if (message.DistributionSupply !== "") {
+            writer.uint32(114).string(message.DistributionSupply);
         }
         return writer;
     },
@@ -2675,6 +2679,12 @@ export const TokenSale = {
                     }
                     message.TokenSaleContractAddr = reader.string();
                     continue;
+                case 14:
+                    if (tag !== 114) {
+                        break;
+                    }
+                    message.DistributionSupply = reader.string();
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -2710,6 +2720,7 @@ export const TokenSale = {
             TokenSaleContractAddr: isSet(object.TokenSaleContractAddr)
                 ? globalThis.String(object.TokenSaleContractAddr)
                 : undefined,
+            DistributionSupply: isSet(object.DistributionSupply) ? globalThis.String(object.DistributionSupply) : "",
         };
     },
     toJSON(message) {
@@ -2754,13 +2765,16 @@ export const TokenSale = {
         if (message.TokenSaleContractAddr !== undefined) {
             obj.TokenSaleContractAddr = message.TokenSaleContractAddr;
         }
+        if (message.DistributionSupply !== "") {
+            obj.DistributionSupply = message.DistributionSupply;
+        }
         return obj;
     },
     create(base) {
         return TokenSale.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
         const message = createBaseTokenSale();
         message.QuantityStep = (_a = object.QuantityStep) !== null && _a !== void 0 ? _a : "";
         message.SellPricesPerSubunit = ((_b = object.SellPricesPerSubunit) === null || _b === void 0 ? void 0 : _b.map((e) => DecCoin.fromPartial(e))) || [];
@@ -2775,6 +2789,7 @@ export const TokenSale = {
         message.AssetExtensionContractAddr = (_l = object.AssetExtensionContractAddr) !== null && _l !== void 0 ? _l : undefined;
         message.OrderHubContractAddr = (_m = object.OrderHubContractAddr) !== null && _m !== void 0 ? _m : "";
         message.TokenSaleContractAddr = (_o = object.TokenSaleContractAddr) !== null && _o !== void 0 ? _o : undefined;
+        message.DistributionSupply = (_p = object.DistributionSupply) !== null && _p !== void 0 ? _p : "";
         return message;
     },
 };
@@ -2795,6 +2810,7 @@ function createBaseCrowdfund() {
         AssetRegistryContractAddr: "",
         AssetExtensionCode: "",
         AssetExtensionContractAddr: undefined,
+        DistributionSupply: "",
     };
 }
 export const Crowdfund = {
@@ -2843,6 +2859,9 @@ export const Crowdfund = {
         }
         if (message.AssetExtensionContractAddr !== undefined) {
             writer.uint32(122).string(message.AssetExtensionContractAddr);
+        }
+        if (message.DistributionSupply !== "") {
+            writer.uint32(130).string(message.DistributionSupply);
         }
         return writer;
     },
@@ -2943,6 +2962,12 @@ export const Crowdfund = {
                     }
                     message.AssetExtensionContractAddr = reader.string();
                     continue;
+                case 16:
+                    if (tag !== 130) {
+                        break;
+                    }
+                    message.DistributionSupply = reader.string();
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -2980,6 +3005,7 @@ export const Crowdfund = {
             AssetExtensionContractAddr: isSet(object.AssetExtensionContractAddr)
                 ? globalThis.String(object.AssetExtensionContractAddr)
                 : undefined,
+            DistributionSupply: isSet(object.DistributionSupply) ? globalThis.String(object.DistributionSupply) : "",
         };
     },
     toJSON(message) {
@@ -3030,13 +3056,16 @@ export const Crowdfund = {
         if (message.AssetExtensionContractAddr !== undefined) {
             obj.AssetExtensionContractAddr = message.AssetExtensionContractAddr;
         }
+        if (message.DistributionSupply !== "") {
+            obj.DistributionSupply = message.DistributionSupply;
+        }
         return obj;
     },
     create(base) {
         return Crowdfund.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
         const message = createBaseCrowdfund();
         message.QuantityStep = (_a = object.QuantityStep) !== null && _a !== void 0 ? _a : "";
         message.PricesPerSubunit = ((_b = object.PricesPerSubunit) === null || _b === void 0 ? void 0 : _b.map((e) => DecCoin.fromPartial(e))) || [];
@@ -3053,6 +3082,7 @@ export const Crowdfund = {
         message.AssetRegistryContractAddr = (_o = object.AssetRegistryContractAddr) !== null && _o !== void 0 ? _o : "";
         message.AssetExtensionCode = (_p = object.AssetExtensionCode) !== null && _p !== void 0 ? _p : "";
         message.AssetExtensionContractAddr = (_q = object.AssetExtensionContractAddr) !== null && _q !== void 0 ? _q : undefined;
+        message.DistributionSupply = (_r = object.DistributionSupply) !== null && _r !== void 0 ? _r : "";
         return message;
     },
 };

@@ -223,9 +223,9 @@ export interface TokenSale {
     BaseDenom: string;
     /** Minimum amount of base_denom to purchase */
     MinAmount: string;
-    /** Timestamp of when the token sale starts */
+    /** Timestamp (in seconds) of when the token sale starts */
     StartDate: number;
-    /** Timestamp of when the token sale ends */
+    /** Timestamp (in seconds) of when the token sale ends */
     EndDate: number;
     /** Address of compliance manager contract. That contract is called to check if transfers are allowed or not */
     ComplianceManagerContractAddr: string;
@@ -241,6 +241,11 @@ export interface TokenSale {
     OrderHubContractAddr: string;
     /** Address of the token sale contract */
     TokenSaleContractAddr?: string | undefined;
+    /**
+     * Distribution supply (in subunits) -
+     * To mint at the moment of registring the sale to the Smart Contract.
+     */
+    DistributionSupply: string;
 }
 export interface Crowdfund {
     /** The smallest allowable step for the base_denom */
@@ -273,6 +278,8 @@ export interface Crowdfund {
     AssetExtensionCode: string;
     /** Address of the asset extension contract */
     AssetExtensionContractAddr?: string | undefined;
+    /** Distribution supply (in subunits) - To mint after the crowdfund is successful */
+    DistributionSupply: string;
 }
 export interface IntellectualProperty {
     Category: string;
@@ -587,6 +594,7 @@ export declare const AssetDetails: {
                 AssetRegistryContractAddr?: string | undefined;
                 AssetExtensionCode?: string | undefined;
                 AssetExtensionContractAddr?: string | undefined;
+                DistributionSupply?: string | undefined;
             } | undefined;
             TokenSaleDetails?: {
                 QuantityStep?: string | undefined;
@@ -608,6 +616,7 @@ export declare const AssetDetails: {
                 AssetExtensionContractAddr?: string | undefined;
                 OrderHubContractAddr?: string | undefined;
                 TokenSaleContractAddr?: string | undefined;
+                DistributionSupply?: string | undefined;
             } | undefined;
         } | undefined;
     } & {
@@ -986,6 +995,7 @@ export declare const AssetDetails: {
                 AssetRegistryContractAddr?: string | undefined;
                 AssetExtensionCode?: string | undefined;
                 AssetExtensionContractAddr?: string | undefined;
+                DistributionSupply?: string | undefined;
             } | undefined;
             TokenSaleDetails?: {
                 QuantityStep?: string | undefined;
@@ -1007,6 +1017,7 @@ export declare const AssetDetails: {
                 AssetExtensionContractAddr?: string | undefined;
                 OrderHubContractAddr?: string | undefined;
                 TokenSaleContractAddr?: string | undefined;
+                DistributionSupply?: string | undefined;
             } | undefined;
         } & {
             Type?: DistributionType | undefined;
@@ -1029,6 +1040,7 @@ export declare const AssetDetails: {
                 AssetRegistryContractAddr?: string | undefined;
                 AssetExtensionCode?: string | undefined;
                 AssetExtensionContractAddr?: string | undefined;
+                DistributionSupply?: string | undefined;
             } & {
                 QuantityStep?: string | undefined;
                 PricesPerSubunit?: ({
@@ -1057,6 +1069,7 @@ export declare const AssetDetails: {
                 AssetRegistryContractAddr?: string | undefined;
                 AssetExtensionCode?: string | undefined;
                 AssetExtensionContractAddr?: string | undefined;
+                DistributionSupply?: string | undefined;
             } & { [K_31 in Exclude<keyof I["DistributionDetails"]["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
             TokenSaleDetails?: ({
                 QuantityStep?: string | undefined;
@@ -1078,6 +1091,7 @@ export declare const AssetDetails: {
                 AssetExtensionContractAddr?: string | undefined;
                 OrderHubContractAddr?: string | undefined;
                 TokenSaleContractAddr?: string | undefined;
+                DistributionSupply?: string | undefined;
             } & {
                 QuantityStep?: string | undefined;
                 SellPricesPerSubunit?: ({
@@ -1116,6 +1130,7 @@ export declare const AssetDetails: {
                 AssetExtensionContractAddr?: string | undefined;
                 OrderHubContractAddr?: string | undefined;
                 TokenSaleContractAddr?: string | undefined;
+                DistributionSupply?: string | undefined;
             } & { [K_36 in Exclude<keyof I["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
         } & { [K_37 in Exclude<keyof I["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
     } & { [K_38 in Exclude<keyof I, keyof AssetDetails>]: never; }>(base?: I | undefined): AssetDetails;
@@ -1315,6 +1330,7 @@ export declare const AssetDetails: {
                 AssetRegistryContractAddr?: string | undefined;
                 AssetExtensionCode?: string | undefined;
                 AssetExtensionContractAddr?: string | undefined;
+                DistributionSupply?: string | undefined;
             } | undefined;
             TokenSaleDetails?: {
                 QuantityStep?: string | undefined;
@@ -1336,6 +1352,7 @@ export declare const AssetDetails: {
                 AssetExtensionContractAddr?: string | undefined;
                 OrderHubContractAddr?: string | undefined;
                 TokenSaleContractAddr?: string | undefined;
+                DistributionSupply?: string | undefined;
             } | undefined;
         } | undefined;
     } & {
@@ -1714,6 +1731,7 @@ export declare const AssetDetails: {
                 AssetRegistryContractAddr?: string | undefined;
                 AssetExtensionCode?: string | undefined;
                 AssetExtensionContractAddr?: string | undefined;
+                DistributionSupply?: string | undefined;
             } | undefined;
             TokenSaleDetails?: {
                 QuantityStep?: string | undefined;
@@ -1735,6 +1753,7 @@ export declare const AssetDetails: {
                 AssetExtensionContractAddr?: string | undefined;
                 OrderHubContractAddr?: string | undefined;
                 TokenSaleContractAddr?: string | undefined;
+                DistributionSupply?: string | undefined;
             } | undefined;
         } & {
             Type?: DistributionType | undefined;
@@ -1757,6 +1776,7 @@ export declare const AssetDetails: {
                 AssetRegistryContractAddr?: string | undefined;
                 AssetExtensionCode?: string | undefined;
                 AssetExtensionContractAddr?: string | undefined;
+                DistributionSupply?: string | undefined;
             } & {
                 QuantityStep?: string | undefined;
                 PricesPerSubunit?: ({
@@ -1785,6 +1805,7 @@ export declare const AssetDetails: {
                 AssetRegistryContractAddr?: string | undefined;
                 AssetExtensionCode?: string | undefined;
                 AssetExtensionContractAddr?: string | undefined;
+                DistributionSupply?: string | undefined;
             } & { [K_70 in Exclude<keyof I_1["DistributionDetails"]["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
             TokenSaleDetails?: ({
                 QuantityStep?: string | undefined;
@@ -1806,6 +1827,7 @@ export declare const AssetDetails: {
                 AssetExtensionContractAddr?: string | undefined;
                 OrderHubContractAddr?: string | undefined;
                 TokenSaleContractAddr?: string | undefined;
+                DistributionSupply?: string | undefined;
             } & {
                 QuantityStep?: string | undefined;
                 SellPricesPerSubunit?: ({
@@ -1844,6 +1866,7 @@ export declare const AssetDetails: {
                 AssetExtensionContractAddr?: string | undefined;
                 OrderHubContractAddr?: string | undefined;
                 TokenSaleContractAddr?: string | undefined;
+                DistributionSupply?: string | undefined;
             } & { [K_75 in Exclude<keyof I_1["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
         } & { [K_76 in Exclude<keyof I_1["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
     } & { [K_77 in Exclude<keyof I_1, keyof AssetDetails>]: never; }>(object: I_1): AssetDetails;
@@ -2050,6 +2073,7 @@ export declare const Asset: {
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
                     AssetExtensionContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } | undefined;
                 TokenSaleDetails?: {
                     QuantityStep?: string | undefined;
@@ -2071,6 +2095,7 @@ export declare const Asset: {
                     AssetExtensionContractAddr?: string | undefined;
                     OrderHubContractAddr?: string | undefined;
                     TokenSaleContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } | undefined;
             } | undefined;
         } | undefined;
@@ -2303,6 +2328,7 @@ export declare const Asset: {
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
                     AssetExtensionContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } | undefined;
                 TokenSaleDetails?: {
                     QuantityStep?: string | undefined;
@@ -2324,6 +2350,7 @@ export declare const Asset: {
                     AssetExtensionContractAddr?: string | undefined;
                     OrderHubContractAddr?: string | undefined;
                     TokenSaleContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } | undefined;
             } | undefined;
         } & {
@@ -2702,6 +2729,7 @@ export declare const Asset: {
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
                     AssetExtensionContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } | undefined;
                 TokenSaleDetails?: {
                     QuantityStep?: string | undefined;
@@ -2723,6 +2751,7 @@ export declare const Asset: {
                     AssetExtensionContractAddr?: string | undefined;
                     OrderHubContractAddr?: string | undefined;
                     TokenSaleContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } | undefined;
             } & {
                 Type?: DistributionType | undefined;
@@ -2745,6 +2774,7 @@ export declare const Asset: {
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
                     AssetExtensionContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } & {
                     QuantityStep?: string | undefined;
                     PricesPerSubunit?: ({
@@ -2773,6 +2803,7 @@ export declare const Asset: {
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
                     AssetExtensionContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } & { [K_31 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
                 TokenSaleDetails?: ({
                     QuantityStep?: string | undefined;
@@ -2794,6 +2825,7 @@ export declare const Asset: {
                     AssetExtensionContractAddr?: string | undefined;
                     OrderHubContractAddr?: string | undefined;
                     TokenSaleContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } & {
                     QuantityStep?: string | undefined;
                     SellPricesPerSubunit?: ({
@@ -2832,6 +2864,7 @@ export declare const Asset: {
                     AssetExtensionContractAddr?: string | undefined;
                     OrderHubContractAddr?: string | undefined;
                     TokenSaleContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } & { [K_36 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
             } & { [K_37 in Exclude<keyof I["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
         } & { [K_38 in Exclude<keyof I["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
@@ -3094,6 +3127,7 @@ export declare const Asset: {
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
                     AssetExtensionContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } | undefined;
                 TokenSaleDetails?: {
                     QuantityStep?: string | undefined;
@@ -3115,6 +3149,7 @@ export declare const Asset: {
                     AssetExtensionContractAddr?: string | undefined;
                     OrderHubContractAddr?: string | undefined;
                     TokenSaleContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } | undefined;
             } | undefined;
         } | undefined;
@@ -3347,6 +3382,7 @@ export declare const Asset: {
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
                     AssetExtensionContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } | undefined;
                 TokenSaleDetails?: {
                     QuantityStep?: string | undefined;
@@ -3368,6 +3404,7 @@ export declare const Asset: {
                     AssetExtensionContractAddr?: string | undefined;
                     OrderHubContractAddr?: string | undefined;
                     TokenSaleContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } | undefined;
             } | undefined;
         } & {
@@ -3746,6 +3783,7 @@ export declare const Asset: {
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
                     AssetExtensionContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } | undefined;
                 TokenSaleDetails?: {
                     QuantityStep?: string | undefined;
@@ -3767,6 +3805,7 @@ export declare const Asset: {
                     AssetExtensionContractAddr?: string | undefined;
                     OrderHubContractAddr?: string | undefined;
                     TokenSaleContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } | undefined;
             } & {
                 Type?: DistributionType | undefined;
@@ -3789,6 +3828,7 @@ export declare const Asset: {
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
                     AssetExtensionContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } & {
                     QuantityStep?: string | undefined;
                     PricesPerSubunit?: ({
@@ -3817,6 +3857,7 @@ export declare const Asset: {
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
                     AssetExtensionContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } & { [K_75 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
                 TokenSaleDetails?: ({
                     QuantityStep?: string | undefined;
@@ -3838,6 +3879,7 @@ export declare const Asset: {
                     AssetExtensionContractAddr?: string | undefined;
                     OrderHubContractAddr?: string | undefined;
                     TokenSaleContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } & {
                     QuantityStep?: string | undefined;
                     SellPricesPerSubunit?: ({
@@ -3876,6 +3918,7 @@ export declare const Asset: {
                     AssetExtensionContractAddr?: string | undefined;
                     OrderHubContractAddr?: string | undefined;
                     TokenSaleContractAddr?: string | undefined;
+                    DistributionSupply?: string | undefined;
                 } & { [K_80 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
             } & { [K_81 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
         } & { [K_82 in Exclude<keyof I_1["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
@@ -4145,6 +4188,7 @@ export declare const Assets: {
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                     TokenSaleDetails?: {
                         QuantityStep?: string | undefined;
@@ -4166,6 +4210,7 @@ export declare const Assets: {
                         AssetExtensionContractAddr?: string | undefined;
                         OrderHubContractAddr?: string | undefined;
                         TokenSaleContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
             } | undefined;
@@ -4401,6 +4446,7 @@ export declare const Assets: {
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                     TokenSaleDetails?: {
                         QuantityStep?: string | undefined;
@@ -4422,6 +4468,7 @@ export declare const Assets: {
                         AssetExtensionContractAddr?: string | undefined;
                         OrderHubContractAddr?: string | undefined;
                         TokenSaleContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
             } | undefined;
@@ -4654,6 +4701,7 @@ export declare const Assets: {
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                     TokenSaleDetails?: {
                         QuantityStep?: string | undefined;
@@ -4675,6 +4723,7 @@ export declare const Assets: {
                         AssetExtensionContractAddr?: string | undefined;
                         OrderHubContractAddr?: string | undefined;
                         TokenSaleContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
             } | undefined;
@@ -4907,6 +4956,7 @@ export declare const Assets: {
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                     TokenSaleDetails?: {
                         QuantityStep?: string | undefined;
@@ -4928,6 +4978,7 @@ export declare const Assets: {
                         AssetExtensionContractAddr?: string | undefined;
                         OrderHubContractAddr?: string | undefined;
                         TokenSaleContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
             } & {
@@ -5306,6 +5357,7 @@ export declare const Assets: {
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                     TokenSaleDetails?: {
                         QuantityStep?: string | undefined;
@@ -5327,6 +5379,7 @@ export declare const Assets: {
                         AssetExtensionContractAddr?: string | undefined;
                         OrderHubContractAddr?: string | undefined;
                         TokenSaleContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                 } & {
                     Type?: DistributionType | undefined;
@@ -5349,6 +5402,7 @@ export declare const Assets: {
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } & {
                         QuantityStep?: string | undefined;
                         PricesPerSubunit?: ({
@@ -5377,6 +5431,7 @@ export declare const Assets: {
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } & { [K_31 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
                     TokenSaleDetails?: ({
                         QuantityStep?: string | undefined;
@@ -5398,6 +5453,7 @@ export declare const Assets: {
                         AssetExtensionContractAddr?: string | undefined;
                         OrderHubContractAddr?: string | undefined;
                         TokenSaleContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } & {
                         QuantityStep?: string | undefined;
                         SellPricesPerSubunit?: ({
@@ -5436,6 +5492,7 @@ export declare const Assets: {
                         AssetExtensionContractAddr?: string | undefined;
                         OrderHubContractAddr?: string | undefined;
                         TokenSaleContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } & { [K_36 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
                 } & { [K_37 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
             } & { [K_38 in Exclude<keyof I["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
@@ -5697,6 +5754,7 @@ export declare const Assets: {
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                     TokenSaleDetails?: {
                         QuantityStep?: string | undefined;
@@ -5718,6 +5776,7 @@ export declare const Assets: {
                         AssetExtensionContractAddr?: string | undefined;
                         OrderHubContractAddr?: string | undefined;
                         TokenSaleContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
             } | undefined;
@@ -5954,6 +6013,7 @@ export declare const Assets: {
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                     TokenSaleDetails?: {
                         QuantityStep?: string | undefined;
@@ -5975,6 +6035,7 @@ export declare const Assets: {
                         AssetExtensionContractAddr?: string | undefined;
                         OrderHubContractAddr?: string | undefined;
                         TokenSaleContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
             } | undefined;
@@ -6210,6 +6271,7 @@ export declare const Assets: {
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                     TokenSaleDetails?: {
                         QuantityStep?: string | undefined;
@@ -6231,6 +6293,7 @@ export declare const Assets: {
                         AssetExtensionContractAddr?: string | undefined;
                         OrderHubContractAddr?: string | undefined;
                         TokenSaleContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
             } | undefined;
@@ -6463,6 +6526,7 @@ export declare const Assets: {
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                     TokenSaleDetails?: {
                         QuantityStep?: string | undefined;
@@ -6484,6 +6548,7 @@ export declare const Assets: {
                         AssetExtensionContractAddr?: string | undefined;
                         OrderHubContractAddr?: string | undefined;
                         TokenSaleContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
             } | undefined;
@@ -6716,6 +6781,7 @@ export declare const Assets: {
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                     TokenSaleDetails?: {
                         QuantityStep?: string | undefined;
@@ -6737,6 +6803,7 @@ export declare const Assets: {
                         AssetExtensionContractAddr?: string | undefined;
                         OrderHubContractAddr?: string | undefined;
                         TokenSaleContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
             } & {
@@ -7115,6 +7182,7 @@ export declare const Assets: {
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                     TokenSaleDetails?: {
                         QuantityStep?: string | undefined;
@@ -7136,6 +7204,7 @@ export declare const Assets: {
                         AssetExtensionContractAddr?: string | undefined;
                         OrderHubContractAddr?: string | undefined;
                         TokenSaleContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                 } & {
                     Type?: DistributionType | undefined;
@@ -7158,6 +7227,7 @@ export declare const Assets: {
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } & {
                         QuantityStep?: string | undefined;
                         PricesPerSubunit?: ({
@@ -7186,6 +7256,7 @@ export declare const Assets: {
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } & { [K_77 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
                     TokenSaleDetails?: ({
                         QuantityStep?: string | undefined;
@@ -7207,6 +7278,7 @@ export declare const Assets: {
                         AssetExtensionContractAddr?: string | undefined;
                         OrderHubContractAddr?: string | undefined;
                         TokenSaleContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } & {
                         QuantityStep?: string | undefined;
                         SellPricesPerSubunit?: ({
@@ -7245,6 +7317,7 @@ export declare const Assets: {
                         AssetExtensionContractAddr?: string | undefined;
                         OrderHubContractAddr?: string | undefined;
                         TokenSaleContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } & { [K_82 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
                 } & { [K_83 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
             } & { [K_84 in Exclude<keyof I_1["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
@@ -7506,6 +7579,7 @@ export declare const Assets: {
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
                         AssetExtensionContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                     TokenSaleDetails?: {
                         QuantityStep?: string | undefined;
@@ -7527,6 +7601,7 @@ export declare const Assets: {
                         AssetExtensionContractAddr?: string | undefined;
                         OrderHubContractAddr?: string | undefined;
                         TokenSaleContractAddr?: string | undefined;
+                        DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
             } | undefined;
@@ -8166,6 +8241,7 @@ export declare const Distribution: {
             AssetRegistryContractAddr?: string | undefined;
             AssetExtensionCode?: string | undefined;
             AssetExtensionContractAddr?: string | undefined;
+            DistributionSupply?: string | undefined;
         } | undefined;
         TokenSaleDetails?: {
             QuantityStep?: string | undefined;
@@ -8187,6 +8263,7 @@ export declare const Distribution: {
             AssetExtensionContractAddr?: string | undefined;
             OrderHubContractAddr?: string | undefined;
             TokenSaleContractAddr?: string | undefined;
+            DistributionSupply?: string | undefined;
         } | undefined;
     } & {
         Type?: DistributionType | undefined;
@@ -8209,6 +8286,7 @@ export declare const Distribution: {
             AssetRegistryContractAddr?: string | undefined;
             AssetExtensionCode?: string | undefined;
             AssetExtensionContractAddr?: string | undefined;
+            DistributionSupply?: string | undefined;
         } & {
             QuantityStep?: string | undefined;
             PricesPerSubunit?: ({
@@ -8237,6 +8315,7 @@ export declare const Distribution: {
             AssetRegistryContractAddr?: string | undefined;
             AssetExtensionCode?: string | undefined;
             AssetExtensionContractAddr?: string | undefined;
+            DistributionSupply?: string | undefined;
         } & { [K_2 in Exclude<keyof I["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
         TokenSaleDetails?: ({
             QuantityStep?: string | undefined;
@@ -8258,6 +8337,7 @@ export declare const Distribution: {
             AssetExtensionContractAddr?: string | undefined;
             OrderHubContractAddr?: string | undefined;
             TokenSaleContractAddr?: string | undefined;
+            DistributionSupply?: string | undefined;
         } & {
             QuantityStep?: string | undefined;
             SellPricesPerSubunit?: ({
@@ -8296,6 +8376,7 @@ export declare const Distribution: {
             AssetExtensionContractAddr?: string | undefined;
             OrderHubContractAddr?: string | undefined;
             TokenSaleContractAddr?: string | undefined;
+            DistributionSupply?: string | undefined;
         } & { [K_7 in Exclude<keyof I["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
     } & { [K_8 in Exclude<keyof I, keyof Distribution>]: never; }>(base?: I | undefined): Distribution;
     fromPartial<I_1 extends {
@@ -8319,6 +8400,7 @@ export declare const Distribution: {
             AssetRegistryContractAddr?: string | undefined;
             AssetExtensionCode?: string | undefined;
             AssetExtensionContractAddr?: string | undefined;
+            DistributionSupply?: string | undefined;
         } | undefined;
         TokenSaleDetails?: {
             QuantityStep?: string | undefined;
@@ -8340,6 +8422,7 @@ export declare const Distribution: {
             AssetExtensionContractAddr?: string | undefined;
             OrderHubContractAddr?: string | undefined;
             TokenSaleContractAddr?: string | undefined;
+            DistributionSupply?: string | undefined;
         } | undefined;
     } & {
         Type?: DistributionType | undefined;
@@ -8362,6 +8445,7 @@ export declare const Distribution: {
             AssetRegistryContractAddr?: string | undefined;
             AssetExtensionCode?: string | undefined;
             AssetExtensionContractAddr?: string | undefined;
+            DistributionSupply?: string | undefined;
         } & {
             QuantityStep?: string | undefined;
             PricesPerSubunit?: ({
@@ -8390,6 +8474,7 @@ export declare const Distribution: {
             AssetRegistryContractAddr?: string | undefined;
             AssetExtensionCode?: string | undefined;
             AssetExtensionContractAddr?: string | undefined;
+            DistributionSupply?: string | undefined;
         } & { [K_11 in Exclude<keyof I_1["CrowdfundDetails"], keyof Crowdfund>]: never; }) | undefined;
         TokenSaleDetails?: ({
             QuantityStep?: string | undefined;
@@ -8411,6 +8496,7 @@ export declare const Distribution: {
             AssetExtensionContractAddr?: string | undefined;
             OrderHubContractAddr?: string | undefined;
             TokenSaleContractAddr?: string | undefined;
+            DistributionSupply?: string | undefined;
         } & {
             QuantityStep?: string | undefined;
             SellPricesPerSubunit?: ({
@@ -8449,6 +8535,7 @@ export declare const Distribution: {
             AssetExtensionContractAddr?: string | undefined;
             OrderHubContractAddr?: string | undefined;
             TokenSaleContractAddr?: string | undefined;
+            DistributionSupply?: string | undefined;
         } & { [K_16 in Exclude<keyof I_1["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
     } & { [K_17 in Exclude<keyof I_1, keyof Distribution>]: never; }>(object: I_1): Distribution;
 };
@@ -8477,6 +8564,7 @@ export declare const TokenSale: {
         AssetExtensionContractAddr?: string | undefined;
         OrderHubContractAddr?: string | undefined;
         TokenSaleContractAddr?: string | undefined;
+        DistributionSupply?: string | undefined;
     } & {
         QuantityStep?: string | undefined;
         SellPricesPerSubunit?: ({
@@ -8515,6 +8603,7 @@ export declare const TokenSale: {
         AssetExtensionContractAddr?: string | undefined;
         OrderHubContractAddr?: string | undefined;
         TokenSaleContractAddr?: string | undefined;
+        DistributionSupply?: string | undefined;
     } & { [K_4 in Exclude<keyof I, keyof TokenSale>]: never; }>(base?: I | undefined): TokenSale;
     fromPartial<I_1 extends {
         QuantityStep?: string | undefined;
@@ -8536,6 +8625,7 @@ export declare const TokenSale: {
         AssetExtensionContractAddr?: string | undefined;
         OrderHubContractAddr?: string | undefined;
         TokenSaleContractAddr?: string | undefined;
+        DistributionSupply?: string | undefined;
     } & {
         QuantityStep?: string | undefined;
         SellPricesPerSubunit?: ({
@@ -8574,6 +8664,7 @@ export declare const TokenSale: {
         AssetExtensionContractAddr?: string | undefined;
         OrderHubContractAddr?: string | undefined;
         TokenSaleContractAddr?: string | undefined;
+        DistributionSupply?: string | undefined;
     } & { [K_9 in Exclude<keyof I_1, keyof TokenSale>]: never; }>(object: I_1): TokenSale;
 };
 export declare const Crowdfund: {
@@ -8600,6 +8691,7 @@ export declare const Crowdfund: {
         AssetRegistryContractAddr?: string | undefined;
         AssetExtensionCode?: string | undefined;
         AssetExtensionContractAddr?: string | undefined;
+        DistributionSupply?: string | undefined;
     } & {
         QuantityStep?: string | undefined;
         PricesPerSubunit?: ({
@@ -8628,6 +8720,7 @@ export declare const Crowdfund: {
         AssetRegistryContractAddr?: string | undefined;
         AssetExtensionCode?: string | undefined;
         AssetExtensionContractAddr?: string | undefined;
+        DistributionSupply?: string | undefined;
     } & { [K_2 in Exclude<keyof I, keyof Crowdfund>]: never; }>(base?: I | undefined): Crowdfund;
     fromPartial<I_1 extends {
         QuantityStep?: string | undefined;
@@ -8648,6 +8741,7 @@ export declare const Crowdfund: {
         AssetRegistryContractAddr?: string | undefined;
         AssetExtensionCode?: string | undefined;
         AssetExtensionContractAddr?: string | undefined;
+        DistributionSupply?: string | undefined;
     } & {
         QuantityStep?: string | undefined;
         PricesPerSubunit?: ({
@@ -8676,6 +8770,7 @@ export declare const Crowdfund: {
         AssetRegistryContractAddr?: string | undefined;
         AssetExtensionCode?: string | undefined;
         AssetExtensionContractAddr?: string | undefined;
+        DistributionSupply?: string | undefined;
     } & { [K_5 in Exclude<keyof I_1, keyof Crowdfund>]: never; }>(object: I_1): Crowdfund;
 };
 export declare const IntellectualProperty: {
