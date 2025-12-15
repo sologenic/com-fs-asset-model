@@ -3,6 +3,20 @@ import { Denom } from "./sologenic/com-fs-asset-model/domain/denom/denom";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
 import { MetaData, Network } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 export declare const protobufPackage = "asset";
+export declare enum MessageTransaction {
+    MESSAGE_TRANSACTION_DO_NOT_USE = 0,
+    MESSAGE_TRANSACTION_MINT = 1,
+    MESSAGE_TRANSACTION_BURN = 2,
+    MESSAGE_TRANSACTION_FREEZE = 3,
+    MESSAGE_TRANSACTION_WHITELIST = 4,
+    MESSAGE_TRANSACTION_CLAWBACK = 5,
+    MESSAGE_TRANSACTION_ASSET_EXTENSTION = 6,
+    MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION = 7,
+    MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION = 8,
+    UNRECOGNIZED = -1
+}
+export declare function messageTransactionFromJSON(object: any): MessageTransaction;
+export declare function messageTransactionToJSON(object: MessageTransaction): string;
 export declare enum DistributionType {
     DISTRIBUTION_TYPE_DO_NOT_USE = 0,
     DISTRIBUTION_TYPE_CROWDFUND = 1,
@@ -208,6 +222,12 @@ export interface Vehicle {
 export interface DecCoin {
     Denom: string;
     Amount: string;
+}
+export interface AssetTransaction {
+    Amount: number;
+    DestinationAddress?: string | undefined;
+    IsGloballyFrozen?: boolean | undefined;
+    IsGloballyUnfrozen?: boolean | undefined;
 }
 export interface Distribution {
     Type: DistributionType;
@@ -8214,6 +8234,34 @@ export declare const DecCoin: {
         Denom?: string | undefined;
         Amount?: string | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof DecCoin>]: never; }>(object: I_1): DecCoin;
+};
+export declare const AssetTransaction: {
+    encode(message: AssetTransaction, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): AssetTransaction;
+    fromJSON(object: any): AssetTransaction;
+    toJSON(message: AssetTransaction): unknown;
+    create<I extends {
+        Amount?: number | undefined;
+        DestinationAddress?: string | undefined;
+        IsGloballyFrozen?: boolean | undefined;
+        IsGloballyUnfrozen?: boolean | undefined;
+    } & {
+        Amount?: number | undefined;
+        DestinationAddress?: string | undefined;
+        IsGloballyFrozen?: boolean | undefined;
+        IsGloballyUnfrozen?: boolean | undefined;
+    } & { [K in Exclude<keyof I, keyof AssetTransaction>]: never; }>(base?: I | undefined): AssetTransaction;
+    fromPartial<I_1 extends {
+        Amount?: number | undefined;
+        DestinationAddress?: string | undefined;
+        IsGloballyFrozen?: boolean | undefined;
+        IsGloballyUnfrozen?: boolean | undefined;
+    } & {
+        Amount?: number | undefined;
+        DestinationAddress?: string | undefined;
+        IsGloballyFrozen?: boolean | undefined;
+        IsGloballyUnfrozen?: boolean | undefined;
+    } & { [K_1 in Exclude<keyof I_1, keyof AssetTransaction>]: never; }>(object: I_1): AssetTransaction;
 };
 export declare const Distribution: {
     encode(message: Distribution, writer?: _m0.Writer): _m0.Writer;

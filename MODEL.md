@@ -477,7 +477,7 @@ Defines a token sale distribution mechanism. Should be pre-issued (even with zer
 | AssetExtensionContractAddr    | string           | Optional          | Address of the asset extension contract                                                                  |
 | OrderHubContractAddr          | string           | Required          | Address of the order hub contract                                                                        |
 | TokenSaleContractAddr         | string           | Optional          | Address of the token sale contract                                                                       |
-| DistributionSupply            | string           | Required          | Distribution supply (in subunits). To mint at the moment of registering the sale to the Smart Contract. |
+| DistributionSupply            | string           | Required          | Distribution supply (in subunits). To mint at the moment of registering the sale to the Smart Contract.  |
 
 **Use Cases:**
 
@@ -490,23 +490,23 @@ Defines a token sale distribution mechanism. Should be pre-issued (even with zer
 
 Defines a crowdfunding distribution mechanism. Should be pre-issued (even with zero total supply). Base denom (RWA tokens). Timestamp (in seconds) of when the token sale starts. Timestamp (in seconds) of when the token sale ends. Address of the compliance manager contract.
 
-| Field                         | Type             | Required/Optional | Description                                                                 |
-| ----------------------------- | ---------------- | ----------------- | --------------------------------------------------------------------------- |
-| QuantityStep                  | string           | Required          | The smallest allowable step for the base_denom                              |
-| PricesPerSubunit              | repeated DecCoin | Required          | Price to purchase the tokenized asset with, per subunit                     |
-| BaseDenom                     | string           | Required          | Base denom (RWA tokens). Should be pre-issued (even with zero total supply) |
-| MinAmount                     | string           | Required          | Minimum amount of base_denom to purchase                                    |
-| StartDate                     | int64            | Required          | Timestamp (in seconds) of when the token sale starts                        |
-| EndDate                       | int64            | Required          | Timestamp (in seconds) of when the token sale ends                          |
-| MinThreshold                  | string           | Required          | Minimum threshold for the token sale                                        |
-| MaxThreshold                  | string           | Required          | Maximum threshold for the token sale                                        |
-| AllowOrderCancellation        | bool             | Required          | Allow order cancellation                                                    |
-| ComplianceManagerContractAddr | string           | Required          | Address of the compliance manager contract                                  |
-| OrderHubContractAddr          | string           | Required          | Address of the order hub contract                                           |
-| CrowdfundContractAddr         | string           | Optional          | Address of the crowdfund contract                                           |
-| AssetRegistryContractAddr     | string           | Required          | Address of the asset registry contract                                      |
-| AssetExtensionCode            | string           | Required          | Code of the asset extension                                                 |
-| AssetExtensionContractAddr    | string           | Optional          | Address of the asset extension contract                                     |
+| Field                         | Type             | Required/Optional | Description                                                                   |
+| ----------------------------- | ---------------- | ----------------- | ----------------------------------------------------------------------------- |
+| QuantityStep                  | string           | Required          | The smallest allowable step for the base_denom                                |
+| PricesPerSubunit              | repeated DecCoin | Required          | Price to purchase the tokenized asset with, per subunit                       |
+| BaseDenom                     | string           | Required          | Base denom (RWA tokens). Should be pre-issued (even with zero total supply)   |
+| MinAmount                     | string           | Required          | Minimum amount of base_denom to purchase                                      |
+| StartDate                     | int64            | Required          | Timestamp (in seconds) of when the token sale starts                          |
+| EndDate                       | int64            | Required          | Timestamp (in seconds) of when the token sale ends                            |
+| MinThreshold                  | string           | Required          | Minimum threshold for the token sale                                          |
+| MaxThreshold                  | string           | Required          | Maximum threshold for the token sale                                          |
+| AllowOrderCancellation        | bool             | Required          | Allow order cancellation                                                      |
+| ComplianceManagerContractAddr | string           | Required          | Address of the compliance manager contract                                    |
+| OrderHubContractAddr          | string           | Required          | Address of the order hub contract                                             |
+| CrowdfundContractAddr         | string           | Optional          | Address of the crowdfund contract                                             |
+| AssetRegistryContractAddr     | string           | Required          | Address of the asset registry contract                                        |
+| AssetExtensionCode            | string           | Required          | Code of the asset extension                                                   |
+| AssetExtensionContractAddr    | string           | Optional          | Address of the asset extension contract                                       |
 | DistributionSupply            | string           | Required          | Distribution supply (in subunits). To mint after the crowdfund is successful. |
 
 **Use Cases:**

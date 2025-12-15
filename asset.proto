@@ -158,6 +158,28 @@ message DecCoin {
     string Amount = 2;
 }
 
+enum MessageTransaction {
+    MESSAGE_TRANSACTION_DO_NOT_USE = 0;
+    MESSAGE_TRANSACTION_MINT = 1;
+    MESSAGE_TRANSACTION_BURN = 2;
+    MESSAGE_TRANSACTION_FREEZE = 3;
+    MESSAGE_TRANSACTION_WHITELIST = 4;
+    MESSAGE_TRANSACTION_CLAWBACK = 5;
+    MESSAGE_TRANSACTION_ASSET_EXTENSTION = 6;
+    MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION = 7;
+    MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION = 8;
+}
+
+message AssetTransaction {
+    int64 Amount = 1;
+    optional string DestinationAddress = 2;
+    optional bool IsGloballyFrozen = 3;
+    optional bool IsGloballyUnfrozen = 4;
+}
+
+
+
+
 message Distribution {
     DistributionType Type = 1;
     optional Crowdfund CrowdfundDetails = 2;

@@ -10,6 +10,79 @@ import { Denom } from "./sologenic/com-fs-asset-model/domain/denom/denom";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
 import { MetaData, networkFromJSON, networkToJSON, } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 export const protobufPackage = "asset";
+export var MessageTransaction;
+(function (MessageTransaction) {
+    MessageTransaction[MessageTransaction["MESSAGE_TRANSACTION_DO_NOT_USE"] = 0] = "MESSAGE_TRANSACTION_DO_NOT_USE";
+    MessageTransaction[MessageTransaction["MESSAGE_TRANSACTION_MINT"] = 1] = "MESSAGE_TRANSACTION_MINT";
+    MessageTransaction[MessageTransaction["MESSAGE_TRANSACTION_BURN"] = 2] = "MESSAGE_TRANSACTION_BURN";
+    MessageTransaction[MessageTransaction["MESSAGE_TRANSACTION_FREEZE"] = 3] = "MESSAGE_TRANSACTION_FREEZE";
+    MessageTransaction[MessageTransaction["MESSAGE_TRANSACTION_WHITELIST"] = 4] = "MESSAGE_TRANSACTION_WHITELIST";
+    MessageTransaction[MessageTransaction["MESSAGE_TRANSACTION_CLAWBACK"] = 5] = "MESSAGE_TRANSACTION_CLAWBACK";
+    MessageTransaction[MessageTransaction["MESSAGE_TRANSACTION_ASSET_EXTENSTION"] = 6] = "MESSAGE_TRANSACTION_ASSET_EXTENSTION";
+    MessageTransaction[MessageTransaction["MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION"] = 7] = "MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION";
+    MessageTransaction[MessageTransaction["MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION"] = 8] = "MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION";
+    MessageTransaction[MessageTransaction["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
+})(MessageTransaction || (MessageTransaction = {}));
+export function messageTransactionFromJSON(object) {
+    switch (object) {
+        case 0:
+        case "MESSAGE_TRANSACTION_DO_NOT_USE":
+            return MessageTransaction.MESSAGE_TRANSACTION_DO_NOT_USE;
+        case 1:
+        case "MESSAGE_TRANSACTION_MINT":
+            return MessageTransaction.MESSAGE_TRANSACTION_MINT;
+        case 2:
+        case "MESSAGE_TRANSACTION_BURN":
+            return MessageTransaction.MESSAGE_TRANSACTION_BURN;
+        case 3:
+        case "MESSAGE_TRANSACTION_FREEZE":
+            return MessageTransaction.MESSAGE_TRANSACTION_FREEZE;
+        case 4:
+        case "MESSAGE_TRANSACTION_WHITELIST":
+            return MessageTransaction.MESSAGE_TRANSACTION_WHITELIST;
+        case 5:
+        case "MESSAGE_TRANSACTION_CLAWBACK":
+            return MessageTransaction.MESSAGE_TRANSACTION_CLAWBACK;
+        case 6:
+        case "MESSAGE_TRANSACTION_ASSET_EXTENSTION":
+            return MessageTransaction.MESSAGE_TRANSACTION_ASSET_EXTENSTION;
+        case 7:
+        case "MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION":
+            return MessageTransaction.MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION;
+        case 8:
+        case "MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION":
+            return MessageTransaction.MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION;
+        case -1:
+        case "UNRECOGNIZED":
+        default:
+            return MessageTransaction.UNRECOGNIZED;
+    }
+}
+export function messageTransactionToJSON(object) {
+    switch (object) {
+        case MessageTransaction.MESSAGE_TRANSACTION_DO_NOT_USE:
+            return "MESSAGE_TRANSACTION_DO_NOT_USE";
+        case MessageTransaction.MESSAGE_TRANSACTION_MINT:
+            return "MESSAGE_TRANSACTION_MINT";
+        case MessageTransaction.MESSAGE_TRANSACTION_BURN:
+            return "MESSAGE_TRANSACTION_BURN";
+        case MessageTransaction.MESSAGE_TRANSACTION_FREEZE:
+            return "MESSAGE_TRANSACTION_FREEZE";
+        case MessageTransaction.MESSAGE_TRANSACTION_WHITELIST:
+            return "MESSAGE_TRANSACTION_WHITELIST";
+        case MessageTransaction.MESSAGE_TRANSACTION_CLAWBACK:
+            return "MESSAGE_TRANSACTION_CLAWBACK";
+        case MessageTransaction.MESSAGE_TRANSACTION_ASSET_EXTENSTION:
+            return "MESSAGE_TRANSACTION_ASSET_EXTENSTION";
+        case MessageTransaction.MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION:
+            return "MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION";
+        case MessageTransaction.MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION:
+            return "MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION";
+        case MessageTransaction.UNRECOGNIZED:
+        default:
+            return "UNRECOGNIZED";
+    }
+}
 export var DistributionType;
 (function (DistributionType) {
     DistributionType[DistributionType["DISTRIBUTION_TYPE_DO_NOT_USE"] = 0] = "DISTRIBUTION_TYPE_DO_NOT_USE";
@@ -2442,6 +2515,101 @@ export const DecCoin = {
         const message = createBaseDecCoin();
         message.Denom = (_a = object.Denom) !== null && _a !== void 0 ? _a : "";
         message.Amount = (_b = object.Amount) !== null && _b !== void 0 ? _b : "";
+        return message;
+    },
+};
+function createBaseAssetTransaction() {
+    return { Amount: 0, DestinationAddress: undefined, IsGloballyFrozen: undefined, IsGloballyUnfrozen: undefined };
+}
+export const AssetTransaction = {
+    encode(message, writer = _m0.Writer.create()) {
+        if (message.Amount !== 0) {
+            writer.uint32(8).int64(message.Amount);
+        }
+        if (message.DestinationAddress !== undefined) {
+            writer.uint32(18).string(message.DestinationAddress);
+        }
+        if (message.IsGloballyFrozen !== undefined) {
+            writer.uint32(24).bool(message.IsGloballyFrozen);
+        }
+        if (message.IsGloballyUnfrozen !== undefined) {
+            writer.uint32(32).bool(message.IsGloballyUnfrozen);
+        }
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseAssetTransaction();
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    if (tag !== 8) {
+                        break;
+                    }
+                    message.Amount = longToNumber(reader.int64());
+                    continue;
+                case 2:
+                    if (tag !== 18) {
+                        break;
+                    }
+                    message.DestinationAddress = reader.string();
+                    continue;
+                case 3:
+                    if (tag !== 24) {
+                        break;
+                    }
+                    message.IsGloballyFrozen = reader.bool();
+                    continue;
+                case 4:
+                    if (tag !== 32) {
+                        break;
+                    }
+                    message.IsGloballyUnfrozen = reader.bool();
+                    continue;
+            }
+            if ((tag & 7) === 4 || tag === 0) {
+                break;
+            }
+            reader.skipType(tag & 7);
+        }
+        return message;
+    },
+    fromJSON(object) {
+        return {
+            Amount: isSet(object.Amount) ? globalThis.Number(object.Amount) : 0,
+            DestinationAddress: isSet(object.DestinationAddress) ? globalThis.String(object.DestinationAddress) : undefined,
+            IsGloballyFrozen: isSet(object.IsGloballyFrozen) ? globalThis.Boolean(object.IsGloballyFrozen) : undefined,
+            IsGloballyUnfrozen: isSet(object.IsGloballyUnfrozen) ? globalThis.Boolean(object.IsGloballyUnfrozen) : undefined,
+        };
+    },
+    toJSON(message) {
+        const obj = {};
+        if (message.Amount !== 0) {
+            obj.Amount = Math.round(message.Amount);
+        }
+        if (message.DestinationAddress !== undefined) {
+            obj.DestinationAddress = message.DestinationAddress;
+        }
+        if (message.IsGloballyFrozen !== undefined) {
+            obj.IsGloballyFrozen = message.IsGloballyFrozen;
+        }
+        if (message.IsGloballyUnfrozen !== undefined) {
+            obj.IsGloballyUnfrozen = message.IsGloballyUnfrozen;
+        }
+        return obj;
+    },
+    create(base) {
+        return AssetTransaction.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial(object) {
+        var _a, _b, _c, _d;
+        const message = createBaseAssetTransaction();
+        message.Amount = (_a = object.Amount) !== null && _a !== void 0 ? _a : 0;
+        message.DestinationAddress = (_b = object.DestinationAddress) !== null && _b !== void 0 ? _b : undefined;
+        message.IsGloballyFrozen = (_c = object.IsGloballyFrozen) !== null && _c !== void 0 ? _c : undefined;
+        message.IsGloballyUnfrozen = (_d = object.IsGloballyUnfrozen) !== null && _d !== void 0 ? _d : undefined;
         return message;
     },
 };
