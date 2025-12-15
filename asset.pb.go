@@ -1720,6 +1720,7 @@ type AssetTransaction struct {
 	DestinationAddress *string                `protobuf:"bytes,2,opt,name=DestinationAddress,proto3,oneof" json:"DestinationAddress,omitempty"`
 	IsGloballyFrozen   *bool                  `protobuf:"varint,3,opt,name=IsGloballyFrozen,proto3,oneof" json:"IsGloballyFrozen,omitempty"`
 	IsGloballyUnfrozen *bool                  `protobuf:"varint,4,opt,name=IsGloballyUnfrozen,proto3,oneof" json:"IsGloballyUnfrozen,omitempty"`
+	TransactionType    MessageTransaction     `protobuf:"varint,5,opt,name=TransactionType,proto3,enum=asset.MessageTransaction" json:"TransactionType,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -1780,6 +1781,13 @@ func (x *AssetTransaction) GetIsGloballyUnfrozen() bool {
 		return *x.IsGloballyUnfrozen
 	}
 	return false
+}
+
+func (x *AssetTransaction) GetTransactionType() MessageTransaction {
+	if x != nil {
+		return x.TransactionType
+	}
+	return MessageTransaction_MESSAGE_TRANSACTION_DO_NOT_USE
 }
 
 type Distribution struct {
@@ -3422,12 +3430,13 @@ const file_asset_proto_rawDesc = "" +
 	"\t_Location\"7\n" +
 	"\aDecCoin\x12\x14\n" +
 	"\x05Denom\x18\x01 \x01(\tR\x05Denom\x12\x16\n" +
-	"\x06Amount\x18\x02 \x01(\tR\x06Amount\"\x88\x02\n" +
+	"\x06Amount\x18\x02 \x01(\tR\x06Amount\"\xcd\x02\n" +
 	"\x10AssetTransaction\x12\x16\n" +
 	"\x06Amount\x18\x01 \x01(\x03R\x06Amount\x123\n" +
 	"\x12DestinationAddress\x18\x02 \x01(\tH\x00R\x12DestinationAddress\x88\x01\x01\x12/\n" +
 	"\x10IsGloballyFrozen\x18\x03 \x01(\bH\x01R\x10IsGloballyFrozen\x88\x01\x01\x123\n" +
-	"\x12IsGloballyUnfrozen\x18\x04 \x01(\bH\x02R\x12IsGloballyUnfrozen\x88\x01\x01B\x15\n" +
+	"\x12IsGloballyUnfrozen\x18\x04 \x01(\bH\x02R\x12IsGloballyUnfrozen\x88\x01\x01\x12C\n" +
+	"\x0fTransactionType\x18\x05 \x01(\x0e2\x19.asset.MessageTransactionR\x0fTransactionTypeB\x15\n" +
 	"\x13_DestinationAddressB\x13\n" +
 	"\x11_IsGloballyFrozenB\x15\n" +
 	"\x13_IsGloballyUnfrozen\"\xeb\x01\n" +
@@ -3761,23 +3770,24 @@ var file_asset_proto_depIdxs = []int32{
 	7,  // 21: asset.UserAssetList.Status:type_name -> asset.UserAssetStatus
 	34, // 22: asset.UserAssetList.MetaData:type_name -> metadata.MetaData
 	11, // 23: asset.UserAssetLists.UserAssetLists:type_name -> asset.UserAssetList
-	1,  // 24: asset.Distribution.Type:type_name -> asset.DistributionType
-	22, // 25: asset.Distribution.CrowdfundDetails:type_name -> asset.Crowdfund
-	21, // 26: asset.Distribution.TokenSaleDetails:type_name -> asset.TokenSale
-	18, // 27: asset.TokenSale.SellPricesPerSubunit:type_name -> asset.DecCoin
-	18, // 28: asset.TokenSale.BuyPricesPerSubunit:type_name -> asset.DecCoin
-	18, // 29: asset.Crowdfund.PricesPerSubunit:type_name -> asset.DecCoin
-	36, // 30: asset.FinancialProperties.Network:type_name -> metadata.Network
-	32, // 31: asset.Description.Logo:type_name -> asset.LogoFile
-	29, // 32: asset.ExternalResources.Links:type_name -> asset.Link
-	30, // 33: asset.ExternalResources.Socials:type_name -> asset.SocialMedia
-	2,  // 34: asset.Link.Type:type_name -> asset.LinkType
-	3,  // 35: asset.SocialMedia.Type:type_name -> asset.SocialMediaType
-	36, // [36:36] is the sub-list for method output_type
-	36, // [36:36] is the sub-list for method input_type
-	36, // [36:36] is the sub-list for extension type_name
-	36, // [36:36] is the sub-list for extension extendee
-	0,  // [0:36] is the sub-list for field type_name
+	0,  // 24: asset.AssetTransaction.TransactionType:type_name -> asset.MessageTransaction
+	1,  // 25: asset.Distribution.Type:type_name -> asset.DistributionType
+	22, // 26: asset.Distribution.CrowdfundDetails:type_name -> asset.Crowdfund
+	21, // 27: asset.Distribution.TokenSaleDetails:type_name -> asset.TokenSale
+	18, // 28: asset.TokenSale.SellPricesPerSubunit:type_name -> asset.DecCoin
+	18, // 29: asset.TokenSale.BuyPricesPerSubunit:type_name -> asset.DecCoin
+	18, // 30: asset.Crowdfund.PricesPerSubunit:type_name -> asset.DecCoin
+	36, // 31: asset.FinancialProperties.Network:type_name -> metadata.Network
+	32, // 32: asset.Description.Logo:type_name -> asset.LogoFile
+	29, // 33: asset.ExternalResources.Links:type_name -> asset.Link
+	30, // 34: asset.ExternalResources.Socials:type_name -> asset.SocialMedia
+	2,  // 35: asset.Link.Type:type_name -> asset.LinkType
+	3,  // 36: asset.SocialMedia.Type:type_name -> asset.SocialMediaType
+	37, // [37:37] is the sub-list for method output_type
+	37, // [37:37] is the sub-list for method input_type
+	37, // [37:37] is the sub-list for extension type_name
+	37, // [37:37] is the sub-list for extension extendee
+	0,  // [0:37] is the sub-list for field type_name
 }
 
 func init() { file_asset_proto_init() }

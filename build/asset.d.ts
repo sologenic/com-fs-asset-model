@@ -228,6 +228,7 @@ export interface AssetTransaction {
     DestinationAddress?: string | undefined;
     IsGloballyFrozen?: boolean | undefined;
     IsGloballyUnfrozen?: boolean | undefined;
+    TransactionType: MessageTransaction;
 }
 export interface Distribution {
     Type: DistributionType;
@@ -8245,22 +8246,26 @@ export declare const AssetTransaction: {
         DestinationAddress?: string | undefined;
         IsGloballyFrozen?: boolean | undefined;
         IsGloballyUnfrozen?: boolean | undefined;
+        TransactionType?: MessageTransaction | undefined;
     } & {
         Amount?: number | undefined;
         DestinationAddress?: string | undefined;
         IsGloballyFrozen?: boolean | undefined;
         IsGloballyUnfrozen?: boolean | undefined;
+        TransactionType?: MessageTransaction | undefined;
     } & { [K in Exclude<keyof I, keyof AssetTransaction>]: never; }>(base?: I | undefined): AssetTransaction;
     fromPartial<I_1 extends {
         Amount?: number | undefined;
         DestinationAddress?: string | undefined;
         IsGloballyFrozen?: boolean | undefined;
         IsGloballyUnfrozen?: boolean | undefined;
+        TransactionType?: MessageTransaction | undefined;
     } & {
         Amount?: number | undefined;
         DestinationAddress?: string | undefined;
         IsGloballyFrozen?: boolean | undefined;
         IsGloballyUnfrozen?: boolean | undefined;
+        TransactionType?: MessageTransaction | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof AssetTransaction>]: never; }>(object: I_1): AssetTransaction;
 };
 export declare const Distribution: {

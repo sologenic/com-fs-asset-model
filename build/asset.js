@@ -2519,7 +2519,13 @@ export const DecCoin = {
     },
 };
 function createBaseAssetTransaction() {
-    return { Amount: 0, DestinationAddress: undefined, IsGloballyFrozen: undefined, IsGloballyUnfrozen: undefined };
+    return {
+        Amount: 0,
+        DestinationAddress: undefined,
+        IsGloballyFrozen: undefined,
+        IsGloballyUnfrozen: undefined,
+        TransactionType: 0,
+    };
 }
 export const AssetTransaction = {
     encode(message, writer = _m0.Writer.create()) {
@@ -2534,6 +2540,9 @@ export const AssetTransaction = {
         }
         if (message.IsGloballyUnfrozen !== undefined) {
             writer.uint32(32).bool(message.IsGloballyUnfrozen);
+        }
+        if (message.TransactionType !== 0) {
+            writer.uint32(40).int32(message.TransactionType);
         }
         return writer;
     },
@@ -2568,6 +2577,12 @@ export const AssetTransaction = {
                     }
                     message.IsGloballyUnfrozen = reader.bool();
                     continue;
+                case 5:
+                    if (tag !== 40) {
+                        break;
+                    }
+                    message.TransactionType = reader.int32();
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -2582,6 +2597,7 @@ export const AssetTransaction = {
             DestinationAddress: isSet(object.DestinationAddress) ? globalThis.String(object.DestinationAddress) : undefined,
             IsGloballyFrozen: isSet(object.IsGloballyFrozen) ? globalThis.Boolean(object.IsGloballyFrozen) : undefined,
             IsGloballyUnfrozen: isSet(object.IsGloballyUnfrozen) ? globalThis.Boolean(object.IsGloballyUnfrozen) : undefined,
+            TransactionType: isSet(object.TransactionType) ? messageTransactionFromJSON(object.TransactionType) : 0,
         };
     },
     toJSON(message) {
@@ -2598,18 +2614,22 @@ export const AssetTransaction = {
         if (message.IsGloballyUnfrozen !== undefined) {
             obj.IsGloballyUnfrozen = message.IsGloballyUnfrozen;
         }
+        if (message.TransactionType !== 0) {
+            obj.TransactionType = messageTransactionToJSON(message.TransactionType);
+        }
         return obj;
     },
     create(base) {
         return AssetTransaction.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e;
         const message = createBaseAssetTransaction();
         message.Amount = (_a = object.Amount) !== null && _a !== void 0 ? _a : 0;
         message.DestinationAddress = (_b = object.DestinationAddress) !== null && _b !== void 0 ? _b : undefined;
         message.IsGloballyFrozen = (_c = object.IsGloballyFrozen) !== null && _c !== void 0 ? _c : undefined;
         message.IsGloballyUnfrozen = (_d = object.IsGloballyUnfrozen) !== null && _d !== void 0 ? _d : undefined;
+        message.TransactionType = (_e = object.TransactionType) !== null && _e !== void 0 ? _e : 0;
         return message;
     },
 };

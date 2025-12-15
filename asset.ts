@@ -638,6 +638,7 @@ export interface AssetTransaction {
   DestinationAddress?: string | undefined;
   IsGloballyFrozen?: boolean | undefined;
   IsGloballyUnfrozen?: boolean | undefined;
+  TransactionType: MessageTransaction;
 }
 
 export interface Distribution {
@@ -3060,7 +3061,13 @@ export const DecCoin = {
 };
 
 function createBaseAssetTransaction(): AssetTransaction {
-  return { Amount: 0, DestinationAddress: undefined, IsGloballyFrozen: undefined, IsGloballyUnfrozen: undefined };
+  return {
+    Amount: 0,
+    DestinationAddress: undefined,
+    IsGloballyFrozen: undefined,
+    IsGloballyUnfrozen: undefined,
+    TransactionType: 0,
+  };
 }
 
 export const AssetTransaction = {
@@ -3076,6 +3083,9 @@ export const AssetTransaction = {
     }
     if (message.IsGloballyUnfrozen !== undefined) {
       writer.uint32(32).bool(message.IsGloballyUnfrozen);
+    }
+    if (message.TransactionType !== 0) {
+      writer.uint32(40).int32(message.TransactionType);
     }
     return writer;
   },
@@ -3115,6 +3125,13 @@ export const AssetTransaction = {
 
           message.IsGloballyUnfrozen = reader.bool();
           continue;
+        case 5:
+          if (tag !== 40) {
+            break;
+          }
+
+          message.TransactionType = reader.int32() as any;
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3130,6 +3147,7 @@ export const AssetTransaction = {
       DestinationAddress: isSet(object.DestinationAddress) ? globalThis.String(object.DestinationAddress) : undefined,
       IsGloballyFrozen: isSet(object.IsGloballyFrozen) ? globalThis.Boolean(object.IsGloballyFrozen) : undefined,
       IsGloballyUnfrozen: isSet(object.IsGloballyUnfrozen) ? globalThis.Boolean(object.IsGloballyUnfrozen) : undefined,
+      TransactionType: isSet(object.TransactionType) ? messageTransactionFromJSON(object.TransactionType) : 0,
     };
   },
 
@@ -3147,6 +3165,9 @@ export const AssetTransaction = {
     if (message.IsGloballyUnfrozen !== undefined) {
       obj.IsGloballyUnfrozen = message.IsGloballyUnfrozen;
     }
+    if (message.TransactionType !== 0) {
+      obj.TransactionType = messageTransactionToJSON(message.TransactionType);
+    }
     return obj;
   },
 
@@ -3159,6 +3180,7 @@ export const AssetTransaction = {
     message.DestinationAddress = object.DestinationAddress ?? undefined;
     message.IsGloballyFrozen = object.IsGloballyFrozen ?? undefined;
     message.IsGloballyUnfrozen = object.IsGloballyUnfrozen ?? undefined;
+    message.TransactionType = object.TransactionType ?? 0;
     return message;
   },
 };

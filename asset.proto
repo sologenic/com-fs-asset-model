@@ -175,6 +175,7 @@ message AssetTransaction {
     optional string DestinationAddress = 2;
     optional bool IsGloballyFrozen = 3;
     optional bool IsGloballyUnfrozen = 4;
+    MessageTransaction TransactionType = 5;
 }
 
 
