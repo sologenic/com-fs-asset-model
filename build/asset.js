@@ -2525,6 +2525,7 @@ function createBaseAssetTransaction() {
         IsGloballyFrozen: undefined,
         IsGloballyUnfrozen: undefined,
         TransactionType: 0,
+        AssetID: "",
     };
 }
 export const AssetTransaction = {
@@ -2543,6 +2544,9 @@ export const AssetTransaction = {
         }
         if (message.TransactionType !== 0) {
             writer.uint32(40).int32(message.TransactionType);
+        }
+        if (message.AssetID !== "") {
+            writer.uint32(50).string(message.AssetID);
         }
         return writer;
     },
@@ -2583,6 +2587,12 @@ export const AssetTransaction = {
                     }
                     message.TransactionType = reader.int32();
                     continue;
+                case 6:
+                    if (tag !== 50) {
+                        break;
+                    }
+                    message.AssetID = reader.string();
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -2598,6 +2608,7 @@ export const AssetTransaction = {
             IsGloballyFrozen: isSet(object.IsGloballyFrozen) ? globalThis.Boolean(object.IsGloballyFrozen) : undefined,
             IsGloballyUnfrozen: isSet(object.IsGloballyUnfrozen) ? globalThis.Boolean(object.IsGloballyUnfrozen) : undefined,
             TransactionType: isSet(object.TransactionType) ? messageTransactionFromJSON(object.TransactionType) : 0,
+            AssetID: isSet(object.AssetID) ? globalThis.String(object.AssetID) : "",
         };
     },
     toJSON(message) {
@@ -2617,19 +2628,23 @@ export const AssetTransaction = {
         if (message.TransactionType !== 0) {
             obj.TransactionType = messageTransactionToJSON(message.TransactionType);
         }
+        if (message.AssetID !== "") {
+            obj.AssetID = message.AssetID;
+        }
         return obj;
     },
     create(base) {
         return AssetTransaction.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e;
+        var _a, _b, _c, _d, _e, _f;
         const message = createBaseAssetTransaction();
         message.Amount = (_a = object.Amount) !== null && _a !== void 0 ? _a : 0;
         message.DestinationAddress = (_b = object.DestinationAddress) !== null && _b !== void 0 ? _b : undefined;
         message.IsGloballyFrozen = (_c = object.IsGloballyFrozen) !== null && _c !== void 0 ? _c : undefined;
         message.IsGloballyUnfrozen = (_d = object.IsGloballyUnfrozen) !== null && _d !== void 0 ? _d : undefined;
         message.TransactionType = (_e = object.TransactionType) !== null && _e !== void 0 ? _e : 0;
+        message.AssetID = (_f = object.AssetID) !== null && _f !== void 0 ? _f : "";
         return message;
     },
 };

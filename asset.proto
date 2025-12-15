@@ -176,6 +176,7 @@ message AssetTransaction {
     optional bool IsGloballyFrozen = 3;
     optional bool IsGloballyUnfrozen = 4;
     MessageTransaction TransactionType = 5;
+    string AssetID = 6;
 }
 
 

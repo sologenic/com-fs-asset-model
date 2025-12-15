@@ -639,6 +639,7 @@ export interface AssetTransaction {
   IsGloballyFrozen?: boolean | undefined;
   IsGloballyUnfrozen?: boolean | undefined;
   TransactionType: MessageTransaction;
+  AssetID: string;
 }
 
 export interface Distribution {
@@ -3067,6 +3068,7 @@ function createBaseAssetTransaction(): AssetTransaction {
     IsGloballyFrozen: undefined,
     IsGloballyUnfrozen: undefined,
     TransactionType: 0,
+    AssetID: "",
   };
 }
 
@@ -3086,6 +3088,9 @@ export const AssetTransaction = {
     }
     if (message.TransactionType !== 0) {
       writer.uint32(40).int32(message.TransactionType);
+    }
+    if (message.AssetID !== "") {
+      writer.uint32(50).string(message.AssetID);
     }
     return writer;
   },
@@ -3132,6 +3137,13 @@ export const AssetTransaction = {
 
           message.TransactionType = reader.int32() as any;
           continue;
+        case 6:
+          if (tag !== 50) {
+            break;
+          }
+
+          message.AssetID = reader.string();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -3148,6 +3160,7 @@ export const AssetTransaction = {
       IsGloballyFrozen: isSet(object.IsGloballyFrozen) ? globalThis.Boolean(object.IsGloballyFrozen) : undefined,
       IsGloballyUnfrozen: isSet(object.IsGloballyUnfrozen) ? globalThis.Boolean(object.IsGloballyUnfrozen) : undefined,
       TransactionType: isSet(object.TransactionType) ? messageTransactionFromJSON(object.TransactionType) : 0,
+      AssetID: isSet(object.AssetID) ? globalThis.String(object.AssetID) : "",
     };
   },
 
@@ -3168,6 +3181,9 @@ export const AssetTransaction = {
     if (message.TransactionType !== 0) {
       obj.TransactionType = messageTransactionToJSON(message.TransactionType);
     }
+    if (message.AssetID !== "") {
+      obj.AssetID = message.AssetID;
+    }
     return obj;
   },
 
@@ -3181,6 +3197,7 @@ export const AssetTransaction = {
     message.IsGloballyFrozen = object.IsGloballyFrozen ?? undefined;
     message.IsGloballyUnfrozen = object.IsGloballyUnfrozen ?? undefined;
     message.TransactionType = object.TransactionType ?? 0;
+    message.AssetID = object.AssetID ?? "";
     return message;
   },
 };

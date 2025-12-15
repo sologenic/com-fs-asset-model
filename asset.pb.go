@@ -1721,6 +1721,7 @@ type AssetTransaction struct {
 	IsGloballyFrozen   *bool                  `protobuf:"varint,3,opt,name=IsGloballyFrozen,proto3,oneof" json:"IsGloballyFrozen,omitempty"`
 	IsGloballyUnfrozen *bool                  `protobuf:"varint,4,opt,name=IsGloballyUnfrozen,proto3,oneof" json:"IsGloballyUnfrozen,omitempty"`
 	TransactionType    MessageTransaction     `protobuf:"varint,5,opt,name=TransactionType,proto3,enum=asset.MessageTransaction" json:"TransactionType,omitempty"`
+	AssetID            string                 `protobuf:"bytes,6,opt,name=AssetID,proto3" json:"AssetID,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -1788,6 +1789,13 @@ func (x *AssetTransaction) GetTransactionType() MessageTransaction {
 		return x.TransactionType
 	}
 	return MessageTransaction_MESSAGE_TRANSACTION_DO_NOT_USE
+}
+
+func (x *AssetTransaction) GetAssetID() string {
+	if x != nil {
+		return x.AssetID
+	}
+	return ""
 }
 
 type Distribution struct {
@@ -3430,13 +3438,14 @@ const file_asset_proto_rawDesc = "" +
 	"\t_Location\"7\n" +
 	"\aDecCoin\x12\x14\n" +
 	"\x05Denom\x18\x01 \x01(\tR\x05Denom\x12\x16\n" +
-	"\x06Amount\x18\x02 \x01(\tR\x06Amount\"\xcd\x02\n" +
+	"\x06Amount\x18\x02 \x01(\tR\x06Amount\"\xe7\x02\n" +
 	"\x10AssetTransaction\x12\x16\n" +
 	"\x06Amount\x18\x01 \x01(\x03R\x06Amount\x123\n" +
 	"\x12DestinationAddress\x18\x02 \x01(\tH\x00R\x12DestinationAddress\x88\x01\x01\x12/\n" +
 	"\x10IsGloballyFrozen\x18\x03 \x01(\bH\x01R\x10IsGloballyFrozen\x88\x01\x01\x123\n" +
 	"\x12IsGloballyUnfrozen\x18\x04 \x01(\bH\x02R\x12IsGloballyUnfrozen\x88\x01\x01\x12C\n" +
-	"\x0fTransactionType\x18\x05 \x01(\x0e2\x19.asset.MessageTransactionR\x0fTransactionTypeB\x15\n" +
+	"\x0fTransactionType\x18\x05 \x01(\x0e2\x19.asset.MessageTransactionR\x0fTransactionType\x12\x18\n" +
+	"\aAssetID\x18\x06 \x01(\tR\aAssetIDB\x15\n" +
 	"\x13_DestinationAddressB\x13\n" +
 	"\x11_IsGloballyFrozenB\x15\n" +
 	"\x13_IsGloballyUnfrozen\"\xeb\x01\n" +

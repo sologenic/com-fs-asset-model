@@ -229,6 +229,7 @@ export interface AssetTransaction {
     IsGloballyFrozen?: boolean | undefined;
     IsGloballyUnfrozen?: boolean | undefined;
     TransactionType: MessageTransaction;
+    AssetID: string;
 }
 export interface Distribution {
     Type: DistributionType;
@@ -8247,12 +8248,14 @@ export declare const AssetTransaction: {
         IsGloballyFrozen?: boolean | undefined;
         IsGloballyUnfrozen?: boolean | undefined;
         TransactionType?: MessageTransaction | undefined;
+        AssetID?: string | undefined;
     } & {
         Amount?: number | undefined;
         DestinationAddress?: string | undefined;
         IsGloballyFrozen?: boolean | undefined;
         IsGloballyUnfrozen?: boolean | undefined;
         TransactionType?: MessageTransaction | undefined;
+        AssetID?: string | undefined;
     } & { [K in Exclude<keyof I, keyof AssetTransaction>]: never; }>(base?: I | undefined): AssetTransaction;
     fromPartial<I_1 extends {
         Amount?: number | undefined;
@@ -8260,12 +8263,14 @@ export declare const AssetTransaction: {
         IsGloballyFrozen?: boolean | undefined;
         IsGloballyUnfrozen?: boolean | undefined;
         TransactionType?: MessageTransaction | undefined;
+        AssetID?: string | undefined;
     } & {
         Amount?: number | undefined;
         DestinationAddress?: string | undefined;
         IsGloballyFrozen?: boolean | undefined;
         IsGloballyUnfrozen?: boolean | undefined;
         TransactionType?: MessageTransaction | undefined;
+        AssetID?: string | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof AssetTransaction>]: never; }>(object: I_1): AssetTransaction;
 };
 export declare const Distribution: {
