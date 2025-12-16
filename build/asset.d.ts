@@ -3,20 +3,20 @@ import { Denom } from "./sologenic/com-fs-asset-model/domain/denom/denom";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
 import { MetaData, Network } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 export declare const protobufPackage = "asset";
-export declare enum MessageTransaction {
-    MESSAGE_TRANSACTION_DO_NOT_USE = 0,
-    MESSAGE_TRANSACTION_MINT = 1,
-    MESSAGE_TRANSACTION_BURN = 2,
-    MESSAGE_TRANSACTION_FREEZE = 3,
-    MESSAGE_TRANSACTION_WHITELIST = 4,
-    MESSAGE_TRANSACTION_CLAWBACK = 5,
-    MESSAGE_TRANSACTION_ASSET_EXTENSTION = 6,
-    MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION = 7,
-    MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION = 8,
+export declare enum TransactionType {
+    TRANSACTION_TYPE_DO_NOT_USE = 0,
+    TRANSACTION_TYPE_MINT = 1,
+    TRANSACTION_TYPE_BURN = 2,
+    TRANSACTION_TYPE_FREEZE = 3,
+    TRANSACTION_TYPE_WHITELIST = 4,
+    TRANSACTION_TYPE_CLAWBACK = 5,
+    TRANSACTION_TYPE_ASSET_EXTENSTION = 6,
+    TRANSACTION_TYPE_DEPOSIT_DISTRBITUION = 7,
+    TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION = 8,
     UNRECOGNIZED = -1
 }
-export declare function messageTransactionFromJSON(object: any): MessageTransaction;
-export declare function messageTransactionToJSON(object: MessageTransaction): string;
+export declare function transactionTypeFromJSON(object: any): TransactionType;
+export declare function transactionTypeToJSON(object: TransactionType): string;
 export declare enum DistributionType {
     DISTRIBUTION_TYPE_DO_NOT_USE = 0,
     DISTRIBUTION_TYPE_CROWDFUND = 1,
@@ -228,7 +228,7 @@ export interface AssetTransaction {
     DestinationAddress?: string | undefined;
     IsGloballyFrozen?: boolean | undefined;
     IsGloballyUnfrozen?: boolean | undefined;
-    TransactionType: MessageTransaction;
+    TransactionType: TransactionType;
     AssetKey: string;
 }
 export interface Distribution {
@@ -8247,14 +8247,14 @@ export declare const AssetTransaction: {
         DestinationAddress?: string | undefined;
         IsGloballyFrozen?: boolean | undefined;
         IsGloballyUnfrozen?: boolean | undefined;
-        TransactionType?: MessageTransaction | undefined;
+        TransactionType?: TransactionType | undefined;
         AssetKey?: string | undefined;
     } & {
         Amount?: number | undefined;
         DestinationAddress?: string | undefined;
         IsGloballyFrozen?: boolean | undefined;
         IsGloballyUnfrozen?: boolean | undefined;
-        TransactionType?: MessageTransaction | undefined;
+        TransactionType?: TransactionType | undefined;
         AssetKey?: string | undefined;
     } & { [K in Exclude<keyof I, keyof AssetTransaction>]: never; }>(base?: I | undefined): AssetTransaction;
     fromPartial<I_1 extends {
@@ -8262,14 +8262,14 @@ export declare const AssetTransaction: {
         DestinationAddress?: string | undefined;
         IsGloballyFrozen?: boolean | undefined;
         IsGloballyUnfrozen?: boolean | undefined;
-        TransactionType?: MessageTransaction | undefined;
+        TransactionType?: TransactionType | undefined;
         AssetKey?: string | undefined;
     } & {
         Amount?: number | undefined;
         DestinationAddress?: string | undefined;
         IsGloballyFrozen?: boolean | undefined;
         IsGloballyUnfrozen?: boolean | undefined;
-        TransactionType?: MessageTransaction | undefined;
+        TransactionType?: TransactionType | undefined;
         AssetKey?: string | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof AssetTransaction>]: never; }>(object: I_1): AssetTransaction;
 };

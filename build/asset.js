@@ -10,75 +10,75 @@ import { Denom } from "./sologenic/com-fs-asset-model/domain/denom/denom";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
 import { MetaData, networkFromJSON, networkToJSON, } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 export const protobufPackage = "asset";
-export var MessageTransaction;
-(function (MessageTransaction) {
-    MessageTransaction[MessageTransaction["MESSAGE_TRANSACTION_DO_NOT_USE"] = 0] = "MESSAGE_TRANSACTION_DO_NOT_USE";
-    MessageTransaction[MessageTransaction["MESSAGE_TRANSACTION_MINT"] = 1] = "MESSAGE_TRANSACTION_MINT";
-    MessageTransaction[MessageTransaction["MESSAGE_TRANSACTION_BURN"] = 2] = "MESSAGE_TRANSACTION_BURN";
-    MessageTransaction[MessageTransaction["MESSAGE_TRANSACTION_FREEZE"] = 3] = "MESSAGE_TRANSACTION_FREEZE";
-    MessageTransaction[MessageTransaction["MESSAGE_TRANSACTION_WHITELIST"] = 4] = "MESSAGE_TRANSACTION_WHITELIST";
-    MessageTransaction[MessageTransaction["MESSAGE_TRANSACTION_CLAWBACK"] = 5] = "MESSAGE_TRANSACTION_CLAWBACK";
-    MessageTransaction[MessageTransaction["MESSAGE_TRANSACTION_ASSET_EXTENSTION"] = 6] = "MESSAGE_TRANSACTION_ASSET_EXTENSTION";
-    MessageTransaction[MessageTransaction["MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION"] = 7] = "MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION";
-    MessageTransaction[MessageTransaction["MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION"] = 8] = "MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION";
-    MessageTransaction[MessageTransaction["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
-})(MessageTransaction || (MessageTransaction = {}));
-export function messageTransactionFromJSON(object) {
+export var TransactionType;
+(function (TransactionType) {
+    TransactionType[TransactionType["TRANSACTION_TYPE_DO_NOT_USE"] = 0] = "TRANSACTION_TYPE_DO_NOT_USE";
+    TransactionType[TransactionType["TRANSACTION_TYPE_MINT"] = 1] = "TRANSACTION_TYPE_MINT";
+    TransactionType[TransactionType["TRANSACTION_TYPE_BURN"] = 2] = "TRANSACTION_TYPE_BURN";
+    TransactionType[TransactionType["TRANSACTION_TYPE_FREEZE"] = 3] = "TRANSACTION_TYPE_FREEZE";
+    TransactionType[TransactionType["TRANSACTION_TYPE_WHITELIST"] = 4] = "TRANSACTION_TYPE_WHITELIST";
+    TransactionType[TransactionType["TRANSACTION_TYPE_CLAWBACK"] = 5] = "TRANSACTION_TYPE_CLAWBACK";
+    TransactionType[TransactionType["TRANSACTION_TYPE_ASSET_EXTENSTION"] = 6] = "TRANSACTION_TYPE_ASSET_EXTENSTION";
+    TransactionType[TransactionType["TRANSACTION_TYPE_DEPOSIT_DISTRBITUION"] = 7] = "TRANSACTION_TYPE_DEPOSIT_DISTRBITUION";
+    TransactionType[TransactionType["TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION"] = 8] = "TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION";
+    TransactionType[TransactionType["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
+})(TransactionType || (TransactionType = {}));
+export function transactionTypeFromJSON(object) {
     switch (object) {
         case 0:
-        case "MESSAGE_TRANSACTION_DO_NOT_USE":
-            return MessageTransaction.MESSAGE_TRANSACTION_DO_NOT_USE;
+        case "TRANSACTION_TYPE_DO_NOT_USE":
+            return TransactionType.TRANSACTION_TYPE_DO_NOT_USE;
         case 1:
-        case "MESSAGE_TRANSACTION_MINT":
-            return MessageTransaction.MESSAGE_TRANSACTION_MINT;
+        case "TRANSACTION_TYPE_MINT":
+            return TransactionType.TRANSACTION_TYPE_MINT;
         case 2:
-        case "MESSAGE_TRANSACTION_BURN":
-            return MessageTransaction.MESSAGE_TRANSACTION_BURN;
+        case "TRANSACTION_TYPE_BURN":
+            return TransactionType.TRANSACTION_TYPE_BURN;
         case 3:
-        case "MESSAGE_TRANSACTION_FREEZE":
-            return MessageTransaction.MESSAGE_TRANSACTION_FREEZE;
+        case "TRANSACTION_TYPE_FREEZE":
+            return TransactionType.TRANSACTION_TYPE_FREEZE;
         case 4:
-        case "MESSAGE_TRANSACTION_WHITELIST":
-            return MessageTransaction.MESSAGE_TRANSACTION_WHITELIST;
+        case "TRANSACTION_TYPE_WHITELIST":
+            return TransactionType.TRANSACTION_TYPE_WHITELIST;
         case 5:
-        case "MESSAGE_TRANSACTION_CLAWBACK":
-            return MessageTransaction.MESSAGE_TRANSACTION_CLAWBACK;
+        case "TRANSACTION_TYPE_CLAWBACK":
+            return TransactionType.TRANSACTION_TYPE_CLAWBACK;
         case 6:
-        case "MESSAGE_TRANSACTION_ASSET_EXTENSTION":
-            return MessageTransaction.MESSAGE_TRANSACTION_ASSET_EXTENSTION;
+        case "TRANSACTION_TYPE_ASSET_EXTENSTION":
+            return TransactionType.TRANSACTION_TYPE_ASSET_EXTENSTION;
         case 7:
-        case "MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION":
-            return MessageTransaction.MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION;
+        case "TRANSACTION_TYPE_DEPOSIT_DISTRBITUION":
+            return TransactionType.TRANSACTION_TYPE_DEPOSIT_DISTRBITUION;
         case 8:
-        case "MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION":
-            return MessageTransaction.MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION;
+        case "TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION":
+            return TransactionType.TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION;
         case -1:
         case "UNRECOGNIZED":
         default:
-            return MessageTransaction.UNRECOGNIZED;
+            return TransactionType.UNRECOGNIZED;
     }
 }
-export function messageTransactionToJSON(object) {
+export function transactionTypeToJSON(object) {
     switch (object) {
-        case MessageTransaction.MESSAGE_TRANSACTION_DO_NOT_USE:
-            return "MESSAGE_TRANSACTION_DO_NOT_USE";
-        case MessageTransaction.MESSAGE_TRANSACTION_MINT:
-            return "MESSAGE_TRANSACTION_MINT";
-        case MessageTransaction.MESSAGE_TRANSACTION_BURN:
-            return "MESSAGE_TRANSACTION_BURN";
-        case MessageTransaction.MESSAGE_TRANSACTION_FREEZE:
-            return "MESSAGE_TRANSACTION_FREEZE";
-        case MessageTransaction.MESSAGE_TRANSACTION_WHITELIST:
-            return "MESSAGE_TRANSACTION_WHITELIST";
-        case MessageTransaction.MESSAGE_TRANSACTION_CLAWBACK:
-            return "MESSAGE_TRANSACTION_CLAWBACK";
-        case MessageTransaction.MESSAGE_TRANSACTION_ASSET_EXTENSTION:
-            return "MESSAGE_TRANSACTION_ASSET_EXTENSTION";
-        case MessageTransaction.MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION:
-            return "MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION";
-        case MessageTransaction.MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION:
-            return "MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION";
-        case MessageTransaction.UNRECOGNIZED:
+        case TransactionType.TRANSACTION_TYPE_DO_NOT_USE:
+            return "TRANSACTION_TYPE_DO_NOT_USE";
+        case TransactionType.TRANSACTION_TYPE_MINT:
+            return "TRANSACTION_TYPE_MINT";
+        case TransactionType.TRANSACTION_TYPE_BURN:
+            return "TRANSACTION_TYPE_BURN";
+        case TransactionType.TRANSACTION_TYPE_FREEZE:
+            return "TRANSACTION_TYPE_FREEZE";
+        case TransactionType.TRANSACTION_TYPE_WHITELIST:
+            return "TRANSACTION_TYPE_WHITELIST";
+        case TransactionType.TRANSACTION_TYPE_CLAWBACK:
+            return "TRANSACTION_TYPE_CLAWBACK";
+        case TransactionType.TRANSACTION_TYPE_ASSET_EXTENSTION:
+            return "TRANSACTION_TYPE_ASSET_EXTENSTION";
+        case TransactionType.TRANSACTION_TYPE_DEPOSIT_DISTRBITUION:
+            return "TRANSACTION_TYPE_DEPOSIT_DISTRBITUION";
+        case TransactionType.TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION:
+            return "TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION";
+        case TransactionType.UNRECOGNIZED:
         default:
             return "UNRECOGNIZED";
     }
@@ -2607,7 +2607,7 @@ export const AssetTransaction = {
             DestinationAddress: isSet(object.DestinationAddress) ? globalThis.String(object.DestinationAddress) : undefined,
             IsGloballyFrozen: isSet(object.IsGloballyFrozen) ? globalThis.Boolean(object.IsGloballyFrozen) : undefined,
             IsGloballyUnfrozen: isSet(object.IsGloballyUnfrozen) ? globalThis.Boolean(object.IsGloballyUnfrozen) : undefined,
-            TransactionType: isSet(object.TransactionType) ? messageTransactionFromJSON(object.TransactionType) : 0,
+            TransactionType: isSet(object.TransactionType) ? transactionTypeFromJSON(object.TransactionType) : 0,
             AssetKey: isSet(object.AssetKey) ? globalThis.String(object.AssetKey) : "",
         };
     },
@@ -2626,7 +2626,7 @@ export const AssetTransaction = {
             obj.IsGloballyUnfrozen = message.IsGloballyUnfrozen;
         }
         if (message.TransactionType !== 0) {
-            obj.TransactionType = messageTransactionToJSON(message.TransactionType);
+            obj.TransactionType = transactionTypeToJSON(message.TransactionType);
         }
         if (message.AssetKey !== "") {
             obj.AssetKey = message.AssetKey;

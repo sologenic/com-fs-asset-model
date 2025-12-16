@@ -24,70 +24,70 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type MessageTransaction int32
+type TransactionType int32
 
 const (
-	MessageTransaction_MESSAGE_TRANSACTION_DO_NOT_USE            MessageTransaction = 0
-	MessageTransaction_MESSAGE_TRANSACTION_MINT                  MessageTransaction = 1
-	MessageTransaction_MESSAGE_TRANSACTION_BURN                  MessageTransaction = 2
-	MessageTransaction_MESSAGE_TRANSACTION_FREEZE                MessageTransaction = 3
-	MessageTransaction_MESSAGE_TRANSACTION_WHITELIST             MessageTransaction = 4
-	MessageTransaction_MESSAGE_TRANSACTION_CLAWBACK              MessageTransaction = 5
-	MessageTransaction_MESSAGE_TRANSACTION_ASSET_EXTENSTION      MessageTransaction = 6
-	MessageTransaction_MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION  MessageTransaction = 7
-	MessageTransaction_MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION MessageTransaction = 8
+	TransactionType_TRANSACTION_TYPE_DO_NOT_USE            TransactionType = 0
+	TransactionType_TRANSACTION_TYPE_MINT                  TransactionType = 1
+	TransactionType_TRANSACTION_TYPE_BURN                  TransactionType = 2
+	TransactionType_TRANSACTION_TYPE_FREEZE                TransactionType = 3
+	TransactionType_TRANSACTION_TYPE_WHITELIST             TransactionType = 4
+	TransactionType_TRANSACTION_TYPE_CLAWBACK              TransactionType = 5
+	TransactionType_TRANSACTION_TYPE_ASSET_EXTENSTION      TransactionType = 6
+	TransactionType_TRANSACTION_TYPE_DEPOSIT_DISTRBITUION  TransactionType = 7
+	TransactionType_TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION TransactionType = 8
 )
 
-// Enum value maps for MessageTransaction.
+// Enum value maps for TransactionType.
 var (
-	MessageTransaction_name = map[int32]string{
-		0: "MESSAGE_TRANSACTION_DO_NOT_USE",
-		1: "MESSAGE_TRANSACTION_MINT",
-		2: "MESSAGE_TRANSACTION_BURN",
-		3: "MESSAGE_TRANSACTION_FREEZE",
-		4: "MESSAGE_TRANSACTION_WHITELIST",
-		5: "MESSAGE_TRANSACTION_CLAWBACK",
-		6: "MESSAGE_TRANSACTION_ASSET_EXTENSTION",
-		7: "MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION",
-		8: "MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION",
+	TransactionType_name = map[int32]string{
+		0: "TRANSACTION_TYPE_DO_NOT_USE",
+		1: "TRANSACTION_TYPE_MINT",
+		2: "TRANSACTION_TYPE_BURN",
+		3: "TRANSACTION_TYPE_FREEZE",
+		4: "TRANSACTION_TYPE_WHITELIST",
+		5: "TRANSACTION_TYPE_CLAWBACK",
+		6: "TRANSACTION_TYPE_ASSET_EXTENSTION",
+		7: "TRANSACTION_TYPE_DEPOSIT_DISTRBITUION",
+		8: "TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION",
 	}
-	MessageTransaction_value = map[string]int32{
-		"MESSAGE_TRANSACTION_DO_NOT_USE":            0,
-		"MESSAGE_TRANSACTION_MINT":                  1,
-		"MESSAGE_TRANSACTION_BURN":                  2,
-		"MESSAGE_TRANSACTION_FREEZE":                3,
-		"MESSAGE_TRANSACTION_WHITELIST":             4,
-		"MESSAGE_TRANSACTION_CLAWBACK":              5,
-		"MESSAGE_TRANSACTION_ASSET_EXTENSTION":      6,
-		"MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION":  7,
-		"MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION": 8,
+	TransactionType_value = map[string]int32{
+		"TRANSACTION_TYPE_DO_NOT_USE":            0,
+		"TRANSACTION_TYPE_MINT":                  1,
+		"TRANSACTION_TYPE_BURN":                  2,
+		"TRANSACTION_TYPE_FREEZE":                3,
+		"TRANSACTION_TYPE_WHITELIST":             4,
+		"TRANSACTION_TYPE_CLAWBACK":              5,
+		"TRANSACTION_TYPE_ASSET_EXTENSTION":      6,
+		"TRANSACTION_TYPE_DEPOSIT_DISTRBITUION":  7,
+		"TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION": 8,
 	}
 )
 
-func (x MessageTransaction) Enum() *MessageTransaction {
-	p := new(MessageTransaction)
+func (x TransactionType) Enum() *TransactionType {
+	p := new(TransactionType)
 	*p = x
 	return p
 }
 
-func (x MessageTransaction) String() string {
+func (x TransactionType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (MessageTransaction) Descriptor() protoreflect.EnumDescriptor {
+func (TransactionType) Descriptor() protoreflect.EnumDescriptor {
 	return file_asset_proto_enumTypes[0].Descriptor()
 }
 
-func (MessageTransaction) Type() protoreflect.EnumType {
+func (TransactionType) Type() protoreflect.EnumType {
 	return &file_asset_proto_enumTypes[0]
 }
 
-func (x MessageTransaction) Number() protoreflect.EnumNumber {
+func (x TransactionType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use MessageTransaction.Descriptor instead.
-func (MessageTransaction) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use TransactionType.Descriptor instead.
+func (TransactionType) EnumDescriptor() ([]byte, []int) {
 	return file_asset_proto_rawDescGZIP(), []int{0}
 }
 
@@ -1720,7 +1720,7 @@ type AssetTransaction struct {
 	DestinationAddress *string                `protobuf:"bytes,2,opt,name=DestinationAddress,proto3,oneof" json:"DestinationAddress,omitempty"`
 	IsGloballyFrozen   *bool                  `protobuf:"varint,3,opt,name=IsGloballyFrozen,proto3,oneof" json:"IsGloballyFrozen,omitempty"`
 	IsGloballyUnfrozen *bool                  `protobuf:"varint,4,opt,name=IsGloballyUnfrozen,proto3,oneof" json:"IsGloballyUnfrozen,omitempty"`
-	TransactionType    MessageTransaction     `protobuf:"varint,5,opt,name=TransactionType,proto3,enum=asset.MessageTransaction" json:"TransactionType,omitempty"`
+	TransactionType    TransactionType        `protobuf:"varint,5,opt,name=TransactionType,proto3,enum=asset.TransactionType" json:"TransactionType,omitempty"`
 	AssetKey           string                 `protobuf:"bytes,6,opt,name=AssetKey,proto3" json:"AssetKey,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
@@ -1784,11 +1784,11 @@ func (x *AssetTransaction) GetIsGloballyUnfrozen() bool {
 	return false
 }
 
-func (x *AssetTransaction) GetTransactionType() MessageTransaction {
+func (x *AssetTransaction) GetTransactionType() TransactionType {
 	if x != nil {
 		return x.TransactionType
 	}
-	return MessageTransaction_MESSAGE_TRANSACTION_DO_NOT_USE
+	return TransactionType_TRANSACTION_TYPE_DO_NOT_USE
 }
 
 func (x *AssetTransaction) GetAssetKey() string {
@@ -3438,13 +3438,13 @@ const file_asset_proto_rawDesc = "" +
 	"\t_Location\"7\n" +
 	"\aDecCoin\x12\x14\n" +
 	"\x05Denom\x18\x01 \x01(\tR\x05Denom\x12\x16\n" +
-	"\x06Amount\x18\x02 \x01(\tR\x06Amount\"\xe9\x02\n" +
+	"\x06Amount\x18\x02 \x01(\tR\x06Amount\"\xe6\x02\n" +
 	"\x10AssetTransaction\x12\x16\n" +
 	"\x06Amount\x18\x01 \x01(\x03R\x06Amount\x123\n" +
 	"\x12DestinationAddress\x18\x02 \x01(\tH\x00R\x12DestinationAddress\x88\x01\x01\x12/\n" +
 	"\x10IsGloballyFrozen\x18\x03 \x01(\bH\x01R\x10IsGloballyFrozen\x88\x01\x01\x123\n" +
-	"\x12IsGloballyUnfrozen\x18\x04 \x01(\bH\x02R\x12IsGloballyUnfrozen\x88\x01\x01\x12C\n" +
-	"\x0fTransactionType\x18\x05 \x01(\x0e2\x19.asset.MessageTransactionR\x0fTransactionType\x12\x1a\n" +
+	"\x12IsGloballyUnfrozen\x18\x04 \x01(\bH\x02R\x12IsGloballyUnfrozen\x88\x01\x01\x12@\n" +
+	"\x0fTransactionType\x18\x05 \x01(\x0e2\x16.asset.TransactionTypeR\x0fTransactionType\x12\x1a\n" +
 	"\bAssetKey\x18\x06 \x01(\tR\bAssetKeyB\x15\n" +
 	"\x13_DestinationAddressB\x13\n" +
 	"\x11_IsGloballyFrozenB\x15\n" +
@@ -3634,17 +3634,17 @@ const file_asset_proto_rawDesc = "" +
 	"\tReference\x18\x01 \x01(\tR\tReference\x12\x1c\n" +
 	"\tExtension\x18\x02 \x01(\tR\tExtension\x12\x17\n" +
 	"\x04Name\x18\x03 \x01(\tH\x00R\x04Name\x88\x01\x01B\a\n" +
-	"\x05_Name*\xe0\x02\n" +
-	"\x12MessageTransaction\x12\"\n" +
-	"\x1eMESSAGE_TRANSACTION_DO_NOT_USE\x10\x00\x12\x1c\n" +
-	"\x18MESSAGE_TRANSACTION_MINT\x10\x01\x12\x1c\n" +
-	"\x18MESSAGE_TRANSACTION_BURN\x10\x02\x12\x1e\n" +
-	"\x1aMESSAGE_TRANSACTION_FREEZE\x10\x03\x12!\n" +
-	"\x1dMESSAGE_TRANSACTION_WHITELIST\x10\x04\x12 \n" +
-	"\x1cMESSAGE_TRANSACTION_CLAWBACK\x10\x05\x12(\n" +
-	"$MESSAGE_TRANSACTION_ASSET_EXTENSTION\x10\x06\x12,\n" +
-	"(MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION\x10\a\x12-\n" +
-	")MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION\x10\b*v\n" +
+	"\x05_Name*\xc2\x02\n" +
+	"\x0fTransactionType\x12\x1f\n" +
+	"\x1bTRANSACTION_TYPE_DO_NOT_USE\x10\x00\x12\x19\n" +
+	"\x15TRANSACTION_TYPE_MINT\x10\x01\x12\x19\n" +
+	"\x15TRANSACTION_TYPE_BURN\x10\x02\x12\x1b\n" +
+	"\x17TRANSACTION_TYPE_FREEZE\x10\x03\x12\x1e\n" +
+	"\x1aTRANSACTION_TYPE_WHITELIST\x10\x04\x12\x1d\n" +
+	"\x19TRANSACTION_TYPE_CLAWBACK\x10\x05\x12%\n" +
+	"!TRANSACTION_TYPE_ASSET_EXTENSTION\x10\x06\x12)\n" +
+	"%TRANSACTION_TYPE_DEPOSIT_DISTRBITUION\x10\a\x12*\n" +
+	"&TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION\x10\b*v\n" +
 	"\x10DistributionType\x12 \n" +
 	"\x1cDISTRIBUTION_TYPE_DO_NOT_USE\x10\x00\x12\x1f\n" +
 	"\x1bDISTRIBUTION_TYPE_CROWDFUND\x10\x01\x12\x1f\n" +
@@ -3716,7 +3716,7 @@ func file_asset_proto_rawDescGZIP() []byte {
 var file_asset_proto_enumTypes = make([]protoimpl.EnumInfo, 8)
 var file_asset_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
 var file_asset_proto_goTypes = []any{
-	(MessageTransaction)(0),      // 0: asset.MessageTransaction
+	(TransactionType)(0),         // 0: asset.TransactionType
 	(DistributionType)(0),        // 1: asset.DistributionType
 	(LinkType)(0),                // 2: asset.LinkType
 	(SocialMediaType)(0),         // 3: asset.SocialMediaType
@@ -3779,7 +3779,7 @@ var file_asset_proto_depIdxs = []int32{
 	7,  // 21: asset.UserAssetList.Status:type_name -> asset.UserAssetStatus
 	34, // 22: asset.UserAssetList.MetaData:type_name -> metadata.MetaData
 	11, // 23: asset.UserAssetLists.UserAssetLists:type_name -> asset.UserAssetList
-	0,  // 24: asset.AssetTransaction.TransactionType:type_name -> asset.MessageTransaction
+	0,  // 24: asset.AssetTransaction.TransactionType:type_name -> asset.TransactionType
 	1,  // 25: asset.Distribution.Type:type_name -> asset.DistributionType
 	22, // 26: asset.Distribution.CrowdfundDetails:type_name -> asset.Crowdfund
 	21, // 27: asset.Distribution.TokenSaleDetails:type_name -> asset.TokenSale

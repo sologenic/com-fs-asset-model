@@ -158,16 +158,16 @@ message DecCoin {
     string Amount = 2;
 }
 
-enum MessageTransaction {
-    MESSAGE_TRANSACTION_DO_NOT_USE = 0;
-    MESSAGE_TRANSACTION_MINT = 1;
-    MESSAGE_TRANSACTION_BURN = 2;
-    MESSAGE_TRANSACTION_FREEZE = 3;
-    MESSAGE_TRANSACTION_WHITELIST = 4;
-    MESSAGE_TRANSACTION_CLAWBACK = 5;
-    MESSAGE_TRANSACTION_ASSET_EXTENSTION = 6;
-    MESSAGE_TRANSACTION_DEPOSIT_DISTRBITUION = 7;
-    MESSAGE_TRANSACTION_WITHDRAW_DISTRIBUTION = 8;
+enum TransactionType {
+    TRANSACTION_TYPE_DO_NOT_USE = 0;
+    TRANSACTION_TYPE_MINT = 1;
+    TRANSACTION_TYPE_BURN = 2;
+    TRANSACTION_TYPE_FREEZE = 3;
+    TRANSACTION_TYPE_WHITELIST = 4;
+    TRANSACTION_TYPE_CLAWBACK = 5;
+    TRANSACTION_TYPE_ASSET_EXTENSTION = 6;
+    TRANSACTION_TYPE_DEPOSIT_DISTRBITUION = 7;
+    TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION = 8;
 }
 
 message AssetTransaction {
@@ -175,7 +175,7 @@ message AssetTransaction {
     optional string DestinationAddress = 2;
     optional bool IsGloballyFrozen = 3;
     optional bool IsGloballyUnfrozen = 4;
-    MessageTransaction TransactionType = 5;
+    TransactionType TransactionType = 5;
     string AssetKey = 6;
 }
 
