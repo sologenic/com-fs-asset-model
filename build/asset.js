@@ -89,6 +89,43 @@ export function transactionTypeToJSON(object) {
             return "UNRECOGNIZED";
     }
 }
+export var AssetRole;
+(function (AssetRole) {
+    AssetRole[AssetRole["ASSET_ROLE_DO_NOT_USE"] = 0] = "ASSET_ROLE_DO_NOT_USE";
+    AssetRole[AssetRole["ASSET_ROLE_DISTRIBUTED"] = 1] = "ASSET_ROLE_DISTRIBUTED";
+    AssetRole[AssetRole["ASSET_ROLE_FUNDED"] = 2] = "ASSET_ROLE_FUNDED";
+    AssetRole[AssetRole["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
+})(AssetRole || (AssetRole = {}));
+export function assetRoleFromJSON(object) {
+    switch (object) {
+        case 0:
+        case "ASSET_ROLE_DO_NOT_USE":
+            return AssetRole.ASSET_ROLE_DO_NOT_USE;
+        case 1:
+        case "ASSET_ROLE_DISTRIBUTED":
+            return AssetRole.ASSET_ROLE_DISTRIBUTED;
+        case 2:
+        case "ASSET_ROLE_FUNDED":
+            return AssetRole.ASSET_ROLE_FUNDED;
+        case -1:
+        case "UNRECOGNIZED":
+        default:
+            return AssetRole.UNRECOGNIZED;
+    }
+}
+export function assetRoleToJSON(object) {
+    switch (object) {
+        case AssetRole.ASSET_ROLE_DO_NOT_USE:
+            return "ASSET_ROLE_DO_NOT_USE";
+        case AssetRole.ASSET_ROLE_DISTRIBUTED:
+            return "ASSET_ROLE_DISTRIBUTED";
+        case AssetRole.ASSET_ROLE_FUNDED:
+            return "ASSET_ROLE_FUNDED";
+        case AssetRole.UNRECOGNIZED:
+        default:
+            return "UNRECOGNIZED";
+    }
+}
 export var DistributionType;
 (function (DistributionType) {
     DistributionType[DistributionType["DISTRIBUTION_TYPE_DO_NOT_USE"] = 0] = "DISTRIBUTION_TYPE_DO_NOT_USE";
@@ -2655,18 +2692,21 @@ export const AssetTransaction = {
     },
 };
 function createBaseDistributionTransaction() {
-    return { Amount: undefined, TransactionType: 0, AssetKey: "" };
+    return { Amount: undefined, AssetRole: undefined, TransactionType: 0, AssetKey: "" };
 }
 export const DistributionTransaction = {
     encode(message, writer = _m0.Writer.create()) {
         if (message.Amount !== undefined) {
             writer.uint32(8).int64(message.Amount);
         }
+        if (message.AssetRole !== undefined) {
+            writer.uint32(16).int32(message.AssetRole);
+        }
         if (message.TransactionType !== 0) {
-            writer.uint32(16).int32(message.TransactionType);
+            writer.uint32(24).int32(message.TransactionType);
         }
         if (message.AssetKey !== "") {
-            writer.uint32(26).string(message.AssetKey);
+            writer.uint32(34).string(message.AssetKey);
         }
         return writer;
     },
@@ -2687,10 +2727,16 @@ export const DistributionTransaction = {
                     if (tag !== 16) {
                         break;
                     }
-                    message.TransactionType = reader.int32();
+                    message.AssetRole = reader.int32();
                     continue;
                 case 3:
-                    if (tag !== 26) {
+                    if (tag !== 24) {
+                        break;
+                    }
+                    message.TransactionType = reader.int32();
+                    continue;
+                case 4:
+                    if (tag !== 34) {
                         break;
                     }
                     message.AssetKey = reader.string();
@@ -2706,6 +2752,7 @@ export const DistributionTransaction = {
     fromJSON(object) {
         return {
             Amount: isSet(object.Amount) ? globalThis.Number(object.Amount) : undefined,
+            AssetRole: isSet(object.AssetRole) ? assetRoleFromJSON(object.AssetRole) : undefined,
             TransactionType: isSet(object.TransactionType) ? transactionTypeFromJSON(object.TransactionType) : 0,
             AssetKey: isSet(object.AssetKey) ? globalThis.String(object.AssetKey) : "",
         };
@@ -2714,6 +2761,9 @@ export const DistributionTransaction = {
         const obj = {};
         if (message.Amount !== undefined) {
             obj.Amount = Math.round(message.Amount);
+        }
+        if (message.AssetRole !== undefined) {
+            obj.AssetRole = assetRoleToJSON(message.AssetRole);
         }
         if (message.TransactionType !== 0) {
             obj.TransactionType = transactionTypeToJSON(message.TransactionType);
@@ -2727,11 +2777,12 @@ export const DistributionTransaction = {
         return DistributionTransaction.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c;
+        var _a, _b, _c, _d;
         const message = createBaseDistributionTransaction();
         message.Amount = (_a = object.Amount) !== null && _a !== void 0 ? _a : undefined;
-        message.TransactionType = (_b = object.TransactionType) !== null && _b !== void 0 ? _b : 0;
-        message.AssetKey = (_c = object.AssetKey) !== null && _c !== void 0 ? _c : "";
+        message.AssetRole = (_b = object.AssetRole) !== null && _b !== void 0 ? _b : undefined;
+        message.TransactionType = (_c = object.TransactionType) !== null && _c !== void 0 ? _c : 0;
+        message.AssetKey = (_d = object.AssetKey) !== null && _d !== void 0 ? _d : "";
         return message;
     },
 };

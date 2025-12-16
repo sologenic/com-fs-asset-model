@@ -182,9 +182,18 @@ message AssetTransaction {
 
 message DistributionTransaction {
     optional int64 Amount = 1;
-    TransactionType TransactionType = 2;
-    string AssetKey = 3;
+    optional AssetRole AssetRole = 2;
+    TransactionType TransactionType = 3;
+    string AssetKey = 4;
 }
+
+enum AssetRole {
+    ASSET_ROLE_DO_NOT_USE = 0;
+    ASSET_ROLE_DISTRIBUTED = 1;
+    ASSET_ROLE_FUNDED = 2;
+}
+
+
 
 message Distribution {
     DistributionType Type = 1;

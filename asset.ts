@@ -99,6 +99,45 @@ export function transactionTypeToJSON(object: TransactionType): string {
   }
 }
 
+export enum AssetRole {
+  ASSET_ROLE_DO_NOT_USE = 0,
+  ASSET_ROLE_DISTRIBUTED = 1,
+  ASSET_ROLE_FUNDED = 2,
+  UNRECOGNIZED = -1,
+}
+
+export function assetRoleFromJSON(object: any): AssetRole {
+  switch (object) {
+    case 0:
+    case "ASSET_ROLE_DO_NOT_USE":
+      return AssetRole.ASSET_ROLE_DO_NOT_USE;
+    case 1:
+    case "ASSET_ROLE_DISTRIBUTED":
+      return AssetRole.ASSET_ROLE_DISTRIBUTED;
+    case 2:
+    case "ASSET_ROLE_FUNDED":
+      return AssetRole.ASSET_ROLE_FUNDED;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return AssetRole.UNRECOGNIZED;
+  }
+}
+
+export function assetRoleToJSON(object: AssetRole): string {
+  switch (object) {
+    case AssetRole.ASSET_ROLE_DO_NOT_USE:
+      return "ASSET_ROLE_DO_NOT_USE";
+    case AssetRole.ASSET_ROLE_DISTRIBUTED:
+      return "ASSET_ROLE_DISTRIBUTED";
+    case AssetRole.ASSET_ROLE_FUNDED:
+      return "ASSET_ROLE_FUNDED";
+    case AssetRole.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
 export enum DistributionType {
   DISTRIBUTION_TYPE_DO_NOT_USE = 0,
   DISTRIBUTION_TYPE_CROWDFUND = 1,
@@ -650,6 +689,7 @@ export interface AssetTransaction {
 
 export interface DistributionTransaction {
   Amount?: number | undefined;
+  AssetRole?: AssetRole | undefined;
   TransactionType: TransactionType;
   AssetKey: string;
 }
@@ -3215,7 +3255,7 @@ export const AssetTransaction = {
 };
 
 function createBaseDistributionTransaction(): DistributionTransaction {
-  return { Amount: undefined, TransactionType: 0, AssetKey: "" };
+  return { Amount: undefined, AssetRole: undefined, TransactionType: 0, AssetKey: "" };
 }
 
 export const DistributionTransaction = {
@@ -3223,11 +3263,14 @@ export const DistributionTransaction = {
     if (message.Amount !== undefined) {
       writer.uint32(8).int64(message.Amount);
     }
+    if (message.AssetRole !== undefined) {
+      writer.uint32(16).int32(message.AssetRole);
+    }
     if (message.TransactionType !== 0) {
-      writer.uint32(16).int32(message.TransactionType);
+      writer.uint32(24).int32(message.TransactionType);
     }
     if (message.AssetKey !== "") {
-      writer.uint32(26).string(message.AssetKey);
+      writer.uint32(34).string(message.AssetKey);
     }
     return writer;
   },
@@ -3251,10 +3294,17 @@ export const DistributionTransaction = {
             break;
           }
 
-          message.TransactionType = reader.int32() as any;
+          message.AssetRole = reader.int32() as any;
           continue;
         case 3:
-          if (tag !== 26) {
+          if (tag !== 24) {
+            break;
+          }
+
+          message.TransactionType = reader.int32() as any;
+          continue;
+        case 4:
+          if (tag !== 34) {
             break;
           }
 
@@ -3272,6 +3322,7 @@ export const DistributionTransaction = {
   fromJSON(object: any): DistributionTransaction {
     return {
       Amount: isSet(object.Amount) ? globalThis.Number(object.Amount) : undefined,
+      AssetRole: isSet(object.AssetRole) ? assetRoleFromJSON(object.AssetRole) : undefined,
       TransactionType: isSet(object.TransactionType) ? transactionTypeFromJSON(object.TransactionType) : 0,
       AssetKey: isSet(object.AssetKey) ? globalThis.String(object.AssetKey) : "",
     };
@@ -3281,6 +3332,9 @@ export const DistributionTransaction = {
     const obj: any = {};
     if (message.Amount !== undefined) {
       obj.Amount = Math.round(message.Amount);
+    }
+    if (message.AssetRole !== undefined) {
+      obj.AssetRole = assetRoleToJSON(message.AssetRole);
     }
     if (message.TransactionType !== 0) {
       obj.TransactionType = transactionTypeToJSON(message.TransactionType);
@@ -3297,6 +3351,7 @@ export const DistributionTransaction = {
   fromPartial<I extends Exact<DeepPartial<DistributionTransaction>, I>>(object: I): DistributionTransaction {
     const message = createBaseDistributionTransaction();
     message.Amount = object.Amount ?? undefined;
+    message.AssetRole = object.AssetRole ?? undefined;
     message.TransactionType = object.TransactionType ?? 0;
     message.AssetKey = object.AssetKey ?? "";
     return message;

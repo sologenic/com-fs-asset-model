@@ -18,6 +18,14 @@ export declare enum TransactionType {
 }
 export declare function transactionTypeFromJSON(object: any): TransactionType;
 export declare function transactionTypeToJSON(object: TransactionType): string;
+export declare enum AssetRole {
+    ASSET_ROLE_DO_NOT_USE = 0,
+    ASSET_ROLE_DISTRIBUTED = 1,
+    ASSET_ROLE_FUNDED = 2,
+    UNRECOGNIZED = -1
+}
+export declare function assetRoleFromJSON(object: any): AssetRole;
+export declare function assetRoleToJSON(object: AssetRole): string;
 export declare enum DistributionType {
     DISTRIBUTION_TYPE_DO_NOT_USE = 0,
     DISTRIBUTION_TYPE_CROWDFUND = 1,
@@ -234,6 +242,7 @@ export interface AssetTransaction {
 }
 export interface DistributionTransaction {
     Amount?: number | undefined;
+    AssetRole?: AssetRole | undefined;
     TransactionType: TransactionType;
     AssetKey: string;
 }
@@ -8286,19 +8295,23 @@ export declare const DistributionTransaction: {
     toJSON(message: DistributionTransaction): unknown;
     create<I extends {
         Amount?: number | undefined;
+        AssetRole?: AssetRole | undefined;
         TransactionType?: TransactionType | undefined;
         AssetKey?: string | undefined;
     } & {
         Amount?: number | undefined;
+        AssetRole?: AssetRole | undefined;
         TransactionType?: TransactionType | undefined;
         AssetKey?: string | undefined;
     } & { [K in Exclude<keyof I, keyof DistributionTransaction>]: never; }>(base?: I | undefined): DistributionTransaction;
     fromPartial<I_1 extends {
         Amount?: number | undefined;
+        AssetRole?: AssetRole | undefined;
         TransactionType?: TransactionType | undefined;
         AssetKey?: string | undefined;
     } & {
         Amount?: number | undefined;
+        AssetRole?: AssetRole | undefined;
         TransactionType?: TransactionType | undefined;
         AssetKey?: string | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof DistributionTransaction>]: never; }>(object: I_1): DistributionTransaction;

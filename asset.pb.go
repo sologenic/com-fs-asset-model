@@ -94,6 +94,55 @@ func (TransactionType) EnumDescriptor() ([]byte, []int) {
 	return file_asset_proto_rawDescGZIP(), []int{0}
 }
 
+type AssetRole int32
+
+const (
+	AssetRole_ASSET_ROLE_DO_NOT_USE  AssetRole = 0
+	AssetRole_ASSET_ROLE_DISTRIBUTED AssetRole = 1
+	AssetRole_ASSET_ROLE_FUNDED      AssetRole = 2
+)
+
+// Enum value maps for AssetRole.
+var (
+	AssetRole_name = map[int32]string{
+		0: "ASSET_ROLE_DO_NOT_USE",
+		1: "ASSET_ROLE_DISTRIBUTED",
+		2: "ASSET_ROLE_FUNDED",
+	}
+	AssetRole_value = map[string]int32{
+		"ASSET_ROLE_DO_NOT_USE":  0,
+		"ASSET_ROLE_DISTRIBUTED": 1,
+		"ASSET_ROLE_FUNDED":      2,
+	}
+)
+
+func (x AssetRole) Enum() *AssetRole {
+	p := new(AssetRole)
+	*p = x
+	return p
+}
+
+func (x AssetRole) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (AssetRole) Descriptor() protoreflect.EnumDescriptor {
+	return file_asset_proto_enumTypes[1].Descriptor()
+}
+
+func (AssetRole) Type() protoreflect.EnumType {
+	return &file_asset_proto_enumTypes[1]
+}
+
+func (x AssetRole) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use AssetRole.Descriptor instead.
+func (AssetRole) EnumDescriptor() ([]byte, []int) {
+	return file_asset_proto_rawDescGZIP(), []int{1}
+}
+
 type DistributionType int32
 
 const (
@@ -127,11 +176,11 @@ func (x DistributionType) String() string {
 }
 
 func (DistributionType) Descriptor() protoreflect.EnumDescriptor {
-	return file_asset_proto_enumTypes[1].Descriptor()
+	return file_asset_proto_enumTypes[2].Descriptor()
 }
 
 func (DistributionType) Type() protoreflect.EnumType {
-	return &file_asset_proto_enumTypes[1]
+	return &file_asset_proto_enumTypes[2]
 }
 
 func (x DistributionType) Number() protoreflect.EnumNumber {
@@ -140,7 +189,7 @@ func (x DistributionType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DistributionType.Descriptor instead.
 func (DistributionType) EnumDescriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{1}
+	return file_asset_proto_rawDescGZIP(), []int{2}
 }
 
 type LinkType int32
@@ -188,11 +237,11 @@ func (x LinkType) String() string {
 }
 
 func (LinkType) Descriptor() protoreflect.EnumDescriptor {
-	return file_asset_proto_enumTypes[2].Descriptor()
+	return file_asset_proto_enumTypes[3].Descriptor()
 }
 
 func (LinkType) Type() protoreflect.EnumType {
-	return &file_asset_proto_enumTypes[2]
+	return &file_asset_proto_enumTypes[3]
 }
 
 func (x LinkType) Number() protoreflect.EnumNumber {
@@ -201,7 +250,7 @@ func (x LinkType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use LinkType.Descriptor instead.
 func (LinkType) EnumDescriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{2}
+	return file_asset_proto_rawDescGZIP(), []int{3}
 }
 
 type SocialMediaType int32
@@ -246,11 +295,11 @@ func (x SocialMediaType) String() string {
 }
 
 func (SocialMediaType) Descriptor() protoreflect.EnumDescriptor {
-	return file_asset_proto_enumTypes[3].Descriptor()
+	return file_asset_proto_enumTypes[4].Descriptor()
 }
 
 func (SocialMediaType) Type() protoreflect.EnumType {
-	return &file_asset_proto_enumTypes[3]
+	return &file_asset_proto_enumTypes[4]
 }
 
 func (x SocialMediaType) Number() protoreflect.EnumNumber {
@@ -259,7 +308,7 @@ func (x SocialMediaType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SocialMediaType.Descriptor instead.
 func (SocialMediaType) EnumDescriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{3}
+	return file_asset_proto_rawDescGZIP(), []int{4}
 }
 
 type AssetStatus int32
@@ -304,11 +353,11 @@ func (x AssetStatus) String() string {
 }
 
 func (AssetStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_asset_proto_enumTypes[4].Descriptor()
+	return file_asset_proto_enumTypes[5].Descriptor()
 }
 
 func (AssetStatus) Type() protoreflect.EnumType {
-	return &file_asset_proto_enumTypes[4]
+	return &file_asset_proto_enumTypes[5]
 }
 
 func (x AssetStatus) Number() protoreflect.EnumNumber {
@@ -317,7 +366,7 @@ func (x AssetStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AssetStatus.Descriptor instead.
 func (AssetStatus) EnumDescriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{4}
+	return file_asset_proto_rawDescGZIP(), []int{5}
 }
 
 type Reason int32
@@ -356,11 +405,11 @@ func (x Reason) String() string {
 }
 
 func (Reason) Descriptor() protoreflect.EnumDescriptor {
-	return file_asset_proto_enumTypes[5].Descriptor()
+	return file_asset_proto_enumTypes[6].Descriptor()
 }
 
 func (Reason) Type() protoreflect.EnumType {
-	return &file_asset_proto_enumTypes[5]
+	return &file_asset_proto_enumTypes[6]
 }
 
 func (x Reason) Number() protoreflect.EnumNumber {
@@ -369,7 +418,7 @@ func (x Reason) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Reason.Descriptor instead.
 func (Reason) EnumDescriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{5}
+	return file_asset_proto_rawDescGZIP(), []int{6}
 }
 
 type AssetType int32
@@ -426,11 +475,11 @@ func (x AssetType) String() string {
 }
 
 func (AssetType) Descriptor() protoreflect.EnumDescriptor {
-	return file_asset_proto_enumTypes[6].Descriptor()
+	return file_asset_proto_enumTypes[7].Descriptor()
 }
 
 func (AssetType) Type() protoreflect.EnumType {
-	return &file_asset_proto_enumTypes[6]
+	return &file_asset_proto_enumTypes[7]
 }
 
 func (x AssetType) Number() protoreflect.EnumNumber {
@@ -439,7 +488,7 @@ func (x AssetType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use AssetType.Descriptor instead.
 func (AssetType) EnumDescriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{6}
+	return file_asset_proto_rawDescGZIP(), []int{7}
 }
 
 type UserAssetStatus int32
@@ -481,11 +530,11 @@ func (x UserAssetStatus) String() string {
 }
 
 func (UserAssetStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_asset_proto_enumTypes[7].Descriptor()
+	return file_asset_proto_enumTypes[8].Descriptor()
 }
 
 func (UserAssetStatus) Type() protoreflect.EnumType {
-	return &file_asset_proto_enumTypes[7]
+	return &file_asset_proto_enumTypes[8]
 }
 
 func (x UserAssetStatus) Number() protoreflect.EnumNumber {
@@ -494,7 +543,7 @@ func (x UserAssetStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use UserAssetStatus.Descriptor instead.
 func (UserAssetStatus) EnumDescriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{7}
+	return file_asset_proto_rawDescGZIP(), []int{8}
 }
 
 type AssetDetails struct {
@@ -1804,8 +1853,9 @@ func (x *AssetTransaction) GetAssetKey() string {
 type DistributionTransaction struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	Amount          *int64                 `protobuf:"varint,1,opt,name=Amount,proto3,oneof" json:"Amount,omitempty"`
-	TransactionType TransactionType        `protobuf:"varint,2,opt,name=TransactionType,proto3,enum=asset.TransactionType" json:"TransactionType,omitempty"`
-	AssetKey        string                 `protobuf:"bytes,3,opt,name=AssetKey,proto3" json:"AssetKey,omitempty"`
+	AssetRole       *AssetRole             `protobuf:"varint,2,opt,name=AssetRole,proto3,enum=asset.AssetRole,oneof" json:"AssetRole,omitempty"`
+	TransactionType TransactionType        `protobuf:"varint,3,opt,name=TransactionType,proto3,enum=asset.TransactionType" json:"TransactionType,omitempty"`
+	AssetKey        string                 `protobuf:"bytes,4,opt,name=AssetKey,proto3" json:"AssetKey,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1845,6 +1895,13 @@ func (x *DistributionTransaction) GetAmount() int64 {
 		return *x.Amount
 	}
 	return 0
+}
+
+func (x *DistributionTransaction) GetAssetRole() AssetRole {
+	if x != nil && x.AssetRole != nil {
+		return *x.AssetRole
+	}
+	return AssetRole_ASSET_ROLE_DO_NOT_USE
 }
 
 func (x *DistributionTransaction) GetTransactionType() TransactionType {
@@ -3511,12 +3568,15 @@ const file_asset_proto_rawDesc = "" +
 	"\bAssetKey\x18\x06 \x01(\tR\bAssetKeyB\x15\n" +
 	"\x13_DestinationAddressB\x13\n" +
 	"\x11_IsGloballyFrozenB\x15\n" +
-	"\x13_IsGloballyUnfrozen\"\x9f\x01\n" +
+	"\x13_IsGloballyUnfrozen\"\xe2\x01\n" +
 	"\x17DistributionTransaction\x12\x1b\n" +
-	"\x06Amount\x18\x01 \x01(\x03H\x00R\x06Amount\x88\x01\x01\x12@\n" +
-	"\x0fTransactionType\x18\x02 \x01(\x0e2\x16.asset.TransactionTypeR\x0fTransactionType\x12\x1a\n" +
-	"\bAssetKey\x18\x03 \x01(\tR\bAssetKeyB\t\n" +
-	"\a_Amount\"\xeb\x01\n" +
+	"\x06Amount\x18\x01 \x01(\x03H\x00R\x06Amount\x88\x01\x01\x123\n" +
+	"\tAssetRole\x18\x02 \x01(\x0e2\x10.asset.AssetRoleH\x01R\tAssetRole\x88\x01\x01\x12@\n" +
+	"\x0fTransactionType\x18\x03 \x01(\x0e2\x16.asset.TransactionTypeR\x0fTransactionType\x12\x1a\n" +
+	"\bAssetKey\x18\x04 \x01(\tR\bAssetKeyB\t\n" +
+	"\a_AmountB\f\n" +
+	"\n" +
+	"_AssetRole\"\xeb\x01\n" +
 	"\fDistribution\x12+\n" +
 	"\x04Type\x18\x01 \x01(\x0e2\x17.asset.DistributionTypeR\x04Type\x12A\n" +
 	"\x10CrowdfundDetails\x18\x02 \x01(\v2\x10.asset.CrowdfundH\x00R\x10CrowdfundDetails\x88\x01\x01\x12A\n" +
@@ -3713,7 +3773,11 @@ const file_asset_proto_rawDesc = "" +
 	"!TRANSACTION_TYPE_ASSET_EXTENSTION\x10\x06\x12)\n" +
 	"%TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION\x10\a\x12*\n" +
 	"&TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION\x10\b\x12+\n" +
-	"'TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION\x10\t*v\n" +
+	"'TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION\x10\t*Y\n" +
+	"\tAssetRole\x12\x19\n" +
+	"\x15ASSET_ROLE_DO_NOT_USE\x10\x00\x12\x1a\n" +
+	"\x16ASSET_ROLE_DISTRIBUTED\x10\x01\x12\x15\n" +
+	"\x11ASSET_ROLE_FUNDED\x10\x02*v\n" +
 	"\x10DistributionType\x12 \n" +
 	"\x1cDISTRIBUTION_TYPE_DO_NOT_USE\x10\x00\x12\x1f\n" +
 	"\x1bDISTRIBUTION_TYPE_CROWDFUND\x10\x01\x12\x1f\n" +
@@ -3782,92 +3846,94 @@ func file_asset_proto_rawDescGZIP() []byte {
 	return file_asset_proto_rawDescData
 }
 
-var file_asset_proto_enumTypes = make([]protoimpl.EnumInfo, 8)
+var file_asset_proto_enumTypes = make([]protoimpl.EnumInfo, 9)
 var file_asset_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
 var file_asset_proto_goTypes = []any{
 	(TransactionType)(0),            // 0: asset.TransactionType
-	(DistributionType)(0),           // 1: asset.DistributionType
-	(LinkType)(0),                   // 2: asset.LinkType
-	(SocialMediaType)(0),            // 3: asset.SocialMediaType
-	(AssetStatus)(0),                // 4: asset.AssetStatus
-	(Reason)(0),                     // 5: asset.Reason
-	(AssetType)(0),                  // 6: asset.AssetType
-	(UserAssetStatus)(0),            // 7: asset.UserAssetStatus
-	(*AssetDetails)(nil),            // 8: asset.AssetDetails
-	(*Asset)(nil),                   // 9: asset.Asset
-	(*Assets)(nil),                  // 10: asset.Assets
-	(*UserAssetList)(nil),           // 11: asset.UserAssetList
-	(*UserAssetLists)(nil),          // 12: asset.UserAssetLists
-	(*RealEstate)(nil),              // 13: asset.RealEstate
-	(*StableCoin)(nil),              // 14: asset.StableCoin
-	(*Commodity)(nil),               // 15: asset.Commodity
-	(*Collectible)(nil),             // 16: asset.Collectible
-	(*Vehicle)(nil),                 // 17: asset.Vehicle
-	(*DecCoin)(nil),                 // 18: asset.DecCoin
-	(*AssetTransaction)(nil),        // 19: asset.AssetTransaction
-	(*DistributionTransaction)(nil), // 20: asset.DistributionTransaction
-	(*Distribution)(nil),            // 21: asset.Distribution
-	(*TokenSale)(nil),               // 22: asset.TokenSale
-	(*Crowdfund)(nil),               // 23: asset.Crowdfund
-	(*IntellectualProperty)(nil),    // 24: asset.IntellectualProperty
-	(*InvestmentFund)(nil),          // 25: asset.InvestmentFund
-	(*Equity)(nil),                  // 26: asset.Equity
-	(*FinancialProperties)(nil),     // 27: asset.FinancialProperties
-	(*Description)(nil),             // 28: asset.Description
-	(*ExternalResources)(nil),       // 29: asset.ExternalResources
-	(*Link)(nil),                    // 30: asset.Link
-	(*SocialMedia)(nil),             // 31: asset.SocialMedia
-	(*IssuerDetails)(nil),           // 32: asset.IssuerDetails
-	(*LogoFile)(nil),                // 33: asset.LogoFile
-	(*denom.Denom)(nil),             // 34: denom.Denom
-	(*metadata.MetaData)(nil),       // 35: metadata.MetaData
-	(*audit.Audit)(nil),             // 36: audit.Audit
-	(metadata.Network)(0),           // 37: metadata.Network
+	(AssetRole)(0),                  // 1: asset.AssetRole
+	(DistributionType)(0),           // 2: asset.DistributionType
+	(LinkType)(0),                   // 3: asset.LinkType
+	(SocialMediaType)(0),            // 4: asset.SocialMediaType
+	(AssetStatus)(0),                // 5: asset.AssetStatus
+	(Reason)(0),                     // 6: asset.Reason
+	(AssetType)(0),                  // 7: asset.AssetType
+	(UserAssetStatus)(0),            // 8: asset.UserAssetStatus
+	(*AssetDetails)(nil),            // 9: asset.AssetDetails
+	(*Asset)(nil),                   // 10: asset.Asset
+	(*Assets)(nil),                  // 11: asset.Assets
+	(*UserAssetList)(nil),           // 12: asset.UserAssetList
+	(*UserAssetLists)(nil),          // 13: asset.UserAssetLists
+	(*RealEstate)(nil),              // 14: asset.RealEstate
+	(*StableCoin)(nil),              // 15: asset.StableCoin
+	(*Commodity)(nil),               // 16: asset.Commodity
+	(*Collectible)(nil),             // 17: asset.Collectible
+	(*Vehicle)(nil),                 // 18: asset.Vehicle
+	(*DecCoin)(nil),                 // 19: asset.DecCoin
+	(*AssetTransaction)(nil),        // 20: asset.AssetTransaction
+	(*DistributionTransaction)(nil), // 21: asset.DistributionTransaction
+	(*Distribution)(nil),            // 22: asset.Distribution
+	(*TokenSale)(nil),               // 23: asset.TokenSale
+	(*Crowdfund)(nil),               // 24: asset.Crowdfund
+	(*IntellectualProperty)(nil),    // 25: asset.IntellectualProperty
+	(*InvestmentFund)(nil),          // 26: asset.InvestmentFund
+	(*Equity)(nil),                  // 27: asset.Equity
+	(*FinancialProperties)(nil),     // 28: asset.FinancialProperties
+	(*Description)(nil),             // 29: asset.Description
+	(*ExternalResources)(nil),       // 30: asset.ExternalResources
+	(*Link)(nil),                    // 31: asset.Link
+	(*SocialMedia)(nil),             // 32: asset.SocialMedia
+	(*IssuerDetails)(nil),           // 33: asset.IssuerDetails
+	(*LogoFile)(nil),                // 34: asset.LogoFile
+	(*denom.Denom)(nil),             // 35: denom.Denom
+	(*metadata.MetaData)(nil),       // 36: metadata.MetaData
+	(*audit.Audit)(nil),             // 37: audit.Audit
+	(metadata.Network)(0),           // 38: metadata.Network
 }
 var file_asset_proto_depIdxs = []int32{
-	4,  // 0: asset.AssetDetails.Status:type_name -> asset.AssetStatus
-	5,  // 1: asset.AssetDetails.Reason:type_name -> asset.Reason
-	6,  // 2: asset.AssetDetails.Type:type_name -> asset.AssetType
-	34, // 3: asset.AssetDetails.Denom:type_name -> denom.Denom
-	13, // 4: asset.AssetDetails.RealEstateDetails:type_name -> asset.RealEstate
-	14, // 5: asset.AssetDetails.StableCoinDetails:type_name -> asset.StableCoin
-	15, // 6: asset.AssetDetails.CommodityDetails:type_name -> asset.Commodity
-	16, // 7: asset.AssetDetails.CollectibleDetails:type_name -> asset.Collectible
-	17, // 8: asset.AssetDetails.VehicleDetails:type_name -> asset.Vehicle
-	24, // 9: asset.AssetDetails.IntellectualPropertyDetails:type_name -> asset.IntellectualProperty
-	25, // 10: asset.AssetDetails.InvestmentFundDetails:type_name -> asset.InvestmentFund
-	26, // 11: asset.AssetDetails.EquityDetails:type_name -> asset.Equity
-	27, // 12: asset.AssetDetails.FinancialProperties:type_name -> asset.FinancialProperties
-	28, // 13: asset.AssetDetails.Description:type_name -> asset.Description
-	29, // 14: asset.AssetDetails.ExternalResources:type_name -> asset.ExternalResources
-	21, // 15: asset.AssetDetails.DistributionDetails:type_name -> asset.Distribution
-	8,  // 16: asset.Asset.AssetDetails:type_name -> asset.AssetDetails
-	35, // 17: asset.Asset.MetaData:type_name -> metadata.MetaData
-	36, // 18: asset.Asset.Audit:type_name -> audit.Audit
-	32, // 19: asset.Asset.IssuerDetails:type_name -> asset.IssuerDetails
-	9,  // 20: asset.Assets.Assets:type_name -> asset.Asset
-	7,  // 21: asset.UserAssetList.Status:type_name -> asset.UserAssetStatus
-	35, // 22: asset.UserAssetList.MetaData:type_name -> metadata.MetaData
-	11, // 23: asset.UserAssetLists.UserAssetLists:type_name -> asset.UserAssetList
+	5,  // 0: asset.AssetDetails.Status:type_name -> asset.AssetStatus
+	6,  // 1: asset.AssetDetails.Reason:type_name -> asset.Reason
+	7,  // 2: asset.AssetDetails.Type:type_name -> asset.AssetType
+	35, // 3: asset.AssetDetails.Denom:type_name -> denom.Denom
+	14, // 4: asset.AssetDetails.RealEstateDetails:type_name -> asset.RealEstate
+	15, // 5: asset.AssetDetails.StableCoinDetails:type_name -> asset.StableCoin
+	16, // 6: asset.AssetDetails.CommodityDetails:type_name -> asset.Commodity
+	17, // 7: asset.AssetDetails.CollectibleDetails:type_name -> asset.Collectible
+	18, // 8: asset.AssetDetails.VehicleDetails:type_name -> asset.Vehicle
+	25, // 9: asset.AssetDetails.IntellectualPropertyDetails:type_name -> asset.IntellectualProperty
+	26, // 10: asset.AssetDetails.InvestmentFundDetails:type_name -> asset.InvestmentFund
+	27, // 11: asset.AssetDetails.EquityDetails:type_name -> asset.Equity
+	28, // 12: asset.AssetDetails.FinancialProperties:type_name -> asset.FinancialProperties
+	29, // 13: asset.AssetDetails.Description:type_name -> asset.Description
+	30, // 14: asset.AssetDetails.ExternalResources:type_name -> asset.ExternalResources
+	22, // 15: asset.AssetDetails.DistributionDetails:type_name -> asset.Distribution
+	9,  // 16: asset.Asset.AssetDetails:type_name -> asset.AssetDetails
+	36, // 17: asset.Asset.MetaData:type_name -> metadata.MetaData
+	37, // 18: asset.Asset.Audit:type_name -> audit.Audit
+	33, // 19: asset.Asset.IssuerDetails:type_name -> asset.IssuerDetails
+	10, // 20: asset.Assets.Assets:type_name -> asset.Asset
+	8,  // 21: asset.UserAssetList.Status:type_name -> asset.UserAssetStatus
+	36, // 22: asset.UserAssetList.MetaData:type_name -> metadata.MetaData
+	12, // 23: asset.UserAssetLists.UserAssetLists:type_name -> asset.UserAssetList
 	0,  // 24: asset.AssetTransaction.TransactionType:type_name -> asset.TransactionType
-	0,  // 25: asset.DistributionTransaction.TransactionType:type_name -> asset.TransactionType
-	1,  // 26: asset.Distribution.Type:type_name -> asset.DistributionType
-	23, // 27: asset.Distribution.CrowdfundDetails:type_name -> asset.Crowdfund
-	22, // 28: asset.Distribution.TokenSaleDetails:type_name -> asset.TokenSale
-	18, // 29: asset.TokenSale.SellPricesPerSubunit:type_name -> asset.DecCoin
-	18, // 30: asset.TokenSale.BuyPricesPerSubunit:type_name -> asset.DecCoin
-	18, // 31: asset.Crowdfund.PricesPerSubunit:type_name -> asset.DecCoin
-	37, // 32: asset.FinancialProperties.Network:type_name -> metadata.Network
-	33, // 33: asset.Description.Logo:type_name -> asset.LogoFile
-	30, // 34: asset.ExternalResources.Links:type_name -> asset.Link
-	31, // 35: asset.ExternalResources.Socials:type_name -> asset.SocialMedia
-	2,  // 36: asset.Link.Type:type_name -> asset.LinkType
-	3,  // 37: asset.SocialMedia.Type:type_name -> asset.SocialMediaType
-	38, // [38:38] is the sub-list for method output_type
-	38, // [38:38] is the sub-list for method input_type
-	38, // [38:38] is the sub-list for extension type_name
-	38, // [38:38] is the sub-list for extension extendee
-	0,  // [0:38] is the sub-list for field type_name
+	1,  // 25: asset.DistributionTransaction.AssetRole:type_name -> asset.AssetRole
+	0,  // 26: asset.DistributionTransaction.TransactionType:type_name -> asset.TransactionType
+	2,  // 27: asset.Distribution.Type:type_name -> asset.DistributionType
+	24, // 28: asset.Distribution.CrowdfundDetails:type_name -> asset.Crowdfund
+	23, // 29: asset.Distribution.TokenSaleDetails:type_name -> asset.TokenSale
+	19, // 30: asset.TokenSale.SellPricesPerSubunit:type_name -> asset.DecCoin
+	19, // 31: asset.TokenSale.BuyPricesPerSubunit:type_name -> asset.DecCoin
+	19, // 32: asset.Crowdfund.PricesPerSubunit:type_name -> asset.DecCoin
+	38, // 33: asset.FinancialProperties.Network:type_name -> metadata.Network
+	34, // 34: asset.Description.Logo:type_name -> asset.LogoFile
+	31, // 35: asset.ExternalResources.Links:type_name -> asset.Link
+	32, // 36: asset.ExternalResources.Socials:type_name -> asset.SocialMedia
+	3,  // 37: asset.Link.Type:type_name -> asset.LinkType
+	4,  // 38: asset.SocialMedia.Type:type_name -> asset.SocialMediaType
+	39, // [39:39] is the sub-list for method output_type
+	39, // [39:39] is the sub-list for method input_type
+	39, // [39:39] is the sub-list for extension type_name
+	39, // [39:39] is the sub-list for extension extendee
+	0,  // [0:39] is the sub-list for field type_name
 }
 
 func init() { file_asset_proto_init() }
@@ -3899,7 +3965,7 @@ func file_asset_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_asset_proto_rawDesc), len(file_asset_proto_rawDesc)),
-			NumEnums:      8,
+			NumEnums:      9,
 			NumMessages:   26,
 			NumExtensions: 0,
 			NumServices:   0,
