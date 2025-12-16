@@ -11,8 +11,9 @@ export declare enum TransactionType {
     TRANSACTION_TYPE_WHITELIST = 4,
     TRANSACTION_TYPE_CLAWBACK = 5,
     TRANSACTION_TYPE_ASSET_EXTENSTION = 6,
-    TRANSACTION_TYPE_DEPOSIT_DISTRBITUION = 7,
+    TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION = 7,
     TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION = 8,
+    TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION = 9,
     UNRECOGNIZED = -1
 }
 export declare function transactionTypeFromJSON(object: any): TransactionType;
@@ -228,6 +229,11 @@ export interface AssetTransaction {
     DestinationAddress?: string | undefined;
     IsGloballyFrozen?: boolean | undefined;
     IsGloballyUnfrozen?: boolean | undefined;
+    TransactionType: TransactionType;
+    AssetKey: string;
+}
+export interface DistributionTransaction {
+    Amount?: number | undefined;
     TransactionType: TransactionType;
     AssetKey: string;
 }
@@ -8272,6 +8278,30 @@ export declare const AssetTransaction: {
         TransactionType?: TransactionType | undefined;
         AssetKey?: string | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof AssetTransaction>]: never; }>(object: I_1): AssetTransaction;
+};
+export declare const DistributionTransaction: {
+    encode(message: DistributionTransaction, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): DistributionTransaction;
+    fromJSON(object: any): DistributionTransaction;
+    toJSON(message: DistributionTransaction): unknown;
+    create<I extends {
+        Amount?: number | undefined;
+        TransactionType?: TransactionType | undefined;
+        AssetKey?: string | undefined;
+    } & {
+        Amount?: number | undefined;
+        TransactionType?: TransactionType | undefined;
+        AssetKey?: string | undefined;
+    } & { [K in Exclude<keyof I, keyof DistributionTransaction>]: never; }>(base?: I | undefined): DistributionTransaction;
+    fromPartial<I_1 extends {
+        Amount?: number | undefined;
+        TransactionType?: TransactionType | undefined;
+        AssetKey?: string | undefined;
+    } & {
+        Amount?: number | undefined;
+        TransactionType?: TransactionType | undefined;
+        AssetKey?: string | undefined;
+    } & { [K_1 in Exclude<keyof I_1, keyof DistributionTransaction>]: never; }>(object: I_1): DistributionTransaction;
 };
 export declare const Distribution: {
     encode(message: Distribution, writer?: _m0.Writer): _m0.Writer;

@@ -19,8 +19,9 @@ export var TransactionType;
     TransactionType[TransactionType["TRANSACTION_TYPE_WHITELIST"] = 4] = "TRANSACTION_TYPE_WHITELIST";
     TransactionType[TransactionType["TRANSACTION_TYPE_CLAWBACK"] = 5] = "TRANSACTION_TYPE_CLAWBACK";
     TransactionType[TransactionType["TRANSACTION_TYPE_ASSET_EXTENSTION"] = 6] = "TRANSACTION_TYPE_ASSET_EXTENSTION";
-    TransactionType[TransactionType["TRANSACTION_TYPE_DEPOSIT_DISTRBITUION"] = 7] = "TRANSACTION_TYPE_DEPOSIT_DISTRBITUION";
+    TransactionType[TransactionType["TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION"] = 7] = "TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION";
     TransactionType[TransactionType["TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION"] = 8] = "TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION";
+    TransactionType[TransactionType["TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION"] = 9] = "TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION";
     TransactionType[TransactionType["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
 })(TransactionType || (TransactionType = {}));
 export function transactionTypeFromJSON(object) {
@@ -47,11 +48,14 @@ export function transactionTypeFromJSON(object) {
         case "TRANSACTION_TYPE_ASSET_EXTENSTION":
             return TransactionType.TRANSACTION_TYPE_ASSET_EXTENSTION;
         case 7:
-        case "TRANSACTION_TYPE_DEPOSIT_DISTRBITUION":
-            return TransactionType.TRANSACTION_TYPE_DEPOSIT_DISTRBITUION;
+        case "TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION":
+            return TransactionType.TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION;
         case 8:
         case "TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION":
             return TransactionType.TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION;
+        case 9:
+        case "TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION":
+            return TransactionType.TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION;
         case -1:
         case "UNRECOGNIZED":
         default:
@@ -74,10 +78,12 @@ export function transactionTypeToJSON(object) {
             return "TRANSACTION_TYPE_CLAWBACK";
         case TransactionType.TRANSACTION_TYPE_ASSET_EXTENSTION:
             return "TRANSACTION_TYPE_ASSET_EXTENSTION";
-        case TransactionType.TRANSACTION_TYPE_DEPOSIT_DISTRBITUION:
-            return "TRANSACTION_TYPE_DEPOSIT_DISTRBITUION";
+        case TransactionType.TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION:
+            return "TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION";
         case TransactionType.TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION:
             return "TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION";
+        case TransactionType.TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION:
+            return "TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION";
         case TransactionType.UNRECOGNIZED:
         default:
             return "UNRECOGNIZED";
@@ -2645,6 +2651,87 @@ export const AssetTransaction = {
         message.IsGloballyUnfrozen = (_d = object.IsGloballyUnfrozen) !== null && _d !== void 0 ? _d : undefined;
         message.TransactionType = (_e = object.TransactionType) !== null && _e !== void 0 ? _e : 0;
         message.AssetKey = (_f = object.AssetKey) !== null && _f !== void 0 ? _f : "";
+        return message;
+    },
+};
+function createBaseDistributionTransaction() {
+    return { Amount: undefined, TransactionType: 0, AssetKey: "" };
+}
+export const DistributionTransaction = {
+    encode(message, writer = _m0.Writer.create()) {
+        if (message.Amount !== undefined) {
+            writer.uint32(8).int64(message.Amount);
+        }
+        if (message.TransactionType !== 0) {
+            writer.uint32(16).int32(message.TransactionType);
+        }
+        if (message.AssetKey !== "") {
+            writer.uint32(26).string(message.AssetKey);
+        }
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseDistributionTransaction();
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    if (tag !== 8) {
+                        break;
+                    }
+                    message.Amount = longToNumber(reader.int64());
+                    continue;
+                case 2:
+                    if (tag !== 16) {
+                        break;
+                    }
+                    message.TransactionType = reader.int32();
+                    continue;
+                case 3:
+                    if (tag !== 26) {
+                        break;
+                    }
+                    message.AssetKey = reader.string();
+                    continue;
+            }
+            if ((tag & 7) === 4 || tag === 0) {
+                break;
+            }
+            reader.skipType(tag & 7);
+        }
+        return message;
+    },
+    fromJSON(object) {
+        return {
+            Amount: isSet(object.Amount) ? globalThis.Number(object.Amount) : undefined,
+            TransactionType: isSet(object.TransactionType) ? transactionTypeFromJSON(object.TransactionType) : 0,
+            AssetKey: isSet(object.AssetKey) ? globalThis.String(object.AssetKey) : "",
+        };
+    },
+    toJSON(message) {
+        const obj = {};
+        if (message.Amount !== undefined) {
+            obj.Amount = Math.round(message.Amount);
+        }
+        if (message.TransactionType !== 0) {
+            obj.TransactionType = transactionTypeToJSON(message.TransactionType);
+        }
+        if (message.AssetKey !== "") {
+            obj.AssetKey = message.AssetKey;
+        }
+        return obj;
+    },
+    create(base) {
+        return DistributionTransaction.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial(object) {
+        var _a, _b, _c;
+        const message = createBaseDistributionTransaction();
+        message.Amount = (_a = object.Amount) !== null && _a !== void 0 ? _a : undefined;
+        message.TransactionType = (_b = object.TransactionType) !== null && _b !== void 0 ? _b : 0;
+        message.AssetKey = (_c = object.AssetKey) !== null && _c !== void 0 ? _c : "";
         return message;
     },
 };

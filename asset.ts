@@ -26,8 +26,9 @@ export enum TransactionType {
   TRANSACTION_TYPE_WHITELIST = 4,
   TRANSACTION_TYPE_CLAWBACK = 5,
   TRANSACTION_TYPE_ASSET_EXTENSTION = 6,
-  TRANSACTION_TYPE_DEPOSIT_DISTRBITUION = 7,
+  TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION = 7,
   TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION = 8,
+  TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION = 9,
   UNRECOGNIZED = -1,
 }
 
@@ -55,11 +56,14 @@ export function transactionTypeFromJSON(object: any): TransactionType {
     case "TRANSACTION_TYPE_ASSET_EXTENSTION":
       return TransactionType.TRANSACTION_TYPE_ASSET_EXTENSTION;
     case 7:
-    case "TRANSACTION_TYPE_DEPOSIT_DISTRBITUION":
-      return TransactionType.TRANSACTION_TYPE_DEPOSIT_DISTRBITUION;
+    case "TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION":
+      return TransactionType.TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION;
     case 8:
     case "TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION":
       return TransactionType.TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION;
+    case 9:
+    case "TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION":
+      return TransactionType.TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -83,10 +87,12 @@ export function transactionTypeToJSON(object: TransactionType): string {
       return "TRANSACTION_TYPE_CLAWBACK";
     case TransactionType.TRANSACTION_TYPE_ASSET_EXTENSTION:
       return "TRANSACTION_TYPE_ASSET_EXTENSTION";
-    case TransactionType.TRANSACTION_TYPE_DEPOSIT_DISTRBITUION:
-      return "TRANSACTION_TYPE_DEPOSIT_DISTRBITUION";
+    case TransactionType.TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION:
+      return "TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION";
     case TransactionType.TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION:
       return "TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION";
+    case TransactionType.TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION:
+      return "TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION";
     case TransactionType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -638,6 +644,12 @@ export interface AssetTransaction {
   DestinationAddress?: string | undefined;
   IsGloballyFrozen?: boolean | undefined;
   IsGloballyUnfrozen?: boolean | undefined;
+  TransactionType: TransactionType;
+  AssetKey: string;
+}
+
+export interface DistributionTransaction {
+  Amount?: number | undefined;
   TransactionType: TransactionType;
   AssetKey: string;
 }
@@ -3196,6 +3208,95 @@ export const AssetTransaction = {
     message.DestinationAddress = object.DestinationAddress ?? undefined;
     message.IsGloballyFrozen = object.IsGloballyFrozen ?? undefined;
     message.IsGloballyUnfrozen = object.IsGloballyUnfrozen ?? undefined;
+    message.TransactionType = object.TransactionType ?? 0;
+    message.AssetKey = object.AssetKey ?? "";
+    return message;
+  },
+};
+
+function createBaseDistributionTransaction(): DistributionTransaction {
+  return { Amount: undefined, TransactionType: 0, AssetKey: "" };
+}
+
+export const DistributionTransaction = {
+  encode(message: DistributionTransaction, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.Amount !== undefined) {
+      writer.uint32(8).int64(message.Amount);
+    }
+    if (message.TransactionType !== 0) {
+      writer.uint32(16).int32(message.TransactionType);
+    }
+    if (message.AssetKey !== "") {
+      writer.uint32(26).string(message.AssetKey);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): DistributionTransaction {
+    const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseDistributionTransaction();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          if (tag !== 8) {
+            break;
+          }
+
+          message.Amount = longToNumber(reader.int64() as Long);
+          continue;
+        case 2:
+          if (tag !== 16) {
+            break;
+          }
+
+          message.TransactionType = reader.int32() as any;
+          continue;
+        case 3:
+          if (tag !== 26) {
+            break;
+          }
+
+          message.AssetKey = reader.string();
+          continue;
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skipType(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): DistributionTransaction {
+    return {
+      Amount: isSet(object.Amount) ? globalThis.Number(object.Amount) : undefined,
+      TransactionType: isSet(object.TransactionType) ? transactionTypeFromJSON(object.TransactionType) : 0,
+      AssetKey: isSet(object.AssetKey) ? globalThis.String(object.AssetKey) : "",
+    };
+  },
+
+  toJSON(message: DistributionTransaction): unknown {
+    const obj: any = {};
+    if (message.Amount !== undefined) {
+      obj.Amount = Math.round(message.Amount);
+    }
+    if (message.TransactionType !== 0) {
+      obj.TransactionType = transactionTypeToJSON(message.TransactionType);
+    }
+    if (message.AssetKey !== "") {
+      obj.AssetKey = message.AssetKey;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<DistributionTransaction>, I>>(base?: I): DistributionTransaction {
+    return DistributionTransaction.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<DistributionTransaction>, I>>(object: I): DistributionTransaction {
+    const message = createBaseDistributionTransaction();
+    message.Amount = object.Amount ?? undefined;
     message.TransactionType = object.TransactionType ?? 0;
     message.AssetKey = object.AssetKey ?? "";
     return message;

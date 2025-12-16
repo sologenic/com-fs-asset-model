@@ -27,15 +27,16 @@ const (
 type TransactionType int32
 
 const (
-	TransactionType_TRANSACTION_TYPE_DO_NOT_USE            TransactionType = 0
-	TransactionType_TRANSACTION_TYPE_MINT                  TransactionType = 1
-	TransactionType_TRANSACTION_TYPE_BURN                  TransactionType = 2
-	TransactionType_TRANSACTION_TYPE_FREEZE                TransactionType = 3
-	TransactionType_TRANSACTION_TYPE_WHITELIST             TransactionType = 4
-	TransactionType_TRANSACTION_TYPE_CLAWBACK              TransactionType = 5
-	TransactionType_TRANSACTION_TYPE_ASSET_EXTENSTION      TransactionType = 6
-	TransactionType_TRANSACTION_TYPE_DEPOSIT_DISTRBITUION  TransactionType = 7
-	TransactionType_TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION TransactionType = 8
+	TransactionType_TRANSACTION_TYPE_DO_NOT_USE             TransactionType = 0
+	TransactionType_TRANSACTION_TYPE_MINT                   TransactionType = 1
+	TransactionType_TRANSACTION_TYPE_BURN                   TransactionType = 2
+	TransactionType_TRANSACTION_TYPE_FREEZE                 TransactionType = 3
+	TransactionType_TRANSACTION_TYPE_WHITELIST              TransactionType = 4
+	TransactionType_TRANSACTION_TYPE_CLAWBACK               TransactionType = 5
+	TransactionType_TRANSACTION_TYPE_ASSET_EXTENSTION       TransactionType = 6
+	TransactionType_TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION   TransactionType = 7
+	TransactionType_TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION  TransactionType = 8
+	TransactionType_TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION TransactionType = 9
 )
 
 // Enum value maps for TransactionType.
@@ -48,19 +49,21 @@ var (
 		4: "TRANSACTION_TYPE_WHITELIST",
 		5: "TRANSACTION_TYPE_CLAWBACK",
 		6: "TRANSACTION_TYPE_ASSET_EXTENSTION",
-		7: "TRANSACTION_TYPE_DEPOSIT_DISTRBITUION",
+		7: "TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION",
 		8: "TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION",
+		9: "TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION",
 	}
 	TransactionType_value = map[string]int32{
-		"TRANSACTION_TYPE_DO_NOT_USE":            0,
-		"TRANSACTION_TYPE_MINT":                  1,
-		"TRANSACTION_TYPE_BURN":                  2,
-		"TRANSACTION_TYPE_FREEZE":                3,
-		"TRANSACTION_TYPE_WHITELIST":             4,
-		"TRANSACTION_TYPE_CLAWBACK":              5,
-		"TRANSACTION_TYPE_ASSET_EXTENSTION":      6,
-		"TRANSACTION_TYPE_DEPOSIT_DISTRBITUION":  7,
-		"TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION": 8,
+		"TRANSACTION_TYPE_DO_NOT_USE":             0,
+		"TRANSACTION_TYPE_MINT":                   1,
+		"TRANSACTION_TYPE_BURN":                   2,
+		"TRANSACTION_TYPE_FREEZE":                 3,
+		"TRANSACTION_TYPE_WHITELIST":              4,
+		"TRANSACTION_TYPE_CLAWBACK":               5,
+		"TRANSACTION_TYPE_ASSET_EXTENSTION":       6,
+		"TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION":   7,
+		"TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION":  8,
+		"TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION": 9,
 	}
 )
 
@@ -1798,6 +1801,66 @@ func (x *AssetTransaction) GetAssetKey() string {
 	return ""
 }
 
+type DistributionTransaction struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Amount          *int64                 `protobuf:"varint,1,opt,name=Amount,proto3,oneof" json:"Amount,omitempty"`
+	TransactionType TransactionType        `protobuf:"varint,2,opt,name=TransactionType,proto3,enum=asset.TransactionType" json:"TransactionType,omitempty"`
+	AssetKey        string                 `protobuf:"bytes,3,opt,name=AssetKey,proto3" json:"AssetKey,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *DistributionTransaction) Reset() {
+	*x = DistributionTransaction{}
+	mi := &file_asset_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DistributionTransaction) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DistributionTransaction) ProtoMessage() {}
+
+func (x *DistributionTransaction) ProtoReflect() protoreflect.Message {
+	mi := &file_asset_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DistributionTransaction.ProtoReflect.Descriptor instead.
+func (*DistributionTransaction) Descriptor() ([]byte, []int) {
+	return file_asset_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *DistributionTransaction) GetAmount() int64 {
+	if x != nil && x.Amount != nil {
+		return *x.Amount
+	}
+	return 0
+}
+
+func (x *DistributionTransaction) GetTransactionType() TransactionType {
+	if x != nil {
+		return x.TransactionType
+	}
+	return TransactionType_TRANSACTION_TYPE_DO_NOT_USE
+}
+
+func (x *DistributionTransaction) GetAssetKey() string {
+	if x != nil {
+		return x.AssetKey
+	}
+	return ""
+}
+
 type Distribution struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	Type             DistributionType       `protobuf:"varint,1,opt,name=Type,proto3,enum=asset.DistributionType" json:"Type,omitempty"`
@@ -1809,7 +1872,7 @@ type Distribution struct {
 
 func (x *Distribution) Reset() {
 	*x = Distribution{}
-	mi := &file_asset_proto_msgTypes[12]
+	mi := &file_asset_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1821,7 +1884,7 @@ func (x *Distribution) String() string {
 func (*Distribution) ProtoMessage() {}
 
 func (x *Distribution) ProtoReflect() protoreflect.Message {
-	mi := &file_asset_proto_msgTypes[12]
+	mi := &file_asset_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1834,7 +1897,7 @@ func (x *Distribution) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Distribution.ProtoReflect.Descriptor instead.
 func (*Distribution) Descriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{12}
+	return file_asset_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *Distribution) GetType() DistributionType {
@@ -1895,7 +1958,7 @@ type TokenSale struct {
 
 func (x *TokenSale) Reset() {
 	*x = TokenSale{}
-	mi := &file_asset_proto_msgTypes[13]
+	mi := &file_asset_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1907,7 +1970,7 @@ func (x *TokenSale) String() string {
 func (*TokenSale) ProtoMessage() {}
 
 func (x *TokenSale) ProtoReflect() protoreflect.Message {
-	mi := &file_asset_proto_msgTypes[13]
+	mi := &file_asset_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1920,7 +1983,7 @@ func (x *TokenSale) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TokenSale.ProtoReflect.Descriptor instead.
 func (*TokenSale) Descriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{13}
+	return file_asset_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *TokenSale) GetQuantityStep() string {
@@ -2061,7 +2124,7 @@ type Crowdfund struct {
 
 func (x *Crowdfund) Reset() {
 	*x = Crowdfund{}
-	mi := &file_asset_proto_msgTypes[14]
+	mi := &file_asset_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2073,7 +2136,7 @@ func (x *Crowdfund) String() string {
 func (*Crowdfund) ProtoMessage() {}
 
 func (x *Crowdfund) ProtoReflect() protoreflect.Message {
-	mi := &file_asset_proto_msgTypes[14]
+	mi := &file_asset_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2086,7 +2149,7 @@ func (x *Crowdfund) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Crowdfund.ProtoReflect.Descriptor instead.
 func (*Crowdfund) Descriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{14}
+	return file_asset_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *Crowdfund) GetQuantityStep() string {
@@ -2218,7 +2281,7 @@ type IntellectualProperty struct {
 
 func (x *IntellectualProperty) Reset() {
 	*x = IntellectualProperty{}
-	mi := &file_asset_proto_msgTypes[15]
+	mi := &file_asset_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2230,7 +2293,7 @@ func (x *IntellectualProperty) String() string {
 func (*IntellectualProperty) ProtoMessage() {}
 
 func (x *IntellectualProperty) ProtoReflect() protoreflect.Message {
-	mi := &file_asset_proto_msgTypes[15]
+	mi := &file_asset_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2243,7 +2306,7 @@ func (x *IntellectualProperty) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IntellectualProperty.ProtoReflect.Descriptor instead.
 func (*IntellectualProperty) Descriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{15}
+	return file_asset_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *IntellectualProperty) GetCategory() string {
@@ -2325,7 +2388,7 @@ type InvestmentFund struct {
 
 func (x *InvestmentFund) Reset() {
 	*x = InvestmentFund{}
-	mi := &file_asset_proto_msgTypes[16]
+	mi := &file_asset_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2337,7 +2400,7 @@ func (x *InvestmentFund) String() string {
 func (*InvestmentFund) ProtoMessage() {}
 
 func (x *InvestmentFund) ProtoReflect() protoreflect.Message {
-	mi := &file_asset_proto_msgTypes[16]
+	mi := &file_asset_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2350,7 +2413,7 @@ func (x *InvestmentFund) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InvestmentFund.ProtoReflect.Descriptor instead.
 func (*InvestmentFund) Descriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{16}
+	return file_asset_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *InvestmentFund) GetFundType() string {
@@ -2422,7 +2485,7 @@ type Equity struct {
 
 func (x *Equity) Reset() {
 	*x = Equity{}
-	mi := &file_asset_proto_msgTypes[17]
+	mi := &file_asset_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2434,7 +2497,7 @@ func (x *Equity) String() string {
 func (*Equity) ProtoMessage() {}
 
 func (x *Equity) ProtoReflect() protoreflect.Message {
-	mi := &file_asset_proto_msgTypes[17]
+	mi := &file_asset_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2447,7 +2510,7 @@ func (x *Equity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Equity.ProtoReflect.Descriptor instead.
 func (*Equity) Descriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{17}
+	return file_asset_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *Equity) GetExchangeTickerSymbol() string {
@@ -2516,7 +2579,7 @@ type FinancialProperties struct {
 
 func (x *FinancialProperties) Reset() {
 	*x = FinancialProperties{}
-	mi := &file_asset_proto_msgTypes[18]
+	mi := &file_asset_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2528,7 +2591,7 @@ func (x *FinancialProperties) String() string {
 func (*FinancialProperties) ProtoMessage() {}
 
 func (x *FinancialProperties) ProtoReflect() protoreflect.Message {
-	mi := &file_asset_proto_msgTypes[18]
+	mi := &file_asset_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2541,7 +2604,7 @@ func (x *FinancialProperties) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FinancialProperties.ProtoReflect.Descriptor instead.
 func (*FinancialProperties) Descriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{18}
+	return file_asset_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *FinancialProperties) GetSymbol() string {
@@ -2724,7 +2787,7 @@ type Description struct {
 
 func (x *Description) Reset() {
 	*x = Description{}
-	mi := &file_asset_proto_msgTypes[19]
+	mi := &file_asset_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2736,7 +2799,7 @@ func (x *Description) String() string {
 func (*Description) ProtoMessage() {}
 
 func (x *Description) ProtoReflect() protoreflect.Message {
-	mi := &file_asset_proto_msgTypes[19]
+	mi := &file_asset_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2749,7 +2812,7 @@ func (x *Description) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Description.ProtoReflect.Descriptor instead.
 func (*Description) Descriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{19}
+	return file_asset_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *Description) GetName() string {
@@ -2839,7 +2902,7 @@ type ExternalResources struct {
 
 func (x *ExternalResources) Reset() {
 	*x = ExternalResources{}
-	mi := &file_asset_proto_msgTypes[20]
+	mi := &file_asset_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2851,7 +2914,7 @@ func (x *ExternalResources) String() string {
 func (*ExternalResources) ProtoMessage() {}
 
 func (x *ExternalResources) ProtoReflect() protoreflect.Message {
-	mi := &file_asset_proto_msgTypes[20]
+	mi := &file_asset_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2864,7 +2927,7 @@ func (x *ExternalResources) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExternalResources.ProtoReflect.Descriptor instead.
 func (*ExternalResources) Descriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{20}
+	return file_asset_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *ExternalResources) GetLinks() []*Link {
@@ -2891,7 +2954,7 @@ type Link struct {
 
 func (x *Link) Reset() {
 	*x = Link{}
-	mi := &file_asset_proto_msgTypes[21]
+	mi := &file_asset_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2903,7 +2966,7 @@ func (x *Link) String() string {
 func (*Link) ProtoMessage() {}
 
 func (x *Link) ProtoReflect() protoreflect.Message {
-	mi := &file_asset_proto_msgTypes[21]
+	mi := &file_asset_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2916,7 +2979,7 @@ func (x *Link) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Link.ProtoReflect.Descriptor instead.
 func (*Link) Descriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{21}
+	return file_asset_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *Link) GetType() LinkType {
@@ -2943,7 +3006,7 @@ type SocialMedia struct {
 
 func (x *SocialMedia) Reset() {
 	*x = SocialMedia{}
-	mi := &file_asset_proto_msgTypes[22]
+	mi := &file_asset_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2955,7 +3018,7 @@ func (x *SocialMedia) String() string {
 func (*SocialMedia) ProtoMessage() {}
 
 func (x *SocialMedia) ProtoReflect() protoreflect.Message {
-	mi := &file_asset_proto_msgTypes[22]
+	mi := &file_asset_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2968,7 +3031,7 @@ func (x *SocialMedia) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SocialMedia.ProtoReflect.Descriptor instead.
 func (*SocialMedia) Descriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{22}
+	return file_asset_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *SocialMedia) GetType() SocialMediaType {
@@ -3012,7 +3075,7 @@ type IssuerDetails struct {
 
 func (x *IssuerDetails) Reset() {
 	*x = IssuerDetails{}
-	mi := &file_asset_proto_msgTypes[23]
+	mi := &file_asset_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3024,7 +3087,7 @@ func (x *IssuerDetails) String() string {
 func (*IssuerDetails) ProtoMessage() {}
 
 func (x *IssuerDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_asset_proto_msgTypes[23]
+	mi := &file_asset_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3037,7 +3100,7 @@ func (x *IssuerDetails) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IssuerDetails.ProtoReflect.Descriptor instead.
 func (*IssuerDetails) Descriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{23}
+	return file_asset_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *IssuerDetails) GetName() string {
@@ -3184,7 +3247,7 @@ type LogoFile struct {
 
 func (x *LogoFile) Reset() {
 	*x = LogoFile{}
-	mi := &file_asset_proto_msgTypes[24]
+	mi := &file_asset_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3196,7 +3259,7 @@ func (x *LogoFile) String() string {
 func (*LogoFile) ProtoMessage() {}
 
 func (x *LogoFile) ProtoReflect() protoreflect.Message {
-	mi := &file_asset_proto_msgTypes[24]
+	mi := &file_asset_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3209,7 +3272,7 @@ func (x *LogoFile) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LogoFile.ProtoReflect.Descriptor instead.
 func (*LogoFile) Descriptor() ([]byte, []int) {
-	return file_asset_proto_rawDescGZIP(), []int{24}
+	return file_asset_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *LogoFile) GetReference() string {
@@ -3448,7 +3511,12 @@ const file_asset_proto_rawDesc = "" +
 	"\bAssetKey\x18\x06 \x01(\tR\bAssetKeyB\x15\n" +
 	"\x13_DestinationAddressB\x13\n" +
 	"\x11_IsGloballyFrozenB\x15\n" +
-	"\x13_IsGloballyUnfrozen\"\xeb\x01\n" +
+	"\x13_IsGloballyUnfrozen\"\x9f\x01\n" +
+	"\x17DistributionTransaction\x12\x1b\n" +
+	"\x06Amount\x18\x01 \x01(\x03H\x00R\x06Amount\x88\x01\x01\x12@\n" +
+	"\x0fTransactionType\x18\x02 \x01(\x0e2\x16.asset.TransactionTypeR\x0fTransactionType\x12\x1a\n" +
+	"\bAssetKey\x18\x03 \x01(\tR\bAssetKeyB\t\n" +
+	"\a_Amount\"\xeb\x01\n" +
 	"\fDistribution\x12+\n" +
 	"\x04Type\x18\x01 \x01(\x0e2\x17.asset.DistributionTypeR\x04Type\x12A\n" +
 	"\x10CrowdfundDetails\x18\x02 \x01(\v2\x10.asset.CrowdfundH\x00R\x10CrowdfundDetails\x88\x01\x01\x12A\n" +
@@ -3634,7 +3702,7 @@ const file_asset_proto_rawDesc = "" +
 	"\tReference\x18\x01 \x01(\tR\tReference\x12\x1c\n" +
 	"\tExtension\x18\x02 \x01(\tR\tExtension\x12\x17\n" +
 	"\x04Name\x18\x03 \x01(\tH\x00R\x04Name\x88\x01\x01B\a\n" +
-	"\x05_Name*\xc2\x02\n" +
+	"\x05_Name*\xef\x02\n" +
 	"\x0fTransactionType\x12\x1f\n" +
 	"\x1bTRANSACTION_TYPE_DO_NOT_USE\x10\x00\x12\x19\n" +
 	"\x15TRANSACTION_TYPE_MINT\x10\x01\x12\x19\n" +
@@ -3643,8 +3711,9 @@ const file_asset_proto_rawDesc = "" +
 	"\x1aTRANSACTION_TYPE_WHITELIST\x10\x04\x12\x1d\n" +
 	"\x19TRANSACTION_TYPE_CLAWBACK\x10\x05\x12%\n" +
 	"!TRANSACTION_TYPE_ASSET_EXTENSTION\x10\x06\x12)\n" +
-	"%TRANSACTION_TYPE_DEPOSIT_DISTRBITUION\x10\a\x12*\n" +
-	"&TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION\x10\b*v\n" +
+	"%TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION\x10\a\x12*\n" +
+	"&TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION\x10\b\x12+\n" +
+	"'TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION\x10\t*v\n" +
 	"\x10DistributionType\x12 \n" +
 	"\x1cDISTRIBUTION_TYPE_DO_NOT_USE\x10\x00\x12\x1f\n" +
 	"\x1bDISTRIBUTION_TYPE_CROWDFUND\x10\x01\x12\x1f\n" +
@@ -3714,89 +3783,91 @@ func file_asset_proto_rawDescGZIP() []byte {
 }
 
 var file_asset_proto_enumTypes = make([]protoimpl.EnumInfo, 8)
-var file_asset_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
+var file_asset_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
 var file_asset_proto_goTypes = []any{
-	(TransactionType)(0),         // 0: asset.TransactionType
-	(DistributionType)(0),        // 1: asset.DistributionType
-	(LinkType)(0),                // 2: asset.LinkType
-	(SocialMediaType)(0),         // 3: asset.SocialMediaType
-	(AssetStatus)(0),             // 4: asset.AssetStatus
-	(Reason)(0),                  // 5: asset.Reason
-	(AssetType)(0),               // 6: asset.AssetType
-	(UserAssetStatus)(0),         // 7: asset.UserAssetStatus
-	(*AssetDetails)(nil),         // 8: asset.AssetDetails
-	(*Asset)(nil),                // 9: asset.Asset
-	(*Assets)(nil),               // 10: asset.Assets
-	(*UserAssetList)(nil),        // 11: asset.UserAssetList
-	(*UserAssetLists)(nil),       // 12: asset.UserAssetLists
-	(*RealEstate)(nil),           // 13: asset.RealEstate
-	(*StableCoin)(nil),           // 14: asset.StableCoin
-	(*Commodity)(nil),            // 15: asset.Commodity
-	(*Collectible)(nil),          // 16: asset.Collectible
-	(*Vehicle)(nil),              // 17: asset.Vehicle
-	(*DecCoin)(nil),              // 18: asset.DecCoin
-	(*AssetTransaction)(nil),     // 19: asset.AssetTransaction
-	(*Distribution)(nil),         // 20: asset.Distribution
-	(*TokenSale)(nil),            // 21: asset.TokenSale
-	(*Crowdfund)(nil),            // 22: asset.Crowdfund
-	(*IntellectualProperty)(nil), // 23: asset.IntellectualProperty
-	(*InvestmentFund)(nil),       // 24: asset.InvestmentFund
-	(*Equity)(nil),               // 25: asset.Equity
-	(*FinancialProperties)(nil),  // 26: asset.FinancialProperties
-	(*Description)(nil),          // 27: asset.Description
-	(*ExternalResources)(nil),    // 28: asset.ExternalResources
-	(*Link)(nil),                 // 29: asset.Link
-	(*SocialMedia)(nil),          // 30: asset.SocialMedia
-	(*IssuerDetails)(nil),        // 31: asset.IssuerDetails
-	(*LogoFile)(nil),             // 32: asset.LogoFile
-	(*denom.Denom)(nil),          // 33: denom.Denom
-	(*metadata.MetaData)(nil),    // 34: metadata.MetaData
-	(*audit.Audit)(nil),          // 35: audit.Audit
-	(metadata.Network)(0),        // 36: metadata.Network
+	(TransactionType)(0),            // 0: asset.TransactionType
+	(DistributionType)(0),           // 1: asset.DistributionType
+	(LinkType)(0),                   // 2: asset.LinkType
+	(SocialMediaType)(0),            // 3: asset.SocialMediaType
+	(AssetStatus)(0),                // 4: asset.AssetStatus
+	(Reason)(0),                     // 5: asset.Reason
+	(AssetType)(0),                  // 6: asset.AssetType
+	(UserAssetStatus)(0),            // 7: asset.UserAssetStatus
+	(*AssetDetails)(nil),            // 8: asset.AssetDetails
+	(*Asset)(nil),                   // 9: asset.Asset
+	(*Assets)(nil),                  // 10: asset.Assets
+	(*UserAssetList)(nil),           // 11: asset.UserAssetList
+	(*UserAssetLists)(nil),          // 12: asset.UserAssetLists
+	(*RealEstate)(nil),              // 13: asset.RealEstate
+	(*StableCoin)(nil),              // 14: asset.StableCoin
+	(*Commodity)(nil),               // 15: asset.Commodity
+	(*Collectible)(nil),             // 16: asset.Collectible
+	(*Vehicle)(nil),                 // 17: asset.Vehicle
+	(*DecCoin)(nil),                 // 18: asset.DecCoin
+	(*AssetTransaction)(nil),        // 19: asset.AssetTransaction
+	(*DistributionTransaction)(nil), // 20: asset.DistributionTransaction
+	(*Distribution)(nil),            // 21: asset.Distribution
+	(*TokenSale)(nil),               // 22: asset.TokenSale
+	(*Crowdfund)(nil),               // 23: asset.Crowdfund
+	(*IntellectualProperty)(nil),    // 24: asset.IntellectualProperty
+	(*InvestmentFund)(nil),          // 25: asset.InvestmentFund
+	(*Equity)(nil),                  // 26: asset.Equity
+	(*FinancialProperties)(nil),     // 27: asset.FinancialProperties
+	(*Description)(nil),             // 28: asset.Description
+	(*ExternalResources)(nil),       // 29: asset.ExternalResources
+	(*Link)(nil),                    // 30: asset.Link
+	(*SocialMedia)(nil),             // 31: asset.SocialMedia
+	(*IssuerDetails)(nil),           // 32: asset.IssuerDetails
+	(*LogoFile)(nil),                // 33: asset.LogoFile
+	(*denom.Denom)(nil),             // 34: denom.Denom
+	(*metadata.MetaData)(nil),       // 35: metadata.MetaData
+	(*audit.Audit)(nil),             // 36: audit.Audit
+	(metadata.Network)(0),           // 37: metadata.Network
 }
 var file_asset_proto_depIdxs = []int32{
 	4,  // 0: asset.AssetDetails.Status:type_name -> asset.AssetStatus
 	5,  // 1: asset.AssetDetails.Reason:type_name -> asset.Reason
 	6,  // 2: asset.AssetDetails.Type:type_name -> asset.AssetType
-	33, // 3: asset.AssetDetails.Denom:type_name -> denom.Denom
+	34, // 3: asset.AssetDetails.Denom:type_name -> denom.Denom
 	13, // 4: asset.AssetDetails.RealEstateDetails:type_name -> asset.RealEstate
 	14, // 5: asset.AssetDetails.StableCoinDetails:type_name -> asset.StableCoin
 	15, // 6: asset.AssetDetails.CommodityDetails:type_name -> asset.Commodity
 	16, // 7: asset.AssetDetails.CollectibleDetails:type_name -> asset.Collectible
 	17, // 8: asset.AssetDetails.VehicleDetails:type_name -> asset.Vehicle
-	23, // 9: asset.AssetDetails.IntellectualPropertyDetails:type_name -> asset.IntellectualProperty
-	24, // 10: asset.AssetDetails.InvestmentFundDetails:type_name -> asset.InvestmentFund
-	25, // 11: asset.AssetDetails.EquityDetails:type_name -> asset.Equity
-	26, // 12: asset.AssetDetails.FinancialProperties:type_name -> asset.FinancialProperties
-	27, // 13: asset.AssetDetails.Description:type_name -> asset.Description
-	28, // 14: asset.AssetDetails.ExternalResources:type_name -> asset.ExternalResources
-	20, // 15: asset.AssetDetails.DistributionDetails:type_name -> asset.Distribution
+	24, // 9: asset.AssetDetails.IntellectualPropertyDetails:type_name -> asset.IntellectualProperty
+	25, // 10: asset.AssetDetails.InvestmentFundDetails:type_name -> asset.InvestmentFund
+	26, // 11: asset.AssetDetails.EquityDetails:type_name -> asset.Equity
+	27, // 12: asset.AssetDetails.FinancialProperties:type_name -> asset.FinancialProperties
+	28, // 13: asset.AssetDetails.Description:type_name -> asset.Description
+	29, // 14: asset.AssetDetails.ExternalResources:type_name -> asset.ExternalResources
+	21, // 15: asset.AssetDetails.DistributionDetails:type_name -> asset.Distribution
 	8,  // 16: asset.Asset.AssetDetails:type_name -> asset.AssetDetails
-	34, // 17: asset.Asset.MetaData:type_name -> metadata.MetaData
-	35, // 18: asset.Asset.Audit:type_name -> audit.Audit
-	31, // 19: asset.Asset.IssuerDetails:type_name -> asset.IssuerDetails
+	35, // 17: asset.Asset.MetaData:type_name -> metadata.MetaData
+	36, // 18: asset.Asset.Audit:type_name -> audit.Audit
+	32, // 19: asset.Asset.IssuerDetails:type_name -> asset.IssuerDetails
 	9,  // 20: asset.Assets.Assets:type_name -> asset.Asset
 	7,  // 21: asset.UserAssetList.Status:type_name -> asset.UserAssetStatus
-	34, // 22: asset.UserAssetList.MetaData:type_name -> metadata.MetaData
+	35, // 22: asset.UserAssetList.MetaData:type_name -> metadata.MetaData
 	11, // 23: asset.UserAssetLists.UserAssetLists:type_name -> asset.UserAssetList
 	0,  // 24: asset.AssetTransaction.TransactionType:type_name -> asset.TransactionType
-	1,  // 25: asset.Distribution.Type:type_name -> asset.DistributionType
-	22, // 26: asset.Distribution.CrowdfundDetails:type_name -> asset.Crowdfund
-	21, // 27: asset.Distribution.TokenSaleDetails:type_name -> asset.TokenSale
-	18, // 28: asset.TokenSale.SellPricesPerSubunit:type_name -> asset.DecCoin
-	18, // 29: asset.TokenSale.BuyPricesPerSubunit:type_name -> asset.DecCoin
-	18, // 30: asset.Crowdfund.PricesPerSubunit:type_name -> asset.DecCoin
-	36, // 31: asset.FinancialProperties.Network:type_name -> metadata.Network
-	32, // 32: asset.Description.Logo:type_name -> asset.LogoFile
-	29, // 33: asset.ExternalResources.Links:type_name -> asset.Link
-	30, // 34: asset.ExternalResources.Socials:type_name -> asset.SocialMedia
-	2,  // 35: asset.Link.Type:type_name -> asset.LinkType
-	3,  // 36: asset.SocialMedia.Type:type_name -> asset.SocialMediaType
-	37, // [37:37] is the sub-list for method output_type
-	37, // [37:37] is the sub-list for method input_type
-	37, // [37:37] is the sub-list for extension type_name
-	37, // [37:37] is the sub-list for extension extendee
-	0,  // [0:37] is the sub-list for field type_name
+	0,  // 25: asset.DistributionTransaction.TransactionType:type_name -> asset.TransactionType
+	1,  // 26: asset.Distribution.Type:type_name -> asset.DistributionType
+	23, // 27: asset.Distribution.CrowdfundDetails:type_name -> asset.Crowdfund
+	22, // 28: asset.Distribution.TokenSaleDetails:type_name -> asset.TokenSale
+	18, // 29: asset.TokenSale.SellPricesPerSubunit:type_name -> asset.DecCoin
+	18, // 30: asset.TokenSale.BuyPricesPerSubunit:type_name -> asset.DecCoin
+	18, // 31: asset.Crowdfund.PricesPerSubunit:type_name -> asset.DecCoin
+	37, // 32: asset.FinancialProperties.Network:type_name -> metadata.Network
+	33, // 33: asset.Description.Logo:type_name -> asset.LogoFile
+	30, // 34: asset.ExternalResources.Links:type_name -> asset.Link
+	31, // 35: asset.ExternalResources.Socials:type_name -> asset.SocialMedia
+	2,  // 36: asset.Link.Type:type_name -> asset.LinkType
+	3,  // 37: asset.SocialMedia.Type:type_name -> asset.SocialMediaType
+	38, // [38:38] is the sub-list for method output_type
+	38, // [38:38] is the sub-list for method input_type
+	38, // [38:38] is the sub-list for extension type_name
+	38, // [38:38] is the sub-list for extension extendee
+	0,  // [0:38] is the sub-list for field type_name
 }
 
 func init() { file_asset_proto_init() }
@@ -3820,15 +3891,16 @@ func file_asset_proto_init() {
 	file_asset_proto_msgTypes[17].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[18].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[19].OneofWrappers = []any{}
-	file_asset_proto_msgTypes[23].OneofWrappers = []any{}
+	file_asset_proto_msgTypes[20].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[24].OneofWrappers = []any{}
+	file_asset_proto_msgTypes[25].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_asset_proto_rawDesc), len(file_asset_proto_rawDesc)),
 			NumEnums:      8,
-			NumMessages:   25,
+			NumMessages:   26,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

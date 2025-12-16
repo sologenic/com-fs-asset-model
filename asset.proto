@@ -166,8 +166,9 @@ enum TransactionType {
     TRANSACTION_TYPE_WHITELIST = 4;
     TRANSACTION_TYPE_CLAWBACK = 5;
     TRANSACTION_TYPE_ASSET_EXTENSTION = 6;
-    TRANSACTION_TYPE_DEPOSIT_DISTRBITUION = 7;
+    TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION = 7;
     TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION = 8;
+    TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION = 9;
 }
 
 message AssetTransaction {
@@ -179,8 +180,11 @@ message AssetTransaction {
     string AssetKey = 6;
 }
 
-
-
+message DistributionTransaction {
+    optional int64 Amount = 1;
+    TransactionType TransactionType = 2;
+    string AssetKey = 3;
+}
 
 message Distribution {
     DistributionType Type = 1;
