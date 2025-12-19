@@ -232,6 +232,11 @@ export interface DecCoin {
     Denom: string;
     Amount: string;
 }
+export interface DecCoinWithPrecision {
+    Denom: string;
+    Amount: string;
+    Precision: number;
+}
 export interface AssetTransaction {
     Amount: number;
     DestinationAddress?: string | undefined;
@@ -255,7 +260,7 @@ export interface TokenSale {
     /** The smallest allowable step for the base_denom */
     QuantityStep: string;
     /** Price to purchase the tokenized asset with, per subunit */
-    SellPricesPerSubunit: DecCoin[];
+    SellPricesPerSubunit: DecCoinWithPrecision[];
     /** Should be pre-issued (even with zero total supply) */
     BaseDenom: string;
     /** Minimum amount of base_denom to purchase */
@@ -267,7 +272,7 @@ export interface TokenSale {
     /** Address of compliance manager contract. That contract is called to check if transfers are allowed or not */
     ComplianceManagerContractAddr: string;
     /** Buy prices per subunit. If empty, buy is not allowed for this token sale */
-    BuyPricesPerSubunit: DecCoin[];
+    BuyPricesPerSubunit: DecCoinWithPrecision[];
     /** Address of the asset registry contract */
     AssetRegistryContractAddr: string;
     /** Code of the asset extension */
@@ -288,7 +293,7 @@ export interface Crowdfund {
     /** The smallest allowable step for the base_denom */
     QuantityStep: string;
     /** Price to purchase the tokenized asset with, per subunit */
-    PricesPerSubunit: DecCoin[];
+    PricesPerSubunit: DecCoinWithPrecision[];
     /** Should be pre-issued (even with zero total supply) */
     BaseDenom: string;
     /** Minimum amount of base_denom to purchase */
@@ -617,6 +622,7 @@ export declare const AssetDetails: {
                 PricesPerSubunit?: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] | undefined;
                 BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
@@ -638,6 +644,7 @@ export declare const AssetDetails: {
                 SellPricesPerSubunit?: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] | undefined;
                 BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
@@ -647,6 +654,7 @@ export declare const AssetDetails: {
                 BuyPricesPerSubunit?: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] | undefined;
                 AssetRegistryContractAddr?: string | undefined;
                 AssetExtensionCode?: string | undefined;
@@ -1018,6 +1026,7 @@ export declare const AssetDetails: {
                 PricesPerSubunit?: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] | undefined;
                 BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
@@ -1039,6 +1048,7 @@ export declare const AssetDetails: {
                 SellPricesPerSubunit?: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] | undefined;
                 BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
@@ -1048,6 +1058,7 @@ export declare const AssetDetails: {
                 BuyPricesPerSubunit?: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] | undefined;
                 AssetRegistryContractAddr?: string | undefined;
                 AssetExtensionCode?: string | undefined;
@@ -1063,6 +1074,7 @@ export declare const AssetDetails: {
                 PricesPerSubunit?: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] | undefined;
                 BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
@@ -1083,15 +1095,19 @@ export declare const AssetDetails: {
                 PricesPerSubunit?: ({
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] & ({
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 } & {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
-                } & { [K_29 in Exclude<keyof I["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_30 in Exclude<keyof I["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"], keyof {
+                    Precision?: number | undefined;
+                } & { [K_29 in Exclude<keyof I["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_30 in Exclude<keyof I["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"], keyof {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[]>]: never; }) | undefined;
                 BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
@@ -1113,6 +1129,7 @@ export declare const AssetDetails: {
                 SellPricesPerSubunit?: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] | undefined;
                 BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
@@ -1122,6 +1139,7 @@ export declare const AssetDetails: {
                 BuyPricesPerSubunit?: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] | undefined;
                 AssetRegistryContractAddr?: string | undefined;
                 AssetExtensionCode?: string | undefined;
@@ -1134,15 +1152,19 @@ export declare const AssetDetails: {
                 SellPricesPerSubunit?: ({
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] & ({
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 } & {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
-                } & { [K_32 in Exclude<keyof I["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_33 in Exclude<keyof I["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
+                    Precision?: number | undefined;
+                } & { [K_32 in Exclude<keyof I["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_33 in Exclude<keyof I["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[]>]: never; }) | undefined;
                 BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
@@ -1152,15 +1174,19 @@ export declare const AssetDetails: {
                 BuyPricesPerSubunit?: ({
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] & ({
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 } & {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
-                } & { [K_34 in Exclude<keyof I["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_35 in Exclude<keyof I["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
+                    Precision?: number | undefined;
+                } & { [K_34 in Exclude<keyof I["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_35 in Exclude<keyof I["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[]>]: never; }) | undefined;
                 AssetRegistryContractAddr?: string | undefined;
                 AssetExtensionCode?: string | undefined;
@@ -1353,6 +1379,7 @@ export declare const AssetDetails: {
                 PricesPerSubunit?: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] | undefined;
                 BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
@@ -1374,6 +1401,7 @@ export declare const AssetDetails: {
                 SellPricesPerSubunit?: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] | undefined;
                 BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
@@ -1383,6 +1411,7 @@ export declare const AssetDetails: {
                 BuyPricesPerSubunit?: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] | undefined;
                 AssetRegistryContractAddr?: string | undefined;
                 AssetExtensionCode?: string | undefined;
@@ -1754,6 +1783,7 @@ export declare const AssetDetails: {
                 PricesPerSubunit?: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] | undefined;
                 BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
@@ -1775,6 +1805,7 @@ export declare const AssetDetails: {
                 SellPricesPerSubunit?: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] | undefined;
                 BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
@@ -1784,6 +1815,7 @@ export declare const AssetDetails: {
                 BuyPricesPerSubunit?: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] | undefined;
                 AssetRegistryContractAddr?: string | undefined;
                 AssetExtensionCode?: string | undefined;
@@ -1799,6 +1831,7 @@ export declare const AssetDetails: {
                 PricesPerSubunit?: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] | undefined;
                 BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
@@ -1819,15 +1852,19 @@ export declare const AssetDetails: {
                 PricesPerSubunit?: ({
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] & ({
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 } & {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
-                } & { [K_68 in Exclude<keyof I_1["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_69 in Exclude<keyof I_1["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"], keyof {
+                    Precision?: number | undefined;
+                } & { [K_68 in Exclude<keyof I_1["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_69 in Exclude<keyof I_1["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"], keyof {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[]>]: never; }) | undefined;
                 BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
@@ -1849,6 +1886,7 @@ export declare const AssetDetails: {
                 SellPricesPerSubunit?: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] | undefined;
                 BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
@@ -1858,6 +1896,7 @@ export declare const AssetDetails: {
                 BuyPricesPerSubunit?: {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] | undefined;
                 AssetRegistryContractAddr?: string | undefined;
                 AssetExtensionCode?: string | undefined;
@@ -1870,15 +1909,19 @@ export declare const AssetDetails: {
                 SellPricesPerSubunit?: ({
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] & ({
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 } & {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
-                } & { [K_71 in Exclude<keyof I_1["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_72 in Exclude<keyof I_1["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
+                    Precision?: number | undefined;
+                } & { [K_71 in Exclude<keyof I_1["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_72 in Exclude<keyof I_1["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[]>]: never; }) | undefined;
                 BaseDenom?: string | undefined;
                 MinAmount?: string | undefined;
@@ -1888,15 +1931,19 @@ export declare const AssetDetails: {
                 BuyPricesPerSubunit?: ({
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[] & ({
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 } & {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
-                } & { [K_73 in Exclude<keyof I_1["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_74 in Exclude<keyof I_1["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
+                    Precision?: number | undefined;
+                } & { [K_73 in Exclude<keyof I_1["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_74 in Exclude<keyof I_1["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
                     Denom?: string | undefined;
                     Amount?: string | undefined;
+                    Precision?: number | undefined;
                 }[]>]: never; }) | undefined;
                 AssetRegistryContractAddr?: string | undefined;
                 AssetExtensionCode?: string | undefined;
@@ -2096,6 +2143,7 @@ export declare const Asset: {
                     PricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -2117,6 +2165,7 @@ export declare const Asset: {
                     SellPricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -2126,6 +2175,7 @@ export declare const Asset: {
                     BuyPricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
@@ -2351,6 +2401,7 @@ export declare const Asset: {
                     PricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -2372,6 +2423,7 @@ export declare const Asset: {
                     SellPricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -2381,6 +2433,7 @@ export declare const Asset: {
                     BuyPricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
@@ -2752,6 +2805,7 @@ export declare const Asset: {
                     PricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -2773,6 +2827,7 @@ export declare const Asset: {
                     SellPricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -2782,6 +2837,7 @@ export declare const Asset: {
                     BuyPricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
@@ -2797,6 +2853,7 @@ export declare const Asset: {
                     PricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -2817,15 +2874,19 @@ export declare const Asset: {
                     PricesPerSubunit?: ({
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] & ({
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     } & {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
-                    } & { [K_29 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_30 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"], keyof {
+                        Precision?: number | undefined;
+                    } & { [K_29 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_30 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"], keyof {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[]>]: never; }) | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -2847,6 +2908,7 @@ export declare const Asset: {
                     SellPricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -2856,6 +2918,7 @@ export declare const Asset: {
                     BuyPricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
@@ -2868,15 +2931,19 @@ export declare const Asset: {
                     SellPricesPerSubunit?: ({
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] & ({
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     } & {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
-                    } & { [K_32 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_33 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
+                        Precision?: number | undefined;
+                    } & { [K_32 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_33 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[]>]: never; }) | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -2886,15 +2953,19 @@ export declare const Asset: {
                     BuyPricesPerSubunit?: ({
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] & ({
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     } & {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
-                    } & { [K_34 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_35 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
+                        Precision?: number | undefined;
+                    } & { [K_34 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_35 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[]>]: never; }) | undefined;
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
@@ -3150,6 +3221,7 @@ export declare const Asset: {
                     PricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -3171,6 +3243,7 @@ export declare const Asset: {
                     SellPricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -3180,6 +3253,7 @@ export declare const Asset: {
                     BuyPricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
@@ -3405,6 +3479,7 @@ export declare const Asset: {
                     PricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -3426,6 +3501,7 @@ export declare const Asset: {
                     SellPricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -3435,6 +3511,7 @@ export declare const Asset: {
                     BuyPricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
@@ -3806,6 +3883,7 @@ export declare const Asset: {
                     PricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -3827,6 +3905,7 @@ export declare const Asset: {
                     SellPricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -3836,6 +3915,7 @@ export declare const Asset: {
                     BuyPricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
@@ -3851,6 +3931,7 @@ export declare const Asset: {
                     PricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -3871,15 +3952,19 @@ export declare const Asset: {
                     PricesPerSubunit?: ({
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] & ({
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     } & {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
-                    } & { [K_73 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_74 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"], keyof {
+                        Precision?: number | undefined;
+                    } & { [K_73 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_74 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"], keyof {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[]>]: never; }) | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -3901,6 +3986,7 @@ export declare const Asset: {
                     SellPricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -3910,6 +3996,7 @@ export declare const Asset: {
                     BuyPricesPerSubunit?: {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] | undefined;
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
@@ -3922,15 +4009,19 @@ export declare const Asset: {
                     SellPricesPerSubunit?: ({
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] & ({
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     } & {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
-                    } & { [K_76 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_77 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
+                        Precision?: number | undefined;
+                    } & { [K_76 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_77 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[]>]: never; }) | undefined;
                     BaseDenom?: string | undefined;
                     MinAmount?: string | undefined;
@@ -3940,15 +4031,19 @@ export declare const Asset: {
                     BuyPricesPerSubunit?: ({
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[] & ({
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     } & {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
-                    } & { [K_78 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_79 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
+                        Precision?: number | undefined;
+                    } & { [K_78 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_79 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
                         Denom?: string | undefined;
                         Amount?: string | undefined;
+                        Precision?: number | undefined;
                     }[]>]: never; }) | undefined;
                     AssetRegistryContractAddr?: string | undefined;
                     AssetExtensionCode?: string | undefined;
@@ -4211,6 +4306,7 @@ export declare const Assets: {
                         PricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -4232,6 +4328,7 @@ export declare const Assets: {
                         SellPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -4241,6 +4338,7 @@ export declare const Assets: {
                         BuyPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
@@ -4469,6 +4567,7 @@ export declare const Assets: {
                         PricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -4490,6 +4589,7 @@ export declare const Assets: {
                         SellPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -4499,6 +4599,7 @@ export declare const Assets: {
                         BuyPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
@@ -4724,6 +4825,7 @@ export declare const Assets: {
                         PricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -4745,6 +4847,7 @@ export declare const Assets: {
                         SellPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -4754,6 +4857,7 @@ export declare const Assets: {
                         BuyPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
@@ -4979,6 +5083,7 @@ export declare const Assets: {
                         PricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -5000,6 +5105,7 @@ export declare const Assets: {
                         SellPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -5009,6 +5115,7 @@ export declare const Assets: {
                         BuyPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
@@ -5380,6 +5487,7 @@ export declare const Assets: {
                         PricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -5401,6 +5509,7 @@ export declare const Assets: {
                         SellPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -5410,6 +5519,7 @@ export declare const Assets: {
                         BuyPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
@@ -5425,6 +5535,7 @@ export declare const Assets: {
                         PricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -5445,15 +5556,19 @@ export declare const Assets: {
                         PricesPerSubunit?: ({
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] & ({
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         } & {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
-                        } & { [K_29 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_30 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"], keyof {
+                            Precision?: number | undefined;
+                        } & { [K_29 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_30 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"], keyof {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[]>]: never; }) | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -5475,6 +5590,7 @@ export declare const Assets: {
                         SellPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -5484,6 +5600,7 @@ export declare const Assets: {
                         BuyPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
@@ -5496,15 +5613,19 @@ export declare const Assets: {
                         SellPricesPerSubunit?: ({
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] & ({
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         } & {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
-                        } & { [K_32 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_33 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
+                            Precision?: number | undefined;
+                        } & { [K_32 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_33 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[]>]: never; }) | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -5514,15 +5635,19 @@ export declare const Assets: {
                         BuyPricesPerSubunit?: ({
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] & ({
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         } & {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
-                        } & { [K_34 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_35 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
+                            Precision?: number | undefined;
+                        } & { [K_34 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_35 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[]>]: never; }) | undefined;
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
@@ -5777,6 +5902,7 @@ export declare const Assets: {
                         PricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -5798,6 +5924,7 @@ export declare const Assets: {
                         SellPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -5807,6 +5934,7 @@ export declare const Assets: {
                         BuyPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
@@ -6036,6 +6164,7 @@ export declare const Assets: {
                         PricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -6057,6 +6186,7 @@ export declare const Assets: {
                         SellPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -6066,6 +6196,7 @@ export declare const Assets: {
                         BuyPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
@@ -6294,6 +6425,7 @@ export declare const Assets: {
                         PricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -6315,6 +6447,7 @@ export declare const Assets: {
                         SellPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -6324,6 +6457,7 @@ export declare const Assets: {
                         BuyPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
@@ -6549,6 +6683,7 @@ export declare const Assets: {
                         PricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -6570,6 +6705,7 @@ export declare const Assets: {
                         SellPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -6579,6 +6715,7 @@ export declare const Assets: {
                         BuyPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
@@ -6804,6 +6941,7 @@ export declare const Assets: {
                         PricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -6825,6 +6963,7 @@ export declare const Assets: {
                         SellPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -6834,6 +6973,7 @@ export declare const Assets: {
                         BuyPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
@@ -7205,6 +7345,7 @@ export declare const Assets: {
                         PricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -7226,6 +7367,7 @@ export declare const Assets: {
                         SellPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -7235,6 +7377,7 @@ export declare const Assets: {
                         BuyPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
@@ -7250,6 +7393,7 @@ export declare const Assets: {
                         PricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -7270,15 +7414,19 @@ export declare const Assets: {
                         PricesPerSubunit?: ({
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] & ({
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         } & {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
-                        } & { [K_75 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_76 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"], keyof {
+                            Precision?: number | undefined;
+                        } & { [K_75 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_76 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["CrowdfundDetails"]["PricesPerSubunit"], keyof {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[]>]: never; }) | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -7300,6 +7448,7 @@ export declare const Assets: {
                         SellPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -7309,6 +7458,7 @@ export declare const Assets: {
                         BuyPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
@@ -7321,15 +7471,19 @@ export declare const Assets: {
                         SellPricesPerSubunit?: ({
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] & ({
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         } & {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
-                        } & { [K_78 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_79 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
+                            Precision?: number | undefined;
+                        } & { [K_78 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_79 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[]>]: never; }) | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -7339,15 +7493,19 @@ export declare const Assets: {
                         BuyPricesPerSubunit?: ({
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] & ({
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         } & {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
-                        } & { [K_80 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_81 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
+                            Precision?: number | undefined;
+                        } & { [K_80 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_81 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[]>]: never; }) | undefined;
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
@@ -7602,6 +7760,7 @@ export declare const Assets: {
                         PricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -7623,6 +7782,7 @@ export declare const Assets: {
                         SellPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         BaseDenom?: string | undefined;
                         MinAmount?: string | undefined;
@@ -7632,6 +7792,7 @@ export declare const Assets: {
                         BuyPricesPerSubunit?: {
                             Denom?: string | undefined;
                             Amount?: string | undefined;
+                            Precision?: number | undefined;
                         }[] | undefined;
                         AssetRegistryContractAddr?: string | undefined;
                         AssetExtensionCode?: string | undefined;
@@ -8252,6 +8413,30 @@ export declare const DecCoin: {
         Amount?: string | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof DecCoin>]: never; }>(object: I_1): DecCoin;
 };
+export declare const DecCoinWithPrecision: {
+    encode(message: DecCoinWithPrecision, writer?: _m0.Writer): _m0.Writer;
+    decode(input: _m0.Reader | Uint8Array, length?: number): DecCoinWithPrecision;
+    fromJSON(object: any): DecCoinWithPrecision;
+    toJSON(message: DecCoinWithPrecision): unknown;
+    create<I extends {
+        Denom?: string | undefined;
+        Amount?: string | undefined;
+        Precision?: number | undefined;
+    } & {
+        Denom?: string | undefined;
+        Amount?: string | undefined;
+        Precision?: number | undefined;
+    } & { [K in Exclude<keyof I, keyof DecCoinWithPrecision>]: never; }>(base?: I | undefined): DecCoinWithPrecision;
+    fromPartial<I_1 extends {
+        Denom?: string | undefined;
+        Amount?: string | undefined;
+        Precision?: number | undefined;
+    } & {
+        Denom?: string | undefined;
+        Amount?: string | undefined;
+        Precision?: number | undefined;
+    } & { [K_1 in Exclude<keyof I_1, keyof DecCoinWithPrecision>]: never; }>(object: I_1): DecCoinWithPrecision;
+};
 export declare const AssetTransaction: {
     encode(message: AssetTransaction, writer?: _m0.Writer): _m0.Writer;
     decode(input: _m0.Reader | Uint8Array, length?: number): AssetTransaction;
@@ -8328,6 +8513,7 @@ export declare const Distribution: {
             PricesPerSubunit?: {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[] | undefined;
             BaseDenom?: string | undefined;
             MinAmount?: string | undefined;
@@ -8349,6 +8535,7 @@ export declare const Distribution: {
             SellPricesPerSubunit?: {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[] | undefined;
             BaseDenom?: string | undefined;
             MinAmount?: string | undefined;
@@ -8358,6 +8545,7 @@ export declare const Distribution: {
             BuyPricesPerSubunit?: {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[] | undefined;
             AssetRegistryContractAddr?: string | undefined;
             AssetExtensionCode?: string | undefined;
@@ -8373,6 +8561,7 @@ export declare const Distribution: {
             PricesPerSubunit?: {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[] | undefined;
             BaseDenom?: string | undefined;
             MinAmount?: string | undefined;
@@ -8393,15 +8582,19 @@ export declare const Distribution: {
             PricesPerSubunit?: ({
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[] & ({
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             } & {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
-            } & { [K in Exclude<keyof I["CrowdfundDetails"]["PricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_1 in Exclude<keyof I["CrowdfundDetails"]["PricesPerSubunit"], keyof {
+                Precision?: number | undefined;
+            } & { [K in Exclude<keyof I["CrowdfundDetails"]["PricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_1 in Exclude<keyof I["CrowdfundDetails"]["PricesPerSubunit"], keyof {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[]>]: never; }) | undefined;
             BaseDenom?: string | undefined;
             MinAmount?: string | undefined;
@@ -8423,6 +8616,7 @@ export declare const Distribution: {
             SellPricesPerSubunit?: {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[] | undefined;
             BaseDenom?: string | undefined;
             MinAmount?: string | undefined;
@@ -8432,6 +8626,7 @@ export declare const Distribution: {
             BuyPricesPerSubunit?: {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[] | undefined;
             AssetRegistryContractAddr?: string | undefined;
             AssetExtensionCode?: string | undefined;
@@ -8444,15 +8639,19 @@ export declare const Distribution: {
             SellPricesPerSubunit?: ({
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[] & ({
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             } & {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
-            } & { [K_3 in Exclude<keyof I["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_4 in Exclude<keyof I["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
+                Precision?: number | undefined;
+            } & { [K_3 in Exclude<keyof I["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_4 in Exclude<keyof I["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[]>]: never; }) | undefined;
             BaseDenom?: string | undefined;
             MinAmount?: string | undefined;
@@ -8462,15 +8661,19 @@ export declare const Distribution: {
             BuyPricesPerSubunit?: ({
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[] & ({
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             } & {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
-            } & { [K_5 in Exclude<keyof I["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_6 in Exclude<keyof I["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
+                Precision?: number | undefined;
+            } & { [K_5 in Exclude<keyof I["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_6 in Exclude<keyof I["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[]>]: never; }) | undefined;
             AssetRegistryContractAddr?: string | undefined;
             AssetExtensionCode?: string | undefined;
@@ -8487,6 +8690,7 @@ export declare const Distribution: {
             PricesPerSubunit?: {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[] | undefined;
             BaseDenom?: string | undefined;
             MinAmount?: string | undefined;
@@ -8508,6 +8712,7 @@ export declare const Distribution: {
             SellPricesPerSubunit?: {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[] | undefined;
             BaseDenom?: string | undefined;
             MinAmount?: string | undefined;
@@ -8517,6 +8722,7 @@ export declare const Distribution: {
             BuyPricesPerSubunit?: {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[] | undefined;
             AssetRegistryContractAddr?: string | undefined;
             AssetExtensionCode?: string | undefined;
@@ -8532,6 +8738,7 @@ export declare const Distribution: {
             PricesPerSubunit?: {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[] | undefined;
             BaseDenom?: string | undefined;
             MinAmount?: string | undefined;
@@ -8552,15 +8759,19 @@ export declare const Distribution: {
             PricesPerSubunit?: ({
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[] & ({
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             } & {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
-            } & { [K_9 in Exclude<keyof I_1["CrowdfundDetails"]["PricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_10 in Exclude<keyof I_1["CrowdfundDetails"]["PricesPerSubunit"], keyof {
+                Precision?: number | undefined;
+            } & { [K_9 in Exclude<keyof I_1["CrowdfundDetails"]["PricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_10 in Exclude<keyof I_1["CrowdfundDetails"]["PricesPerSubunit"], keyof {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[]>]: never; }) | undefined;
             BaseDenom?: string | undefined;
             MinAmount?: string | undefined;
@@ -8582,6 +8793,7 @@ export declare const Distribution: {
             SellPricesPerSubunit?: {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[] | undefined;
             BaseDenom?: string | undefined;
             MinAmount?: string | undefined;
@@ -8591,6 +8803,7 @@ export declare const Distribution: {
             BuyPricesPerSubunit?: {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[] | undefined;
             AssetRegistryContractAddr?: string | undefined;
             AssetExtensionCode?: string | undefined;
@@ -8603,15 +8816,19 @@ export declare const Distribution: {
             SellPricesPerSubunit?: ({
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[] & ({
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             } & {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
-            } & { [K_12 in Exclude<keyof I_1["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_13 in Exclude<keyof I_1["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
+                Precision?: number | undefined;
+            } & { [K_12 in Exclude<keyof I_1["TokenSaleDetails"]["SellPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_13 in Exclude<keyof I_1["TokenSaleDetails"]["SellPricesPerSubunit"], keyof {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[]>]: never; }) | undefined;
             BaseDenom?: string | undefined;
             MinAmount?: string | undefined;
@@ -8621,15 +8838,19 @@ export declare const Distribution: {
             BuyPricesPerSubunit?: ({
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[] & ({
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             } & {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
-            } & { [K_14 in Exclude<keyof I_1["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_15 in Exclude<keyof I_1["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
+                Precision?: number | undefined;
+            } & { [K_14 in Exclude<keyof I_1["TokenSaleDetails"]["BuyPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_15 in Exclude<keyof I_1["TokenSaleDetails"]["BuyPricesPerSubunit"], keyof {
                 Denom?: string | undefined;
                 Amount?: string | undefined;
+                Precision?: number | undefined;
             }[]>]: never; }) | undefined;
             AssetRegistryContractAddr?: string | undefined;
             AssetExtensionCode?: string | undefined;
@@ -8650,6 +8871,7 @@ export declare const TokenSale: {
         SellPricesPerSubunit?: {
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         }[] | undefined;
         BaseDenom?: string | undefined;
         MinAmount?: string | undefined;
@@ -8659,6 +8881,7 @@ export declare const TokenSale: {
         BuyPricesPerSubunit?: {
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         }[] | undefined;
         AssetRegistryContractAddr?: string | undefined;
         AssetExtensionCode?: string | undefined;
@@ -8671,15 +8894,19 @@ export declare const TokenSale: {
         SellPricesPerSubunit?: ({
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         }[] & ({
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         } & {
             Denom?: string | undefined;
             Amount?: string | undefined;
-        } & { [K in Exclude<keyof I["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_1 in Exclude<keyof I["SellPricesPerSubunit"], keyof {
+            Precision?: number | undefined;
+        } & { [K in Exclude<keyof I["SellPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_1 in Exclude<keyof I["SellPricesPerSubunit"], keyof {
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         }[]>]: never; }) | undefined;
         BaseDenom?: string | undefined;
         MinAmount?: string | undefined;
@@ -8689,15 +8916,19 @@ export declare const TokenSale: {
         BuyPricesPerSubunit?: ({
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         }[] & ({
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         } & {
             Denom?: string | undefined;
             Amount?: string | undefined;
-        } & { [K_2 in Exclude<keyof I["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_3 in Exclude<keyof I["BuyPricesPerSubunit"], keyof {
+            Precision?: number | undefined;
+        } & { [K_2 in Exclude<keyof I["BuyPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_3 in Exclude<keyof I["BuyPricesPerSubunit"], keyof {
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         }[]>]: never; }) | undefined;
         AssetRegistryContractAddr?: string | undefined;
         AssetExtensionCode?: string | undefined;
@@ -8711,6 +8942,7 @@ export declare const TokenSale: {
         SellPricesPerSubunit?: {
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         }[] | undefined;
         BaseDenom?: string | undefined;
         MinAmount?: string | undefined;
@@ -8720,6 +8952,7 @@ export declare const TokenSale: {
         BuyPricesPerSubunit?: {
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         }[] | undefined;
         AssetRegistryContractAddr?: string | undefined;
         AssetExtensionCode?: string | undefined;
@@ -8732,15 +8965,19 @@ export declare const TokenSale: {
         SellPricesPerSubunit?: ({
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         }[] & ({
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         } & {
             Denom?: string | undefined;
             Amount?: string | undefined;
-        } & { [K_5 in Exclude<keyof I_1["SellPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_6 in Exclude<keyof I_1["SellPricesPerSubunit"], keyof {
+            Precision?: number | undefined;
+        } & { [K_5 in Exclude<keyof I_1["SellPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_6 in Exclude<keyof I_1["SellPricesPerSubunit"], keyof {
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         }[]>]: never; }) | undefined;
         BaseDenom?: string | undefined;
         MinAmount?: string | undefined;
@@ -8750,15 +8987,19 @@ export declare const TokenSale: {
         BuyPricesPerSubunit?: ({
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         }[] & ({
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         } & {
             Denom?: string | undefined;
             Amount?: string | undefined;
-        } & { [K_7 in Exclude<keyof I_1["BuyPricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_8 in Exclude<keyof I_1["BuyPricesPerSubunit"], keyof {
+            Precision?: number | undefined;
+        } & { [K_7 in Exclude<keyof I_1["BuyPricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_8 in Exclude<keyof I_1["BuyPricesPerSubunit"], keyof {
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         }[]>]: never; }) | undefined;
         AssetRegistryContractAddr?: string | undefined;
         AssetExtensionCode?: string | undefined;
@@ -8778,6 +9019,7 @@ export declare const Crowdfund: {
         PricesPerSubunit?: {
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         }[] | undefined;
         BaseDenom?: string | undefined;
         MinAmount?: string | undefined;
@@ -8798,15 +9040,19 @@ export declare const Crowdfund: {
         PricesPerSubunit?: ({
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         }[] & ({
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         } & {
             Denom?: string | undefined;
             Amount?: string | undefined;
-        } & { [K in Exclude<keyof I["PricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_1 in Exclude<keyof I["PricesPerSubunit"], keyof {
+            Precision?: number | undefined;
+        } & { [K in Exclude<keyof I["PricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_1 in Exclude<keyof I["PricesPerSubunit"], keyof {
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         }[]>]: never; }) | undefined;
         BaseDenom?: string | undefined;
         MinAmount?: string | undefined;
@@ -8828,6 +9074,7 @@ export declare const Crowdfund: {
         PricesPerSubunit?: {
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         }[] | undefined;
         BaseDenom?: string | undefined;
         MinAmount?: string | undefined;
@@ -8848,15 +9095,19 @@ export declare const Crowdfund: {
         PricesPerSubunit?: ({
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         }[] & ({
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         } & {
             Denom?: string | undefined;
             Amount?: string | undefined;
-        } & { [K_3 in Exclude<keyof I_1["PricesPerSubunit"][number], keyof DecCoin>]: never; })[] & { [K_4 in Exclude<keyof I_1["PricesPerSubunit"], keyof {
+            Precision?: number | undefined;
+        } & { [K_3 in Exclude<keyof I_1["PricesPerSubunit"][number], keyof DecCoinWithPrecision>]: never; })[] & { [K_4 in Exclude<keyof I_1["PricesPerSubunit"], keyof {
             Denom?: string | undefined;
             Amount?: string | undefined;
+            Precision?: number | undefined;
         }[]>]: never; }) | undefined;
         BaseDenom?: string | undefined;
         MinAmount?: string | undefined;

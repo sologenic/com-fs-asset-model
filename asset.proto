@@ -158,6 +158,12 @@ message DecCoin {
     string Amount = 2;
 }
 
+message DecCoinWithPrecision {
+    string Denom = 1;
+    string Amount = 2;
+    int64 Precision = 3;
+}
+
 enum TransactionType {
     TRANSACTION_TYPE_DO_NOT_USE = 0;
     TRANSACTION_TYPE_MINT = 1;
@@ -211,7 +217,7 @@ message TokenSale {
     // The smallest allowable step for the base_denom
     string QuantityStep = 1;
     // Price to purchase the tokenized asset with, per subunit
-    repeated DecCoin SellPricesPerSubunit = 2;
+    repeated DecCoinWithPrecision SellPricesPerSubunit = 2;
     // Should be pre-issued (even with zero total supply)
     string BaseDenom = 3; // Base denom (RWA tokens)
     // Minimum amount of base_denom to purchase
@@ -223,7 +229,7 @@ message TokenSale {
     // Address of compliance manager contract. That contract is called to check if transfers are allowed or not
     string ComplianceManagerContractAddr = 7;
     // Buy prices per subunit. If empty, buy is not allowed for this token sale
-    repeated DecCoin BuyPricesPerSubunit = 8;
+    repeated DecCoinWithPrecision BuyPricesPerSubunit = 8;
     // Address of the asset registry contract
     string AssetRegistryContractAddr = 9;
     // Code of the asset extension
@@ -243,7 +249,7 @@ message Crowdfund {
     // The smallest allowable step for the base_denom   
     string QuantityStep = 1;
     // Price to purchase the tokenized asset with, per subunit
-    repeated DecCoin PricesPerSubunit = 2;
+    repeated DecCoinWithPrecision PricesPerSubunit = 2;
     // Should be pre-issued (even with zero total supply)
     string BaseDenom = 3; // Base denom (RWA tokens)
     // Minimum amount of base_denom to purchase

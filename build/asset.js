@@ -2561,6 +2561,87 @@ export const DecCoin = {
         return message;
     },
 };
+function createBaseDecCoinWithPrecision() {
+    return { Denom: "", Amount: "", Precision: 0 };
+}
+export const DecCoinWithPrecision = {
+    encode(message, writer = _m0.Writer.create()) {
+        if (message.Denom !== "") {
+            writer.uint32(10).string(message.Denom);
+        }
+        if (message.Amount !== "") {
+            writer.uint32(18).string(message.Amount);
+        }
+        if (message.Precision !== 0) {
+            writer.uint32(24).int64(message.Precision);
+        }
+        return writer;
+    },
+    decode(input, length) {
+        const reader = input instanceof _m0.Reader ? input : _m0.Reader.create(input);
+        let end = length === undefined ? reader.len : reader.pos + length;
+        const message = createBaseDecCoinWithPrecision();
+        while (reader.pos < end) {
+            const tag = reader.uint32();
+            switch (tag >>> 3) {
+                case 1:
+                    if (tag !== 10) {
+                        break;
+                    }
+                    message.Denom = reader.string();
+                    continue;
+                case 2:
+                    if (tag !== 18) {
+                        break;
+                    }
+                    message.Amount = reader.string();
+                    continue;
+                case 3:
+                    if (tag !== 24) {
+                        break;
+                    }
+                    message.Precision = longToNumber(reader.int64());
+                    continue;
+            }
+            if ((tag & 7) === 4 || tag === 0) {
+                break;
+            }
+            reader.skipType(tag & 7);
+        }
+        return message;
+    },
+    fromJSON(object) {
+        return {
+            Denom: isSet(object.Denom) ? globalThis.String(object.Denom) : "",
+            Amount: isSet(object.Amount) ? globalThis.String(object.Amount) : "",
+            Precision: isSet(object.Precision) ? globalThis.Number(object.Precision) : 0,
+        };
+    },
+    toJSON(message) {
+        const obj = {};
+        if (message.Denom !== "") {
+            obj.Denom = message.Denom;
+        }
+        if (message.Amount !== "") {
+            obj.Amount = message.Amount;
+        }
+        if (message.Precision !== 0) {
+            obj.Precision = Math.round(message.Precision);
+        }
+        return obj;
+    },
+    create(base) {
+        return DecCoinWithPrecision.fromPartial(base !== null && base !== void 0 ? base : {});
+    },
+    fromPartial(object) {
+        var _a, _b, _c;
+        const message = createBaseDecCoinWithPrecision();
+        message.Denom = (_a = object.Denom) !== null && _a !== void 0 ? _a : "";
+        message.Amount = (_b = object.Amount) !== null && _b !== void 0 ? _b : "";
+        message.Precision = (_c = object.Precision) !== null && _c !== void 0 ? _c : 0;
+        return message;
+    },
+};
 function createBaseAssetTransaction() {
     return {
         Amount: 0,
@@ -2895,7 +2976,7 @@ export const TokenSale = {
             writer.uint32(10).string(message.QuantityStep);
         }
         for (const v of message.SellPricesPerSubunit) {
-            DecCoin.encode(v, writer.uint32(18).fork()).ldelim();
+            DecCoinWithPrecision.encode(v, writer.uint32(18).fork()).ldelim();
         }
         if (message.BaseDenom !== "") {
             writer.uint32(26).string(message.BaseDenom);
@@ -2913,7 +2994,7 @@ export const TokenSale = {
             writer.uint32(58).string(message.ComplianceManagerContractAddr);
         }
         for (const v of message.BuyPricesPerSubunit) {
-            DecCoin.encode(v, writer.uint32(66).fork()).ldelim();
+            DecCoinWithPrecision.encode(v, writer.uint32(66).fork()).ldelim();
         }
         if (message.AssetRegistryContractAddr !== "") {
             writer.uint32(74).string(message.AssetRegistryContractAddr);
@@ -2952,7 +3033,7 @@ export const TokenSale = {
                     if (tag !== 18) {
                         break;
                     }
-                    message.SellPricesPerSubunit.push(DecCoin.decode(reader, reader.uint32()));
+                    message.SellPricesPerSubunit.push(DecCoinWithPrecision.decode(reader, reader.uint32()));
                     continue;
                 case 3:
                     if (tag !== 26) {
@@ -2988,7 +3069,7 @@ export const TokenSale = {
                     if (tag !== 66) {
                         break;
                     }
-                    message.BuyPricesPerSubunit.push(DecCoin.decode(reader, reader.uint32()));
+                    message.BuyPricesPerSubunit.push(DecCoinWithPrecision.decode(reader, reader.uint32()));
                     continue;
                 case 9:
                     if (tag !== 74) {
@@ -3038,7 +3119,7 @@ export const TokenSale = {
         return {
             QuantityStep: isSet(object.QuantityStep) ? globalThis.String(object.QuantityStep) : "",
             SellPricesPerSubunit: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.SellPricesPerSubunit)
-                ? object.SellPricesPerSubunit.map((e) => DecCoin.fromJSON(e))
+                ? object.SellPricesPerSubunit.map((e) => DecCoinWithPrecision.fromJSON(e))
                 : [],
             BaseDenom: isSet(object.BaseDenom) ? globalThis.String(object.BaseDenom) : "",
             MinAmount: isSet(object.MinAmount) ? globalThis.String(object.MinAmount) : "",
@@ -3048,7 +3129,7 @@ export const TokenSale = {
                 ? globalThis.String(object.ComplianceManagerContractAddr)
                 : "",
             BuyPricesPerSubunit: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.BuyPricesPerSubunit)
-                ? object.BuyPricesPerSubunit.map((e) => DecCoin.fromJSON(e))
+                ? object.BuyPricesPerSubunit.map((e) => DecCoinWithPrecision.fromJSON(e))
                 : [],
             AssetRegistryContractAddr: isSet(object.AssetRegistryContractAddr)
                 ? globalThis.String(object.AssetRegistryContractAddr)
@@ -3071,7 +3152,7 @@ export const TokenSale = {
             obj.QuantityStep = message.QuantityStep;
         }
         if ((_a = message.SellPricesPerSubunit) === null || _a === void 0 ? void 0 : _a.length) {
-            obj.SellPricesPerSubunit = message.SellPricesPerSubunit.map((e) => DecCoin.toJSON(e));
+            obj.SellPricesPerSubunit = message.SellPricesPerSubunit.map((e) => DecCoinWithPrecision.toJSON(e));
         }
         if (message.BaseDenom !== "") {
             obj.BaseDenom = message.BaseDenom;
@@ -3089,7 +3170,7 @@ export const TokenSale = {
             obj.ComplianceManagerContractAddr = message.ComplianceManagerContractAddr;
         }
         if ((_b = message.BuyPricesPerSubunit) === null || _b === void 0 ? void 0 : _b.length) {
-            obj.BuyPricesPerSubunit = message.BuyPricesPerSubunit.map((e) => DecCoin.toJSON(e));
+            obj.BuyPricesPerSubunit = message.BuyPricesPerSubunit.map((e) => DecCoinWithPrecision.toJSON(e));
         }
         if (message.AssetRegistryContractAddr !== "") {
             obj.AssetRegistryContractAddr = message.AssetRegistryContractAddr;
@@ -3118,13 +3199,13 @@ export const TokenSale = {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
         const message = createBaseTokenSale();
         message.QuantityStep = (_a = object.QuantityStep) !== null && _a !== void 0 ? _a : "";
-        message.SellPricesPerSubunit = ((_b = object.SellPricesPerSubunit) === null || _b === void 0 ? void 0 : _b.map((e) => DecCoin.fromPartial(e))) || [];
+        message.SellPricesPerSubunit = ((_b = object.SellPricesPerSubunit) === null || _b === void 0 ? void 0 : _b.map((e) => DecCoinWithPrecision.fromPartial(e))) || [];
         message.BaseDenom = (_c = object.BaseDenom) !== null && _c !== void 0 ? _c : "";
         message.MinAmount = (_d = object.MinAmount) !== null && _d !== void 0 ? _d : "";
         message.StartDate = (_e = object.StartDate) !== null && _e !== void 0 ? _e : 0;
         message.EndDate = (_f = object.EndDate) !== null && _f !== void 0 ? _f : 0;
         message.ComplianceManagerContractAddr = (_g = object.ComplianceManagerContractAddr) !== null && _g !== void 0 ? _g : "";
-        message.BuyPricesPerSubunit = ((_h = object.BuyPricesPerSubunit) === null || _h === void 0 ? void 0 : _h.map((e) => DecCoin.fromPartial(e))) || [];
+        message.BuyPricesPerSubunit = ((_h = object.BuyPricesPerSubunit) === null || _h === void 0 ? void 0 : _h.map((e) => DecCoinWithPrecision.fromPartial(e))) || [];
         message.AssetRegistryContractAddr = (_j = object.AssetRegistryContractAddr) !== null && _j !== void 0 ? _j : "";
         message.AssetExtensionCode = (_k = object.AssetExtensionCode) !== null && _k !== void 0 ? _k : "";
         message.AssetExtensionContractAddr = (_l = object.AssetExtensionContractAddr) !== null && _l !== void 0 ? _l : undefined;
@@ -3160,7 +3241,7 @@ export const Crowdfund = {
             writer.uint32(10).string(message.QuantityStep);
         }
         for (const v of message.PricesPerSubunit) {
-            DecCoin.encode(v, writer.uint32(18).fork()).ldelim();
+            DecCoinWithPrecision.encode(v, writer.uint32(18).fork()).ldelim();
         }
         if (message.BaseDenom !== "") {
             writer.uint32(26).string(message.BaseDenom);
@@ -3223,7 +3304,7 @@ export const Crowdfund = {
                     if (tag !== 18) {
                         break;
                     }
-                    message.PricesPerSubunit.push(DecCoin.decode(reader, reader.uint32()));
+                    message.PricesPerSubunit.push(DecCoinWithPrecision.decode(reader, reader.uint32()));
                     continue;
                 case 3:
                     if (tag !== 26) {
@@ -3321,7 +3402,7 @@ export const Crowdfund = {
         return {
             QuantityStep: isSet(object.QuantityStep) ? globalThis.String(object.QuantityStep) : "",
             PricesPerSubunit: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.PricesPerSubunit)
-                ? object.PricesPerSubunit.map((e) => DecCoin.fromJSON(e))
+                ? object.PricesPerSubunit.map((e) => DecCoinWithPrecision.fromJSON(e))
                 : [],
             BaseDenom: isSet(object.BaseDenom) ? globalThis.String(object.BaseDenom) : "",
             MinAmount: isSet(object.MinAmount) ? globalThis.String(object.MinAmount) : "",
@@ -3356,7 +3437,7 @@ export const Crowdfund = {
             obj.QuantityStep = message.QuantityStep;
         }
         if ((_a = message.PricesPerSubunit) === null || _a === void 0 ? void 0 : _a.length) {
-            obj.PricesPerSubunit = message.PricesPerSubunit.map((e) => DecCoin.toJSON(e));
+            obj.PricesPerSubunit = message.PricesPerSubunit.map((e) => DecCoinWithPrecision.toJSON(e));
         }
         if (message.BaseDenom !== "") {
             obj.BaseDenom = message.BaseDenom;
@@ -3409,7 +3490,7 @@ export const Crowdfund = {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
         const message = createBaseCrowdfund();
         message.QuantityStep = (_a = object.QuantityStep) !== null && _a !== void 0 ? _a : "";
-        message.PricesPerSubunit = ((_b = object.PricesPerSubunit) === null || _b === void 0 ? void 0 : _b.map((e) => DecCoin.fromPartial(e))) || [];
+        message.PricesPerSubunit = ((_b = object.PricesPerSubunit) === null || _b === void 0 ? void 0 : _b.map((e) => DecCoinWithPrecision.fromPartial(e))) || [];
         message.BaseDenom = (_c = object.BaseDenom) !== null && _c !== void 0 ? _c : "";
         message.MinAmount = (_d = object.MinAmount) !== null && _d !== void 0 ? _d : "";
         message.StartDate = (_e = object.StartDate) !== null && _e !== void 0 ? _e : 0;
