@@ -35,6 +35,7 @@ message AssetDetails {
     optional ExternalResources ExternalResources = 30;     // External links and resources
     
     optional Distribution DistributionDetails = 31;
+    bool IsVisible = 32; // Controls whether the asset is visible in the marketplace
 }
 
 // ---------------- Existing Messages ----------------

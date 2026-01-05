@@ -127,6 +127,8 @@ export interface AssetDetails {
     /** External links and resources */
     ExternalResources?: ExternalResources | undefined;
     DistributionDetails?: Distribution | undefined;
+    /** Controls whether the asset is visible in the marketplace */
+    IsVisible: boolean;
 }
 export interface Asset {
     AssetDetails: AssetDetails | undefined;
@@ -664,6 +666,7 @@ export declare const AssetDetails: {
                 DistributionSupply?: string | undefined;
             } | undefined;
         } | undefined;
+        IsVisible?: boolean | undefined;
     } & {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -1196,6 +1199,7 @@ export declare const AssetDetails: {
                 DistributionSupply?: string | undefined;
             } & { [K_36 in Exclude<keyof I["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
         } & { [K_37 in Exclude<keyof I["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
+        IsVisible?: boolean | undefined;
     } & { [K_38 in Exclude<keyof I, keyof AssetDetails>]: never; }>(base?: I | undefined): AssetDetails;
     fromPartial<I_1 extends {
         ID?: string | undefined;
@@ -1421,6 +1425,7 @@ export declare const AssetDetails: {
                 DistributionSupply?: string | undefined;
             } | undefined;
         } | undefined;
+        IsVisible?: boolean | undefined;
     } & {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -1953,6 +1958,7 @@ export declare const AssetDetails: {
                 DistributionSupply?: string | undefined;
             } & { [K_75 in Exclude<keyof I_1["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
         } & { [K_76 in Exclude<keyof I_1["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
+        IsVisible?: boolean | undefined;
     } & { [K_77 in Exclude<keyof I_1, keyof AssetDetails>]: never; }>(object: I_1): AssetDetails;
 };
 export declare const Asset: {
@@ -2185,6 +2191,7 @@ export declare const Asset: {
                     DistributionSupply?: string | undefined;
                 } | undefined;
             } | undefined;
+            IsVisible?: boolean | undefined;
         } | undefined;
         MetaData?: {
             Network?: Network | undefined;
@@ -2443,6 +2450,7 @@ export declare const Asset: {
                     DistributionSupply?: string | undefined;
                 } | undefined;
             } | undefined;
+            IsVisible?: boolean | undefined;
         } & {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -2975,6 +2983,7 @@ export declare const Asset: {
                     DistributionSupply?: string | undefined;
                 } & { [K_36 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
             } & { [K_37 in Exclude<keyof I["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
+            IsVisible?: boolean | undefined;
         } & { [K_38 in Exclude<keyof I["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
         MetaData?: ({
             Network?: Network | undefined;
@@ -3263,6 +3272,7 @@ export declare const Asset: {
                     DistributionSupply?: string | undefined;
                 } | undefined;
             } | undefined;
+            IsVisible?: boolean | undefined;
         } | undefined;
         MetaData?: {
             Network?: Network | undefined;
@@ -3521,6 +3531,7 @@ export declare const Asset: {
                     DistributionSupply?: string | undefined;
                 } | undefined;
             } | undefined;
+            IsVisible?: boolean | undefined;
         } & {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -4053,6 +4064,7 @@ export declare const Asset: {
                     DistributionSupply?: string | undefined;
                 } & { [K_80 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
             } & { [K_81 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
+            IsVisible?: boolean | undefined;
         } & { [K_82 in Exclude<keyof I_1["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
         MetaData?: ({
             Network?: Network | undefined;
@@ -4348,6 +4360,7 @@ export declare const Assets: {
                         DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
+                IsVisible?: boolean | undefined;
             } | undefined;
             MetaData?: {
                 Network?: Network | undefined;
@@ -4609,6 +4622,7 @@ export declare const Assets: {
                         DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
+                IsVisible?: boolean | undefined;
             } | undefined;
             MetaData?: {
                 Network?: Network | undefined;
@@ -4867,6 +4881,7 @@ export declare const Assets: {
                         DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
+                IsVisible?: boolean | undefined;
             } | undefined;
             MetaData?: {
                 Network?: Network | undefined;
@@ -5125,6 +5140,7 @@ export declare const Assets: {
                         DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
+                IsVisible?: boolean | undefined;
             } & {
                 ID?: string | undefined;
                 OrganizationID?: string | undefined;
@@ -5657,6 +5673,7 @@ export declare const Assets: {
                         DistributionSupply?: string | undefined;
                     } & { [K_36 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
                 } & { [K_37 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
+                IsVisible?: boolean | undefined;
             } & { [K_38 in Exclude<keyof I["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
             MetaData?: ({
                 Network?: Network | undefined;
@@ -5944,6 +5961,7 @@ export declare const Assets: {
                         DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
+                IsVisible?: boolean | undefined;
             } | undefined;
             MetaData?: {
                 Network?: Network | undefined;
@@ -6206,6 +6224,7 @@ export declare const Assets: {
                         DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
+                IsVisible?: boolean | undefined;
             } | undefined;
             MetaData?: {
                 Network?: Network | undefined;
@@ -6467,6 +6486,7 @@ export declare const Assets: {
                         DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
+                IsVisible?: boolean | undefined;
             } | undefined;
             MetaData?: {
                 Network?: Network | undefined;
@@ -6725,6 +6745,7 @@ export declare const Assets: {
                         DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
+                IsVisible?: boolean | undefined;
             } | undefined;
             MetaData?: {
                 Network?: Network | undefined;
@@ -6983,6 +7004,7 @@ export declare const Assets: {
                         DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
+                IsVisible?: boolean | undefined;
             } & {
                 ID?: string | undefined;
                 OrganizationID?: string | undefined;
@@ -7515,6 +7537,7 @@ export declare const Assets: {
                         DistributionSupply?: string | undefined;
                     } & { [K_82 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
                 } & { [K_83 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
+                IsVisible?: boolean | undefined;
             } & { [K_84 in Exclude<keyof I_1["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
             MetaData?: ({
                 Network?: Network | undefined;
@@ -7802,6 +7825,7 @@ export declare const Assets: {
                         DistributionSupply?: string | undefined;
                     } | undefined;
                 } | undefined;
+                IsVisible?: boolean | undefined;
             } | undefined;
             MetaData?: {
                 Network?: Network | undefined;
