@@ -793,7 +793,6 @@ export interface IntellectualProperty {
   RegistrationNumber?: string | undefined;
   FilingDate?: string | undefined;
   ExpirationDate?: string | undefined;
-  IPJurisdictionIDs: string[];
   LicenseType?: string | undefined;
   LicenseTerms?: string | undefined;
   Value?: number | undefined;
@@ -4167,7 +4166,6 @@ function createBaseIntellectualProperty(): IntellectualProperty {
     RegistrationNumber: undefined,
     FilingDate: undefined,
     ExpirationDate: undefined,
-    IPJurisdictionIDs: [],
     LicenseType: undefined,
     LicenseTerms: undefined,
     Value: undefined,
@@ -4190,9 +4188,6 @@ export const IntellectualProperty = {
     }
     if (message.ExpirationDate !== undefined) {
       writer.uint32(42).string(message.ExpirationDate);
-    }
-    for (const v of message.IPJurisdictionIDs) {
-      writer.uint32(50).string(v!);
     }
     if (message.LicenseType !== undefined) {
       writer.uint32(58).string(message.LicenseType);
@@ -4248,13 +4243,6 @@ export const IntellectualProperty = {
 
           message.ExpirationDate = reader.string();
           continue;
-        case 6:
-          if (tag !== 50) {
-            break;
-          }
-
-          message.IPJurisdictionIDs.push(reader.string());
-          continue;
         case 7:
           if (tag !== 58) {
             break;
@@ -4292,9 +4280,6 @@ export const IntellectualProperty = {
       RegistrationNumber: isSet(object.RegistrationNumber) ? globalThis.String(object.RegistrationNumber) : undefined,
       FilingDate: isSet(object.FilingDate) ? globalThis.String(object.FilingDate) : undefined,
       ExpirationDate: isSet(object.ExpirationDate) ? globalThis.String(object.ExpirationDate) : undefined,
-      IPJurisdictionIDs: globalThis.Array.isArray(object?.IPJurisdictionIDs)
-        ? object.IPJurisdictionIDs.map((e: any) => globalThis.String(e))
-        : [],
       LicenseType: isSet(object.LicenseType) ? globalThis.String(object.LicenseType) : undefined,
       LicenseTerms: isSet(object.LicenseTerms) ? globalThis.String(object.LicenseTerms) : undefined,
       Value: isSet(object.Value) ? globalThis.Number(object.Value) : undefined,
@@ -4318,9 +4303,6 @@ export const IntellectualProperty = {
     if (message.ExpirationDate !== undefined) {
       obj.ExpirationDate = message.ExpirationDate;
     }
-    if (message.IPJurisdictionIDs?.length) {
-      obj.IPJurisdictionIDs = message.IPJurisdictionIDs;
-    }
     if (message.LicenseType !== undefined) {
       obj.LicenseType = message.LicenseType;
     }
@@ -4343,7 +4325,6 @@ export const IntellectualProperty = {
     message.RegistrationNumber = object.RegistrationNumber ?? undefined;
     message.FilingDate = object.FilingDate ?? undefined;
     message.ExpirationDate = object.ExpirationDate ?? undefined;
-    message.IPJurisdictionIDs = object.IPJurisdictionIDs?.map((e) => e) || [];
     message.LicenseType = object.LicenseType ?? undefined;
     message.LicenseTerms = object.LicenseTerms ?? undefined;
     message.Value = object.Value ?? undefined;

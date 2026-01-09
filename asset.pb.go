@@ -2396,7 +2396,6 @@ type IntellectualProperty struct {
 	RegistrationNumber *string                `protobuf:"bytes,3,opt,name=RegistrationNumber,proto3,oneof" json:"RegistrationNumber,omitempty"`
 	FilingDate         *string                `protobuf:"bytes,4,opt,name=FilingDate,proto3,oneof" json:"FilingDate,omitempty"`
 	ExpirationDate     *string                `protobuf:"bytes,5,opt,name=ExpirationDate,proto3,oneof" json:"ExpirationDate,omitempty"`
-	IPJurisdictionIDs  []string               `protobuf:"bytes,6,rep,name=IPJurisdictionIDs,proto3" json:"IPJurisdictionIDs,omitempty"`
 	LicenseType        *string                `protobuf:"bytes,7,opt,name=LicenseType,proto3,oneof" json:"LicenseType,omitempty"`
 	LicenseTerms       *string                `protobuf:"bytes,8,opt,name=LicenseTerms,proto3,oneof" json:"LicenseTerms,omitempty"`
 	Value              *float32               `protobuf:"fixed32,9,opt,name=Value,proto3,oneof" json:"Value,omitempty"`
@@ -2467,13 +2466,6 @@ func (x *IntellectualProperty) GetExpirationDate() string {
 		return *x.ExpirationDate
 	}
 	return ""
-}
-
-func (x *IntellectualProperty) GetIPJurisdictionIDs() []string {
-	if x != nil {
-		return x.IPJurisdictionIDs
-	}
-	return nil
 }
 
 func (x *IntellectualProperty) GetLicenseType() string {
@@ -3693,7 +3685,7 @@ const file_asset_proto_rawDesc = "" +
 	"\x1aAssetExtensionContractAddr\x18\x0f \x01(\tH\x01R\x1aAssetExtensionContractAddr\x88\x01\x01\x12.\n" +
 	"\x12DistributionSupply\x18\x10 \x01(\tR\x12DistributionSupplyB\x18\n" +
 	"\x16_CrowdfundContractAddrB\x1d\n" +
-	"\x1b_AssetExtensionContractAddr\"\xcc\x03\n" +
+	"\x1b_AssetExtensionContractAddr\"\x9e\x03\n" +
 	"\x14IntellectualProperty\x12\x1a\n" +
 	"\bCategory\x18\x01 \x01(\tR\bCategory\x12\x14\n" +
 	"\x05Owner\x18\x02 \x01(\tR\x05Owner\x123\n" +
@@ -3701,8 +3693,7 @@ const file_asset_proto_rawDesc = "" +
 	"\n" +
 	"FilingDate\x18\x04 \x01(\tH\x01R\n" +
 	"FilingDate\x88\x01\x01\x12+\n" +
-	"\x0eExpirationDate\x18\x05 \x01(\tH\x02R\x0eExpirationDate\x88\x01\x01\x12,\n" +
-	"\x11IPJurisdictionIDs\x18\x06 \x03(\tR\x11IPJurisdictionIDs\x12%\n" +
+	"\x0eExpirationDate\x18\x05 \x01(\tH\x02R\x0eExpirationDate\x88\x01\x01\x12%\n" +
 	"\vLicenseType\x18\a \x01(\tH\x03R\vLicenseType\x88\x01\x01\x12'\n" +
 	"\fLicenseTerms\x18\b \x01(\tH\x04R\fLicenseTerms\x88\x01\x01\x12\x19\n" +
 	"\x05Value\x18\t \x01(\x02H\x05R\x05Value\x88\x01\x01B\x15\n" +

@@ -3530,7 +3530,6 @@ function createBaseIntellectualProperty() {
         RegistrationNumber: undefined,
         FilingDate: undefined,
         ExpirationDate: undefined,
-        IPJurisdictionIDs: [],
         LicenseType: undefined,
         LicenseTerms: undefined,
         Value: undefined,
@@ -3552,9 +3551,6 @@ export const IntellectualProperty = {
         }
         if (message.ExpirationDate !== undefined) {
             writer.uint32(42).string(message.ExpirationDate);
-        }
-        for (const v of message.IPJurisdictionIDs) {
-            writer.uint32(50).string(v);
         }
         if (message.LicenseType !== undefined) {
             writer.uint32(58).string(message.LicenseType);
@@ -3604,12 +3600,6 @@ export const IntellectualProperty = {
                     }
                     message.ExpirationDate = reader.string();
                     continue;
-                case 6:
-                    if (tag !== 50) {
-                        break;
-                    }
-                    message.IPJurisdictionIDs.push(reader.string());
-                    continue;
                 case 7:
                     if (tag !== 58) {
                         break;
@@ -3643,16 +3633,12 @@ export const IntellectualProperty = {
             RegistrationNumber: isSet(object.RegistrationNumber) ? globalThis.String(object.RegistrationNumber) : undefined,
             FilingDate: isSet(object.FilingDate) ? globalThis.String(object.FilingDate) : undefined,
             ExpirationDate: isSet(object.ExpirationDate) ? globalThis.String(object.ExpirationDate) : undefined,
-            IPJurisdictionIDs: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.IPJurisdictionIDs)
-                ? object.IPJurisdictionIDs.map((e) => globalThis.String(e))
-                : [],
             LicenseType: isSet(object.LicenseType) ? globalThis.String(object.LicenseType) : undefined,
             LicenseTerms: isSet(object.LicenseTerms) ? globalThis.String(object.LicenseTerms) : undefined,
             Value: isSet(object.Value) ? globalThis.Number(object.Value) : undefined,
         };
     },
     toJSON(message) {
-        var _a;
         const obj = {};
         if (message.Category !== "") {
             obj.Category = message.Category;
@@ -3669,9 +3655,6 @@ export const IntellectualProperty = {
         if (message.ExpirationDate !== undefined) {
             obj.ExpirationDate = message.ExpirationDate;
         }
-        if ((_a = message.IPJurisdictionIDs) === null || _a === void 0 ? void 0 : _a.length) {
-            obj.IPJurisdictionIDs = message.IPJurisdictionIDs;
-        }
         if (message.LicenseType !== undefined) {
             obj.LicenseType = message.LicenseType;
         }
@@ -3687,17 +3670,16 @@ export const IntellectualProperty = {
         return IntellectualProperty.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+        var _a, _b, _c, _d, _e, _f, _g, _h;
         const message = createBaseIntellectualProperty();
         message.Category = (_a = object.Category) !== null && _a !== void 0 ? _a : "";
         message.Owner = (_b = object.Owner) !== null && _b !== void 0 ? _b : "";
         message.RegistrationNumber = (_c = object.RegistrationNumber) !== null && _c !== void 0 ? _c : undefined;
         message.FilingDate = (_d = object.FilingDate) !== null && _d !== void 0 ? _d : undefined;
         message.ExpirationDate = (_e = object.ExpirationDate) !== null && _e !== void 0 ? _e : undefined;
-        message.IPJurisdictionIDs = ((_f = object.IPJurisdictionIDs) === null || _f === void 0 ? void 0 : _f.map((e) => e)) || [];
-        message.LicenseType = (_g = object.LicenseType) !== null && _g !== void 0 ? _g : undefined;
-        message.LicenseTerms = (_h = object.LicenseTerms) !== null && _h !== void 0 ? _h : undefined;
-        message.Value = (_j = object.Value) !== null && _j !== void 0 ? _j : undefined;
+        message.LicenseType = (_f = object.LicenseType) !== null && _f !== void 0 ? _f : undefined;
+        message.LicenseTerms = (_g = object.LicenseTerms) !== null && _g !== void 0 ? _g : undefined;
+        message.Value = (_h = object.Value) !== null && _h !== void 0 ? _h : undefined;
         return message;
     },
 };

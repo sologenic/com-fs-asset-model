@@ -287,7 +287,6 @@ message IntellectualProperty {
     optional string RegistrationNumber = 3;     
     optional string FilingDate = 4;             
     optional string ExpirationDate = 5;         
-    repeated string IPJurisdictionIDs = 6;      
     optional string LicenseType = 7;            
     optional string LicenseTerms = 8;           
     optional float Value = 9;                   
