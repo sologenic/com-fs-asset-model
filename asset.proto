@@ -316,9 +316,7 @@ message Equity {
 
 message FinancialProperties {
     string Symbol = 1;                        
-    string Issuer = 2;                        
-    repeated string JurisdictionIDs = 3;      
-    optional string JurisdictionRestrictions = 4; 
+    string Issuer = 2; 
     optional string RedemptionTerms = 5;      
     optional bool ComplianceRequired = 6;     
     string Type = 7;                          
@@ -351,7 +349,9 @@ message Description {
     repeated string Country = 6;                      
     repeated string Documents = 7;           
     repeated string Images = 8;              
-    string Vertical = 9;                     
+    string Vertical = 9;                
+    repeated string AllowedJurisdictions = 12;
+    string AllowedJurisdictionRestrictions = 13;     
     optional string CreatedAt = 10;          
     optional string UpdatedAt = 11;          
 }

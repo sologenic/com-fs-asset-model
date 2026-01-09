@@ -356,8 +356,6 @@ export interface Equity {
 export interface FinancialProperties {
     Symbol: string;
     Issuer: string;
-    JurisdictionIDs: string[];
-    JurisdictionRestrictions?: string | undefined;
     RedemptionTerms?: string | undefined;
     ComplianceRequired?: boolean | undefined;
     Type: string;
@@ -388,6 +386,8 @@ export interface Description {
     Documents: string[];
     Images: string[];
     Vertical: string;
+    AllowedJurisdictions: string[];
+    AllowedJurisdictionRestrictions: string;
     CreatedAt?: string | undefined;
     UpdatedAt?: string | undefined;
 }
@@ -568,8 +568,6 @@ export declare const AssetDetails: {
         FinancialProperties?: {
             Symbol?: string | undefined;
             Issuer?: string | undefined;
-            JurisdictionIDs?: string[] | undefined;
-            JurisdictionRestrictions?: string | undefined;
             RedemptionTerms?: string | undefined;
             ComplianceRequired?: boolean | undefined;
             Type?: string | undefined;
@@ -604,6 +602,8 @@ export declare const AssetDetails: {
             Documents?: string[] | undefined;
             Images?: string[] | undefined;
             Vertical?: string | undefined;
+            AllowedJurisdictions?: string[] | undefined;
+            AllowedJurisdictionRestrictions?: string | undefined;
             CreatedAt?: string | undefined;
             UpdatedAt?: string | undefined;
         } | undefined;
@@ -902,8 +902,6 @@ export declare const AssetDetails: {
         FinancialProperties?: ({
             Symbol?: string | undefined;
             Issuer?: string | undefined;
-            JurisdictionIDs?: string[] | undefined;
-            JurisdictionRestrictions?: string | undefined;
             RedemptionTerms?: string | undefined;
             ComplianceRequired?: boolean | undefined;
             Type?: string | undefined;
@@ -926,12 +924,10 @@ export declare const AssetDetails: {
         } & {
             Symbol?: string | undefined;
             Issuer?: string | undefined;
-            JurisdictionIDs?: (string[] & string[] & { [K_16 in Exclude<keyof I["FinancialProperties"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
-            JurisdictionRestrictions?: string | undefined;
             RedemptionTerms?: string | undefined;
             ComplianceRequired?: boolean | undefined;
             Type?: string | undefined;
-            TradeAllowances?: (string[] & string[] & { [K_17 in Exclude<keyof I["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
+            TradeAllowances?: (string[] & string[] & { [K_16 in Exclude<keyof I["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
             Transferable?: boolean | undefined;
             Platform?: string | undefined;
             PlatformType?: string | undefined;
@@ -947,7 +943,7 @@ export declare const AssetDetails: {
             ValuationDate?: string | undefined;
             Network?: Network | undefined;
             Status?: string | undefined;
-        } & { [K_18 in Exclude<keyof I["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
+        } & { [K_17 in Exclude<keyof I["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
         Description?: ({
             Name?: string | undefined;
             Description?: string | undefined;
@@ -962,6 +958,8 @@ export declare const AssetDetails: {
             Documents?: string[] | undefined;
             Images?: string[] | undefined;
             Vertical?: string | undefined;
+            AllowedJurisdictions?: string[] | undefined;
+            AllowedJurisdictionRestrictions?: string | undefined;
             CreatedAt?: string | undefined;
             UpdatedAt?: string | undefined;
         } & {
@@ -975,13 +973,15 @@ export declare const AssetDetails: {
                 Reference?: string | undefined;
                 Extension?: string | undefined;
                 Name?: string | undefined;
-            } & { [K_19 in Exclude<keyof I["Description"]["Logo"], keyof LogoFile>]: never; }) | undefined;
+            } & { [K_18 in Exclude<keyof I["Description"]["Logo"], keyof LogoFile>]: never; }) | undefined;
             AssetID?: string | undefined;
             URL?: string | undefined;
-            Country?: (string[] & string[] & { [K_20 in Exclude<keyof I["Description"]["Country"], keyof string[]>]: never; }) | undefined;
-            Documents?: (string[] & string[] & { [K_21 in Exclude<keyof I["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
-            Images?: (string[] & string[] & { [K_22 in Exclude<keyof I["Description"]["Images"], keyof string[]>]: never; }) | undefined;
+            Country?: (string[] & string[] & { [K_19 in Exclude<keyof I["Description"]["Country"], keyof string[]>]: never; }) | undefined;
+            Documents?: (string[] & string[] & { [K_20 in Exclude<keyof I["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
+            Images?: (string[] & string[] & { [K_21 in Exclude<keyof I["Description"]["Images"], keyof string[]>]: never; }) | undefined;
             Vertical?: string | undefined;
+            AllowedJurisdictions?: (string[] & string[] & { [K_22 in Exclude<keyof I["Description"]["AllowedJurisdictions"], keyof string[]>]: never; }) | undefined;
+            AllowedJurisdictionRestrictions?: string | undefined;
             CreatedAt?: string | undefined;
             UpdatedAt?: string | undefined;
         } & { [K_23 in Exclude<keyof I["Description"], keyof Description>]: never; }) | undefined;
@@ -1327,8 +1327,6 @@ export declare const AssetDetails: {
         FinancialProperties?: {
             Symbol?: string | undefined;
             Issuer?: string | undefined;
-            JurisdictionIDs?: string[] | undefined;
-            JurisdictionRestrictions?: string | undefined;
             RedemptionTerms?: string | undefined;
             ComplianceRequired?: boolean | undefined;
             Type?: string | undefined;
@@ -1363,6 +1361,8 @@ export declare const AssetDetails: {
             Documents?: string[] | undefined;
             Images?: string[] | undefined;
             Vertical?: string | undefined;
+            AllowedJurisdictions?: string[] | undefined;
+            AllowedJurisdictionRestrictions?: string | undefined;
             CreatedAt?: string | undefined;
             UpdatedAt?: string | undefined;
         } | undefined;
@@ -1661,8 +1661,6 @@ export declare const AssetDetails: {
         FinancialProperties?: ({
             Symbol?: string | undefined;
             Issuer?: string | undefined;
-            JurisdictionIDs?: string[] | undefined;
-            JurisdictionRestrictions?: string | undefined;
             RedemptionTerms?: string | undefined;
             ComplianceRequired?: boolean | undefined;
             Type?: string | undefined;
@@ -1685,12 +1683,10 @@ export declare const AssetDetails: {
         } & {
             Symbol?: string | undefined;
             Issuer?: string | undefined;
-            JurisdictionIDs?: (string[] & string[] & { [K_55 in Exclude<keyof I_1["FinancialProperties"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
-            JurisdictionRestrictions?: string | undefined;
             RedemptionTerms?: string | undefined;
             ComplianceRequired?: boolean | undefined;
             Type?: string | undefined;
-            TradeAllowances?: (string[] & string[] & { [K_56 in Exclude<keyof I_1["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
+            TradeAllowances?: (string[] & string[] & { [K_55 in Exclude<keyof I_1["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
             Transferable?: boolean | undefined;
             Platform?: string | undefined;
             PlatformType?: string | undefined;
@@ -1706,7 +1702,7 @@ export declare const AssetDetails: {
             ValuationDate?: string | undefined;
             Network?: Network | undefined;
             Status?: string | undefined;
-        } & { [K_57 in Exclude<keyof I_1["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
+        } & { [K_56 in Exclude<keyof I_1["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
         Description?: ({
             Name?: string | undefined;
             Description?: string | undefined;
@@ -1721,6 +1717,8 @@ export declare const AssetDetails: {
             Documents?: string[] | undefined;
             Images?: string[] | undefined;
             Vertical?: string | undefined;
+            AllowedJurisdictions?: string[] | undefined;
+            AllowedJurisdictionRestrictions?: string | undefined;
             CreatedAt?: string | undefined;
             UpdatedAt?: string | undefined;
         } & {
@@ -1734,13 +1732,15 @@ export declare const AssetDetails: {
                 Reference?: string | undefined;
                 Extension?: string | undefined;
                 Name?: string | undefined;
-            } & { [K_58 in Exclude<keyof I_1["Description"]["Logo"], keyof LogoFile>]: never; }) | undefined;
+            } & { [K_57 in Exclude<keyof I_1["Description"]["Logo"], keyof LogoFile>]: never; }) | undefined;
             AssetID?: string | undefined;
             URL?: string | undefined;
-            Country?: (string[] & string[] & { [K_59 in Exclude<keyof I_1["Description"]["Country"], keyof string[]>]: never; }) | undefined;
-            Documents?: (string[] & string[] & { [K_60 in Exclude<keyof I_1["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
-            Images?: (string[] & string[] & { [K_61 in Exclude<keyof I_1["Description"]["Images"], keyof string[]>]: never; }) | undefined;
+            Country?: (string[] & string[] & { [K_58 in Exclude<keyof I_1["Description"]["Country"], keyof string[]>]: never; }) | undefined;
+            Documents?: (string[] & string[] & { [K_59 in Exclude<keyof I_1["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
+            Images?: (string[] & string[] & { [K_60 in Exclude<keyof I_1["Description"]["Images"], keyof string[]>]: never; }) | undefined;
             Vertical?: string | undefined;
+            AllowedJurisdictions?: (string[] & string[] & { [K_61 in Exclude<keyof I_1["Description"]["AllowedJurisdictions"], keyof string[]>]: never; }) | undefined;
+            AllowedJurisdictionRestrictions?: string | undefined;
             CreatedAt?: string | undefined;
             UpdatedAt?: string | undefined;
         } & { [K_62 in Exclude<keyof I_1["Description"], keyof Description>]: never; }) | undefined;
@@ -2093,8 +2093,6 @@ export declare const Asset: {
             FinancialProperties?: {
                 Symbol?: string | undefined;
                 Issuer?: string | undefined;
-                JurisdictionIDs?: string[] | undefined;
-                JurisdictionRestrictions?: string | undefined;
                 RedemptionTerms?: string | undefined;
                 ComplianceRequired?: boolean | undefined;
                 Type?: string | undefined;
@@ -2129,6 +2127,8 @@ export declare const Asset: {
                 Documents?: string[] | undefined;
                 Images?: string[] | undefined;
                 Vertical?: string | undefined;
+                AllowedJurisdictions?: string[] | undefined;
+                AllowedJurisdictionRestrictions?: string | undefined;
                 CreatedAt?: string | undefined;
                 UpdatedAt?: string | undefined;
             } | undefined;
@@ -2352,8 +2352,6 @@ export declare const Asset: {
             FinancialProperties?: {
                 Symbol?: string | undefined;
                 Issuer?: string | undefined;
-                JurisdictionIDs?: string[] | undefined;
-                JurisdictionRestrictions?: string | undefined;
                 RedemptionTerms?: string | undefined;
                 ComplianceRequired?: boolean | undefined;
                 Type?: string | undefined;
@@ -2388,6 +2386,8 @@ export declare const Asset: {
                 Documents?: string[] | undefined;
                 Images?: string[] | undefined;
                 Vertical?: string | undefined;
+                AllowedJurisdictions?: string[] | undefined;
+                AllowedJurisdictionRestrictions?: string | undefined;
                 CreatedAt?: string | undefined;
                 UpdatedAt?: string | undefined;
             } | undefined;
@@ -2686,8 +2686,6 @@ export declare const Asset: {
             FinancialProperties?: ({
                 Symbol?: string | undefined;
                 Issuer?: string | undefined;
-                JurisdictionIDs?: string[] | undefined;
-                JurisdictionRestrictions?: string | undefined;
                 RedemptionTerms?: string | undefined;
                 ComplianceRequired?: boolean | undefined;
                 Type?: string | undefined;
@@ -2710,12 +2708,10 @@ export declare const Asset: {
             } & {
                 Symbol?: string | undefined;
                 Issuer?: string | undefined;
-                JurisdictionIDs?: (string[] & string[] & { [K_16 in Exclude<keyof I["AssetDetails"]["FinancialProperties"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
-                JurisdictionRestrictions?: string | undefined;
                 RedemptionTerms?: string | undefined;
                 ComplianceRequired?: boolean | undefined;
                 Type?: string | undefined;
-                TradeAllowances?: (string[] & string[] & { [K_17 in Exclude<keyof I["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
+                TradeAllowances?: (string[] & string[] & { [K_16 in Exclude<keyof I["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
                 Transferable?: boolean | undefined;
                 Platform?: string | undefined;
                 PlatformType?: string | undefined;
@@ -2731,7 +2727,7 @@ export declare const Asset: {
                 ValuationDate?: string | undefined;
                 Network?: Network | undefined;
                 Status?: string | undefined;
-            } & { [K_18 in Exclude<keyof I["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
+            } & { [K_17 in Exclude<keyof I["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
             Description?: ({
                 Name?: string | undefined;
                 Description?: string | undefined;
@@ -2746,6 +2742,8 @@ export declare const Asset: {
                 Documents?: string[] | undefined;
                 Images?: string[] | undefined;
                 Vertical?: string | undefined;
+                AllowedJurisdictions?: string[] | undefined;
+                AllowedJurisdictionRestrictions?: string | undefined;
                 CreatedAt?: string | undefined;
                 UpdatedAt?: string | undefined;
             } & {
@@ -2759,13 +2757,15 @@ export declare const Asset: {
                     Reference?: string | undefined;
                     Extension?: string | undefined;
                     Name?: string | undefined;
-                } & { [K_19 in Exclude<keyof I["AssetDetails"]["Description"]["Logo"], keyof LogoFile>]: never; }) | undefined;
+                } & { [K_18 in Exclude<keyof I["AssetDetails"]["Description"]["Logo"], keyof LogoFile>]: never; }) | undefined;
                 AssetID?: string | undefined;
                 URL?: string | undefined;
-                Country?: (string[] & string[] & { [K_20 in Exclude<keyof I["AssetDetails"]["Description"]["Country"], keyof string[]>]: never; }) | undefined;
-                Documents?: (string[] & string[] & { [K_21 in Exclude<keyof I["AssetDetails"]["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
-                Images?: (string[] & string[] & { [K_22 in Exclude<keyof I["AssetDetails"]["Description"]["Images"], keyof string[]>]: never; }) | undefined;
+                Country?: (string[] & string[] & { [K_19 in Exclude<keyof I["AssetDetails"]["Description"]["Country"], keyof string[]>]: never; }) | undefined;
+                Documents?: (string[] & string[] & { [K_20 in Exclude<keyof I["AssetDetails"]["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
+                Images?: (string[] & string[] & { [K_21 in Exclude<keyof I["AssetDetails"]["Description"]["Images"], keyof string[]>]: never; }) | undefined;
                 Vertical?: string | undefined;
+                AllowedJurisdictions?: (string[] & string[] & { [K_22 in Exclude<keyof I["AssetDetails"]["Description"]["AllowedJurisdictions"], keyof string[]>]: never; }) | undefined;
+                AllowedJurisdictionRestrictions?: string | undefined;
                 CreatedAt?: string | undefined;
                 UpdatedAt?: string | undefined;
             } & { [K_23 in Exclude<keyof I["AssetDetails"]["Description"], keyof Description>]: never; }) | undefined;
@@ -3174,8 +3174,6 @@ export declare const Asset: {
             FinancialProperties?: {
                 Symbol?: string | undefined;
                 Issuer?: string | undefined;
-                JurisdictionIDs?: string[] | undefined;
-                JurisdictionRestrictions?: string | undefined;
                 RedemptionTerms?: string | undefined;
                 ComplianceRequired?: boolean | undefined;
                 Type?: string | undefined;
@@ -3210,6 +3208,8 @@ export declare const Asset: {
                 Documents?: string[] | undefined;
                 Images?: string[] | undefined;
                 Vertical?: string | undefined;
+                AllowedJurisdictions?: string[] | undefined;
+                AllowedJurisdictionRestrictions?: string | undefined;
                 CreatedAt?: string | undefined;
                 UpdatedAt?: string | undefined;
             } | undefined;
@@ -3433,8 +3433,6 @@ export declare const Asset: {
             FinancialProperties?: {
                 Symbol?: string | undefined;
                 Issuer?: string | undefined;
-                JurisdictionIDs?: string[] | undefined;
-                JurisdictionRestrictions?: string | undefined;
                 RedemptionTerms?: string | undefined;
                 ComplianceRequired?: boolean | undefined;
                 Type?: string | undefined;
@@ -3469,6 +3467,8 @@ export declare const Asset: {
                 Documents?: string[] | undefined;
                 Images?: string[] | undefined;
                 Vertical?: string | undefined;
+                AllowedJurisdictions?: string[] | undefined;
+                AllowedJurisdictionRestrictions?: string | undefined;
                 CreatedAt?: string | undefined;
                 UpdatedAt?: string | undefined;
             } | undefined;
@@ -3767,8 +3767,6 @@ export declare const Asset: {
             FinancialProperties?: ({
                 Symbol?: string | undefined;
                 Issuer?: string | undefined;
-                JurisdictionIDs?: string[] | undefined;
-                JurisdictionRestrictions?: string | undefined;
                 RedemptionTerms?: string | undefined;
                 ComplianceRequired?: boolean | undefined;
                 Type?: string | undefined;
@@ -3791,12 +3789,10 @@ export declare const Asset: {
             } & {
                 Symbol?: string | undefined;
                 Issuer?: string | undefined;
-                JurisdictionIDs?: (string[] & string[] & { [K_60 in Exclude<keyof I_1["AssetDetails"]["FinancialProperties"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
-                JurisdictionRestrictions?: string | undefined;
                 RedemptionTerms?: string | undefined;
                 ComplianceRequired?: boolean | undefined;
                 Type?: string | undefined;
-                TradeAllowances?: (string[] & string[] & { [K_61 in Exclude<keyof I_1["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
+                TradeAllowances?: (string[] & string[] & { [K_60 in Exclude<keyof I_1["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
                 Transferable?: boolean | undefined;
                 Platform?: string | undefined;
                 PlatformType?: string | undefined;
@@ -3812,7 +3808,7 @@ export declare const Asset: {
                 ValuationDate?: string | undefined;
                 Network?: Network | undefined;
                 Status?: string | undefined;
-            } & { [K_62 in Exclude<keyof I_1["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
+            } & { [K_61 in Exclude<keyof I_1["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
             Description?: ({
                 Name?: string | undefined;
                 Description?: string | undefined;
@@ -3827,6 +3823,8 @@ export declare const Asset: {
                 Documents?: string[] | undefined;
                 Images?: string[] | undefined;
                 Vertical?: string | undefined;
+                AllowedJurisdictions?: string[] | undefined;
+                AllowedJurisdictionRestrictions?: string | undefined;
                 CreatedAt?: string | undefined;
                 UpdatedAt?: string | undefined;
             } & {
@@ -3840,13 +3838,15 @@ export declare const Asset: {
                     Reference?: string | undefined;
                     Extension?: string | undefined;
                     Name?: string | undefined;
-                } & { [K_63 in Exclude<keyof I_1["AssetDetails"]["Description"]["Logo"], keyof LogoFile>]: never; }) | undefined;
+                } & { [K_62 in Exclude<keyof I_1["AssetDetails"]["Description"]["Logo"], keyof LogoFile>]: never; }) | undefined;
                 AssetID?: string | undefined;
                 URL?: string | undefined;
-                Country?: (string[] & string[] & { [K_64 in Exclude<keyof I_1["AssetDetails"]["Description"]["Country"], keyof string[]>]: never; }) | undefined;
-                Documents?: (string[] & string[] & { [K_65 in Exclude<keyof I_1["AssetDetails"]["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
-                Images?: (string[] & string[] & { [K_66 in Exclude<keyof I_1["AssetDetails"]["Description"]["Images"], keyof string[]>]: never; }) | undefined;
+                Country?: (string[] & string[] & { [K_63 in Exclude<keyof I_1["AssetDetails"]["Description"]["Country"], keyof string[]>]: never; }) | undefined;
+                Documents?: (string[] & string[] & { [K_64 in Exclude<keyof I_1["AssetDetails"]["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
+                Images?: (string[] & string[] & { [K_65 in Exclude<keyof I_1["AssetDetails"]["Description"]["Images"], keyof string[]>]: never; }) | undefined;
                 Vertical?: string | undefined;
+                AllowedJurisdictions?: (string[] & string[] & { [K_66 in Exclude<keyof I_1["AssetDetails"]["Description"]["AllowedJurisdictions"], keyof string[]>]: never; }) | undefined;
+                AllowedJurisdictionRestrictions?: string | undefined;
                 CreatedAt?: string | undefined;
                 UpdatedAt?: string | undefined;
             } & { [K_67 in Exclude<keyof I_1["AssetDetails"]["Description"], keyof Description>]: never; }) | undefined;
@@ -4262,8 +4262,6 @@ export declare const Assets: {
                 FinancialProperties?: {
                     Symbol?: string | undefined;
                     Issuer?: string | undefined;
-                    JurisdictionIDs?: string[] | undefined;
-                    JurisdictionRestrictions?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
@@ -4298,6 +4296,8 @@ export declare const Assets: {
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
                     Vertical?: string | undefined;
+                    AllowedJurisdictions?: string[] | undefined;
+                    AllowedJurisdictionRestrictions?: string | undefined;
                     CreatedAt?: string | undefined;
                     UpdatedAt?: string | undefined;
                 } | undefined;
@@ -4524,8 +4524,6 @@ export declare const Assets: {
                 FinancialProperties?: {
                     Symbol?: string | undefined;
                     Issuer?: string | undefined;
-                    JurisdictionIDs?: string[] | undefined;
-                    JurisdictionRestrictions?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
@@ -4560,6 +4558,8 @@ export declare const Assets: {
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
                     Vertical?: string | undefined;
+                    AllowedJurisdictions?: string[] | undefined;
+                    AllowedJurisdictionRestrictions?: string | undefined;
                     CreatedAt?: string | undefined;
                     UpdatedAt?: string | undefined;
                 } | undefined;
@@ -4783,8 +4783,6 @@ export declare const Assets: {
                 FinancialProperties?: {
                     Symbol?: string | undefined;
                     Issuer?: string | undefined;
-                    JurisdictionIDs?: string[] | undefined;
-                    JurisdictionRestrictions?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
@@ -4819,6 +4817,8 @@ export declare const Assets: {
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
                     Vertical?: string | undefined;
+                    AllowedJurisdictions?: string[] | undefined;
+                    AllowedJurisdictionRestrictions?: string | undefined;
                     CreatedAt?: string | undefined;
                     UpdatedAt?: string | undefined;
                 } | undefined;
@@ -5042,8 +5042,6 @@ export declare const Assets: {
                 FinancialProperties?: {
                     Symbol?: string | undefined;
                     Issuer?: string | undefined;
-                    JurisdictionIDs?: string[] | undefined;
-                    JurisdictionRestrictions?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
@@ -5078,6 +5076,8 @@ export declare const Assets: {
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
                     Vertical?: string | undefined;
+                    AllowedJurisdictions?: string[] | undefined;
+                    AllowedJurisdictionRestrictions?: string | undefined;
                     CreatedAt?: string | undefined;
                     UpdatedAt?: string | undefined;
                 } | undefined;
@@ -5376,8 +5376,6 @@ export declare const Assets: {
                 FinancialProperties?: ({
                     Symbol?: string | undefined;
                     Issuer?: string | undefined;
-                    JurisdictionIDs?: string[] | undefined;
-                    JurisdictionRestrictions?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
@@ -5400,12 +5398,10 @@ export declare const Assets: {
                 } & {
                     Symbol?: string | undefined;
                     Issuer?: string | undefined;
-                    JurisdictionIDs?: (string[] & string[] & { [K_16 in Exclude<keyof I["Assets"][number]["AssetDetails"]["FinancialProperties"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
-                    JurisdictionRestrictions?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
-                    TradeAllowances?: (string[] & string[] & { [K_17 in Exclude<keyof I["Assets"][number]["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
+                    TradeAllowances?: (string[] & string[] & { [K_16 in Exclude<keyof I["Assets"][number]["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
                     Transferable?: boolean | undefined;
                     Platform?: string | undefined;
                     PlatformType?: string | undefined;
@@ -5421,7 +5417,7 @@ export declare const Assets: {
                     ValuationDate?: string | undefined;
                     Network?: Network | undefined;
                     Status?: string | undefined;
-                } & { [K_18 in Exclude<keyof I["Assets"][number]["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
+                } & { [K_17 in Exclude<keyof I["Assets"][number]["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
                 Description?: ({
                     Name?: string | undefined;
                     Description?: string | undefined;
@@ -5436,6 +5432,8 @@ export declare const Assets: {
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
                     Vertical?: string | undefined;
+                    AllowedJurisdictions?: string[] | undefined;
+                    AllowedJurisdictionRestrictions?: string | undefined;
                     CreatedAt?: string | undefined;
                     UpdatedAt?: string | undefined;
                 } & {
@@ -5449,13 +5447,15 @@ export declare const Assets: {
                         Reference?: string | undefined;
                         Extension?: string | undefined;
                         Name?: string | undefined;
-                    } & { [K_19 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Description"]["Logo"], keyof LogoFile>]: never; }) | undefined;
+                    } & { [K_18 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Description"]["Logo"], keyof LogoFile>]: never; }) | undefined;
                     AssetID?: string | undefined;
                     URL?: string | undefined;
-                    Country?: (string[] & string[] & { [K_20 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Description"]["Country"], keyof string[]>]: never; }) | undefined;
-                    Documents?: (string[] & string[] & { [K_21 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
-                    Images?: (string[] & string[] & { [K_22 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Description"]["Images"], keyof string[]>]: never; }) | undefined;
+                    Country?: (string[] & string[] & { [K_19 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Description"]["Country"], keyof string[]>]: never; }) | undefined;
+                    Documents?: (string[] & string[] & { [K_20 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
+                    Images?: (string[] & string[] & { [K_21 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Description"]["Images"], keyof string[]>]: never; }) | undefined;
                     Vertical?: string | undefined;
+                    AllowedJurisdictions?: (string[] & string[] & { [K_22 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Description"]["AllowedJurisdictions"], keyof string[]>]: never; }) | undefined;
+                    AllowedJurisdictionRestrictions?: string | undefined;
                     CreatedAt?: string | undefined;
                     UpdatedAt?: string | undefined;
                 } & { [K_23 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Description"], keyof Description>]: never; }) | undefined;
@@ -5863,8 +5863,6 @@ export declare const Assets: {
                 FinancialProperties?: {
                     Symbol?: string | undefined;
                     Issuer?: string | undefined;
-                    JurisdictionIDs?: string[] | undefined;
-                    JurisdictionRestrictions?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
@@ -5899,6 +5897,8 @@ export declare const Assets: {
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
                     Vertical?: string | undefined;
+                    AllowedJurisdictions?: string[] | undefined;
+                    AllowedJurisdictionRestrictions?: string | undefined;
                     CreatedAt?: string | undefined;
                     UpdatedAt?: string | undefined;
                 } | undefined;
@@ -6126,8 +6126,6 @@ export declare const Assets: {
                 FinancialProperties?: {
                     Symbol?: string | undefined;
                     Issuer?: string | undefined;
-                    JurisdictionIDs?: string[] | undefined;
-                    JurisdictionRestrictions?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
@@ -6162,6 +6160,8 @@ export declare const Assets: {
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
                     Vertical?: string | undefined;
+                    AllowedJurisdictions?: string[] | undefined;
+                    AllowedJurisdictionRestrictions?: string | undefined;
                     CreatedAt?: string | undefined;
                     UpdatedAt?: string | undefined;
                 } | undefined;
@@ -6388,8 +6388,6 @@ export declare const Assets: {
                 FinancialProperties?: {
                     Symbol?: string | undefined;
                     Issuer?: string | undefined;
-                    JurisdictionIDs?: string[] | undefined;
-                    JurisdictionRestrictions?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
@@ -6424,6 +6422,8 @@ export declare const Assets: {
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
                     Vertical?: string | undefined;
+                    AllowedJurisdictions?: string[] | undefined;
+                    AllowedJurisdictionRestrictions?: string | undefined;
                     CreatedAt?: string | undefined;
                     UpdatedAt?: string | undefined;
                 } | undefined;
@@ -6647,8 +6647,6 @@ export declare const Assets: {
                 FinancialProperties?: {
                     Symbol?: string | undefined;
                     Issuer?: string | undefined;
-                    JurisdictionIDs?: string[] | undefined;
-                    JurisdictionRestrictions?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
@@ -6683,6 +6681,8 @@ export declare const Assets: {
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
                     Vertical?: string | undefined;
+                    AllowedJurisdictions?: string[] | undefined;
+                    AllowedJurisdictionRestrictions?: string | undefined;
                     CreatedAt?: string | undefined;
                     UpdatedAt?: string | undefined;
                 } | undefined;
@@ -6906,8 +6906,6 @@ export declare const Assets: {
                 FinancialProperties?: {
                     Symbol?: string | undefined;
                     Issuer?: string | undefined;
-                    JurisdictionIDs?: string[] | undefined;
-                    JurisdictionRestrictions?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
@@ -6942,6 +6940,8 @@ export declare const Assets: {
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
                     Vertical?: string | undefined;
+                    AllowedJurisdictions?: string[] | undefined;
+                    AllowedJurisdictionRestrictions?: string | undefined;
                     CreatedAt?: string | undefined;
                     UpdatedAt?: string | undefined;
                 } | undefined;
@@ -7240,8 +7240,6 @@ export declare const Assets: {
                 FinancialProperties?: ({
                     Symbol?: string | undefined;
                     Issuer?: string | undefined;
-                    JurisdictionIDs?: string[] | undefined;
-                    JurisdictionRestrictions?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
@@ -7264,12 +7262,10 @@ export declare const Assets: {
                 } & {
                     Symbol?: string | undefined;
                     Issuer?: string | undefined;
-                    JurisdictionIDs?: (string[] & string[] & { [K_62 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["FinancialProperties"]["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
-                    JurisdictionRestrictions?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
-                    TradeAllowances?: (string[] & string[] & { [K_63 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
+                    TradeAllowances?: (string[] & string[] & { [K_62 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
                     Transferable?: boolean | undefined;
                     Platform?: string | undefined;
                     PlatformType?: string | undefined;
@@ -7285,7 +7281,7 @@ export declare const Assets: {
                     ValuationDate?: string | undefined;
                     Network?: Network | undefined;
                     Status?: string | undefined;
-                } & { [K_64 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
+                } & { [K_63 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
                 Description?: ({
                     Name?: string | undefined;
                     Description?: string | undefined;
@@ -7300,6 +7296,8 @@ export declare const Assets: {
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
                     Vertical?: string | undefined;
+                    AllowedJurisdictions?: string[] | undefined;
+                    AllowedJurisdictionRestrictions?: string | undefined;
                     CreatedAt?: string | undefined;
                     UpdatedAt?: string | undefined;
                 } & {
@@ -7313,13 +7311,15 @@ export declare const Assets: {
                         Reference?: string | undefined;
                         Extension?: string | undefined;
                         Name?: string | undefined;
-                    } & { [K_65 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"]["Logo"], keyof LogoFile>]: never; }) | undefined;
+                    } & { [K_64 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"]["Logo"], keyof LogoFile>]: never; }) | undefined;
                     AssetID?: string | undefined;
                     URL?: string | undefined;
-                    Country?: (string[] & string[] & { [K_66 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"]["Country"], keyof string[]>]: never; }) | undefined;
-                    Documents?: (string[] & string[] & { [K_67 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
-                    Images?: (string[] & string[] & { [K_68 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"]["Images"], keyof string[]>]: never; }) | undefined;
+                    Country?: (string[] & string[] & { [K_65 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"]["Country"], keyof string[]>]: never; }) | undefined;
+                    Documents?: (string[] & string[] & { [K_66 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
+                    Images?: (string[] & string[] & { [K_67 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"]["Images"], keyof string[]>]: never; }) | undefined;
                     Vertical?: string | undefined;
+                    AllowedJurisdictions?: (string[] & string[] & { [K_68 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"]["AllowedJurisdictions"], keyof string[]>]: never; }) | undefined;
+                    AllowedJurisdictionRestrictions?: string | undefined;
                     CreatedAt?: string | undefined;
                     UpdatedAt?: string | undefined;
                 } & { [K_69 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"], keyof Description>]: never; }) | undefined;
@@ -7727,8 +7727,6 @@ export declare const Assets: {
                 FinancialProperties?: {
                     Symbol?: string | undefined;
                     Issuer?: string | undefined;
-                    JurisdictionIDs?: string[] | undefined;
-                    JurisdictionRestrictions?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
@@ -7763,6 +7761,8 @@ export declare const Assets: {
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
                     Vertical?: string | undefined;
+                    AllowedJurisdictions?: string[] | undefined;
+                    AllowedJurisdictionRestrictions?: string | undefined;
                     CreatedAt?: string | undefined;
                     UpdatedAt?: string | undefined;
                 } | undefined;
@@ -9281,8 +9281,6 @@ export declare const FinancialProperties: {
     create<I extends {
         Symbol?: string | undefined;
         Issuer?: string | undefined;
-        JurisdictionIDs?: string[] | undefined;
-        JurisdictionRestrictions?: string | undefined;
         RedemptionTerms?: string | undefined;
         ComplianceRequired?: boolean | undefined;
         Type?: string | undefined;
@@ -9305,12 +9303,10 @@ export declare const FinancialProperties: {
     } & {
         Symbol?: string | undefined;
         Issuer?: string | undefined;
-        JurisdictionIDs?: (string[] & string[] & { [K in Exclude<keyof I["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
-        JurisdictionRestrictions?: string | undefined;
         RedemptionTerms?: string | undefined;
         ComplianceRequired?: boolean | undefined;
         Type?: string | undefined;
-        TradeAllowances?: (string[] & string[] & { [K_1 in Exclude<keyof I["TradeAllowances"], keyof string[]>]: never; }) | undefined;
+        TradeAllowances?: (string[] & string[] & { [K in Exclude<keyof I["TradeAllowances"], keyof string[]>]: never; }) | undefined;
         Transferable?: boolean | undefined;
         Platform?: string | undefined;
         PlatformType?: string | undefined;
@@ -9326,12 +9322,10 @@ export declare const FinancialProperties: {
         ValuationDate?: string | undefined;
         Network?: Network | undefined;
         Status?: string | undefined;
-    } & { [K_2 in Exclude<keyof I, keyof FinancialProperties>]: never; }>(base?: I | undefined): FinancialProperties;
+    } & { [K_1 in Exclude<keyof I, keyof FinancialProperties>]: never; }>(base?: I | undefined): FinancialProperties;
     fromPartial<I_1 extends {
         Symbol?: string | undefined;
         Issuer?: string | undefined;
-        JurisdictionIDs?: string[] | undefined;
-        JurisdictionRestrictions?: string | undefined;
         RedemptionTerms?: string | undefined;
         ComplianceRequired?: boolean | undefined;
         Type?: string | undefined;
@@ -9354,12 +9348,10 @@ export declare const FinancialProperties: {
     } & {
         Symbol?: string | undefined;
         Issuer?: string | undefined;
-        JurisdictionIDs?: (string[] & string[] & { [K_3 in Exclude<keyof I_1["JurisdictionIDs"], keyof string[]>]: never; }) | undefined;
-        JurisdictionRestrictions?: string | undefined;
         RedemptionTerms?: string | undefined;
         ComplianceRequired?: boolean | undefined;
         Type?: string | undefined;
-        TradeAllowances?: (string[] & string[] & { [K_4 in Exclude<keyof I_1["TradeAllowances"], keyof string[]>]: never; }) | undefined;
+        TradeAllowances?: (string[] & string[] & { [K_2 in Exclude<keyof I_1["TradeAllowances"], keyof string[]>]: never; }) | undefined;
         Transferable?: boolean | undefined;
         Platform?: string | undefined;
         PlatformType?: string | undefined;
@@ -9375,7 +9367,7 @@ export declare const FinancialProperties: {
         ValuationDate?: string | undefined;
         Network?: Network | undefined;
         Status?: string | undefined;
-    } & { [K_5 in Exclude<keyof I_1, keyof FinancialProperties>]: never; }>(object: I_1): FinancialProperties;
+    } & { [K_3 in Exclude<keyof I_1, keyof FinancialProperties>]: never; }>(object: I_1): FinancialProperties;
 };
 export declare const Description: {
     encode(message: Description, writer?: _m0.Writer): _m0.Writer;
@@ -9396,6 +9388,8 @@ export declare const Description: {
         Documents?: string[] | undefined;
         Images?: string[] | undefined;
         Vertical?: string | undefined;
+        AllowedJurisdictions?: string[] | undefined;
+        AllowedJurisdictionRestrictions?: string | undefined;
         CreatedAt?: string | undefined;
         UpdatedAt?: string | undefined;
     } & {
@@ -9416,9 +9410,11 @@ export declare const Description: {
         Documents?: (string[] & string[] & { [K_2 in Exclude<keyof I["Documents"], keyof string[]>]: never; }) | undefined;
         Images?: (string[] & string[] & { [K_3 in Exclude<keyof I["Images"], keyof string[]>]: never; }) | undefined;
         Vertical?: string | undefined;
+        AllowedJurisdictions?: (string[] & string[] & { [K_4 in Exclude<keyof I["AllowedJurisdictions"], keyof string[]>]: never; }) | undefined;
+        AllowedJurisdictionRestrictions?: string | undefined;
         CreatedAt?: string | undefined;
         UpdatedAt?: string | undefined;
-    } & { [K_4 in Exclude<keyof I, keyof Description>]: never; }>(base?: I | undefined): Description;
+    } & { [K_5 in Exclude<keyof I, keyof Description>]: never; }>(base?: I | undefined): Description;
     fromPartial<I_1 extends {
         Name?: string | undefined;
         Description?: string | undefined;
@@ -9433,6 +9429,8 @@ export declare const Description: {
         Documents?: string[] | undefined;
         Images?: string[] | undefined;
         Vertical?: string | undefined;
+        AllowedJurisdictions?: string[] | undefined;
+        AllowedJurisdictionRestrictions?: string | undefined;
         CreatedAt?: string | undefined;
         UpdatedAt?: string | undefined;
     } & {
@@ -9446,16 +9444,18 @@ export declare const Description: {
             Reference?: string | undefined;
             Extension?: string | undefined;
             Name?: string | undefined;
-        } & { [K_5 in Exclude<keyof I_1["Logo"], keyof LogoFile>]: never; }) | undefined;
+        } & { [K_6 in Exclude<keyof I_1["Logo"], keyof LogoFile>]: never; }) | undefined;
         AssetID?: string | undefined;
         URL?: string | undefined;
-        Country?: (string[] & string[] & { [K_6 in Exclude<keyof I_1["Country"], keyof string[]>]: never; }) | undefined;
-        Documents?: (string[] & string[] & { [K_7 in Exclude<keyof I_1["Documents"], keyof string[]>]: never; }) | undefined;
-        Images?: (string[] & string[] & { [K_8 in Exclude<keyof I_1["Images"], keyof string[]>]: never; }) | undefined;
+        Country?: (string[] & string[] & { [K_7 in Exclude<keyof I_1["Country"], keyof string[]>]: never; }) | undefined;
+        Documents?: (string[] & string[] & { [K_8 in Exclude<keyof I_1["Documents"], keyof string[]>]: never; }) | undefined;
+        Images?: (string[] & string[] & { [K_9 in Exclude<keyof I_1["Images"], keyof string[]>]: never; }) | undefined;
         Vertical?: string | undefined;
+        AllowedJurisdictions?: (string[] & string[] & { [K_10 in Exclude<keyof I_1["AllowedJurisdictions"], keyof string[]>]: never; }) | undefined;
+        AllowedJurisdictionRestrictions?: string | undefined;
         CreatedAt?: string | undefined;
         UpdatedAt?: string | undefined;
-    } & { [K_9 in Exclude<keyof I_1, keyof Description>]: never; }>(object: I_1): Description;
+    } & { [K_11 in Exclude<keyof I_1, keyof Description>]: never; }>(object: I_1): Description;
 };
 export declare const ExternalResources: {
     encode(message: ExternalResources, writer?: _m0.Writer): _m0.Writer;
