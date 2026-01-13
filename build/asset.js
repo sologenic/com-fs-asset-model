@@ -4328,11 +4328,10 @@ function createBaseDescription() {
         Logo: undefined,
         AssetID: "",
         URL: "",
-        Country: [],
+        AllowedJurisdictions: [],
         Documents: [],
         Images: [],
         Vertical: "",
-        AllowedJurisdictions: [],
         AllowedJurisdictionRestrictions: "",
         CreatedAt: undefined,
         UpdatedAt: undefined,
@@ -4355,7 +4354,7 @@ export const Description = {
         if (message.URL !== "") {
             writer.uint32(42).string(message.URL);
         }
-        for (const v of message.Country) {
+        for (const v of message.AllowedJurisdictions) {
             writer.uint32(50).string(v);
         }
         for (const v of message.Documents) {
@@ -4367,11 +4366,8 @@ export const Description = {
         if (message.Vertical !== "") {
             writer.uint32(74).string(message.Vertical);
         }
-        for (const v of message.AllowedJurisdictions) {
-            writer.uint32(98).string(v);
-        }
         if (message.AllowedJurisdictionRestrictions !== "") {
-            writer.uint32(106).string(message.AllowedJurisdictionRestrictions);
+            writer.uint32(98).string(message.AllowedJurisdictionRestrictions);
         }
         if (message.CreatedAt !== undefined) {
             writer.uint32(82).string(message.CreatedAt);
@@ -4422,7 +4418,7 @@ export const Description = {
                     if (tag !== 50) {
                         break;
                     }
-                    message.Country.push(reader.string());
+                    message.AllowedJurisdictions.push(reader.string());
                     continue;
                 case 7:
                     if (tag !== 58) {
@@ -4444,12 +4440,6 @@ export const Description = {
                     continue;
                 case 12:
                     if (tag !== 98) {
-                        break;
-                    }
-                    message.AllowedJurisdictions.push(reader.string());
-                    continue;
-                case 13:
-                    if (tag !== 106) {
                         break;
                     }
                     message.AllowedJurisdictionRestrictions = reader.string();
@@ -4481,15 +4471,14 @@ export const Description = {
             Logo: isSet(object.Logo) ? LogoFile.fromJSON(object.Logo) : undefined,
             AssetID: isSet(object.AssetID) ? globalThis.String(object.AssetID) : "",
             URL: isSet(object.URL) ? globalThis.String(object.URL) : "",
-            Country: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Country) ? object.Country.map((e) => globalThis.String(e)) : [],
+            AllowedJurisdictions: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.AllowedJurisdictions)
+                ? object.AllowedJurisdictions.map((e) => globalThis.String(e))
+                : [],
             Documents: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Documents)
                 ? object.Documents.map((e) => globalThis.String(e))
                 : [],
             Images: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Images) ? object.Images.map((e) => globalThis.String(e)) : [],
             Vertical: isSet(object.Vertical) ? globalThis.String(object.Vertical) : "",
-            AllowedJurisdictions: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.AllowedJurisdictions)
-                ? object.AllowedJurisdictions.map((e) => globalThis.String(e))
-                : [],
             AllowedJurisdictionRestrictions: isSet(object.AllowedJurisdictionRestrictions)
                 ? globalThis.String(object.AllowedJurisdictionRestrictions)
                 : "",
@@ -4498,7 +4487,7 @@ export const Description = {
         };
     },
     toJSON(message) {
-        var _a, _b, _c, _d;
+        var _a, _b, _c;
         const obj = {};
         if (message.Name !== "") {
             obj.Name = message.Name;
@@ -4515,8 +4504,8 @@ export const Description = {
         if (message.URL !== "") {
             obj.URL = message.URL;
         }
-        if ((_a = message.Country) === null || _a === void 0 ? void 0 : _a.length) {
-            obj.Country = message.Country;
+        if ((_a = message.AllowedJurisdictions) === null || _a === void 0 ? void 0 : _a.length) {
+            obj.AllowedJurisdictions = message.AllowedJurisdictions;
         }
         if ((_b = message.Documents) === null || _b === void 0 ? void 0 : _b.length) {
             obj.Documents = message.Documents;
@@ -4526,9 +4515,6 @@ export const Description = {
         }
         if (message.Vertical !== "") {
             obj.Vertical = message.Vertical;
-        }
-        if ((_d = message.AllowedJurisdictions) === null || _d === void 0 ? void 0 : _d.length) {
-            obj.AllowedJurisdictions = message.AllowedJurisdictions;
         }
         if (message.AllowedJurisdictionRestrictions !== "") {
             obj.AllowedJurisdictionRestrictions = message.AllowedJurisdictionRestrictions;
@@ -4545,21 +4531,20 @@ export const Description = {
         return Description.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
         const message = createBaseDescription();
         message.Name = (_a = object.Name) !== null && _a !== void 0 ? _a : "";
         message.Description = (_b = object.Description) !== null && _b !== void 0 ? _b : "";
         message.Logo = (object.Logo !== undefined && object.Logo !== null) ? LogoFile.fromPartial(object.Logo) : undefined;
         message.AssetID = (_c = object.AssetID) !== null && _c !== void 0 ? _c : "";
         message.URL = (_d = object.URL) !== null && _d !== void 0 ? _d : "";
-        message.Country = ((_e = object.Country) === null || _e === void 0 ? void 0 : _e.map((e) => e)) || [];
+        message.AllowedJurisdictions = ((_e = object.AllowedJurisdictions) === null || _e === void 0 ? void 0 : _e.map((e) => e)) || [];
         message.Documents = ((_f = object.Documents) === null || _f === void 0 ? void 0 : _f.map((e) => e)) || [];
         message.Images = ((_g = object.Images) === null || _g === void 0 ? void 0 : _g.map((e) => e)) || [];
         message.Vertical = (_h = object.Vertical) !== null && _h !== void 0 ? _h : "";
-        message.AllowedJurisdictions = ((_j = object.AllowedJurisdictions) === null || _j === void 0 ? void 0 : _j.map((e) => e)) || [];
-        message.AllowedJurisdictionRestrictions = (_k = object.AllowedJurisdictionRestrictions) !== null && _k !== void 0 ? _k : "";
-        message.CreatedAt = (_l = object.CreatedAt) !== null && _l !== void 0 ? _l : undefined;
-        message.UpdatedAt = (_m = object.UpdatedAt) !== null && _m !== void 0 ? _m : undefined;
+        message.AllowedJurisdictionRestrictions = (_j = object.AllowedJurisdictionRestrictions) !== null && _j !== void 0 ? _j : "";
+        message.CreatedAt = (_k = object.CreatedAt) !== null && _k !== void 0 ? _k : undefined;
+        message.UpdatedAt = (_l = object.UpdatedAt) !== null && _l !== void 0 ? _l : undefined;
         return message;
     },
 };

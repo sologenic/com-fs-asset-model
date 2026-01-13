@@ -2876,12 +2876,11 @@ type Description struct {
 	Logo                            *LogoFile              `protobuf:"bytes,3,opt,name=Logo,proto3" json:"Logo,omitempty"`
 	AssetID                         string                 `protobuf:"bytes,4,opt,name=AssetID,proto3" json:"AssetID,omitempty"`
 	URL                             string                 `protobuf:"bytes,5,opt,name=URL,proto3" json:"URL,omitempty"`
-	Country                         []string               `protobuf:"bytes,6,rep,name=Country,proto3" json:"Country,omitempty"`
+	AllowedJurisdictions            []string               `protobuf:"bytes,6,rep,name=AllowedJurisdictions,proto3" json:"AllowedJurisdictions,omitempty"`
 	Documents                       []string               `protobuf:"bytes,7,rep,name=Documents,proto3" json:"Documents,omitempty"`
 	Images                          []string               `protobuf:"bytes,8,rep,name=Images,proto3" json:"Images,omitempty"`
 	Vertical                        string                 `protobuf:"bytes,9,opt,name=Vertical,proto3" json:"Vertical,omitempty"`
-	AllowedJurisdictions            []string               `protobuf:"bytes,12,rep,name=AllowedJurisdictions,proto3" json:"AllowedJurisdictions,omitempty"`
-	AllowedJurisdictionRestrictions string                 `protobuf:"bytes,13,opt,name=AllowedJurisdictionRestrictions,proto3" json:"AllowedJurisdictionRestrictions,omitempty"`
+	AllowedJurisdictionRestrictions string                 `protobuf:"bytes,12,opt,name=AllowedJurisdictionRestrictions,proto3" json:"AllowedJurisdictionRestrictions,omitempty"`
 	CreatedAt                       *string                `protobuf:"bytes,10,opt,name=CreatedAt,proto3,oneof" json:"CreatedAt,omitempty"`
 	UpdatedAt                       *string                `protobuf:"bytes,11,opt,name=UpdatedAt,proto3,oneof" json:"UpdatedAt,omitempty"`
 	unknownFields                   protoimpl.UnknownFields
@@ -2953,9 +2952,9 @@ func (x *Description) GetURL() string {
 	return ""
 }
 
-func (x *Description) GetCountry() []string {
+func (x *Description) GetAllowedJurisdictions() []string {
 	if x != nil {
-		return x.Country
+		return x.AllowedJurisdictions
 	}
 	return nil
 }
@@ -2979,13 +2978,6 @@ func (x *Description) GetVertical() string {
 		return x.Vertical
 	}
 	return ""
-}
-
-func (x *Description) GetAllowedJurisdictions() []string {
-	if x != nil {
-		return x.AllowedJurisdictions
-	}
-	return nil
 }
 
 func (x *Description) GetAllowedJurisdictionRestrictions() string {
@@ -3758,19 +3750,18 @@ const file_asset_proto_rawDesc = "" +
 	"\n" +
 	"\b_SubunitB\b\n" +
 	"\x06_PriceB\x10\n" +
-	"\x0e_ValuationDate\"\xe0\x03\n" +
+	"\x0e_ValuationDate\"\xc6\x03\n" +
 	"\vDescription\x12\x12\n" +
 	"\x04Name\x18\x01 \x01(\tR\x04Name\x12 \n" +
 	"\vDescription\x18\x02 \x01(\tR\vDescription\x12#\n" +
 	"\x04Logo\x18\x03 \x01(\v2\x0f.asset.LogoFileR\x04Logo\x12\x18\n" +
 	"\aAssetID\x18\x04 \x01(\tR\aAssetID\x12\x10\n" +
-	"\x03URL\x18\x05 \x01(\tR\x03URL\x12\x18\n" +
-	"\aCountry\x18\x06 \x03(\tR\aCountry\x12\x1c\n" +
+	"\x03URL\x18\x05 \x01(\tR\x03URL\x122\n" +
+	"\x14AllowedJurisdictions\x18\x06 \x03(\tR\x14AllowedJurisdictions\x12\x1c\n" +
 	"\tDocuments\x18\a \x03(\tR\tDocuments\x12\x16\n" +
 	"\x06Images\x18\b \x03(\tR\x06Images\x12\x1a\n" +
-	"\bVertical\x18\t \x01(\tR\bVertical\x122\n" +
-	"\x14AllowedJurisdictions\x18\f \x03(\tR\x14AllowedJurisdictions\x12H\n" +
-	"\x1fAllowedJurisdictionRestrictions\x18\r \x01(\tR\x1fAllowedJurisdictionRestrictions\x12!\n" +
+	"\bVertical\x18\t \x01(\tR\bVertical\x12H\n" +
+	"\x1fAllowedJurisdictionRestrictions\x18\f \x01(\tR\x1fAllowedJurisdictionRestrictions\x12!\n" +
 	"\tCreatedAt\x18\n" +
 	" \x01(\tH\x00R\tCreatedAt\x88\x01\x01\x12!\n" +
 	"\tUpdatedAt\x18\v \x01(\tH\x01R\tUpdatedAt\x88\x01\x01B\f\n" +

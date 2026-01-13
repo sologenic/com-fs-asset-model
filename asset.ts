@@ -847,11 +847,10 @@ export interface Description {
   Logo: LogoFile | undefined;
   AssetID: string;
   URL: string;
-  Country: string[];
+  AllowedJurisdictions: string[];
   Documents: string[];
   Images: string[];
   Vertical: string;
-  AllowedJurisdictions: string[];
   AllowedJurisdictionRestrictions: string;
   CreatedAt?: string | undefined;
   UpdatedAt?: string | undefined;
@@ -5024,11 +5023,10 @@ function createBaseDescription(): Description {
     Logo: undefined,
     AssetID: "",
     URL: "",
-    Country: [],
+    AllowedJurisdictions: [],
     Documents: [],
     Images: [],
     Vertical: "",
-    AllowedJurisdictions: [],
     AllowedJurisdictionRestrictions: "",
     CreatedAt: undefined,
     UpdatedAt: undefined,
@@ -5052,7 +5050,7 @@ export const Description = {
     if (message.URL !== "") {
       writer.uint32(42).string(message.URL);
     }
-    for (const v of message.Country) {
+    for (const v of message.AllowedJurisdictions) {
       writer.uint32(50).string(v!);
     }
     for (const v of message.Documents) {
@@ -5064,11 +5062,8 @@ export const Description = {
     if (message.Vertical !== "") {
       writer.uint32(74).string(message.Vertical);
     }
-    for (const v of message.AllowedJurisdictions) {
-      writer.uint32(98).string(v!);
-    }
     if (message.AllowedJurisdictionRestrictions !== "") {
-      writer.uint32(106).string(message.AllowedJurisdictionRestrictions);
+      writer.uint32(98).string(message.AllowedJurisdictionRestrictions);
     }
     if (message.CreatedAt !== undefined) {
       writer.uint32(82).string(message.CreatedAt);
@@ -5126,7 +5121,7 @@ export const Description = {
             break;
           }
 
-          message.Country.push(reader.string());
+          message.AllowedJurisdictions.push(reader.string());
           continue;
         case 7:
           if (tag !== 58) {
@@ -5151,13 +5146,6 @@ export const Description = {
           continue;
         case 12:
           if (tag !== 98) {
-            break;
-          }
-
-          message.AllowedJurisdictions.push(reader.string());
-          continue;
-        case 13:
-          if (tag !== 106) {
             break;
           }
 
@@ -5193,15 +5181,14 @@ export const Description = {
       Logo: isSet(object.Logo) ? LogoFile.fromJSON(object.Logo) : undefined,
       AssetID: isSet(object.AssetID) ? globalThis.String(object.AssetID) : "",
       URL: isSet(object.URL) ? globalThis.String(object.URL) : "",
-      Country: globalThis.Array.isArray(object?.Country) ? object.Country.map((e: any) => globalThis.String(e)) : [],
+      AllowedJurisdictions: globalThis.Array.isArray(object?.AllowedJurisdictions)
+        ? object.AllowedJurisdictions.map((e: any) => globalThis.String(e))
+        : [],
       Documents: globalThis.Array.isArray(object?.Documents)
         ? object.Documents.map((e: any) => globalThis.String(e))
         : [],
       Images: globalThis.Array.isArray(object?.Images) ? object.Images.map((e: any) => globalThis.String(e)) : [],
       Vertical: isSet(object.Vertical) ? globalThis.String(object.Vertical) : "",
-      AllowedJurisdictions: globalThis.Array.isArray(object?.AllowedJurisdictions)
-        ? object.AllowedJurisdictions.map((e: any) => globalThis.String(e))
-        : [],
       AllowedJurisdictionRestrictions: isSet(object.AllowedJurisdictionRestrictions)
         ? globalThis.String(object.AllowedJurisdictionRestrictions)
         : "",
@@ -5227,8 +5214,8 @@ export const Description = {
     if (message.URL !== "") {
       obj.URL = message.URL;
     }
-    if (message.Country?.length) {
-      obj.Country = message.Country;
+    if (message.AllowedJurisdictions?.length) {
+      obj.AllowedJurisdictions = message.AllowedJurisdictions;
     }
     if (message.Documents?.length) {
       obj.Documents = message.Documents;
@@ -5238,9 +5225,6 @@ export const Description = {
     }
     if (message.Vertical !== "") {
       obj.Vertical = message.Vertical;
-    }
-    if (message.AllowedJurisdictions?.length) {
-      obj.AllowedJurisdictions = message.AllowedJurisdictions;
     }
     if (message.AllowedJurisdictionRestrictions !== "") {
       obj.AllowedJurisdictionRestrictions = message.AllowedJurisdictionRestrictions;
@@ -5264,11 +5248,10 @@ export const Description = {
     message.Logo = (object.Logo !== undefined && object.Logo !== null) ? LogoFile.fromPartial(object.Logo) : undefined;
     message.AssetID = object.AssetID ?? "";
     message.URL = object.URL ?? "";
-    message.Country = object.Country?.map((e) => e) || [];
+    message.AllowedJurisdictions = object.AllowedJurisdictions?.map((e) => e) || [];
     message.Documents = object.Documents?.map((e) => e) || [];
     message.Images = object.Images?.map((e) => e) || [];
     message.Vertical = object.Vertical ?? "";
-    message.AllowedJurisdictions = object.AllowedJurisdictions?.map((e) => e) || [];
     message.AllowedJurisdictionRestrictions = object.AllowedJurisdictionRestrictions ?? "";
     message.CreatedAt = object.CreatedAt ?? undefined;
     message.UpdatedAt = object.UpdatedAt ?? undefined;
