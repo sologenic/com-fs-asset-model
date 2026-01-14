@@ -1923,7 +1923,6 @@ function createBaseCommodity() {
         Quality: undefined,
         UnitOfMeasure: "",
         Quantity: undefined,
-        OriginCountry: undefined,
         ExchangeTickerSymbol: undefined,
         Exchange: undefined,
         MinTransactionAmount: undefined,
@@ -1945,9 +1944,6 @@ export const Commodity = {
         }
         if (message.Quantity !== undefined) {
             writer.uint32(37).float(message.Quantity);
-        }
-        if (message.OriginCountry !== undefined) {
-            writer.uint32(42).string(message.OriginCountry);
         }
         if (message.ExchangeTickerSymbol !== undefined) {
             writer.uint32(50).string(message.ExchangeTickerSymbol);
@@ -2000,12 +1996,6 @@ export const Commodity = {
                     }
                     message.Quantity = reader.float();
                     continue;
-                case 5:
-                    if (tag !== 42) {
-                        break;
-                    }
-                    message.OriginCountry = reader.string();
-                    continue;
                 case 6:
                     if (tag !== 50) {
                         break;
@@ -2056,7 +2046,6 @@ export const Commodity = {
             Quality: isSet(object.Quality) ? globalThis.String(object.Quality) : undefined,
             UnitOfMeasure: isSet(object.UnitOfMeasure) ? globalThis.String(object.UnitOfMeasure) : "",
             Quantity: isSet(object.Quantity) ? globalThis.Number(object.Quantity) : undefined,
-            OriginCountry: isSet(object.OriginCountry) ? globalThis.String(object.OriginCountry) : undefined,
             ExchangeTickerSymbol: isSet(object.ExchangeTickerSymbol)
                 ? globalThis.String(object.ExchangeTickerSymbol)
                 : undefined,
@@ -2083,9 +2072,6 @@ export const Commodity = {
         if (message.Quantity !== undefined) {
             obj.Quantity = message.Quantity;
         }
-        if (message.OriginCountry !== undefined) {
-            obj.OriginCountry = message.OriginCountry;
-        }
         if (message.ExchangeTickerSymbol !== undefined) {
             obj.ExchangeTickerSymbol = message.ExchangeTickerSymbol;
         }
@@ -2110,19 +2096,18 @@ export const Commodity = {
         return Commodity.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
         const message = createBaseCommodity();
         message.Category = (_a = object.Category) !== null && _a !== void 0 ? _a : "";
         message.Quality = (_b = object.Quality) !== null && _b !== void 0 ? _b : undefined;
         message.UnitOfMeasure = (_c = object.UnitOfMeasure) !== null && _c !== void 0 ? _c : "";
         message.Quantity = (_d = object.Quantity) !== null && _d !== void 0 ? _d : undefined;
-        message.OriginCountry = (_e = object.OriginCountry) !== null && _e !== void 0 ? _e : undefined;
-        message.ExchangeTickerSymbol = (_f = object.ExchangeTickerSymbol) !== null && _f !== void 0 ? _f : undefined;
-        message.Exchange = (_g = object.Exchange) !== null && _g !== void 0 ? _g : undefined;
-        message.MinTransactionAmount = (_h = object.MinTransactionAmount) !== null && _h !== void 0 ? _h : undefined;
-        message.StorageLocation = (_j = object.StorageLocation) !== null && _j !== void 0 ? _j : undefined;
-        message.ContractType = (_k = object.ContractType) !== null && _k !== void 0 ? _k : undefined;
-        message.DeliveryDate = (_l = object.DeliveryDate) !== null && _l !== void 0 ? _l : undefined;
+        message.ExchangeTickerSymbol = (_e = object.ExchangeTickerSymbol) !== null && _e !== void 0 ? _e : undefined;
+        message.Exchange = (_f = object.Exchange) !== null && _f !== void 0 ? _f : undefined;
+        message.MinTransactionAmount = (_g = object.MinTransactionAmount) !== null && _g !== void 0 ? _g : undefined;
+        message.StorageLocation = (_h = object.StorageLocation) !== null && _h !== void 0 ? _h : undefined;
+        message.ContractType = (_j = object.ContractType) !== null && _j !== void 0 ? _j : undefined;
+        message.DeliveryDate = (_k = object.DeliveryDate) !== null && _k !== void 0 ? _k : undefined;
         return message;
     },
 };
@@ -4328,10 +4313,11 @@ function createBaseDescription() {
         Logo: undefined,
         AssetID: "",
         URL: "",
-        AllowedJurisdictions: [],
+        OriginCountry: "",
         Documents: [],
         Images: [],
         Vertical: "",
+        AllowedJurisdictions: [],
         AllowedJurisdictionRestrictions: "",
         CreatedAt: undefined,
         UpdatedAt: undefined,
@@ -4354,8 +4340,8 @@ export const Description = {
         if (message.URL !== "") {
             writer.uint32(42).string(message.URL);
         }
-        for (const v of message.AllowedJurisdictions) {
-            writer.uint32(50).string(v);
+        if (message.OriginCountry !== "") {
+            writer.uint32(50).string(message.OriginCountry);
         }
         for (const v of message.Documents) {
             writer.uint32(58).string(v);
@@ -4366,8 +4352,11 @@ export const Description = {
         if (message.Vertical !== "") {
             writer.uint32(74).string(message.Vertical);
         }
+        for (const v of message.AllowedJurisdictions) {
+            writer.uint32(98).string(v);
+        }
         if (message.AllowedJurisdictionRestrictions !== "") {
-            writer.uint32(98).string(message.AllowedJurisdictionRestrictions);
+            writer.uint32(106).string(message.AllowedJurisdictionRestrictions);
         }
         if (message.CreatedAt !== undefined) {
             writer.uint32(82).string(message.CreatedAt);
@@ -4418,7 +4407,7 @@ export const Description = {
                     if (tag !== 50) {
                         break;
                     }
-                    message.AllowedJurisdictions.push(reader.string());
+                    message.OriginCountry = reader.string();
                     continue;
                 case 7:
                     if (tag !== 58) {
@@ -4440,6 +4429,12 @@ export const Description = {
                     continue;
                 case 12:
                     if (tag !== 98) {
+                        break;
+                    }
+                    message.AllowedJurisdictions.push(reader.string());
+                    continue;
+                case 13:
+                    if (tag !== 106) {
                         break;
                     }
                     message.AllowedJurisdictionRestrictions = reader.string();
@@ -4471,14 +4466,15 @@ export const Description = {
             Logo: isSet(object.Logo) ? LogoFile.fromJSON(object.Logo) : undefined,
             AssetID: isSet(object.AssetID) ? globalThis.String(object.AssetID) : "",
             URL: isSet(object.URL) ? globalThis.String(object.URL) : "",
-            AllowedJurisdictions: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.AllowedJurisdictions)
-                ? object.AllowedJurisdictions.map((e) => globalThis.String(e))
-                : [],
+            OriginCountry: isSet(object.OriginCountry) ? globalThis.String(object.OriginCountry) : "",
             Documents: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Documents)
                 ? object.Documents.map((e) => globalThis.String(e))
                 : [],
             Images: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Images) ? object.Images.map((e) => globalThis.String(e)) : [],
             Vertical: isSet(object.Vertical) ? globalThis.String(object.Vertical) : "",
+            AllowedJurisdictions: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.AllowedJurisdictions)
+                ? object.AllowedJurisdictions.map((e) => globalThis.String(e))
+                : [],
             AllowedJurisdictionRestrictions: isSet(object.AllowedJurisdictionRestrictions)
                 ? globalThis.String(object.AllowedJurisdictionRestrictions)
                 : "",
@@ -4504,17 +4500,20 @@ export const Description = {
         if (message.URL !== "") {
             obj.URL = message.URL;
         }
-        if ((_a = message.AllowedJurisdictions) === null || _a === void 0 ? void 0 : _a.length) {
-            obj.AllowedJurisdictions = message.AllowedJurisdictions;
+        if (message.OriginCountry !== "") {
+            obj.OriginCountry = message.OriginCountry;
         }
-        if ((_b = message.Documents) === null || _b === void 0 ? void 0 : _b.length) {
+        if ((_a = message.Documents) === null || _a === void 0 ? void 0 : _a.length) {
             obj.Documents = message.Documents;
         }
-        if ((_c = message.Images) === null || _c === void 0 ? void 0 : _c.length) {
+        if ((_b = message.Images) === null || _b === void 0 ? void 0 : _b.length) {
             obj.Images = message.Images;
         }
         if (message.Vertical !== "") {
             obj.Vertical = message.Vertical;
+        }
+        if ((_c = message.AllowedJurisdictions) === null || _c === void 0 ? void 0 : _c.length) {
+            obj.AllowedJurisdictions = message.AllowedJurisdictions;
         }
         if (message.AllowedJurisdictionRestrictions !== "") {
             obj.AllowedJurisdictionRestrictions = message.AllowedJurisdictionRestrictions;
@@ -4531,20 +4530,21 @@ export const Description = {
         return Description.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
         const message = createBaseDescription();
         message.Name = (_a = object.Name) !== null && _a !== void 0 ? _a : "";
         message.Description = (_b = object.Description) !== null && _b !== void 0 ? _b : "";
         message.Logo = (object.Logo !== undefined && object.Logo !== null) ? LogoFile.fromPartial(object.Logo) : undefined;
         message.AssetID = (_c = object.AssetID) !== null && _c !== void 0 ? _c : "";
         message.URL = (_d = object.URL) !== null && _d !== void 0 ? _d : "";
-        message.AllowedJurisdictions = ((_e = object.AllowedJurisdictions) === null || _e === void 0 ? void 0 : _e.map((e) => e)) || [];
+        message.OriginCountry = (_e = object.OriginCountry) !== null && _e !== void 0 ? _e : "";
         message.Documents = ((_f = object.Documents) === null || _f === void 0 ? void 0 : _f.map((e) => e)) || [];
         message.Images = ((_g = object.Images) === null || _g === void 0 ? void 0 : _g.map((e) => e)) || [];
         message.Vertical = (_h = object.Vertical) !== null && _h !== void 0 ? _h : "";
-        message.AllowedJurisdictionRestrictions = (_j = object.AllowedJurisdictionRestrictions) !== null && _j !== void 0 ? _j : "";
-        message.CreatedAt = (_k = object.CreatedAt) !== null && _k !== void 0 ? _k : undefined;
-        message.UpdatedAt = (_l = object.UpdatedAt) !== null && _l !== void 0 ? _l : undefined;
+        message.AllowedJurisdictions = ((_j = object.AllowedJurisdictions) === null || _j === void 0 ? void 0 : _j.map((e) => e)) || [];
+        message.AllowedJurisdictionRestrictions = (_k = object.AllowedJurisdictionRestrictions) !== null && _k !== void 0 ? _k : "";
+        message.CreatedAt = (_l = object.CreatedAt) !== null && _l !== void 0 ? _l : undefined;
+        message.UpdatedAt = (_m = object.UpdatedAt) !== null && _m !== void 0 ? _m : undefined;
         return message;
     },
 };

@@ -1372,7 +1372,6 @@ type Commodity struct {
 	Quality              *string                `protobuf:"bytes,2,opt,name=Quality,proto3,oneof" json:"Quality,omitempty"`
 	UnitOfMeasure        string                 `protobuf:"bytes,3,opt,name=UnitOfMeasure,proto3" json:"UnitOfMeasure,omitempty"`
 	Quantity             *float32               `protobuf:"fixed32,4,opt,name=Quantity,proto3,oneof" json:"Quantity,omitempty"`
-	OriginCountry        *string                `protobuf:"bytes,5,opt,name=OriginCountry,proto3,oneof" json:"OriginCountry,omitempty"`
 	ExchangeTickerSymbol *string                `protobuf:"bytes,6,opt,name=ExchangeTickerSymbol,proto3,oneof" json:"ExchangeTickerSymbol,omitempty"`
 	Exchange             *string                `protobuf:"bytes,7,opt,name=Exchange,proto3,oneof" json:"Exchange,omitempty"`
 	MinTransactionAmount *float32               `protobuf:"fixed32,8,opt,name=MinTransactionAmount,proto3,oneof" json:"MinTransactionAmount,omitempty"`
@@ -1439,13 +1438,6 @@ func (x *Commodity) GetQuantity() float32 {
 		return *x.Quantity
 	}
 	return 0
-}
-
-func (x *Commodity) GetOriginCountry() string {
-	if x != nil && x.OriginCountry != nil {
-		return *x.OriginCountry
-	}
-	return ""
 }
 
 func (x *Commodity) GetExchangeTickerSymbol() string {
@@ -2876,11 +2868,12 @@ type Description struct {
 	Logo                            *LogoFile              `protobuf:"bytes,3,opt,name=Logo,proto3" json:"Logo,omitempty"`
 	AssetID                         string                 `protobuf:"bytes,4,opt,name=AssetID,proto3" json:"AssetID,omitempty"`
 	URL                             string                 `protobuf:"bytes,5,opt,name=URL,proto3" json:"URL,omitempty"`
-	AllowedJurisdictions            []string               `protobuf:"bytes,6,rep,name=AllowedJurisdictions,proto3" json:"AllowedJurisdictions,omitempty"`
+	OriginCountry                   string                 `protobuf:"bytes,6,opt,name=OriginCountry,proto3" json:"OriginCountry,omitempty"` // ISO 3166-1 alpha-3 code e.g. "USA", "CAD"
 	Documents                       []string               `protobuf:"bytes,7,rep,name=Documents,proto3" json:"Documents,omitempty"`
 	Images                          []string               `protobuf:"bytes,8,rep,name=Images,proto3" json:"Images,omitempty"`
 	Vertical                        string                 `protobuf:"bytes,9,opt,name=Vertical,proto3" json:"Vertical,omitempty"`
-	AllowedJurisdictionRestrictions string                 `protobuf:"bytes,12,opt,name=AllowedJurisdictionRestrictions,proto3" json:"AllowedJurisdictionRestrictions,omitempty"`
+	AllowedJurisdictions            []string               `protobuf:"bytes,12,rep,name=AllowedJurisdictions,proto3" json:"AllowedJurisdictions,omitempty"` // ISO 3166-1 alpha-3 code e.g. "USA", "CAD"
+	AllowedJurisdictionRestrictions string                 `protobuf:"bytes,13,opt,name=AllowedJurisdictionRestrictions,proto3" json:"AllowedJurisdictionRestrictions,omitempty"`
 	CreatedAt                       *string                `protobuf:"bytes,10,opt,name=CreatedAt,proto3,oneof" json:"CreatedAt,omitempty"`
 	UpdatedAt                       *string                `protobuf:"bytes,11,opt,name=UpdatedAt,proto3,oneof" json:"UpdatedAt,omitempty"`
 	unknownFields                   protoimpl.UnknownFields
@@ -2952,11 +2945,11 @@ func (x *Description) GetURL() string {
 	return ""
 }
 
-func (x *Description) GetAllowedJurisdictions() []string {
+func (x *Description) GetOriginCountry() string {
 	if x != nil {
-		return x.AllowedJurisdictions
+		return x.OriginCountry
 	}
-	return nil
+	return ""
 }
 
 func (x *Description) GetDocuments() []string {
@@ -2978,6 +2971,13 @@ func (x *Description) GetVertical() string {
 		return x.Vertical
 	}
 	return ""
+}
+
+func (x *Description) GetAllowedJurisdictions() []string {
+	if x != nil {
+		return x.AllowedJurisdictions
+	}
+	return nil
 }
 
 func (x *Description) GetAllowedJurisdictionRestrictions() string {
@@ -3546,24 +3546,22 @@ const file_asset_proto_rawDesc = "" +
 	"\t_ExchangeB\x17\n" +
 	"\x15_MinTransactionAmountB\x1a\n" +
 	"\x18_TradingMarginPercentageB\x18\n" +
-	"\x16_AssetMarginPercentage\"\xec\x04\n" +
+	"\x16_AssetMarginPercentage\"\xaf\x04\n" +
 	"\tCommodity\x12\x1a\n" +
 	"\bCategory\x18\x01 \x01(\tR\bCategory\x12\x1d\n" +
 	"\aQuality\x18\x02 \x01(\tH\x00R\aQuality\x88\x01\x01\x12$\n" +
 	"\rUnitOfMeasure\x18\x03 \x01(\tR\rUnitOfMeasure\x12\x1f\n" +
-	"\bQuantity\x18\x04 \x01(\x02H\x01R\bQuantity\x88\x01\x01\x12)\n" +
-	"\rOriginCountry\x18\x05 \x01(\tH\x02R\rOriginCountry\x88\x01\x01\x127\n" +
-	"\x14ExchangeTickerSymbol\x18\x06 \x01(\tH\x03R\x14ExchangeTickerSymbol\x88\x01\x01\x12\x1f\n" +
-	"\bExchange\x18\a \x01(\tH\x04R\bExchange\x88\x01\x01\x127\n" +
-	"\x14MinTransactionAmount\x18\b \x01(\x02H\x05R\x14MinTransactionAmount\x88\x01\x01\x12-\n" +
-	"\x0fStorageLocation\x18\t \x01(\tH\x06R\x0fStorageLocation\x88\x01\x01\x12'\n" +
+	"\bQuantity\x18\x04 \x01(\x02H\x01R\bQuantity\x88\x01\x01\x127\n" +
+	"\x14ExchangeTickerSymbol\x18\x06 \x01(\tH\x02R\x14ExchangeTickerSymbol\x88\x01\x01\x12\x1f\n" +
+	"\bExchange\x18\a \x01(\tH\x03R\bExchange\x88\x01\x01\x127\n" +
+	"\x14MinTransactionAmount\x18\b \x01(\x02H\x04R\x14MinTransactionAmount\x88\x01\x01\x12-\n" +
+	"\x0fStorageLocation\x18\t \x01(\tH\x05R\x0fStorageLocation\x88\x01\x01\x12'\n" +
 	"\fContractType\x18\n" +
-	" \x01(\tH\aR\fContractType\x88\x01\x01\x12'\n" +
-	"\fDeliveryDate\x18\v \x01(\tH\bR\fDeliveryDate\x88\x01\x01B\n" +
+	" \x01(\tH\x06R\fContractType\x88\x01\x01\x12'\n" +
+	"\fDeliveryDate\x18\v \x01(\tH\aR\fDeliveryDate\x88\x01\x01B\n" +
 	"\n" +
 	"\b_QualityB\v\n" +
-	"\t_QuantityB\x10\n" +
-	"\x0e_OriginCountryB\x17\n" +
+	"\t_QuantityB\x17\n" +
 	"\x15_ExchangeTickerSymbolB\v\n" +
 	"\t_ExchangeB\x17\n" +
 	"\x15_MinTransactionAmountB\x12\n" +
@@ -3750,18 +3748,19 @@ const file_asset_proto_rawDesc = "" +
 	"\n" +
 	"\b_SubunitB\b\n" +
 	"\x06_PriceB\x10\n" +
-	"\x0e_ValuationDate\"\xc6\x03\n" +
+	"\x0e_ValuationDate\"\xec\x03\n" +
 	"\vDescription\x12\x12\n" +
 	"\x04Name\x18\x01 \x01(\tR\x04Name\x12 \n" +
 	"\vDescription\x18\x02 \x01(\tR\vDescription\x12#\n" +
 	"\x04Logo\x18\x03 \x01(\v2\x0f.asset.LogoFileR\x04Logo\x12\x18\n" +
 	"\aAssetID\x18\x04 \x01(\tR\aAssetID\x12\x10\n" +
-	"\x03URL\x18\x05 \x01(\tR\x03URL\x122\n" +
-	"\x14AllowedJurisdictions\x18\x06 \x03(\tR\x14AllowedJurisdictions\x12\x1c\n" +
+	"\x03URL\x18\x05 \x01(\tR\x03URL\x12$\n" +
+	"\rOriginCountry\x18\x06 \x01(\tR\rOriginCountry\x12\x1c\n" +
 	"\tDocuments\x18\a \x03(\tR\tDocuments\x12\x16\n" +
 	"\x06Images\x18\b \x03(\tR\x06Images\x12\x1a\n" +
-	"\bVertical\x18\t \x01(\tR\bVertical\x12H\n" +
-	"\x1fAllowedJurisdictionRestrictions\x18\f \x01(\tR\x1fAllowedJurisdictionRestrictions\x12!\n" +
+	"\bVertical\x18\t \x01(\tR\bVertical\x122\n" +
+	"\x14AllowedJurisdictions\x18\f \x03(\tR\x14AllowedJurisdictions\x12H\n" +
+	"\x1fAllowedJurisdictionRestrictions\x18\r \x01(\tR\x1fAllowedJurisdictionRestrictions\x12!\n" +
 	"\tCreatedAt\x18\n" +
 	" \x01(\tH\x00R\tCreatedAt\x88\x01\x01\x12!\n" +
 	"\tUpdatedAt\x18\v \x01(\tH\x01R\tUpdatedAt\x88\x01\x01B\f\n" +

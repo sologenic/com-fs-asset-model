@@ -119,7 +119,6 @@ message Commodity {
     optional string Quality = 2;               
     string UnitOfMeasure = 3;                  
     optional float Quantity = 4;               
-    optional string OriginCountry = 5;         
     optional string ExchangeTickerSymbol = 6;  
     optional string Exchange = 7;              
     optional float MinTransactionAmount = 8;   
@@ -344,7 +343,8 @@ message Description {
     string Description = 2;                  
     LogoFile Logo = 3;               
     string AssetID = 4;                      
-    string URL = 5;                          
+    string URL = 5; 
+    string OriginCountry = 6; // ISO 3166-1 alpha-3 code e.g. "USA", "CAD"                        
     repeated string Documents = 7;           
     repeated string Images = 8;              
     string Vertical = 9;                
