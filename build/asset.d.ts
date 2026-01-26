@@ -129,6 +129,8 @@ export interface AssetDetails {
     DistributionDetails?: Distribution | undefined;
     /** Controls whether the asset is visible in the marketplace */
     IsVisible: boolean;
+    /** Default hold limit for the asset */
+    DefaultHoldLimit: string;
 }
 export interface Asset {
     AssetDetails: AssetDetails | undefined;
@@ -665,6 +667,7 @@ export declare const AssetDetails: {
             } | undefined;
         } | undefined;
         IsVisible?: boolean | undefined;
+        DefaultHoldLimit?: string | undefined;
     } & {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -1194,6 +1197,7 @@ export declare const AssetDetails: {
             } & { [K_34 in Exclude<keyof I["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
         } & { [K_35 in Exclude<keyof I["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
         IsVisible?: boolean | undefined;
+        DefaultHoldLimit?: string | undefined;
     } & { [K_36 in Exclude<keyof I, keyof AssetDetails>]: never; }>(base?: I | undefined): AssetDetails;
     fromPartial<I_1 extends {
         ID?: string | undefined;
@@ -1418,6 +1422,7 @@ export declare const AssetDetails: {
             } | undefined;
         } | undefined;
         IsVisible?: boolean | undefined;
+        DefaultHoldLimit?: string | undefined;
     } & {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -1947,6 +1952,7 @@ export declare const AssetDetails: {
             } & { [K_71 in Exclude<keyof I_1["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
         } & { [K_72 in Exclude<keyof I_1["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
         IsVisible?: boolean | undefined;
+        DefaultHoldLimit?: string | undefined;
     } & { [K_73 in Exclude<keyof I_1, keyof AssetDetails>]: never; }>(object: I_1): AssetDetails;
 };
 export declare const Asset: {
@@ -2178,6 +2184,7 @@ export declare const Asset: {
                 } | undefined;
             } | undefined;
             IsVisible?: boolean | undefined;
+            DefaultHoldLimit?: string | undefined;
         } | undefined;
         MetaData?: {
             Network?: Network | undefined;
@@ -2435,6 +2442,7 @@ export declare const Asset: {
                 } | undefined;
             } | undefined;
             IsVisible?: boolean | undefined;
+            DefaultHoldLimit?: string | undefined;
         } & {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -2964,6 +2972,7 @@ export declare const Asset: {
                 } & { [K_34 in Exclude<keyof I["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
             } & { [K_35 in Exclude<keyof I["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
             IsVisible?: boolean | undefined;
+            DefaultHoldLimit?: string | undefined;
         } & { [K_36 in Exclude<keyof I["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
         MetaData?: ({
             Network?: Network | undefined;
@@ -3251,6 +3260,7 @@ export declare const Asset: {
                 } | undefined;
             } | undefined;
             IsVisible?: boolean | undefined;
+            DefaultHoldLimit?: string | undefined;
         } | undefined;
         MetaData?: {
             Network?: Network | undefined;
@@ -3508,6 +3518,7 @@ export declare const Asset: {
                 } | undefined;
             } | undefined;
             IsVisible?: boolean | undefined;
+            DefaultHoldLimit?: string | undefined;
         } & {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -4037,6 +4048,7 @@ export declare const Asset: {
                 } & { [K_76 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
             } & { [K_77 in Exclude<keyof I_1["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
             IsVisible?: boolean | undefined;
+            DefaultHoldLimit?: string | undefined;
         } & { [K_78 in Exclude<keyof I_1["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
         MetaData?: ({
             Network?: Network | undefined;
@@ -4331,6 +4343,7 @@ export declare const Assets: {
                     } | undefined;
                 } | undefined;
                 IsVisible?: boolean | undefined;
+                DefaultHoldLimit?: string | undefined;
             } | undefined;
             MetaData?: {
                 Network?: Network | undefined;
@@ -4591,6 +4604,7 @@ export declare const Assets: {
                     } | undefined;
                 } | undefined;
                 IsVisible?: boolean | undefined;
+                DefaultHoldLimit?: string | undefined;
             } | undefined;
             MetaData?: {
                 Network?: Network | undefined;
@@ -4848,6 +4862,7 @@ export declare const Assets: {
                     } | undefined;
                 } | undefined;
                 IsVisible?: boolean | undefined;
+                DefaultHoldLimit?: string | undefined;
             } | undefined;
             MetaData?: {
                 Network?: Network | undefined;
@@ -5105,6 +5120,7 @@ export declare const Assets: {
                     } | undefined;
                 } | undefined;
                 IsVisible?: boolean | undefined;
+                DefaultHoldLimit?: string | undefined;
             } & {
                 ID?: string | undefined;
                 OrganizationID?: string | undefined;
@@ -5634,6 +5650,7 @@ export declare const Assets: {
                     } & { [K_34 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
                 } & { [K_35 in Exclude<keyof I["Assets"][number]["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
                 IsVisible?: boolean | undefined;
+                DefaultHoldLimit?: string | undefined;
             } & { [K_36 in Exclude<keyof I["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
             MetaData?: ({
                 Network?: Network | undefined;
@@ -5920,6 +5937,7 @@ export declare const Assets: {
                     } | undefined;
                 } | undefined;
                 IsVisible?: boolean | undefined;
+                DefaultHoldLimit?: string | undefined;
             } | undefined;
             MetaData?: {
                 Network?: Network | undefined;
@@ -6181,6 +6199,7 @@ export declare const Assets: {
                     } | undefined;
                 } | undefined;
                 IsVisible?: boolean | undefined;
+                DefaultHoldLimit?: string | undefined;
             } | undefined;
             MetaData?: {
                 Network?: Network | undefined;
@@ -6441,6 +6460,7 @@ export declare const Assets: {
                     } | undefined;
                 } | undefined;
                 IsVisible?: boolean | undefined;
+                DefaultHoldLimit?: string | undefined;
             } | undefined;
             MetaData?: {
                 Network?: Network | undefined;
@@ -6698,6 +6718,7 @@ export declare const Assets: {
                     } | undefined;
                 } | undefined;
                 IsVisible?: boolean | undefined;
+                DefaultHoldLimit?: string | undefined;
             } | undefined;
             MetaData?: {
                 Network?: Network | undefined;
@@ -6955,6 +6976,7 @@ export declare const Assets: {
                     } | undefined;
                 } | undefined;
                 IsVisible?: boolean | undefined;
+                DefaultHoldLimit?: string | undefined;
             } & {
                 ID?: string | undefined;
                 OrganizationID?: string | undefined;
@@ -7484,6 +7506,7 @@ export declare const Assets: {
                     } & { [K_78 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"]["TokenSaleDetails"], keyof TokenSale>]: never; }) | undefined;
                 } & { [K_79 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["DistributionDetails"], keyof Distribution>]: never; }) | undefined;
                 IsVisible?: boolean | undefined;
+                DefaultHoldLimit?: string | undefined;
             } & { [K_80 in Exclude<keyof I_1["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
             MetaData?: ({
                 Network?: Network | undefined;
@@ -7770,6 +7793,7 @@ export declare const Assets: {
                     } | undefined;
                 } | undefined;
                 IsVisible?: boolean | undefined;
+                DefaultHoldLimit?: string | undefined;
             } | undefined;
             MetaData?: {
                 Network?: Network | undefined;

@@ -36,6 +36,7 @@ message AssetDetails {
     
     optional Distribution DistributionDetails = 31;
     bool IsVisible = 32; // Controls whether the asset is visible in the marketplace
+    string DefaultHoldLimit = 33; // Default hold limit for the asset
 }
 
 // ---------------- Existing Messages ----------------
