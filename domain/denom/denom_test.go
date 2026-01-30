@@ -6,7 +6,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/sologenic/com-fs-asset-model/domain/currency"
-	"github.com/sologenic/com-fs-utils-lib/go/unittest"
+	"github.com/sologenic/com-fs-utils-internal-lib/go/unittest"
 	"github.com/stretchr/testify/assert"
 )
 
