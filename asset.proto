@@ -15,7 +15,7 @@ message AssetDetails {
     string OrganizationID = 2; 
     AssetStatus Status = 3;
     optional Reason Reason = 4;
-    AssetType Type = 6;
+    AssetType Type = 6; // Better known as Category
 
     denom.Denom Denom = 17; 
     bool IsIssuedInSmartContract = 18; 
@@ -295,6 +295,7 @@ message IntellectualProperty {
 message InvestmentFund {
     string FundType = 1;                
     string Exchange = 2;                
+    optional string ExchangeTickerSymbol = 9;
     optional string ISIN = 3;           
     optional float NAV = 4;             
     optional string InceptionDate = 5;  
@@ -314,27 +315,21 @@ message Equity {
 // ---------------- FinancialProperties ----------------
 
 message FinancialProperties {
-    string Symbol = 1;                        
     string Issuer = 2; 
     optional string RedemptionTerms = 5;      
     optional bool ComplianceRequired = 6;     
-    string Type = 7;                          
+    string Type = 7; // Purely informational                          
     repeated string TradeAllowances = 8;      
     bool Transferable = 9;                    
     string Platform = 10;                     
     string PlatformType = 11;                 
     optional string ContractAddress = 12;     
     bool Fractional = 13;                     
+    int32 QuantityStep = 18; // A way to force a fixed unit for trade e.g. if i have 100k units for sale, but want to enforce the sale of 100 units at once, which leads to 1000 actual tradeable shares
     optional int32 TotalSupply = 14;                   
     optional string Subunit = 15;             
     optional float Price = 16;                
     int32 DecimalPlacesPrice = 17;            
-    string Currency = 18;                     
-    float InitialValuation = 19;              
-    float CurrentValuation = 20;              
-    optional string ValuationDate = 21;       
-    metadata.Network Network = 22;                      
-    string Status = 23;
 }
 
 // ---------------- Description ----------------

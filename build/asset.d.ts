@@ -1,7 +1,7 @@
 import _m0 from "protobufjs/minimal";
 import { Denom } from "./sologenic/com-fs-asset-model/domain/denom/denom";
 import { Audit } from "./sologenic/com-fs-utils-lib/models/audit/audit";
-import { MetaData, Network } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
+import { MetaData } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
 export declare const protobufPackage = "asset";
 export declare enum TransactionType {
     TRANSACTION_TYPE_DO_NOT_USE = 0,
@@ -108,6 +108,7 @@ export interface AssetDetails {
     OrganizationID: string;
     Status: AssetStatus;
     Reason?: Reason | undefined;
+    /** Better known as Category */
     Type: AssetType;
     Denom: Denom | undefined;
     IsIssuedInSmartContract: boolean;
@@ -339,6 +340,7 @@ export interface IntellectualProperty {
 export interface InvestmentFund {
     FundType: string;
     Exchange: string;
+    ExchangeTickerSymbol?: string | undefined;
     ISIN?: string | undefined;
     NAV?: number | undefined;
     InceptionDate?: string | undefined;
@@ -354,10 +356,10 @@ export interface Equity {
     AssetMarginPercentage: number;
 }
 export interface FinancialProperties {
-    Symbol: string;
     Issuer: string;
     RedemptionTerms?: string | undefined;
     ComplianceRequired?: boolean | undefined;
+    /** Purely informational */
     Type: string;
     TradeAllowances: string[];
     Transferable: boolean;
@@ -365,16 +367,12 @@ export interface FinancialProperties {
     PlatformType: string;
     ContractAddress?: string | undefined;
     Fractional: boolean;
+    /** A way to force a fixed unit for trade e.g. if i have 100k units for sale, but want to enforce the sale of 100 units at once, which leads to 1000 actual tradeable shares */
+    QuantityStep: number;
     TotalSupply?: number | undefined;
     Subunit?: string | undefined;
     Price?: number | undefined;
     DecimalPlacesPrice: number;
-    Currency: string;
-    InitialValuation: number;
-    CurrentValuation: number;
-    ValuationDate?: string | undefined;
-    Network: Network;
-    Status: string;
 }
 export interface Description {
     Name: string;
@@ -551,6 +549,7 @@ export declare const AssetDetails: {
         InvestmentFundDetails?: {
             FundType?: string | undefined;
             Exchange?: string | undefined;
+            ExchangeTickerSymbol?: string | undefined;
             ISIN?: string | undefined;
             NAV?: number | undefined;
             InceptionDate?: string | undefined;
@@ -566,7 +565,6 @@ export declare const AssetDetails: {
             AssetMarginPercentage?: number | undefined;
         } | undefined;
         FinancialProperties?: {
-            Symbol?: string | undefined;
             Issuer?: string | undefined;
             RedemptionTerms?: string | undefined;
             ComplianceRequired?: boolean | undefined;
@@ -577,16 +575,11 @@ export declare const AssetDetails: {
             PlatformType?: string | undefined;
             ContractAddress?: string | undefined;
             Fractional?: boolean | undefined;
+            QuantityStep?: number | undefined;
             TotalSupply?: number | undefined;
             Subunit?: string | undefined;
             Price?: number | undefined;
             DecimalPlacesPrice?: number | undefined;
-            Currency?: string | undefined;
-            InitialValuation?: number | undefined;
-            CurrentValuation?: number | undefined;
-            ValuationDate?: string | undefined;
-            Network?: Network | undefined;
-            Status?: string | undefined;
         } | undefined;
         Description?: {
             Name?: string | undefined;
@@ -867,6 +860,7 @@ export declare const AssetDetails: {
         InvestmentFundDetails?: ({
             FundType?: string | undefined;
             Exchange?: string | undefined;
+            ExchangeTickerSymbol?: string | undefined;
             ISIN?: string | undefined;
             NAV?: number | undefined;
             InceptionDate?: string | undefined;
@@ -876,6 +870,7 @@ export declare const AssetDetails: {
         } & {
             FundType?: string | undefined;
             Exchange?: string | undefined;
+            ExchangeTickerSymbol?: string | undefined;
             ISIN?: string | undefined;
             NAV?: number | undefined;
             InceptionDate?: string | undefined;
@@ -897,7 +892,6 @@ export declare const AssetDetails: {
             AssetMarginPercentage?: number | undefined;
         } & { [K_14 in Exclude<keyof I["EquityDetails"], keyof Equity>]: never; }) | undefined;
         FinancialProperties?: ({
-            Symbol?: string | undefined;
             Issuer?: string | undefined;
             RedemptionTerms?: string | undefined;
             ComplianceRequired?: boolean | undefined;
@@ -908,18 +902,12 @@ export declare const AssetDetails: {
             PlatformType?: string | undefined;
             ContractAddress?: string | undefined;
             Fractional?: boolean | undefined;
+            QuantityStep?: number | undefined;
             TotalSupply?: number | undefined;
             Subunit?: string | undefined;
             Price?: number | undefined;
             DecimalPlacesPrice?: number | undefined;
-            Currency?: string | undefined;
-            InitialValuation?: number | undefined;
-            CurrentValuation?: number | undefined;
-            ValuationDate?: string | undefined;
-            Network?: Network | undefined;
-            Status?: string | undefined;
         } & {
-            Symbol?: string | undefined;
             Issuer?: string | undefined;
             RedemptionTerms?: string | undefined;
             ComplianceRequired?: boolean | undefined;
@@ -930,16 +918,11 @@ export declare const AssetDetails: {
             PlatformType?: string | undefined;
             ContractAddress?: string | undefined;
             Fractional?: boolean | undefined;
+            QuantityStep?: number | undefined;
             TotalSupply?: number | undefined;
             Subunit?: string | undefined;
             Price?: number | undefined;
             DecimalPlacesPrice?: number | undefined;
-            Currency?: string | undefined;
-            InitialValuation?: number | undefined;
-            CurrentValuation?: number | undefined;
-            ValuationDate?: string | undefined;
-            Network?: Network | undefined;
-            Status?: string | undefined;
         } & { [K_16 in Exclude<keyof I["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
         Description?: ({
             Name?: string | undefined;
@@ -1306,6 +1289,7 @@ export declare const AssetDetails: {
         InvestmentFundDetails?: {
             FundType?: string | undefined;
             Exchange?: string | undefined;
+            ExchangeTickerSymbol?: string | undefined;
             ISIN?: string | undefined;
             NAV?: number | undefined;
             InceptionDate?: string | undefined;
@@ -1321,7 +1305,6 @@ export declare const AssetDetails: {
             AssetMarginPercentage?: number | undefined;
         } | undefined;
         FinancialProperties?: {
-            Symbol?: string | undefined;
             Issuer?: string | undefined;
             RedemptionTerms?: string | undefined;
             ComplianceRequired?: boolean | undefined;
@@ -1332,16 +1315,11 @@ export declare const AssetDetails: {
             PlatformType?: string | undefined;
             ContractAddress?: string | undefined;
             Fractional?: boolean | undefined;
+            QuantityStep?: number | undefined;
             TotalSupply?: number | undefined;
             Subunit?: string | undefined;
             Price?: number | undefined;
             DecimalPlacesPrice?: number | undefined;
-            Currency?: string | undefined;
-            InitialValuation?: number | undefined;
-            CurrentValuation?: number | undefined;
-            ValuationDate?: string | undefined;
-            Network?: Network | undefined;
-            Status?: string | undefined;
         } | undefined;
         Description?: {
             Name?: string | undefined;
@@ -1622,6 +1600,7 @@ export declare const AssetDetails: {
         InvestmentFundDetails?: ({
             FundType?: string | undefined;
             Exchange?: string | undefined;
+            ExchangeTickerSymbol?: string | undefined;
             ISIN?: string | undefined;
             NAV?: number | undefined;
             InceptionDate?: string | undefined;
@@ -1631,6 +1610,7 @@ export declare const AssetDetails: {
         } & {
             FundType?: string | undefined;
             Exchange?: string | undefined;
+            ExchangeTickerSymbol?: string | undefined;
             ISIN?: string | undefined;
             NAV?: number | undefined;
             InceptionDate?: string | undefined;
@@ -1652,7 +1632,6 @@ export declare const AssetDetails: {
             AssetMarginPercentage?: number | undefined;
         } & { [K_51 in Exclude<keyof I_1["EquityDetails"], keyof Equity>]: never; }) | undefined;
         FinancialProperties?: ({
-            Symbol?: string | undefined;
             Issuer?: string | undefined;
             RedemptionTerms?: string | undefined;
             ComplianceRequired?: boolean | undefined;
@@ -1663,18 +1642,12 @@ export declare const AssetDetails: {
             PlatformType?: string | undefined;
             ContractAddress?: string | undefined;
             Fractional?: boolean | undefined;
+            QuantityStep?: number | undefined;
             TotalSupply?: number | undefined;
             Subunit?: string | undefined;
             Price?: number | undefined;
             DecimalPlacesPrice?: number | undefined;
-            Currency?: string | undefined;
-            InitialValuation?: number | undefined;
-            CurrentValuation?: number | undefined;
-            ValuationDate?: string | undefined;
-            Network?: Network | undefined;
-            Status?: string | undefined;
         } & {
-            Symbol?: string | undefined;
             Issuer?: string | undefined;
             RedemptionTerms?: string | undefined;
             ComplianceRequired?: boolean | undefined;
@@ -1685,16 +1658,11 @@ export declare const AssetDetails: {
             PlatformType?: string | undefined;
             ContractAddress?: string | undefined;
             Fractional?: boolean | undefined;
+            QuantityStep?: number | undefined;
             TotalSupply?: number | undefined;
             Subunit?: string | undefined;
             Price?: number | undefined;
             DecimalPlacesPrice?: number | undefined;
-            Currency?: string | undefined;
-            InitialValuation?: number | undefined;
-            CurrentValuation?: number | undefined;
-            ValuationDate?: string | undefined;
-            Network?: Network | undefined;
-            Status?: string | undefined;
         } & { [K_53 in Exclude<keyof I_1["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
         Description?: ({
             Name?: string | undefined;
@@ -2068,6 +2036,7 @@ export declare const Asset: {
             InvestmentFundDetails?: {
                 FundType?: string | undefined;
                 Exchange?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
                 ISIN?: string | undefined;
                 NAV?: number | undefined;
                 InceptionDate?: string | undefined;
@@ -2083,7 +2052,6 @@ export declare const Asset: {
                 AssetMarginPercentage?: number | undefined;
             } | undefined;
             FinancialProperties?: {
-                Symbol?: string | undefined;
                 Issuer?: string | undefined;
                 RedemptionTerms?: string | undefined;
                 ComplianceRequired?: boolean | undefined;
@@ -2094,16 +2062,11 @@ export declare const Asset: {
                 PlatformType?: string | undefined;
                 ContractAddress?: string | undefined;
                 Fractional?: boolean | undefined;
+                QuantityStep?: number | undefined;
                 TotalSupply?: number | undefined;
                 Subunit?: string | undefined;
                 Price?: number | undefined;
                 DecimalPlacesPrice?: number | undefined;
-                Currency?: string | undefined;
-                InitialValuation?: number | undefined;
-                CurrentValuation?: number | undefined;
-                ValuationDate?: string | undefined;
-                Network?: Network | undefined;
-                Status?: string | undefined;
             } | undefined;
             Description?: {
                 Name?: string | undefined;
@@ -2187,7 +2150,7 @@ export declare const Asset: {
             DefaultHoldLimit?: string | undefined;
         } | undefined;
         MetaData?: {
-            Network?: Network | undefined;
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
             UpdatedAt?: Date | undefined;
             CreatedAt?: Date | undefined;
             UpdatedByAccount?: string | undefined;
@@ -2326,6 +2289,7 @@ export declare const Asset: {
             InvestmentFundDetails?: {
                 FundType?: string | undefined;
                 Exchange?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
                 ISIN?: string | undefined;
                 NAV?: number | undefined;
                 InceptionDate?: string | undefined;
@@ -2341,7 +2305,6 @@ export declare const Asset: {
                 AssetMarginPercentage?: number | undefined;
             } | undefined;
             FinancialProperties?: {
-                Symbol?: string | undefined;
                 Issuer?: string | undefined;
                 RedemptionTerms?: string | undefined;
                 ComplianceRequired?: boolean | undefined;
@@ -2352,16 +2315,11 @@ export declare const Asset: {
                 PlatformType?: string | undefined;
                 ContractAddress?: string | undefined;
                 Fractional?: boolean | undefined;
+                QuantityStep?: number | undefined;
                 TotalSupply?: number | undefined;
                 Subunit?: string | undefined;
                 Price?: number | undefined;
                 DecimalPlacesPrice?: number | undefined;
-                Currency?: string | undefined;
-                InitialValuation?: number | undefined;
-                CurrentValuation?: number | undefined;
-                ValuationDate?: string | undefined;
-                Network?: Network | undefined;
-                Status?: string | undefined;
             } | undefined;
             Description?: {
                 Name?: string | undefined;
@@ -2642,6 +2600,7 @@ export declare const Asset: {
             InvestmentFundDetails?: ({
                 FundType?: string | undefined;
                 Exchange?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
                 ISIN?: string | undefined;
                 NAV?: number | undefined;
                 InceptionDate?: string | undefined;
@@ -2651,6 +2610,7 @@ export declare const Asset: {
             } & {
                 FundType?: string | undefined;
                 Exchange?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
                 ISIN?: string | undefined;
                 NAV?: number | undefined;
                 InceptionDate?: string | undefined;
@@ -2672,7 +2632,6 @@ export declare const Asset: {
                 AssetMarginPercentage?: number | undefined;
             } & { [K_14 in Exclude<keyof I["AssetDetails"]["EquityDetails"], keyof Equity>]: never; }) | undefined;
             FinancialProperties?: ({
-                Symbol?: string | undefined;
                 Issuer?: string | undefined;
                 RedemptionTerms?: string | undefined;
                 ComplianceRequired?: boolean | undefined;
@@ -2683,18 +2642,12 @@ export declare const Asset: {
                 PlatformType?: string | undefined;
                 ContractAddress?: string | undefined;
                 Fractional?: boolean | undefined;
+                QuantityStep?: number | undefined;
                 TotalSupply?: number | undefined;
                 Subunit?: string | undefined;
                 Price?: number | undefined;
                 DecimalPlacesPrice?: number | undefined;
-                Currency?: string | undefined;
-                InitialValuation?: number | undefined;
-                CurrentValuation?: number | undefined;
-                ValuationDate?: string | undefined;
-                Network?: Network | undefined;
-                Status?: string | undefined;
             } & {
-                Symbol?: string | undefined;
                 Issuer?: string | undefined;
                 RedemptionTerms?: string | undefined;
                 ComplianceRequired?: boolean | undefined;
@@ -2705,16 +2658,11 @@ export declare const Asset: {
                 PlatformType?: string | undefined;
                 ContractAddress?: string | undefined;
                 Fractional?: boolean | undefined;
+                QuantityStep?: number | undefined;
                 TotalSupply?: number | undefined;
                 Subunit?: string | undefined;
                 Price?: number | undefined;
                 DecimalPlacesPrice?: number | undefined;
-                Currency?: string | undefined;
-                InitialValuation?: number | undefined;
-                CurrentValuation?: number | undefined;
-                ValuationDate?: string | undefined;
-                Network?: Network | undefined;
-                Status?: string | undefined;
             } & { [K_16 in Exclude<keyof I["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
             Description?: ({
                 Name?: string | undefined;
@@ -2975,12 +2923,12 @@ export declare const Asset: {
             DefaultHoldLimit?: string | undefined;
         } & { [K_36 in Exclude<keyof I["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
         MetaData?: ({
-            Network?: Network | undefined;
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
             UpdatedAt?: Date | undefined;
             CreatedAt?: Date | undefined;
             UpdatedByAccount?: string | undefined;
         } & {
-            Network?: Network | undefined;
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
             UpdatedAt?: Date | undefined;
             CreatedAt?: Date | undefined;
             UpdatedByAccount?: string | undefined;
@@ -3144,6 +3092,7 @@ export declare const Asset: {
             InvestmentFundDetails?: {
                 FundType?: string | undefined;
                 Exchange?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
                 ISIN?: string | undefined;
                 NAV?: number | undefined;
                 InceptionDate?: string | undefined;
@@ -3159,7 +3108,6 @@ export declare const Asset: {
                 AssetMarginPercentage?: number | undefined;
             } | undefined;
             FinancialProperties?: {
-                Symbol?: string | undefined;
                 Issuer?: string | undefined;
                 RedemptionTerms?: string | undefined;
                 ComplianceRequired?: boolean | undefined;
@@ -3170,16 +3118,11 @@ export declare const Asset: {
                 PlatformType?: string | undefined;
                 ContractAddress?: string | undefined;
                 Fractional?: boolean | undefined;
+                QuantityStep?: number | undefined;
                 TotalSupply?: number | undefined;
                 Subunit?: string | undefined;
                 Price?: number | undefined;
                 DecimalPlacesPrice?: number | undefined;
-                Currency?: string | undefined;
-                InitialValuation?: number | undefined;
-                CurrentValuation?: number | undefined;
-                ValuationDate?: string | undefined;
-                Network?: Network | undefined;
-                Status?: string | undefined;
             } | undefined;
             Description?: {
                 Name?: string | undefined;
@@ -3263,7 +3206,7 @@ export declare const Asset: {
             DefaultHoldLimit?: string | undefined;
         } | undefined;
         MetaData?: {
-            Network?: Network | undefined;
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
             UpdatedAt?: Date | undefined;
             CreatedAt?: Date | undefined;
             UpdatedByAccount?: string | undefined;
@@ -3402,6 +3345,7 @@ export declare const Asset: {
             InvestmentFundDetails?: {
                 FundType?: string | undefined;
                 Exchange?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
                 ISIN?: string | undefined;
                 NAV?: number | undefined;
                 InceptionDate?: string | undefined;
@@ -3417,7 +3361,6 @@ export declare const Asset: {
                 AssetMarginPercentage?: number | undefined;
             } | undefined;
             FinancialProperties?: {
-                Symbol?: string | undefined;
                 Issuer?: string | undefined;
                 RedemptionTerms?: string | undefined;
                 ComplianceRequired?: boolean | undefined;
@@ -3428,16 +3371,11 @@ export declare const Asset: {
                 PlatformType?: string | undefined;
                 ContractAddress?: string | undefined;
                 Fractional?: boolean | undefined;
+                QuantityStep?: number | undefined;
                 TotalSupply?: number | undefined;
                 Subunit?: string | undefined;
                 Price?: number | undefined;
                 DecimalPlacesPrice?: number | undefined;
-                Currency?: string | undefined;
-                InitialValuation?: number | undefined;
-                CurrentValuation?: number | undefined;
-                ValuationDate?: string | undefined;
-                Network?: Network | undefined;
-                Status?: string | undefined;
             } | undefined;
             Description?: {
                 Name?: string | undefined;
@@ -3718,6 +3656,7 @@ export declare const Asset: {
             InvestmentFundDetails?: ({
                 FundType?: string | undefined;
                 Exchange?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
                 ISIN?: string | undefined;
                 NAV?: number | undefined;
                 InceptionDate?: string | undefined;
@@ -3727,6 +3666,7 @@ export declare const Asset: {
             } & {
                 FundType?: string | undefined;
                 Exchange?: string | undefined;
+                ExchangeTickerSymbol?: string | undefined;
                 ISIN?: string | undefined;
                 NAV?: number | undefined;
                 InceptionDate?: string | undefined;
@@ -3748,7 +3688,6 @@ export declare const Asset: {
                 AssetMarginPercentage?: number | undefined;
             } & { [K_56 in Exclude<keyof I_1["AssetDetails"]["EquityDetails"], keyof Equity>]: never; }) | undefined;
             FinancialProperties?: ({
-                Symbol?: string | undefined;
                 Issuer?: string | undefined;
                 RedemptionTerms?: string | undefined;
                 ComplianceRequired?: boolean | undefined;
@@ -3759,18 +3698,12 @@ export declare const Asset: {
                 PlatformType?: string | undefined;
                 ContractAddress?: string | undefined;
                 Fractional?: boolean | undefined;
+                QuantityStep?: number | undefined;
                 TotalSupply?: number | undefined;
                 Subunit?: string | undefined;
                 Price?: number | undefined;
                 DecimalPlacesPrice?: number | undefined;
-                Currency?: string | undefined;
-                InitialValuation?: number | undefined;
-                CurrentValuation?: number | undefined;
-                ValuationDate?: string | undefined;
-                Network?: Network | undefined;
-                Status?: string | undefined;
             } & {
-                Symbol?: string | undefined;
                 Issuer?: string | undefined;
                 RedemptionTerms?: string | undefined;
                 ComplianceRequired?: boolean | undefined;
@@ -3781,16 +3714,11 @@ export declare const Asset: {
                 PlatformType?: string | undefined;
                 ContractAddress?: string | undefined;
                 Fractional?: boolean | undefined;
+                QuantityStep?: number | undefined;
                 TotalSupply?: number | undefined;
                 Subunit?: string | undefined;
                 Price?: number | undefined;
                 DecimalPlacesPrice?: number | undefined;
-                Currency?: string | undefined;
-                InitialValuation?: number | undefined;
-                CurrentValuation?: number | undefined;
-                ValuationDate?: string | undefined;
-                Network?: Network | undefined;
-                Status?: string | undefined;
             } & { [K_58 in Exclude<keyof I_1["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
             Description?: ({
                 Name?: string | undefined;
@@ -4051,12 +3979,12 @@ export declare const Asset: {
             DefaultHoldLimit?: string | undefined;
         } & { [K_78 in Exclude<keyof I_1["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
         MetaData?: ({
-            Network?: Network | undefined;
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
             UpdatedAt?: Date | undefined;
             CreatedAt?: Date | undefined;
             UpdatedByAccount?: string | undefined;
         } & {
-            Network?: Network | undefined;
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
             UpdatedAt?: Date | undefined;
             CreatedAt?: Date | undefined;
             UpdatedByAccount?: string | undefined;
@@ -4227,6 +4155,7 @@ export declare const Assets: {
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
                     Exchange?: string | undefined;
+                    ExchangeTickerSymbol?: string | undefined;
                     ISIN?: string | undefined;
                     NAV?: number | undefined;
                     InceptionDate?: string | undefined;
@@ -4242,7 +4171,6 @@ export declare const Assets: {
                     AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
-                    Symbol?: string | undefined;
                     Issuer?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
@@ -4253,16 +4181,11 @@ export declare const Assets: {
                     PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
                     Fractional?: boolean | undefined;
+                    QuantityStep?: number | undefined;
                     TotalSupply?: number | undefined;
                     Subunit?: string | undefined;
                     Price?: number | undefined;
                     DecimalPlacesPrice?: number | undefined;
-                    Currency?: string | undefined;
-                    InitialValuation?: number | undefined;
-                    CurrentValuation?: number | undefined;
-                    ValuationDate?: string | undefined;
-                    Network?: Network | undefined;
-                    Status?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -4346,7 +4269,7 @@ export declare const Assets: {
                 DefaultHoldLimit?: string | undefined;
             } | undefined;
             MetaData?: {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -4488,6 +4411,7 @@ export declare const Assets: {
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
                     Exchange?: string | undefined;
+                    ExchangeTickerSymbol?: string | undefined;
                     ISIN?: string | undefined;
                     NAV?: number | undefined;
                     InceptionDate?: string | undefined;
@@ -4503,7 +4427,6 @@ export declare const Assets: {
                     AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
-                    Symbol?: string | undefined;
                     Issuer?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
@@ -4514,16 +4437,11 @@ export declare const Assets: {
                     PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
                     Fractional?: boolean | undefined;
+                    QuantityStep?: number | undefined;
                     TotalSupply?: number | undefined;
                     Subunit?: string | undefined;
                     Price?: number | undefined;
                     DecimalPlacesPrice?: number | undefined;
-                    Currency?: string | undefined;
-                    InitialValuation?: number | undefined;
-                    CurrentValuation?: number | undefined;
-                    ValuationDate?: string | undefined;
-                    Network?: Network | undefined;
-                    Status?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -4607,7 +4525,7 @@ export declare const Assets: {
                 DefaultHoldLimit?: string | undefined;
             } | undefined;
             MetaData?: {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -4746,6 +4664,7 @@ export declare const Assets: {
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
                     Exchange?: string | undefined;
+                    ExchangeTickerSymbol?: string | undefined;
                     ISIN?: string | undefined;
                     NAV?: number | undefined;
                     InceptionDate?: string | undefined;
@@ -4761,7 +4680,6 @@ export declare const Assets: {
                     AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
-                    Symbol?: string | undefined;
                     Issuer?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
@@ -4772,16 +4690,11 @@ export declare const Assets: {
                     PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
                     Fractional?: boolean | undefined;
+                    QuantityStep?: number | undefined;
                     TotalSupply?: number | undefined;
                     Subunit?: string | undefined;
                     Price?: number | undefined;
                     DecimalPlacesPrice?: number | undefined;
-                    Currency?: string | undefined;
-                    InitialValuation?: number | undefined;
-                    CurrentValuation?: number | undefined;
-                    ValuationDate?: string | undefined;
-                    Network?: Network | undefined;
-                    Status?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -4865,7 +4778,7 @@ export declare const Assets: {
                 DefaultHoldLimit?: string | undefined;
             } | undefined;
             MetaData?: {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -5004,6 +4917,7 @@ export declare const Assets: {
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
                     Exchange?: string | undefined;
+                    ExchangeTickerSymbol?: string | undefined;
                     ISIN?: string | undefined;
                     NAV?: number | undefined;
                     InceptionDate?: string | undefined;
@@ -5019,7 +4933,6 @@ export declare const Assets: {
                     AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
-                    Symbol?: string | undefined;
                     Issuer?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
@@ -5030,16 +4943,11 @@ export declare const Assets: {
                     PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
                     Fractional?: boolean | undefined;
+                    QuantityStep?: number | undefined;
                     TotalSupply?: number | undefined;
                     Subunit?: string | undefined;
                     Price?: number | undefined;
                     DecimalPlacesPrice?: number | undefined;
-                    Currency?: string | undefined;
-                    InitialValuation?: number | undefined;
-                    CurrentValuation?: number | undefined;
-                    ValuationDate?: string | undefined;
-                    Network?: Network | undefined;
-                    Status?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -5320,6 +5228,7 @@ export declare const Assets: {
                 InvestmentFundDetails?: ({
                     FundType?: string | undefined;
                     Exchange?: string | undefined;
+                    ExchangeTickerSymbol?: string | undefined;
                     ISIN?: string | undefined;
                     NAV?: number | undefined;
                     InceptionDate?: string | undefined;
@@ -5329,6 +5238,7 @@ export declare const Assets: {
                 } & {
                     FundType?: string | undefined;
                     Exchange?: string | undefined;
+                    ExchangeTickerSymbol?: string | undefined;
                     ISIN?: string | undefined;
                     NAV?: number | undefined;
                     InceptionDate?: string | undefined;
@@ -5350,7 +5260,6 @@ export declare const Assets: {
                     AssetMarginPercentage?: number | undefined;
                 } & { [K_14 in Exclude<keyof I["Assets"][number]["AssetDetails"]["EquityDetails"], keyof Equity>]: never; }) | undefined;
                 FinancialProperties?: ({
-                    Symbol?: string | undefined;
                     Issuer?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
@@ -5361,18 +5270,12 @@ export declare const Assets: {
                     PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
                     Fractional?: boolean | undefined;
+                    QuantityStep?: number | undefined;
                     TotalSupply?: number | undefined;
                     Subunit?: string | undefined;
                     Price?: number | undefined;
                     DecimalPlacesPrice?: number | undefined;
-                    Currency?: string | undefined;
-                    InitialValuation?: number | undefined;
-                    CurrentValuation?: number | undefined;
-                    ValuationDate?: string | undefined;
-                    Network?: Network | undefined;
-                    Status?: string | undefined;
                 } & {
-                    Symbol?: string | undefined;
                     Issuer?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
@@ -5383,16 +5286,11 @@ export declare const Assets: {
                     PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
                     Fractional?: boolean | undefined;
+                    QuantityStep?: number | undefined;
                     TotalSupply?: number | undefined;
                     Subunit?: string | undefined;
                     Price?: number | undefined;
                     DecimalPlacesPrice?: number | undefined;
-                    Currency?: string | undefined;
-                    InitialValuation?: number | undefined;
-                    CurrentValuation?: number | undefined;
-                    ValuationDate?: string | undefined;
-                    Network?: Network | undefined;
-                    Status?: string | undefined;
                 } & { [K_16 in Exclude<keyof I["Assets"][number]["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
                 Description?: ({
                     Name?: string | undefined;
@@ -5653,12 +5551,12 @@ export declare const Assets: {
                 DefaultHoldLimit?: string | undefined;
             } & { [K_36 in Exclude<keyof I["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
             MetaData?: ({
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
             } & {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -5821,6 +5719,7 @@ export declare const Assets: {
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
                     Exchange?: string | undefined;
+                    ExchangeTickerSymbol?: string | undefined;
                     ISIN?: string | undefined;
                     NAV?: number | undefined;
                     InceptionDate?: string | undefined;
@@ -5836,7 +5735,6 @@ export declare const Assets: {
                     AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
-                    Symbol?: string | undefined;
                     Issuer?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
@@ -5847,16 +5745,11 @@ export declare const Assets: {
                     PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
                     Fractional?: boolean | undefined;
+                    QuantityStep?: number | undefined;
                     TotalSupply?: number | undefined;
                     Subunit?: string | undefined;
                     Price?: number | undefined;
                     DecimalPlacesPrice?: number | undefined;
-                    Currency?: string | undefined;
-                    InitialValuation?: number | undefined;
-                    CurrentValuation?: number | undefined;
-                    ValuationDate?: string | undefined;
-                    Network?: Network | undefined;
-                    Status?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -5940,7 +5833,7 @@ export declare const Assets: {
                 DefaultHoldLimit?: string | undefined;
             } | undefined;
             MetaData?: {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -6083,6 +5976,7 @@ export declare const Assets: {
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
                     Exchange?: string | undefined;
+                    ExchangeTickerSymbol?: string | undefined;
                     ISIN?: string | undefined;
                     NAV?: number | undefined;
                     InceptionDate?: string | undefined;
@@ -6098,7 +5992,6 @@ export declare const Assets: {
                     AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
-                    Symbol?: string | undefined;
                     Issuer?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
@@ -6109,16 +6002,11 @@ export declare const Assets: {
                     PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
                     Fractional?: boolean | undefined;
+                    QuantityStep?: number | undefined;
                     TotalSupply?: number | undefined;
                     Subunit?: string | undefined;
                     Price?: number | undefined;
                     DecimalPlacesPrice?: number | undefined;
-                    Currency?: string | undefined;
-                    InitialValuation?: number | undefined;
-                    CurrentValuation?: number | undefined;
-                    ValuationDate?: string | undefined;
-                    Network?: Network | undefined;
-                    Status?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -6202,7 +6090,7 @@ export declare const Assets: {
                 DefaultHoldLimit?: string | undefined;
             } | undefined;
             MetaData?: {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -6344,6 +6232,7 @@ export declare const Assets: {
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
                     Exchange?: string | undefined;
+                    ExchangeTickerSymbol?: string | undefined;
                     ISIN?: string | undefined;
                     NAV?: number | undefined;
                     InceptionDate?: string | undefined;
@@ -6359,7 +6248,6 @@ export declare const Assets: {
                     AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
-                    Symbol?: string | undefined;
                     Issuer?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
@@ -6370,16 +6258,11 @@ export declare const Assets: {
                     PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
                     Fractional?: boolean | undefined;
+                    QuantityStep?: number | undefined;
                     TotalSupply?: number | undefined;
                     Subunit?: string | undefined;
                     Price?: number | undefined;
                     DecimalPlacesPrice?: number | undefined;
-                    Currency?: string | undefined;
-                    InitialValuation?: number | undefined;
-                    CurrentValuation?: number | undefined;
-                    ValuationDate?: string | undefined;
-                    Network?: Network | undefined;
-                    Status?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -6463,7 +6346,7 @@ export declare const Assets: {
                 DefaultHoldLimit?: string | undefined;
             } | undefined;
             MetaData?: {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -6602,6 +6485,7 @@ export declare const Assets: {
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
                     Exchange?: string | undefined;
+                    ExchangeTickerSymbol?: string | undefined;
                     ISIN?: string | undefined;
                     NAV?: number | undefined;
                     InceptionDate?: string | undefined;
@@ -6617,7 +6501,6 @@ export declare const Assets: {
                     AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
-                    Symbol?: string | undefined;
                     Issuer?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
@@ -6628,16 +6511,11 @@ export declare const Assets: {
                     PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
                     Fractional?: boolean | undefined;
+                    QuantityStep?: number | undefined;
                     TotalSupply?: number | undefined;
                     Subunit?: string | undefined;
                     Price?: number | undefined;
                     DecimalPlacesPrice?: number | undefined;
-                    Currency?: string | undefined;
-                    InitialValuation?: number | undefined;
-                    CurrentValuation?: number | undefined;
-                    ValuationDate?: string | undefined;
-                    Network?: Network | undefined;
-                    Status?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -6721,7 +6599,7 @@ export declare const Assets: {
                 DefaultHoldLimit?: string | undefined;
             } | undefined;
             MetaData?: {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -6860,6 +6738,7 @@ export declare const Assets: {
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
                     Exchange?: string | undefined;
+                    ExchangeTickerSymbol?: string | undefined;
                     ISIN?: string | undefined;
                     NAV?: number | undefined;
                     InceptionDate?: string | undefined;
@@ -6875,7 +6754,6 @@ export declare const Assets: {
                     AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
-                    Symbol?: string | undefined;
                     Issuer?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
@@ -6886,16 +6764,11 @@ export declare const Assets: {
                     PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
                     Fractional?: boolean | undefined;
+                    QuantityStep?: number | undefined;
                     TotalSupply?: number | undefined;
                     Subunit?: string | undefined;
                     Price?: number | undefined;
                     DecimalPlacesPrice?: number | undefined;
-                    Currency?: string | undefined;
-                    InitialValuation?: number | undefined;
-                    CurrentValuation?: number | undefined;
-                    ValuationDate?: string | undefined;
-                    Network?: Network | undefined;
-                    Status?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -7176,6 +7049,7 @@ export declare const Assets: {
                 InvestmentFundDetails?: ({
                     FundType?: string | undefined;
                     Exchange?: string | undefined;
+                    ExchangeTickerSymbol?: string | undefined;
                     ISIN?: string | undefined;
                     NAV?: number | undefined;
                     InceptionDate?: string | undefined;
@@ -7185,6 +7059,7 @@ export declare const Assets: {
                 } & {
                     FundType?: string | undefined;
                     Exchange?: string | undefined;
+                    ExchangeTickerSymbol?: string | undefined;
                     ISIN?: string | undefined;
                     NAV?: number | undefined;
                     InceptionDate?: string | undefined;
@@ -7206,7 +7081,6 @@ export declare const Assets: {
                     AssetMarginPercentage?: number | undefined;
                 } & { [K_58 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["EquityDetails"], keyof Equity>]: never; }) | undefined;
                 FinancialProperties?: ({
-                    Symbol?: string | undefined;
                     Issuer?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
@@ -7217,18 +7091,12 @@ export declare const Assets: {
                     PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
                     Fractional?: boolean | undefined;
+                    QuantityStep?: number | undefined;
                     TotalSupply?: number | undefined;
                     Subunit?: string | undefined;
                     Price?: number | undefined;
                     DecimalPlacesPrice?: number | undefined;
-                    Currency?: string | undefined;
-                    InitialValuation?: number | undefined;
-                    CurrentValuation?: number | undefined;
-                    ValuationDate?: string | undefined;
-                    Network?: Network | undefined;
-                    Status?: string | undefined;
                 } & {
-                    Symbol?: string | undefined;
                     Issuer?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
@@ -7239,16 +7107,11 @@ export declare const Assets: {
                     PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
                     Fractional?: boolean | undefined;
+                    QuantityStep?: number | undefined;
                     TotalSupply?: number | undefined;
                     Subunit?: string | undefined;
                     Price?: number | undefined;
                     DecimalPlacesPrice?: number | undefined;
-                    Currency?: string | undefined;
-                    InitialValuation?: number | undefined;
-                    CurrentValuation?: number | undefined;
-                    ValuationDate?: string | undefined;
-                    Network?: Network | undefined;
-                    Status?: string | undefined;
                 } & { [K_60 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
                 Description?: ({
                     Name?: string | undefined;
@@ -7509,12 +7372,12 @@ export declare const Assets: {
                 DefaultHoldLimit?: string | undefined;
             } & { [K_80 in Exclude<keyof I_1["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
             MetaData?: ({
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
             } & {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -7677,6 +7540,7 @@ export declare const Assets: {
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
                     Exchange?: string | undefined;
+                    ExchangeTickerSymbol?: string | undefined;
                     ISIN?: string | undefined;
                     NAV?: number | undefined;
                     InceptionDate?: string | undefined;
@@ -7692,7 +7556,6 @@ export declare const Assets: {
                     AssetMarginPercentage?: number | undefined;
                 } | undefined;
                 FinancialProperties?: {
-                    Symbol?: string | undefined;
                     Issuer?: string | undefined;
                     RedemptionTerms?: string | undefined;
                     ComplianceRequired?: boolean | undefined;
@@ -7703,16 +7566,11 @@ export declare const Assets: {
                     PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
                     Fractional?: boolean | undefined;
+                    QuantityStep?: number | undefined;
                     TotalSupply?: number | undefined;
                     Subunit?: string | undefined;
                     Price?: number | undefined;
                     DecimalPlacesPrice?: number | undefined;
-                    Currency?: string | undefined;
-                    InitialValuation?: number | undefined;
-                    CurrentValuation?: number | undefined;
-                    ValuationDate?: string | undefined;
-                    Network?: Network | undefined;
-                    Status?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -7796,7 +7654,7 @@ export declare const Assets: {
                 DefaultHoldLimit?: string | undefined;
             } | undefined;
             MetaData?: {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -7842,7 +7700,7 @@ export declare const UserAssetList: {
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
         MetaData?: {
-            Network?: Network | undefined;
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
             UpdatedAt?: Date | undefined;
             CreatedAt?: Date | undefined;
             UpdatedByAccount?: string | undefined;
@@ -7855,12 +7713,12 @@ export declare const UserAssetList: {
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
         MetaData?: ({
-            Network?: Network | undefined;
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
             UpdatedAt?: Date | undefined;
             CreatedAt?: Date | undefined;
             UpdatedByAccount?: string | undefined;
         } & {
-            Network?: Network | undefined;
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
             UpdatedAt?: Date | undefined;
             CreatedAt?: Date | undefined;
             UpdatedByAccount?: string | undefined;
@@ -7874,7 +7732,7 @@ export declare const UserAssetList: {
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
         MetaData?: {
-            Network?: Network | undefined;
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
             UpdatedAt?: Date | undefined;
             CreatedAt?: Date | undefined;
             UpdatedByAccount?: string | undefined;
@@ -7887,12 +7745,12 @@ export declare const UserAssetList: {
         AssetKey?: string | undefined;
         Status?: UserAssetStatus | undefined;
         MetaData?: ({
-            Network?: Network | undefined;
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
             UpdatedAt?: Date | undefined;
             CreatedAt?: Date | undefined;
             UpdatedByAccount?: string | undefined;
         } & {
-            Network?: Network | undefined;
+            Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
             UpdatedAt?: Date | undefined;
             CreatedAt?: Date | undefined;
             UpdatedByAccount?: string | undefined;
@@ -7913,7 +7771,7 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -7928,7 +7786,7 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -7941,7 +7799,7 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -7954,12 +7812,12 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: ({
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
             } & {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -7972,7 +7830,7 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -7988,7 +7846,7 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -8003,7 +7861,7 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -8016,7 +7874,7 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -8029,12 +7887,12 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: ({
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
             } & {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -8047,7 +7905,7 @@ export declare const UserAssetLists: {
             AssetKey?: string | undefined;
             Status?: UserAssetStatus | undefined;
             MetaData?: {
-                Network?: Network | undefined;
+                Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
                 UpdatedAt?: Date | undefined;
                 CreatedAt?: Date | undefined;
                 UpdatedByAccount?: string | undefined;
@@ -9165,6 +9023,7 @@ export declare const InvestmentFund: {
     create<I extends {
         FundType?: string | undefined;
         Exchange?: string | undefined;
+        ExchangeTickerSymbol?: string | undefined;
         ISIN?: string | undefined;
         NAV?: number | undefined;
         InceptionDate?: string | undefined;
@@ -9174,6 +9033,7 @@ export declare const InvestmentFund: {
     } & {
         FundType?: string | undefined;
         Exchange?: string | undefined;
+        ExchangeTickerSymbol?: string | undefined;
         ISIN?: string | undefined;
         NAV?: number | undefined;
         InceptionDate?: string | undefined;
@@ -9184,6 +9044,7 @@ export declare const InvestmentFund: {
     fromPartial<I_1 extends {
         FundType?: string | undefined;
         Exchange?: string | undefined;
+        ExchangeTickerSymbol?: string | undefined;
         ISIN?: string | undefined;
         NAV?: number | undefined;
         InceptionDate?: string | undefined;
@@ -9193,6 +9054,7 @@ export declare const InvestmentFund: {
     } & {
         FundType?: string | undefined;
         Exchange?: string | undefined;
+        ExchangeTickerSymbol?: string | undefined;
         ISIN?: string | undefined;
         NAV?: number | undefined;
         InceptionDate?: string | undefined;
@@ -9239,7 +9101,6 @@ export declare const FinancialProperties: {
     fromJSON(object: any): FinancialProperties;
     toJSON(message: FinancialProperties): unknown;
     create<I extends {
-        Symbol?: string | undefined;
         Issuer?: string | undefined;
         RedemptionTerms?: string | undefined;
         ComplianceRequired?: boolean | undefined;
@@ -9250,18 +9111,12 @@ export declare const FinancialProperties: {
         PlatformType?: string | undefined;
         ContractAddress?: string | undefined;
         Fractional?: boolean | undefined;
+        QuantityStep?: number | undefined;
         TotalSupply?: number | undefined;
         Subunit?: string | undefined;
         Price?: number | undefined;
         DecimalPlacesPrice?: number | undefined;
-        Currency?: string | undefined;
-        InitialValuation?: number | undefined;
-        CurrentValuation?: number | undefined;
-        ValuationDate?: string | undefined;
-        Network?: Network | undefined;
-        Status?: string | undefined;
     } & {
-        Symbol?: string | undefined;
         Issuer?: string | undefined;
         RedemptionTerms?: string | undefined;
         ComplianceRequired?: boolean | undefined;
@@ -9272,19 +9127,13 @@ export declare const FinancialProperties: {
         PlatformType?: string | undefined;
         ContractAddress?: string | undefined;
         Fractional?: boolean | undefined;
+        QuantityStep?: number | undefined;
         TotalSupply?: number | undefined;
         Subunit?: string | undefined;
         Price?: number | undefined;
         DecimalPlacesPrice?: number | undefined;
-        Currency?: string | undefined;
-        InitialValuation?: number | undefined;
-        CurrentValuation?: number | undefined;
-        ValuationDate?: string | undefined;
-        Network?: Network | undefined;
-        Status?: string | undefined;
     } & { [K_1 in Exclude<keyof I, keyof FinancialProperties>]: never; }>(base?: I | undefined): FinancialProperties;
     fromPartial<I_1 extends {
-        Symbol?: string | undefined;
         Issuer?: string | undefined;
         RedemptionTerms?: string | undefined;
         ComplianceRequired?: boolean | undefined;
@@ -9295,18 +9144,12 @@ export declare const FinancialProperties: {
         PlatformType?: string | undefined;
         ContractAddress?: string | undefined;
         Fractional?: boolean | undefined;
+        QuantityStep?: number | undefined;
         TotalSupply?: number | undefined;
         Subunit?: string | undefined;
         Price?: number | undefined;
         DecimalPlacesPrice?: number | undefined;
-        Currency?: string | undefined;
-        InitialValuation?: number | undefined;
-        CurrentValuation?: number | undefined;
-        ValuationDate?: string | undefined;
-        Network?: Network | undefined;
-        Status?: string | undefined;
     } & {
-        Symbol?: string | undefined;
         Issuer?: string | undefined;
         RedemptionTerms?: string | undefined;
         ComplianceRequired?: boolean | undefined;
@@ -9317,16 +9160,11 @@ export declare const FinancialProperties: {
         PlatformType?: string | undefined;
         ContractAddress?: string | undefined;
         Fractional?: boolean | undefined;
+        QuantityStep?: number | undefined;
         TotalSupply?: number | undefined;
         Subunit?: string | undefined;
         Price?: number | undefined;
         DecimalPlacesPrice?: number | undefined;
-        Currency?: string | undefined;
-        InitialValuation?: number | undefined;
-        CurrentValuation?: number | undefined;
-        ValuationDate?: string | undefined;
-        Network?: Network | undefined;
-        Status?: string | undefined;
     } & { [K_3 in Exclude<keyof I_1, keyof FinancialProperties>]: never; }>(object: I_1): FinancialProperties;
 };
 export declare const Description: {
