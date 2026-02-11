@@ -357,22 +357,16 @@ export interface Equity {
 }
 export interface FinancialProperties {
     Issuer: string;
-    RedemptionTerms?: string | undefined;
-    ComplianceRequired?: boolean | undefined;
     /** Purely informational */
     Type: string;
-    TradeAllowances: string[];
-    Transferable: boolean;
-    Platform: string;
-    PlatformType: string;
     ContractAddress?: string | undefined;
+    Platform: string;
+    Transferable: boolean;
     Fractional: boolean;
-    /** A way to force a fixed unit for trade e.g. if i have 100k units for sale, but want to enforce the sale of 100 units at once, which leads to 1000 actual tradeable shares */
-    QuantityStep: number;
+    ComplianceRequired?: boolean | undefined;
+    TradeAllowances: string[];
     TotalSupply?: number | undefined;
-    Subunit?: string | undefined;
-    Price?: number | undefined;
-    DecimalPlacesPrice: number;
+    RedemptionTerms?: string | undefined;
 }
 export interface Description {
     Name: string;
@@ -566,20 +560,15 @@ export declare const AssetDetails: {
         } | undefined;
         FinancialProperties?: {
             Issuer?: string | undefined;
-            RedemptionTerms?: string | undefined;
-            ComplianceRequired?: boolean | undefined;
             Type?: string | undefined;
-            TradeAllowances?: string[] | undefined;
-            Transferable?: boolean | undefined;
-            Platform?: string | undefined;
-            PlatformType?: string | undefined;
             ContractAddress?: string | undefined;
+            Platform?: string | undefined;
+            Transferable?: boolean | undefined;
             Fractional?: boolean | undefined;
-            QuantityStep?: number | undefined;
+            ComplianceRequired?: boolean | undefined;
+            TradeAllowances?: string[] | undefined;
             TotalSupply?: number | undefined;
-            Subunit?: string | undefined;
-            Price?: number | undefined;
-            DecimalPlacesPrice?: number | undefined;
+            RedemptionTerms?: string | undefined;
         } | undefined;
         Description?: {
             Name?: string | undefined;
@@ -893,36 +882,26 @@ export declare const AssetDetails: {
         } & { [K_14 in Exclude<keyof I["EquityDetails"], keyof Equity>]: never; }) | undefined;
         FinancialProperties?: ({
             Issuer?: string | undefined;
-            RedemptionTerms?: string | undefined;
-            ComplianceRequired?: boolean | undefined;
             Type?: string | undefined;
-            TradeAllowances?: string[] | undefined;
-            Transferable?: boolean | undefined;
-            Platform?: string | undefined;
-            PlatformType?: string | undefined;
             ContractAddress?: string | undefined;
+            Platform?: string | undefined;
+            Transferable?: boolean | undefined;
             Fractional?: boolean | undefined;
-            QuantityStep?: number | undefined;
+            ComplianceRequired?: boolean | undefined;
+            TradeAllowances?: string[] | undefined;
             TotalSupply?: number | undefined;
-            Subunit?: string | undefined;
-            Price?: number | undefined;
-            DecimalPlacesPrice?: number | undefined;
+            RedemptionTerms?: string | undefined;
         } & {
             Issuer?: string | undefined;
-            RedemptionTerms?: string | undefined;
-            ComplianceRequired?: boolean | undefined;
             Type?: string | undefined;
-            TradeAllowances?: (string[] & string[] & { [K_15 in Exclude<keyof I["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
-            Transferable?: boolean | undefined;
-            Platform?: string | undefined;
-            PlatformType?: string | undefined;
             ContractAddress?: string | undefined;
+            Platform?: string | undefined;
+            Transferable?: boolean | undefined;
             Fractional?: boolean | undefined;
-            QuantityStep?: number | undefined;
+            ComplianceRequired?: boolean | undefined;
+            TradeAllowances?: (string[] & string[] & { [K_15 in Exclude<keyof I["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
             TotalSupply?: number | undefined;
-            Subunit?: string | undefined;
-            Price?: number | undefined;
-            DecimalPlacesPrice?: number | undefined;
+            RedemptionTerms?: string | undefined;
         } & { [K_16 in Exclude<keyof I["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
         Description?: ({
             Name?: string | undefined;
@@ -1306,20 +1285,15 @@ export declare const AssetDetails: {
         } | undefined;
         FinancialProperties?: {
             Issuer?: string | undefined;
-            RedemptionTerms?: string | undefined;
-            ComplianceRequired?: boolean | undefined;
             Type?: string | undefined;
-            TradeAllowances?: string[] | undefined;
-            Transferable?: boolean | undefined;
-            Platform?: string | undefined;
-            PlatformType?: string | undefined;
             ContractAddress?: string | undefined;
+            Platform?: string | undefined;
+            Transferable?: boolean | undefined;
             Fractional?: boolean | undefined;
-            QuantityStep?: number | undefined;
+            ComplianceRequired?: boolean | undefined;
+            TradeAllowances?: string[] | undefined;
             TotalSupply?: number | undefined;
-            Subunit?: string | undefined;
-            Price?: number | undefined;
-            DecimalPlacesPrice?: number | undefined;
+            RedemptionTerms?: string | undefined;
         } | undefined;
         Description?: {
             Name?: string | undefined;
@@ -1633,36 +1607,26 @@ export declare const AssetDetails: {
         } & { [K_51 in Exclude<keyof I_1["EquityDetails"], keyof Equity>]: never; }) | undefined;
         FinancialProperties?: ({
             Issuer?: string | undefined;
-            RedemptionTerms?: string | undefined;
-            ComplianceRequired?: boolean | undefined;
             Type?: string | undefined;
-            TradeAllowances?: string[] | undefined;
-            Transferable?: boolean | undefined;
-            Platform?: string | undefined;
-            PlatformType?: string | undefined;
             ContractAddress?: string | undefined;
+            Platform?: string | undefined;
+            Transferable?: boolean | undefined;
             Fractional?: boolean | undefined;
-            QuantityStep?: number | undefined;
+            ComplianceRequired?: boolean | undefined;
+            TradeAllowances?: string[] | undefined;
             TotalSupply?: number | undefined;
-            Subunit?: string | undefined;
-            Price?: number | undefined;
-            DecimalPlacesPrice?: number | undefined;
+            RedemptionTerms?: string | undefined;
         } & {
             Issuer?: string | undefined;
-            RedemptionTerms?: string | undefined;
-            ComplianceRequired?: boolean | undefined;
             Type?: string | undefined;
-            TradeAllowances?: (string[] & string[] & { [K_52 in Exclude<keyof I_1["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
-            Transferable?: boolean | undefined;
-            Platform?: string | undefined;
-            PlatformType?: string | undefined;
             ContractAddress?: string | undefined;
+            Platform?: string | undefined;
+            Transferable?: boolean | undefined;
             Fractional?: boolean | undefined;
-            QuantityStep?: number | undefined;
+            ComplianceRequired?: boolean | undefined;
+            TradeAllowances?: (string[] & string[] & { [K_52 in Exclude<keyof I_1["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
             TotalSupply?: number | undefined;
-            Subunit?: string | undefined;
-            Price?: number | undefined;
-            DecimalPlacesPrice?: number | undefined;
+            RedemptionTerms?: string | undefined;
         } & { [K_53 in Exclude<keyof I_1["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
         Description?: ({
             Name?: string | undefined;
@@ -2053,20 +2017,15 @@ export declare const Asset: {
             } | undefined;
             FinancialProperties?: {
                 Issuer?: string | undefined;
-                RedemptionTerms?: string | undefined;
-                ComplianceRequired?: boolean | undefined;
                 Type?: string | undefined;
-                TradeAllowances?: string[] | undefined;
-                Transferable?: boolean | undefined;
-                Platform?: string | undefined;
-                PlatformType?: string | undefined;
                 ContractAddress?: string | undefined;
+                Platform?: string | undefined;
+                Transferable?: boolean | undefined;
                 Fractional?: boolean | undefined;
-                QuantityStep?: number | undefined;
+                ComplianceRequired?: boolean | undefined;
+                TradeAllowances?: string[] | undefined;
                 TotalSupply?: number | undefined;
-                Subunit?: string | undefined;
-                Price?: number | undefined;
-                DecimalPlacesPrice?: number | undefined;
+                RedemptionTerms?: string | undefined;
             } | undefined;
             Description?: {
                 Name?: string | undefined;
@@ -2306,20 +2265,15 @@ export declare const Asset: {
             } | undefined;
             FinancialProperties?: {
                 Issuer?: string | undefined;
-                RedemptionTerms?: string | undefined;
-                ComplianceRequired?: boolean | undefined;
                 Type?: string | undefined;
-                TradeAllowances?: string[] | undefined;
-                Transferable?: boolean | undefined;
-                Platform?: string | undefined;
-                PlatformType?: string | undefined;
                 ContractAddress?: string | undefined;
+                Platform?: string | undefined;
+                Transferable?: boolean | undefined;
                 Fractional?: boolean | undefined;
-                QuantityStep?: number | undefined;
+                ComplianceRequired?: boolean | undefined;
+                TradeAllowances?: string[] | undefined;
                 TotalSupply?: number | undefined;
-                Subunit?: string | undefined;
-                Price?: number | undefined;
-                DecimalPlacesPrice?: number | undefined;
+                RedemptionTerms?: string | undefined;
             } | undefined;
             Description?: {
                 Name?: string | undefined;
@@ -2633,36 +2587,26 @@ export declare const Asset: {
             } & { [K_14 in Exclude<keyof I["AssetDetails"]["EquityDetails"], keyof Equity>]: never; }) | undefined;
             FinancialProperties?: ({
                 Issuer?: string | undefined;
-                RedemptionTerms?: string | undefined;
-                ComplianceRequired?: boolean | undefined;
                 Type?: string | undefined;
-                TradeAllowances?: string[] | undefined;
-                Transferable?: boolean | undefined;
-                Platform?: string | undefined;
-                PlatformType?: string | undefined;
                 ContractAddress?: string | undefined;
+                Platform?: string | undefined;
+                Transferable?: boolean | undefined;
                 Fractional?: boolean | undefined;
-                QuantityStep?: number | undefined;
+                ComplianceRequired?: boolean | undefined;
+                TradeAllowances?: string[] | undefined;
                 TotalSupply?: number | undefined;
-                Subunit?: string | undefined;
-                Price?: number | undefined;
-                DecimalPlacesPrice?: number | undefined;
+                RedemptionTerms?: string | undefined;
             } & {
                 Issuer?: string | undefined;
-                RedemptionTerms?: string | undefined;
-                ComplianceRequired?: boolean | undefined;
                 Type?: string | undefined;
-                TradeAllowances?: (string[] & string[] & { [K_15 in Exclude<keyof I["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
-                Transferable?: boolean | undefined;
-                Platform?: string | undefined;
-                PlatformType?: string | undefined;
                 ContractAddress?: string | undefined;
+                Platform?: string | undefined;
+                Transferable?: boolean | undefined;
                 Fractional?: boolean | undefined;
-                QuantityStep?: number | undefined;
+                ComplianceRequired?: boolean | undefined;
+                TradeAllowances?: (string[] & string[] & { [K_15 in Exclude<keyof I["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
                 TotalSupply?: number | undefined;
-                Subunit?: string | undefined;
-                Price?: number | undefined;
-                DecimalPlacesPrice?: number | undefined;
+                RedemptionTerms?: string | undefined;
             } & { [K_16 in Exclude<keyof I["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
             Description?: ({
                 Name?: string | undefined;
@@ -3109,20 +3053,15 @@ export declare const Asset: {
             } | undefined;
             FinancialProperties?: {
                 Issuer?: string | undefined;
-                RedemptionTerms?: string | undefined;
-                ComplianceRequired?: boolean | undefined;
                 Type?: string | undefined;
-                TradeAllowances?: string[] | undefined;
-                Transferable?: boolean | undefined;
-                Platform?: string | undefined;
-                PlatformType?: string | undefined;
                 ContractAddress?: string | undefined;
+                Platform?: string | undefined;
+                Transferable?: boolean | undefined;
                 Fractional?: boolean | undefined;
-                QuantityStep?: number | undefined;
+                ComplianceRequired?: boolean | undefined;
+                TradeAllowances?: string[] | undefined;
                 TotalSupply?: number | undefined;
-                Subunit?: string | undefined;
-                Price?: number | undefined;
-                DecimalPlacesPrice?: number | undefined;
+                RedemptionTerms?: string | undefined;
             } | undefined;
             Description?: {
                 Name?: string | undefined;
@@ -3362,20 +3301,15 @@ export declare const Asset: {
             } | undefined;
             FinancialProperties?: {
                 Issuer?: string | undefined;
-                RedemptionTerms?: string | undefined;
-                ComplianceRequired?: boolean | undefined;
                 Type?: string | undefined;
-                TradeAllowances?: string[] | undefined;
-                Transferable?: boolean | undefined;
-                Platform?: string | undefined;
-                PlatformType?: string | undefined;
                 ContractAddress?: string | undefined;
+                Platform?: string | undefined;
+                Transferable?: boolean | undefined;
                 Fractional?: boolean | undefined;
-                QuantityStep?: number | undefined;
+                ComplianceRequired?: boolean | undefined;
+                TradeAllowances?: string[] | undefined;
                 TotalSupply?: number | undefined;
-                Subunit?: string | undefined;
-                Price?: number | undefined;
-                DecimalPlacesPrice?: number | undefined;
+                RedemptionTerms?: string | undefined;
             } | undefined;
             Description?: {
                 Name?: string | undefined;
@@ -3689,36 +3623,26 @@ export declare const Asset: {
             } & { [K_56 in Exclude<keyof I_1["AssetDetails"]["EquityDetails"], keyof Equity>]: never; }) | undefined;
             FinancialProperties?: ({
                 Issuer?: string | undefined;
-                RedemptionTerms?: string | undefined;
-                ComplianceRequired?: boolean | undefined;
                 Type?: string | undefined;
-                TradeAllowances?: string[] | undefined;
-                Transferable?: boolean | undefined;
-                Platform?: string | undefined;
-                PlatformType?: string | undefined;
                 ContractAddress?: string | undefined;
+                Platform?: string | undefined;
+                Transferable?: boolean | undefined;
                 Fractional?: boolean | undefined;
-                QuantityStep?: number | undefined;
+                ComplianceRequired?: boolean | undefined;
+                TradeAllowances?: string[] | undefined;
                 TotalSupply?: number | undefined;
-                Subunit?: string | undefined;
-                Price?: number | undefined;
-                DecimalPlacesPrice?: number | undefined;
+                RedemptionTerms?: string | undefined;
             } & {
                 Issuer?: string | undefined;
-                RedemptionTerms?: string | undefined;
-                ComplianceRequired?: boolean | undefined;
                 Type?: string | undefined;
-                TradeAllowances?: (string[] & string[] & { [K_57 in Exclude<keyof I_1["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
-                Transferable?: boolean | undefined;
-                Platform?: string | undefined;
-                PlatformType?: string | undefined;
                 ContractAddress?: string | undefined;
+                Platform?: string | undefined;
+                Transferable?: boolean | undefined;
                 Fractional?: boolean | undefined;
-                QuantityStep?: number | undefined;
+                ComplianceRequired?: boolean | undefined;
+                TradeAllowances?: (string[] & string[] & { [K_57 in Exclude<keyof I_1["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
                 TotalSupply?: number | undefined;
-                Subunit?: string | undefined;
-                Price?: number | undefined;
-                DecimalPlacesPrice?: number | undefined;
+                RedemptionTerms?: string | undefined;
             } & { [K_58 in Exclude<keyof I_1["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
             Description?: ({
                 Name?: string | undefined;
@@ -4172,20 +4096,15 @@ export declare const Assets: {
                 } | undefined;
                 FinancialProperties?: {
                     Issuer?: string | undefined;
-                    RedemptionTerms?: string | undefined;
-                    ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
-                    TradeAllowances?: string[] | undefined;
-                    Transferable?: boolean | undefined;
-                    Platform?: string | undefined;
-                    PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
+                    Platform?: string | undefined;
+                    Transferable?: boolean | undefined;
                     Fractional?: boolean | undefined;
-                    QuantityStep?: number | undefined;
+                    ComplianceRequired?: boolean | undefined;
+                    TradeAllowances?: string[] | undefined;
                     TotalSupply?: number | undefined;
-                    Subunit?: string | undefined;
-                    Price?: number | undefined;
-                    DecimalPlacesPrice?: number | undefined;
+                    RedemptionTerms?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -4428,20 +4347,15 @@ export declare const Assets: {
                 } | undefined;
                 FinancialProperties?: {
                     Issuer?: string | undefined;
-                    RedemptionTerms?: string | undefined;
-                    ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
-                    TradeAllowances?: string[] | undefined;
-                    Transferable?: boolean | undefined;
-                    Platform?: string | undefined;
-                    PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
+                    Platform?: string | undefined;
+                    Transferable?: boolean | undefined;
                     Fractional?: boolean | undefined;
-                    QuantityStep?: number | undefined;
+                    ComplianceRequired?: boolean | undefined;
+                    TradeAllowances?: string[] | undefined;
                     TotalSupply?: number | undefined;
-                    Subunit?: string | undefined;
-                    Price?: number | undefined;
-                    DecimalPlacesPrice?: number | undefined;
+                    RedemptionTerms?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -4681,20 +4595,15 @@ export declare const Assets: {
                 } | undefined;
                 FinancialProperties?: {
                     Issuer?: string | undefined;
-                    RedemptionTerms?: string | undefined;
-                    ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
-                    TradeAllowances?: string[] | undefined;
-                    Transferable?: boolean | undefined;
-                    Platform?: string | undefined;
-                    PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
+                    Platform?: string | undefined;
+                    Transferable?: boolean | undefined;
                     Fractional?: boolean | undefined;
-                    QuantityStep?: number | undefined;
+                    ComplianceRequired?: boolean | undefined;
+                    TradeAllowances?: string[] | undefined;
                     TotalSupply?: number | undefined;
-                    Subunit?: string | undefined;
-                    Price?: number | undefined;
-                    DecimalPlacesPrice?: number | undefined;
+                    RedemptionTerms?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -4934,20 +4843,15 @@ export declare const Assets: {
                 } | undefined;
                 FinancialProperties?: {
                     Issuer?: string | undefined;
-                    RedemptionTerms?: string | undefined;
-                    ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
-                    TradeAllowances?: string[] | undefined;
-                    Transferable?: boolean | undefined;
-                    Platform?: string | undefined;
-                    PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
+                    Platform?: string | undefined;
+                    Transferable?: boolean | undefined;
                     Fractional?: boolean | undefined;
-                    QuantityStep?: number | undefined;
+                    ComplianceRequired?: boolean | undefined;
+                    TradeAllowances?: string[] | undefined;
                     TotalSupply?: number | undefined;
-                    Subunit?: string | undefined;
-                    Price?: number | undefined;
-                    DecimalPlacesPrice?: number | undefined;
+                    RedemptionTerms?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -5261,36 +5165,26 @@ export declare const Assets: {
                 } & { [K_14 in Exclude<keyof I["Assets"][number]["AssetDetails"]["EquityDetails"], keyof Equity>]: never; }) | undefined;
                 FinancialProperties?: ({
                     Issuer?: string | undefined;
-                    RedemptionTerms?: string | undefined;
-                    ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
-                    TradeAllowances?: string[] | undefined;
-                    Transferable?: boolean | undefined;
-                    Platform?: string | undefined;
-                    PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
+                    Platform?: string | undefined;
+                    Transferable?: boolean | undefined;
                     Fractional?: boolean | undefined;
-                    QuantityStep?: number | undefined;
+                    ComplianceRequired?: boolean | undefined;
+                    TradeAllowances?: string[] | undefined;
                     TotalSupply?: number | undefined;
-                    Subunit?: string | undefined;
-                    Price?: number | undefined;
-                    DecimalPlacesPrice?: number | undefined;
+                    RedemptionTerms?: string | undefined;
                 } & {
                     Issuer?: string | undefined;
-                    RedemptionTerms?: string | undefined;
-                    ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
-                    TradeAllowances?: (string[] & string[] & { [K_15 in Exclude<keyof I["Assets"][number]["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
-                    Transferable?: boolean | undefined;
-                    Platform?: string | undefined;
-                    PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
+                    Platform?: string | undefined;
+                    Transferable?: boolean | undefined;
                     Fractional?: boolean | undefined;
-                    QuantityStep?: number | undefined;
+                    ComplianceRequired?: boolean | undefined;
+                    TradeAllowances?: (string[] & string[] & { [K_15 in Exclude<keyof I["Assets"][number]["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
                     TotalSupply?: number | undefined;
-                    Subunit?: string | undefined;
-                    Price?: number | undefined;
-                    DecimalPlacesPrice?: number | undefined;
+                    RedemptionTerms?: string | undefined;
                 } & { [K_16 in Exclude<keyof I["Assets"][number]["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
                 Description?: ({
                     Name?: string | undefined;
@@ -5736,20 +5630,15 @@ export declare const Assets: {
                 } | undefined;
                 FinancialProperties?: {
                     Issuer?: string | undefined;
-                    RedemptionTerms?: string | undefined;
-                    ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
-                    TradeAllowances?: string[] | undefined;
-                    Transferable?: boolean | undefined;
-                    Platform?: string | undefined;
-                    PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
+                    Platform?: string | undefined;
+                    Transferable?: boolean | undefined;
                     Fractional?: boolean | undefined;
-                    QuantityStep?: number | undefined;
+                    ComplianceRequired?: boolean | undefined;
+                    TradeAllowances?: string[] | undefined;
                     TotalSupply?: number | undefined;
-                    Subunit?: string | undefined;
-                    Price?: number | undefined;
-                    DecimalPlacesPrice?: number | undefined;
+                    RedemptionTerms?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -5993,20 +5882,15 @@ export declare const Assets: {
                 } | undefined;
                 FinancialProperties?: {
                     Issuer?: string | undefined;
-                    RedemptionTerms?: string | undefined;
-                    ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
-                    TradeAllowances?: string[] | undefined;
-                    Transferable?: boolean | undefined;
-                    Platform?: string | undefined;
-                    PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
+                    Platform?: string | undefined;
+                    Transferable?: boolean | undefined;
                     Fractional?: boolean | undefined;
-                    QuantityStep?: number | undefined;
+                    ComplianceRequired?: boolean | undefined;
+                    TradeAllowances?: string[] | undefined;
                     TotalSupply?: number | undefined;
-                    Subunit?: string | undefined;
-                    Price?: number | undefined;
-                    DecimalPlacesPrice?: number | undefined;
+                    RedemptionTerms?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -6249,20 +6133,15 @@ export declare const Assets: {
                 } | undefined;
                 FinancialProperties?: {
                     Issuer?: string | undefined;
-                    RedemptionTerms?: string | undefined;
-                    ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
-                    TradeAllowances?: string[] | undefined;
-                    Transferable?: boolean | undefined;
-                    Platform?: string | undefined;
-                    PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
+                    Platform?: string | undefined;
+                    Transferable?: boolean | undefined;
                     Fractional?: boolean | undefined;
-                    QuantityStep?: number | undefined;
+                    ComplianceRequired?: boolean | undefined;
+                    TradeAllowances?: string[] | undefined;
                     TotalSupply?: number | undefined;
-                    Subunit?: string | undefined;
-                    Price?: number | undefined;
-                    DecimalPlacesPrice?: number | undefined;
+                    RedemptionTerms?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -6502,20 +6381,15 @@ export declare const Assets: {
                 } | undefined;
                 FinancialProperties?: {
                     Issuer?: string | undefined;
-                    RedemptionTerms?: string | undefined;
-                    ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
-                    TradeAllowances?: string[] | undefined;
-                    Transferable?: boolean | undefined;
-                    Platform?: string | undefined;
-                    PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
+                    Platform?: string | undefined;
+                    Transferable?: boolean | undefined;
                     Fractional?: boolean | undefined;
-                    QuantityStep?: number | undefined;
+                    ComplianceRequired?: boolean | undefined;
+                    TradeAllowances?: string[] | undefined;
                     TotalSupply?: number | undefined;
-                    Subunit?: string | undefined;
-                    Price?: number | undefined;
-                    DecimalPlacesPrice?: number | undefined;
+                    RedemptionTerms?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -6755,20 +6629,15 @@ export declare const Assets: {
                 } | undefined;
                 FinancialProperties?: {
                     Issuer?: string | undefined;
-                    RedemptionTerms?: string | undefined;
-                    ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
-                    TradeAllowances?: string[] | undefined;
-                    Transferable?: boolean | undefined;
-                    Platform?: string | undefined;
-                    PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
+                    Platform?: string | undefined;
+                    Transferable?: boolean | undefined;
                     Fractional?: boolean | undefined;
-                    QuantityStep?: number | undefined;
+                    ComplianceRequired?: boolean | undefined;
+                    TradeAllowances?: string[] | undefined;
                     TotalSupply?: number | undefined;
-                    Subunit?: string | undefined;
-                    Price?: number | undefined;
-                    DecimalPlacesPrice?: number | undefined;
+                    RedemptionTerms?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -7082,36 +6951,26 @@ export declare const Assets: {
                 } & { [K_58 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["EquityDetails"], keyof Equity>]: never; }) | undefined;
                 FinancialProperties?: ({
                     Issuer?: string | undefined;
-                    RedemptionTerms?: string | undefined;
-                    ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
-                    TradeAllowances?: string[] | undefined;
-                    Transferable?: boolean | undefined;
-                    Platform?: string | undefined;
-                    PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
+                    Platform?: string | undefined;
+                    Transferable?: boolean | undefined;
                     Fractional?: boolean | undefined;
-                    QuantityStep?: number | undefined;
+                    ComplianceRequired?: boolean | undefined;
+                    TradeAllowances?: string[] | undefined;
                     TotalSupply?: number | undefined;
-                    Subunit?: string | undefined;
-                    Price?: number | undefined;
-                    DecimalPlacesPrice?: number | undefined;
+                    RedemptionTerms?: string | undefined;
                 } & {
                     Issuer?: string | undefined;
-                    RedemptionTerms?: string | undefined;
-                    ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
-                    TradeAllowances?: (string[] & string[] & { [K_59 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
-                    Transferable?: boolean | undefined;
-                    Platform?: string | undefined;
-                    PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
+                    Platform?: string | undefined;
+                    Transferable?: boolean | undefined;
                     Fractional?: boolean | undefined;
-                    QuantityStep?: number | undefined;
+                    ComplianceRequired?: boolean | undefined;
+                    TradeAllowances?: (string[] & string[] & { [K_59 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["FinancialProperties"]["TradeAllowances"], keyof string[]>]: never; }) | undefined;
                     TotalSupply?: number | undefined;
-                    Subunit?: string | undefined;
-                    Price?: number | undefined;
-                    DecimalPlacesPrice?: number | undefined;
+                    RedemptionTerms?: string | undefined;
                 } & { [K_60 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["FinancialProperties"], keyof FinancialProperties>]: never; }) | undefined;
                 Description?: ({
                     Name?: string | undefined;
@@ -7557,20 +7416,15 @@ export declare const Assets: {
                 } | undefined;
                 FinancialProperties?: {
                     Issuer?: string | undefined;
-                    RedemptionTerms?: string | undefined;
-                    ComplianceRequired?: boolean | undefined;
                     Type?: string | undefined;
-                    TradeAllowances?: string[] | undefined;
-                    Transferable?: boolean | undefined;
-                    Platform?: string | undefined;
-                    PlatformType?: string | undefined;
                     ContractAddress?: string | undefined;
+                    Platform?: string | undefined;
+                    Transferable?: boolean | undefined;
                     Fractional?: boolean | undefined;
-                    QuantityStep?: number | undefined;
+                    ComplianceRequired?: boolean | undefined;
+                    TradeAllowances?: string[] | undefined;
                     TotalSupply?: number | undefined;
-                    Subunit?: string | undefined;
-                    Price?: number | undefined;
-                    DecimalPlacesPrice?: number | undefined;
+                    RedemptionTerms?: string | undefined;
                 } | undefined;
                 Description?: {
                     Name?: string | undefined;
@@ -9102,69 +8956,49 @@ export declare const FinancialProperties: {
     toJSON(message: FinancialProperties): unknown;
     create<I extends {
         Issuer?: string | undefined;
-        RedemptionTerms?: string | undefined;
-        ComplianceRequired?: boolean | undefined;
         Type?: string | undefined;
-        TradeAllowances?: string[] | undefined;
-        Transferable?: boolean | undefined;
-        Platform?: string | undefined;
-        PlatformType?: string | undefined;
         ContractAddress?: string | undefined;
+        Platform?: string | undefined;
+        Transferable?: boolean | undefined;
         Fractional?: boolean | undefined;
-        QuantityStep?: number | undefined;
+        ComplianceRequired?: boolean | undefined;
+        TradeAllowances?: string[] | undefined;
         TotalSupply?: number | undefined;
-        Subunit?: string | undefined;
-        Price?: number | undefined;
-        DecimalPlacesPrice?: number | undefined;
+        RedemptionTerms?: string | undefined;
     } & {
         Issuer?: string | undefined;
-        RedemptionTerms?: string | undefined;
-        ComplianceRequired?: boolean | undefined;
         Type?: string | undefined;
-        TradeAllowances?: (string[] & string[] & { [K in Exclude<keyof I["TradeAllowances"], keyof string[]>]: never; }) | undefined;
-        Transferable?: boolean | undefined;
-        Platform?: string | undefined;
-        PlatformType?: string | undefined;
         ContractAddress?: string | undefined;
+        Platform?: string | undefined;
+        Transferable?: boolean | undefined;
         Fractional?: boolean | undefined;
-        QuantityStep?: number | undefined;
+        ComplianceRequired?: boolean | undefined;
+        TradeAllowances?: (string[] & string[] & { [K in Exclude<keyof I["TradeAllowances"], keyof string[]>]: never; }) | undefined;
         TotalSupply?: number | undefined;
-        Subunit?: string | undefined;
-        Price?: number | undefined;
-        DecimalPlacesPrice?: number | undefined;
+        RedemptionTerms?: string | undefined;
     } & { [K_1 in Exclude<keyof I, keyof FinancialProperties>]: never; }>(base?: I | undefined): FinancialProperties;
     fromPartial<I_1 extends {
         Issuer?: string | undefined;
-        RedemptionTerms?: string | undefined;
-        ComplianceRequired?: boolean | undefined;
         Type?: string | undefined;
-        TradeAllowances?: string[] | undefined;
-        Transferable?: boolean | undefined;
-        Platform?: string | undefined;
-        PlatformType?: string | undefined;
         ContractAddress?: string | undefined;
+        Platform?: string | undefined;
+        Transferable?: boolean | undefined;
         Fractional?: boolean | undefined;
-        QuantityStep?: number | undefined;
+        ComplianceRequired?: boolean | undefined;
+        TradeAllowances?: string[] | undefined;
         TotalSupply?: number | undefined;
-        Subunit?: string | undefined;
-        Price?: number | undefined;
-        DecimalPlacesPrice?: number | undefined;
+        RedemptionTerms?: string | undefined;
     } & {
         Issuer?: string | undefined;
-        RedemptionTerms?: string | undefined;
-        ComplianceRequired?: boolean | undefined;
         Type?: string | undefined;
-        TradeAllowances?: (string[] & string[] & { [K_2 in Exclude<keyof I_1["TradeAllowances"], keyof string[]>]: never; }) | undefined;
-        Transferable?: boolean | undefined;
-        Platform?: string | undefined;
-        PlatformType?: string | undefined;
         ContractAddress?: string | undefined;
+        Platform?: string | undefined;
+        Transferable?: boolean | undefined;
         Fractional?: boolean | undefined;
-        QuantityStep?: number | undefined;
+        ComplianceRequired?: boolean | undefined;
+        TradeAllowances?: (string[] & string[] & { [K_2 in Exclude<keyof I_1["TradeAllowances"], keyof string[]>]: never; }) | undefined;
         TotalSupply?: number | undefined;
-        Subunit?: string | undefined;
-        Price?: number | undefined;
-        DecimalPlacesPrice?: number | undefined;
+        RedemptionTerms?: string | undefined;
     } & { [K_3 in Exclude<keyof I_1, keyof FinancialProperties>]: never; }>(object: I_1): FinancialProperties;
 };
 export declare const Description: {

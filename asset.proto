@@ -316,20 +316,15 @@ message Equity {
 
 message FinancialProperties {
     string Issuer = 2; 
-    optional string RedemptionTerms = 5;      
-    optional bool ComplianceRequired = 6;     
     string Type = 7; // Purely informational                          
-    repeated string TradeAllowances = 8;      
-    bool Transferable = 9;                    
-    string Platform = 10;                     
-    string PlatformType = 11;                 
     optional string ContractAddress = 12;     
+    string Platform = 10;                     
+    bool Transferable = 9;                    
     bool Fractional = 13;                     
-    int32 QuantityStep = 18; // A way to force a fixed unit for trade e.g. if i have 100k units for sale, but want to enforce the sale of 100 units at once, which leads to 1000 actual tradeable shares
-    optional int32 TotalSupply = 14;                   
-    optional string Subunit = 15;             
-    optional float Price = 16;                
-    int32 DecimalPlacesPrice = 17;            
+    optional bool ComplianceRequired = 6;     
+    repeated string TradeAllowances = 8;      
+    optional int32 TotalSupply = 14;            
+    optional string RedemptionTerms = 5;      
 }
 
 // ---------------- Description ----------------

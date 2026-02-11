@@ -3983,20 +3983,15 @@ export const Equity = {
 function createBaseFinancialProperties() {
     return {
         Issuer: "",
-        RedemptionTerms: undefined,
-        ComplianceRequired: undefined,
         Type: "",
-        TradeAllowances: [],
-        Transferable: false,
-        Platform: "",
-        PlatformType: "",
         ContractAddress: undefined,
+        Platform: "",
+        Transferable: false,
         Fractional: false,
-        QuantityStep: 0,
+        ComplianceRequired: undefined,
+        TradeAllowances: [],
         TotalSupply: undefined,
-        Subunit: undefined,
-        Price: undefined,
-        DecimalPlacesPrice: 0,
+        RedemptionTerms: undefined,
     };
 }
 export const FinancialProperties = {
@@ -4004,47 +3999,32 @@ export const FinancialProperties = {
         if (message.Issuer !== "") {
             writer.uint32(18).string(message.Issuer);
         }
-        if (message.RedemptionTerms !== undefined) {
-            writer.uint32(42).string(message.RedemptionTerms);
-        }
-        if (message.ComplianceRequired !== undefined) {
-            writer.uint32(48).bool(message.ComplianceRequired);
-        }
         if (message.Type !== "") {
             writer.uint32(58).string(message.Type);
-        }
-        for (const v of message.TradeAllowances) {
-            writer.uint32(66).string(v);
-        }
-        if (message.Transferable !== false) {
-            writer.uint32(72).bool(message.Transferable);
-        }
-        if (message.Platform !== "") {
-            writer.uint32(82).string(message.Platform);
-        }
-        if (message.PlatformType !== "") {
-            writer.uint32(90).string(message.PlatformType);
         }
         if (message.ContractAddress !== undefined) {
             writer.uint32(98).string(message.ContractAddress);
         }
+        if (message.Platform !== "") {
+            writer.uint32(82).string(message.Platform);
+        }
+        if (message.Transferable !== false) {
+            writer.uint32(72).bool(message.Transferable);
+        }
         if (message.Fractional !== false) {
             writer.uint32(104).bool(message.Fractional);
         }
-        if (message.QuantityStep !== 0) {
-            writer.uint32(144).int32(message.QuantityStep);
+        if (message.ComplianceRequired !== undefined) {
+            writer.uint32(48).bool(message.ComplianceRequired);
+        }
+        for (const v of message.TradeAllowances) {
+            writer.uint32(66).string(v);
         }
         if (message.TotalSupply !== undefined) {
             writer.uint32(112).int32(message.TotalSupply);
         }
-        if (message.Subunit !== undefined) {
-            writer.uint32(122).string(message.Subunit);
-        }
-        if (message.Price !== undefined) {
-            writer.uint32(133).float(message.Price);
-        }
-        if (message.DecimalPlacesPrice !== 0) {
-            writer.uint32(136).int32(message.DecimalPlacesPrice);
+        if (message.RedemptionTerms !== undefined) {
+            writer.uint32(42).string(message.RedemptionTerms);
         }
         return writer;
     },
@@ -4061,47 +4041,11 @@ export const FinancialProperties = {
                     }
                     message.Issuer = reader.string();
                     continue;
-                case 5:
-                    if (tag !== 42) {
-                        break;
-                    }
-                    message.RedemptionTerms = reader.string();
-                    continue;
-                case 6:
-                    if (tag !== 48) {
-                        break;
-                    }
-                    message.ComplianceRequired = reader.bool();
-                    continue;
                 case 7:
                     if (tag !== 58) {
                         break;
                     }
                     message.Type = reader.string();
-                    continue;
-                case 8:
-                    if (tag !== 66) {
-                        break;
-                    }
-                    message.TradeAllowances.push(reader.string());
-                    continue;
-                case 9:
-                    if (tag !== 72) {
-                        break;
-                    }
-                    message.Transferable = reader.bool();
-                    continue;
-                case 10:
-                    if (tag !== 82) {
-                        break;
-                    }
-                    message.Platform = reader.string();
-                    continue;
-                case 11:
-                    if (tag !== 90) {
-                        break;
-                    }
-                    message.PlatformType = reader.string();
                     continue;
                 case 12:
                     if (tag !== 98) {
@@ -4109,17 +4053,35 @@ export const FinancialProperties = {
                     }
                     message.ContractAddress = reader.string();
                     continue;
+                case 10:
+                    if (tag !== 82) {
+                        break;
+                    }
+                    message.Platform = reader.string();
+                    continue;
+                case 9:
+                    if (tag !== 72) {
+                        break;
+                    }
+                    message.Transferable = reader.bool();
+                    continue;
                 case 13:
                     if (tag !== 104) {
                         break;
                     }
                     message.Fractional = reader.bool();
                     continue;
-                case 18:
-                    if (tag !== 144) {
+                case 6:
+                    if (tag !== 48) {
                         break;
                     }
-                    message.QuantityStep = reader.int32();
+                    message.ComplianceRequired = reader.bool();
+                    continue;
+                case 8:
+                    if (tag !== 66) {
+                        break;
+                    }
+                    message.TradeAllowances.push(reader.string());
                     continue;
                 case 14:
                     if (tag !== 112) {
@@ -4127,23 +4089,11 @@ export const FinancialProperties = {
                     }
                     message.TotalSupply = reader.int32();
                     continue;
-                case 15:
-                    if (tag !== 122) {
+                case 5:
+                    if (tag !== 42) {
                         break;
                     }
-                    message.Subunit = reader.string();
-                    continue;
-                case 16:
-                    if (tag !== 133) {
-                        break;
-                    }
-                    message.Price = reader.float();
-                    continue;
-                case 17:
-                    if (tag !== 136) {
-                        break;
-                    }
-                    message.DecimalPlacesPrice = reader.int32();
+                    message.RedemptionTerms = reader.string();
                     continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
@@ -4156,22 +4106,17 @@ export const FinancialProperties = {
     fromJSON(object) {
         return {
             Issuer: isSet(object.Issuer) ? globalThis.String(object.Issuer) : "",
-            RedemptionTerms: isSet(object.RedemptionTerms) ? globalThis.String(object.RedemptionTerms) : undefined,
-            ComplianceRequired: isSet(object.ComplianceRequired) ? globalThis.Boolean(object.ComplianceRequired) : undefined,
             Type: isSet(object.Type) ? globalThis.String(object.Type) : "",
+            ContractAddress: isSet(object.ContractAddress) ? globalThis.String(object.ContractAddress) : undefined,
+            Platform: isSet(object.Platform) ? globalThis.String(object.Platform) : "",
+            Transferable: isSet(object.Transferable) ? globalThis.Boolean(object.Transferable) : false,
+            Fractional: isSet(object.Fractional) ? globalThis.Boolean(object.Fractional) : false,
+            ComplianceRequired: isSet(object.ComplianceRequired) ? globalThis.Boolean(object.ComplianceRequired) : undefined,
             TradeAllowances: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.TradeAllowances)
                 ? object.TradeAllowances.map((e) => globalThis.String(e))
                 : [],
-            Transferable: isSet(object.Transferable) ? globalThis.Boolean(object.Transferable) : false,
-            Platform: isSet(object.Platform) ? globalThis.String(object.Platform) : "",
-            PlatformType: isSet(object.PlatformType) ? globalThis.String(object.PlatformType) : "",
-            ContractAddress: isSet(object.ContractAddress) ? globalThis.String(object.ContractAddress) : undefined,
-            Fractional: isSet(object.Fractional) ? globalThis.Boolean(object.Fractional) : false,
-            QuantityStep: isSet(object.QuantityStep) ? globalThis.Number(object.QuantityStep) : 0,
             TotalSupply: isSet(object.TotalSupply) ? globalThis.Number(object.TotalSupply) : undefined,
-            Subunit: isSet(object.Subunit) ? globalThis.String(object.Subunit) : undefined,
-            Price: isSet(object.Price) ? globalThis.Number(object.Price) : undefined,
-            DecimalPlacesPrice: isSet(object.DecimalPlacesPrice) ? globalThis.Number(object.DecimalPlacesPrice) : 0,
+            RedemptionTerms: isSet(object.RedemptionTerms) ? globalThis.String(object.RedemptionTerms) : undefined,
         };
     },
     toJSON(message) {
@@ -4180,47 +4125,32 @@ export const FinancialProperties = {
         if (message.Issuer !== "") {
             obj.Issuer = message.Issuer;
         }
-        if (message.RedemptionTerms !== undefined) {
-            obj.RedemptionTerms = message.RedemptionTerms;
-        }
-        if (message.ComplianceRequired !== undefined) {
-            obj.ComplianceRequired = message.ComplianceRequired;
-        }
         if (message.Type !== "") {
             obj.Type = message.Type;
-        }
-        if ((_a = message.TradeAllowances) === null || _a === void 0 ? void 0 : _a.length) {
-            obj.TradeAllowances = message.TradeAllowances;
-        }
-        if (message.Transferable !== false) {
-            obj.Transferable = message.Transferable;
-        }
-        if (message.Platform !== "") {
-            obj.Platform = message.Platform;
-        }
-        if (message.PlatformType !== "") {
-            obj.PlatformType = message.PlatformType;
         }
         if (message.ContractAddress !== undefined) {
             obj.ContractAddress = message.ContractAddress;
         }
+        if (message.Platform !== "") {
+            obj.Platform = message.Platform;
+        }
+        if (message.Transferable !== false) {
+            obj.Transferable = message.Transferable;
+        }
         if (message.Fractional !== false) {
             obj.Fractional = message.Fractional;
         }
-        if (message.QuantityStep !== 0) {
-            obj.QuantityStep = Math.round(message.QuantityStep);
+        if (message.ComplianceRequired !== undefined) {
+            obj.ComplianceRequired = message.ComplianceRequired;
+        }
+        if ((_a = message.TradeAllowances) === null || _a === void 0 ? void 0 : _a.length) {
+            obj.TradeAllowances = message.TradeAllowances;
         }
         if (message.TotalSupply !== undefined) {
             obj.TotalSupply = Math.round(message.TotalSupply);
         }
-        if (message.Subunit !== undefined) {
-            obj.Subunit = message.Subunit;
-        }
-        if (message.Price !== undefined) {
-            obj.Price = message.Price;
-        }
-        if (message.DecimalPlacesPrice !== 0) {
-            obj.DecimalPlacesPrice = Math.round(message.DecimalPlacesPrice);
+        if (message.RedemptionTerms !== undefined) {
+            obj.RedemptionTerms = message.RedemptionTerms;
         }
         return obj;
     },
@@ -4228,23 +4158,18 @@ export const FinancialProperties = {
         return FinancialProperties.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
         const message = createBaseFinancialProperties();
         message.Issuer = (_a = object.Issuer) !== null && _a !== void 0 ? _a : "";
-        message.RedemptionTerms = (_b = object.RedemptionTerms) !== null && _b !== void 0 ? _b : undefined;
-        message.ComplianceRequired = (_c = object.ComplianceRequired) !== null && _c !== void 0 ? _c : undefined;
-        message.Type = (_d = object.Type) !== null && _d !== void 0 ? _d : "";
-        message.TradeAllowances = ((_e = object.TradeAllowances) === null || _e === void 0 ? void 0 : _e.map((e) => e)) || [];
-        message.Transferable = (_f = object.Transferable) !== null && _f !== void 0 ? _f : false;
-        message.Platform = (_g = object.Platform) !== null && _g !== void 0 ? _g : "";
-        message.PlatformType = (_h = object.PlatformType) !== null && _h !== void 0 ? _h : "";
-        message.ContractAddress = (_j = object.ContractAddress) !== null && _j !== void 0 ? _j : undefined;
-        message.Fractional = (_k = object.Fractional) !== null && _k !== void 0 ? _k : false;
-        message.QuantityStep = (_l = object.QuantityStep) !== null && _l !== void 0 ? _l : 0;
-        message.TotalSupply = (_m = object.TotalSupply) !== null && _m !== void 0 ? _m : undefined;
-        message.Subunit = (_o = object.Subunit) !== null && _o !== void 0 ? _o : undefined;
-        message.Price = (_p = object.Price) !== null && _p !== void 0 ? _p : undefined;
-        message.DecimalPlacesPrice = (_q = object.DecimalPlacesPrice) !== null && _q !== void 0 ? _q : 0;
+        message.Type = (_b = object.Type) !== null && _b !== void 0 ? _b : "";
+        message.ContractAddress = (_c = object.ContractAddress) !== null && _c !== void 0 ? _c : undefined;
+        message.Platform = (_d = object.Platform) !== null && _d !== void 0 ? _d : "";
+        message.Transferable = (_e = object.Transferable) !== null && _e !== void 0 ? _e : false;
+        message.Fractional = (_f = object.Fractional) !== null && _f !== void 0 ? _f : false;
+        message.ComplianceRequired = (_g = object.ComplianceRequired) !== null && _g !== void 0 ? _g : undefined;
+        message.TradeAllowances = ((_h = object.TradeAllowances) === null || _h === void 0 ? void 0 : _h.map((e) => e)) || [];
+        message.TotalSupply = (_j = object.TotalSupply) !== null && _j !== void 0 ? _j : undefined;
+        message.RedemptionTerms = (_k = object.RedemptionTerms) !== null && _k !== void 0 ? _k : undefined;
         return message;
     },
 };

@@ -2676,20 +2676,15 @@ func (x *Equity) GetAssetMarginPercentage() float32 {
 type FinancialProperties struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	Issuer             string                 `protobuf:"bytes,2,opt,name=Issuer,proto3" json:"Issuer,omitempty"`
-	RedemptionTerms    *string                `protobuf:"bytes,5,opt,name=RedemptionTerms,proto3,oneof" json:"RedemptionTerms,omitempty"`
-	ComplianceRequired *bool                  `protobuf:"varint,6,opt,name=ComplianceRequired,proto3,oneof" json:"ComplianceRequired,omitempty"`
 	Type               string                 `protobuf:"bytes,7,opt,name=Type,proto3" json:"Type,omitempty"` // Purely informational
-	TradeAllowances    []string               `protobuf:"bytes,8,rep,name=TradeAllowances,proto3" json:"TradeAllowances,omitempty"`
-	Transferable       bool                   `protobuf:"varint,9,opt,name=Transferable,proto3" json:"Transferable,omitempty"`
-	Platform           string                 `protobuf:"bytes,10,opt,name=Platform,proto3" json:"Platform,omitempty"`
-	PlatformType       string                 `protobuf:"bytes,11,opt,name=PlatformType,proto3" json:"PlatformType,omitempty"`
 	ContractAddress    *string                `protobuf:"bytes,12,opt,name=ContractAddress,proto3,oneof" json:"ContractAddress,omitempty"`
+	Platform           string                 `protobuf:"bytes,10,opt,name=Platform,proto3" json:"Platform,omitempty"`
+	Transferable       bool                   `protobuf:"varint,9,opt,name=Transferable,proto3" json:"Transferable,omitempty"`
 	Fractional         bool                   `protobuf:"varint,13,opt,name=Fractional,proto3" json:"Fractional,omitempty"`
-	QuantityStep       int32                  `protobuf:"varint,18,opt,name=QuantityStep,proto3" json:"QuantityStep,omitempty"` // A way to force a fixed unit for trade e.g. if i have 100k units for sale, but want to enforce the sale of 100 units at once, which leads to 1000 actual tradeable shares
+	ComplianceRequired *bool                  `protobuf:"varint,6,opt,name=ComplianceRequired,proto3,oneof" json:"ComplianceRequired,omitempty"`
+	TradeAllowances    []string               `protobuf:"bytes,8,rep,name=TradeAllowances,proto3" json:"TradeAllowances,omitempty"`
 	TotalSupply        *int32                 `protobuf:"varint,14,opt,name=TotalSupply,proto3,oneof" json:"TotalSupply,omitempty"`
-	Subunit            *string                `protobuf:"bytes,15,opt,name=Subunit,proto3,oneof" json:"Subunit,omitempty"`
-	Price              *float32               `protobuf:"fixed32,16,opt,name=Price,proto3,oneof" json:"Price,omitempty"`
-	DecimalPlacesPrice int32                  `protobuf:"varint,17,opt,name=DecimalPlacesPrice,proto3" json:"DecimalPlacesPrice,omitempty"`
+	RedemptionTerms    *string                `protobuf:"bytes,5,opt,name=RedemptionTerms,proto3,oneof" json:"RedemptionTerms,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -2731,51 +2726,9 @@ func (x *FinancialProperties) GetIssuer() string {
 	return ""
 }
 
-func (x *FinancialProperties) GetRedemptionTerms() string {
-	if x != nil && x.RedemptionTerms != nil {
-		return *x.RedemptionTerms
-	}
-	return ""
-}
-
-func (x *FinancialProperties) GetComplianceRequired() bool {
-	if x != nil && x.ComplianceRequired != nil {
-		return *x.ComplianceRequired
-	}
-	return false
-}
-
 func (x *FinancialProperties) GetType() string {
 	if x != nil {
 		return x.Type
-	}
-	return ""
-}
-
-func (x *FinancialProperties) GetTradeAllowances() []string {
-	if x != nil {
-		return x.TradeAllowances
-	}
-	return nil
-}
-
-func (x *FinancialProperties) GetTransferable() bool {
-	if x != nil {
-		return x.Transferable
-	}
-	return false
-}
-
-func (x *FinancialProperties) GetPlatform() string {
-	if x != nil {
-		return x.Platform
-	}
-	return ""
-}
-
-func (x *FinancialProperties) GetPlatformType() string {
-	if x != nil {
-		return x.PlatformType
 	}
 	return ""
 }
@@ -2787,6 +2740,20 @@ func (x *FinancialProperties) GetContractAddress() string {
 	return ""
 }
 
+func (x *FinancialProperties) GetPlatform() string {
+	if x != nil {
+		return x.Platform
+	}
+	return ""
+}
+
+func (x *FinancialProperties) GetTransferable() bool {
+	if x != nil {
+		return x.Transferable
+	}
+	return false
+}
+
 func (x *FinancialProperties) GetFractional() bool {
 	if x != nil {
 		return x.Fractional
@@ -2794,11 +2761,18 @@ func (x *FinancialProperties) GetFractional() bool {
 	return false
 }
 
-func (x *FinancialProperties) GetQuantityStep() int32 {
-	if x != nil {
-		return x.QuantityStep
+func (x *FinancialProperties) GetComplianceRequired() bool {
+	if x != nil && x.ComplianceRequired != nil {
+		return *x.ComplianceRequired
 	}
-	return 0
+	return false
+}
+
+func (x *FinancialProperties) GetTradeAllowances() []string {
+	if x != nil {
+		return x.TradeAllowances
+	}
+	return nil
 }
 
 func (x *FinancialProperties) GetTotalSupply() int32 {
@@ -2808,25 +2782,11 @@ func (x *FinancialProperties) GetTotalSupply() int32 {
 	return 0
 }
 
-func (x *FinancialProperties) GetSubunit() string {
-	if x != nil && x.Subunit != nil {
-		return *x.Subunit
+func (x *FinancialProperties) GetRedemptionTerms() string {
+	if x != nil && x.RedemptionTerms != nil {
+		return *x.RedemptionTerms
 	}
 	return ""
-}
-
-func (x *FinancialProperties) GetPrice() float32 {
-	if x != nil && x.Price != nil {
-		return *x.Price
-	}
-	return 0
-}
-
-func (x *FinancialProperties) GetDecimalPlacesPrice() int32 {
-	if x != nil {
-		return x.DecimalPlacesPrice
-	}
-	return 0
 }
 
 type Description struct {
@@ -3686,33 +3646,25 @@ const file_asset_proto_rawDesc = "" +
 	"\x17TradingMarginPercentage\x18\x04 \x01(\x02R\x17TradingMarginPercentage\x124\n" +
 	"\x15AssetMarginPercentage\x18\x05 \x01(\x02R\x15AssetMarginPercentageB\x17\n" +
 	"\x15_ExchangeTickerSymbolB\v\n" +
-	"\t_Exchange\"\x9c\x05\n" +
+	"\t_Exchange\"\xd4\x03\n" +
 	"\x13FinancialProperties\x12\x16\n" +
-	"\x06Issuer\x18\x02 \x01(\tR\x06Issuer\x12-\n" +
-	"\x0fRedemptionTerms\x18\x05 \x01(\tH\x00R\x0fRedemptionTerms\x88\x01\x01\x123\n" +
-	"\x12ComplianceRequired\x18\x06 \x01(\bH\x01R\x12ComplianceRequired\x88\x01\x01\x12\x12\n" +
-	"\x04Type\x18\a \x01(\tR\x04Type\x12(\n" +
-	"\x0fTradeAllowances\x18\b \x03(\tR\x0fTradeAllowances\x12\"\n" +
-	"\fTransferable\x18\t \x01(\bR\fTransferable\x12\x1a\n" +
+	"\x06Issuer\x18\x02 \x01(\tR\x06Issuer\x12\x12\n" +
+	"\x04Type\x18\a \x01(\tR\x04Type\x12-\n" +
+	"\x0fContractAddress\x18\f \x01(\tH\x00R\x0fContractAddress\x88\x01\x01\x12\x1a\n" +
 	"\bPlatform\x18\n" +
 	" \x01(\tR\bPlatform\x12\"\n" +
-	"\fPlatformType\x18\v \x01(\tR\fPlatformType\x12-\n" +
-	"\x0fContractAddress\x18\f \x01(\tH\x02R\x0fContractAddress\x88\x01\x01\x12\x1e\n" +
+	"\fTransferable\x18\t \x01(\bR\fTransferable\x12\x1e\n" +
 	"\n" +
 	"Fractional\x18\r \x01(\bR\n" +
-	"Fractional\x12\"\n" +
-	"\fQuantityStep\x18\x12 \x01(\x05R\fQuantityStep\x12%\n" +
-	"\vTotalSupply\x18\x0e \x01(\x05H\x03R\vTotalSupply\x88\x01\x01\x12\x1d\n" +
-	"\aSubunit\x18\x0f \x01(\tH\x04R\aSubunit\x88\x01\x01\x12\x19\n" +
-	"\x05Price\x18\x10 \x01(\x02H\x05R\x05Price\x88\x01\x01\x12.\n" +
-	"\x12DecimalPlacesPrice\x18\x11 \x01(\x05R\x12DecimalPlacesPriceB\x12\n" +
-	"\x10_RedemptionTermsB\x15\n" +
-	"\x13_ComplianceRequiredB\x12\n" +
-	"\x10_ContractAddressB\x0e\n" +
-	"\f_TotalSupplyB\n" +
-	"\n" +
-	"\b_SubunitB\b\n" +
-	"\x06_Price\"\xec\x03\n" +
+	"Fractional\x123\n" +
+	"\x12ComplianceRequired\x18\x06 \x01(\bH\x01R\x12ComplianceRequired\x88\x01\x01\x12(\n" +
+	"\x0fTradeAllowances\x18\b \x03(\tR\x0fTradeAllowances\x12%\n" +
+	"\vTotalSupply\x18\x0e \x01(\x05H\x02R\vTotalSupply\x88\x01\x01\x12-\n" +
+	"\x0fRedemptionTerms\x18\x05 \x01(\tH\x03R\x0fRedemptionTerms\x88\x01\x01B\x12\n" +
+	"\x10_ContractAddressB\x15\n" +
+	"\x13_ComplianceRequiredB\x0e\n" +
+	"\f_TotalSupplyB\x12\n" +
+	"\x10_RedemptionTerms\"\xec\x03\n" +
 	"\vDescription\x12\x12\n" +
 	"\x04Name\x18\x01 \x01(\tR\x04Name\x12 \n" +
 	"\vDescription\x18\x02 \x01(\tR\vDescription\x12#\n" +
