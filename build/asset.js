@@ -3532,7 +3532,6 @@ function createBaseIntellectualProperty() {
         ExpirationDate: undefined,
         LicenseType: undefined,
         LicenseTerms: undefined,
-        Value: undefined,
     };
 }
 export const IntellectualProperty = {
@@ -3557,9 +3556,6 @@ export const IntellectualProperty = {
         }
         if (message.LicenseTerms !== undefined) {
             writer.uint32(66).string(message.LicenseTerms);
-        }
-        if (message.Value !== undefined) {
-            writer.uint32(77).float(message.Value);
         }
         return writer;
     },
@@ -3612,12 +3608,6 @@ export const IntellectualProperty = {
                     }
                     message.LicenseTerms = reader.string();
                     continue;
-                case 9:
-                    if (tag !== 77) {
-                        break;
-                    }
-                    message.Value = reader.float();
-                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -3635,7 +3625,6 @@ export const IntellectualProperty = {
             ExpirationDate: isSet(object.ExpirationDate) ? globalThis.String(object.ExpirationDate) : undefined,
             LicenseType: isSet(object.LicenseType) ? globalThis.String(object.LicenseType) : undefined,
             LicenseTerms: isSet(object.LicenseTerms) ? globalThis.String(object.LicenseTerms) : undefined,
-            Value: isSet(object.Value) ? globalThis.Number(object.Value) : undefined,
         };
     },
     toJSON(message) {
@@ -3661,16 +3650,13 @@ export const IntellectualProperty = {
         if (message.LicenseTerms !== undefined) {
             obj.LicenseTerms = message.LicenseTerms;
         }
-        if (message.Value !== undefined) {
-            obj.Value = message.Value;
-        }
         return obj;
     },
     create(base) {
         return IntellectualProperty.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h;
+        var _a, _b, _c, _d, _e, _f, _g;
         const message = createBaseIntellectualProperty();
         message.Category = (_a = object.Category) !== null && _a !== void 0 ? _a : "";
         message.Owner = (_b = object.Owner) !== null && _b !== void 0 ? _b : "";
@@ -3679,7 +3665,6 @@ export const IntellectualProperty = {
         message.ExpirationDate = (_e = object.ExpirationDate) !== null && _e !== void 0 ? _e : undefined;
         message.LicenseType = (_f = object.LicenseType) !== null && _f !== void 0 ? _f : undefined;
         message.LicenseTerms = (_g = object.LicenseTerms) !== null && _g !== void 0 ? _g : undefined;
-        message.Value = (_h = object.Value) !== null && _h !== void 0 ? _h : undefined;
         return message;
     },
 };
@@ -4183,11 +4168,8 @@ function createBaseDescription() {
         OriginCountry: "",
         Documents: [],
         Images: [],
-        Vertical: "",
         AllowedJurisdictions: [],
         AllowedJurisdictionRestrictions: "",
-        CreatedAt: undefined,
-        UpdatedAt: undefined,
     };
 }
 export const Description = {
@@ -4216,20 +4198,11 @@ export const Description = {
         for (const v of message.Images) {
             writer.uint32(66).string(v);
         }
-        if (message.Vertical !== "") {
-            writer.uint32(74).string(message.Vertical);
-        }
         for (const v of message.AllowedJurisdictions) {
             writer.uint32(98).string(v);
         }
         if (message.AllowedJurisdictionRestrictions !== "") {
             writer.uint32(106).string(message.AllowedJurisdictionRestrictions);
-        }
-        if (message.CreatedAt !== undefined) {
-            writer.uint32(82).string(message.CreatedAt);
-        }
-        if (message.UpdatedAt !== undefined) {
-            writer.uint32(90).string(message.UpdatedAt);
         }
         return writer;
     },
@@ -4288,12 +4261,6 @@ export const Description = {
                     }
                     message.Images.push(reader.string());
                     continue;
-                case 9:
-                    if (tag !== 74) {
-                        break;
-                    }
-                    message.Vertical = reader.string();
-                    continue;
                 case 12:
                     if (tag !== 98) {
                         break;
@@ -4305,18 +4272,6 @@ export const Description = {
                         break;
                     }
                     message.AllowedJurisdictionRestrictions = reader.string();
-                    continue;
-                case 10:
-                    if (tag !== 82) {
-                        break;
-                    }
-                    message.CreatedAt = reader.string();
-                    continue;
-                case 11:
-                    if (tag !== 90) {
-                        break;
-                    }
-                    message.UpdatedAt = reader.string();
                     continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
@@ -4338,15 +4293,12 @@ export const Description = {
                 ? object.Documents.map((e) => globalThis.String(e))
                 : [],
             Images: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Images) ? object.Images.map((e) => globalThis.String(e)) : [],
-            Vertical: isSet(object.Vertical) ? globalThis.String(object.Vertical) : "",
             AllowedJurisdictions: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.AllowedJurisdictions)
                 ? object.AllowedJurisdictions.map((e) => globalThis.String(e))
                 : [],
             AllowedJurisdictionRestrictions: isSet(object.AllowedJurisdictionRestrictions)
                 ? globalThis.String(object.AllowedJurisdictionRestrictions)
                 : "",
-            CreatedAt: isSet(object.CreatedAt) ? globalThis.String(object.CreatedAt) : undefined,
-            UpdatedAt: isSet(object.UpdatedAt) ? globalThis.String(object.UpdatedAt) : undefined,
         };
     },
     toJSON(message) {
@@ -4376,20 +4328,11 @@ export const Description = {
         if ((_b = message.Images) === null || _b === void 0 ? void 0 : _b.length) {
             obj.Images = message.Images;
         }
-        if (message.Vertical !== "") {
-            obj.Vertical = message.Vertical;
-        }
         if ((_c = message.AllowedJurisdictions) === null || _c === void 0 ? void 0 : _c.length) {
             obj.AllowedJurisdictions = message.AllowedJurisdictions;
         }
         if (message.AllowedJurisdictionRestrictions !== "") {
             obj.AllowedJurisdictionRestrictions = message.AllowedJurisdictionRestrictions;
-        }
-        if (message.CreatedAt !== undefined) {
-            obj.CreatedAt = message.CreatedAt;
-        }
-        if (message.UpdatedAt !== undefined) {
-            obj.UpdatedAt = message.UpdatedAt;
         }
         return obj;
     },
@@ -4397,7 +4340,7 @@ export const Description = {
         return Description.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j;
         const message = createBaseDescription();
         message.Name = (_a = object.Name) !== null && _a !== void 0 ? _a : "";
         message.Description = (_b = object.Description) !== null && _b !== void 0 ? _b : "";
@@ -4407,11 +4350,8 @@ export const Description = {
         message.OriginCountry = (_e = object.OriginCountry) !== null && _e !== void 0 ? _e : "";
         message.Documents = ((_f = object.Documents) === null || _f === void 0 ? void 0 : _f.map((e) => e)) || [];
         message.Images = ((_g = object.Images) === null || _g === void 0 ? void 0 : _g.map((e) => e)) || [];
-        message.Vertical = (_h = object.Vertical) !== null && _h !== void 0 ? _h : "";
-        message.AllowedJurisdictions = ((_j = object.AllowedJurisdictions) === null || _j === void 0 ? void 0 : _j.map((e) => e)) || [];
-        message.AllowedJurisdictionRestrictions = (_k = object.AllowedJurisdictionRestrictions) !== null && _k !== void 0 ? _k : "";
-        message.CreatedAt = (_l = object.CreatedAt) !== null && _l !== void 0 ? _l : undefined;
-        message.UpdatedAt = (_m = object.UpdatedAt) !== null && _m !== void 0 ? _m : undefined;
+        message.AllowedJurisdictions = ((_h = object.AllowedJurisdictions) === null || _h === void 0 ? void 0 : _h.map((e) => e)) || [];
+        message.AllowedJurisdictionRestrictions = (_j = object.AllowedJurisdictionRestrictions) !== null && _j !== void 0 ? _j : "";
         return message;
     },
 };

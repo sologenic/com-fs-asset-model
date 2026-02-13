@@ -794,7 +794,6 @@ export interface IntellectualProperty {
   ExpirationDate?: string | undefined;
   LicenseType?: string | undefined;
   LicenseTerms?: string | undefined;
-  Value?: number | undefined;
 }
 
 export interface InvestmentFund {
@@ -841,12 +840,9 @@ export interface Description {
   OriginCountry: string;
   Documents: string[];
   Images: string[];
-  Vertical: string;
   /** ISO 3166-1 alpha-3 code e.g. "USA", "CAD" */
   AllowedJurisdictions: string[];
   AllowedJurisdictionRestrictions: string;
-  CreatedAt?: string | undefined;
-  UpdatedAt?: string | undefined;
 }
 
 export interface ExternalResources {
@@ -4160,7 +4156,6 @@ function createBaseIntellectualProperty(): IntellectualProperty {
     ExpirationDate: undefined,
     LicenseType: undefined,
     LicenseTerms: undefined,
-    Value: undefined,
   };
 }
 
@@ -4186,9 +4181,6 @@ export const IntellectualProperty = {
     }
     if (message.LicenseTerms !== undefined) {
       writer.uint32(66).string(message.LicenseTerms);
-    }
-    if (message.Value !== undefined) {
-      writer.uint32(77).float(message.Value);
     }
     return writer;
   },
@@ -4249,13 +4241,6 @@ export const IntellectualProperty = {
 
           message.LicenseTerms = reader.string();
           continue;
-        case 9:
-          if (tag !== 77) {
-            break;
-          }
-
-          message.Value = reader.float();
-          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -4274,7 +4259,6 @@ export const IntellectualProperty = {
       ExpirationDate: isSet(object.ExpirationDate) ? globalThis.String(object.ExpirationDate) : undefined,
       LicenseType: isSet(object.LicenseType) ? globalThis.String(object.LicenseType) : undefined,
       LicenseTerms: isSet(object.LicenseTerms) ? globalThis.String(object.LicenseTerms) : undefined,
-      Value: isSet(object.Value) ? globalThis.Number(object.Value) : undefined,
     };
   },
 
@@ -4301,9 +4285,6 @@ export const IntellectualProperty = {
     if (message.LicenseTerms !== undefined) {
       obj.LicenseTerms = message.LicenseTerms;
     }
-    if (message.Value !== undefined) {
-      obj.Value = message.Value;
-    }
     return obj;
   },
 
@@ -4319,7 +4300,6 @@ export const IntellectualProperty = {
     message.ExpirationDate = object.ExpirationDate ?? undefined;
     message.LicenseType = object.LicenseType ?? undefined;
     message.LicenseTerms = object.LicenseTerms ?? undefined;
-    message.Value = object.Value ?? undefined;
     return message;
   },
 };
@@ -4861,11 +4841,8 @@ function createBaseDescription(): Description {
     OriginCountry: "",
     Documents: [],
     Images: [],
-    Vertical: "",
     AllowedJurisdictions: [],
     AllowedJurisdictionRestrictions: "",
-    CreatedAt: undefined,
-    UpdatedAt: undefined,
   };
 }
 
@@ -4895,20 +4872,11 @@ export const Description = {
     for (const v of message.Images) {
       writer.uint32(66).string(v!);
     }
-    if (message.Vertical !== "") {
-      writer.uint32(74).string(message.Vertical);
-    }
     for (const v of message.AllowedJurisdictions) {
       writer.uint32(98).string(v!);
     }
     if (message.AllowedJurisdictionRestrictions !== "") {
       writer.uint32(106).string(message.AllowedJurisdictionRestrictions);
-    }
-    if (message.CreatedAt !== undefined) {
-      writer.uint32(82).string(message.CreatedAt);
-    }
-    if (message.UpdatedAt !== undefined) {
-      writer.uint32(90).string(message.UpdatedAt);
     }
     return writer;
   },
@@ -4976,13 +4944,6 @@ export const Description = {
 
           message.Images.push(reader.string());
           continue;
-        case 9:
-          if (tag !== 74) {
-            break;
-          }
-
-          message.Vertical = reader.string();
-          continue;
         case 12:
           if (tag !== 98) {
             break;
@@ -4996,20 +4957,6 @@ export const Description = {
           }
 
           message.AllowedJurisdictionRestrictions = reader.string();
-          continue;
-        case 10:
-          if (tag !== 82) {
-            break;
-          }
-
-          message.CreatedAt = reader.string();
-          continue;
-        case 11:
-          if (tag !== 90) {
-            break;
-          }
-
-          message.UpdatedAt = reader.string();
           continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
@@ -5032,15 +4979,12 @@ export const Description = {
         ? object.Documents.map((e: any) => globalThis.String(e))
         : [],
       Images: globalThis.Array.isArray(object?.Images) ? object.Images.map((e: any) => globalThis.String(e)) : [],
-      Vertical: isSet(object.Vertical) ? globalThis.String(object.Vertical) : "",
       AllowedJurisdictions: globalThis.Array.isArray(object?.AllowedJurisdictions)
         ? object.AllowedJurisdictions.map((e: any) => globalThis.String(e))
         : [],
       AllowedJurisdictionRestrictions: isSet(object.AllowedJurisdictionRestrictions)
         ? globalThis.String(object.AllowedJurisdictionRestrictions)
         : "",
-      CreatedAt: isSet(object.CreatedAt) ? globalThis.String(object.CreatedAt) : undefined,
-      UpdatedAt: isSet(object.UpdatedAt) ? globalThis.String(object.UpdatedAt) : undefined,
     };
   },
 
@@ -5070,20 +5014,11 @@ export const Description = {
     if (message.Images?.length) {
       obj.Images = message.Images;
     }
-    if (message.Vertical !== "") {
-      obj.Vertical = message.Vertical;
-    }
     if (message.AllowedJurisdictions?.length) {
       obj.AllowedJurisdictions = message.AllowedJurisdictions;
     }
     if (message.AllowedJurisdictionRestrictions !== "") {
       obj.AllowedJurisdictionRestrictions = message.AllowedJurisdictionRestrictions;
-    }
-    if (message.CreatedAt !== undefined) {
-      obj.CreatedAt = message.CreatedAt;
-    }
-    if (message.UpdatedAt !== undefined) {
-      obj.UpdatedAt = message.UpdatedAt;
     }
     return obj;
   },
@@ -5101,11 +5036,8 @@ export const Description = {
     message.OriginCountry = object.OriginCountry ?? "";
     message.Documents = object.Documents?.map((e) => e) || [];
     message.Images = object.Images?.map((e) => e) || [];
-    message.Vertical = object.Vertical ?? "";
     message.AllowedJurisdictions = object.AllowedJurisdictions?.map((e) => e) || [];
     message.AllowedJurisdictionRestrictions = object.AllowedJurisdictionRestrictions ?? "";
-    message.CreatedAt = object.CreatedAt ?? undefined;
-    message.UpdatedAt = object.UpdatedAt ?? undefined;
     return message;
   },
 };

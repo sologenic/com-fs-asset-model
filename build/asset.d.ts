@@ -335,7 +335,6 @@ export interface IntellectualProperty {
     ExpirationDate?: string | undefined;
     LicenseType?: string | undefined;
     LicenseTerms?: string | undefined;
-    Value?: number | undefined;
 }
 export interface InvestmentFund {
     FundType: string;
@@ -378,12 +377,9 @@ export interface Description {
     OriginCountry: string;
     Documents: string[];
     Images: string[];
-    Vertical: string;
     /** ISO 3166-1 alpha-3 code e.g. "USA", "CAD" */
     AllowedJurisdictions: string[];
     AllowedJurisdictionRestrictions: string;
-    CreatedAt?: string | undefined;
-    UpdatedAt?: string | undefined;
 }
 export interface ExternalResources {
     /** Flexible list of links with type and URL */
@@ -538,7 +534,6 @@ export declare const AssetDetails: {
             ExpirationDate?: string | undefined;
             LicenseType?: string | undefined;
             LicenseTerms?: string | undefined;
-            Value?: number | undefined;
         } | undefined;
         InvestmentFundDetails?: {
             FundType?: string | undefined;
@@ -583,11 +578,8 @@ export declare const AssetDetails: {
             OriginCountry?: string | undefined;
             Documents?: string[] | undefined;
             Images?: string[] | undefined;
-            Vertical?: string | undefined;
             AllowedJurisdictions?: string[] | undefined;
             AllowedJurisdictionRestrictions?: string | undefined;
-            CreatedAt?: string | undefined;
-            UpdatedAt?: string | undefined;
         } | undefined;
         ExternalResources?: {
             Links?: {
@@ -835,7 +827,6 @@ export declare const AssetDetails: {
             ExpirationDate?: string | undefined;
             LicenseType?: string | undefined;
             LicenseTerms?: string | undefined;
-            Value?: number | undefined;
         } & {
             Category?: string | undefined;
             Owner?: string | undefined;
@@ -844,7 +835,6 @@ export declare const AssetDetails: {
             ExpirationDate?: string | undefined;
             LicenseType?: string | undefined;
             LicenseTerms?: string | undefined;
-            Value?: number | undefined;
         } & { [K_11 in Exclude<keyof I["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
         InvestmentFundDetails?: ({
             FundType?: string | undefined;
@@ -916,11 +906,8 @@ export declare const AssetDetails: {
             OriginCountry?: string | undefined;
             Documents?: string[] | undefined;
             Images?: string[] | undefined;
-            Vertical?: string | undefined;
             AllowedJurisdictions?: string[] | undefined;
             AllowedJurisdictionRestrictions?: string | undefined;
-            CreatedAt?: string | undefined;
-            UpdatedAt?: string | undefined;
         } & {
             Name?: string | undefined;
             Description?: string | undefined;
@@ -938,11 +925,8 @@ export declare const AssetDetails: {
             OriginCountry?: string | undefined;
             Documents?: (string[] & string[] & { [K_18 in Exclude<keyof I["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
             Images?: (string[] & string[] & { [K_19 in Exclude<keyof I["Description"]["Images"], keyof string[]>]: never; }) | undefined;
-            Vertical?: string | undefined;
             AllowedJurisdictions?: (string[] & string[] & { [K_20 in Exclude<keyof I["Description"]["AllowedJurisdictions"], keyof string[]>]: never; }) | undefined;
             AllowedJurisdictionRestrictions?: string | undefined;
-            CreatedAt?: string | undefined;
-            UpdatedAt?: string | undefined;
         } & { [K_21 in Exclude<keyof I["Description"], keyof Description>]: never; }) | undefined;
         ExternalResources?: ({
             Links?: {
@@ -1263,7 +1247,6 @@ export declare const AssetDetails: {
             ExpirationDate?: string | undefined;
             LicenseType?: string | undefined;
             LicenseTerms?: string | undefined;
-            Value?: number | undefined;
         } | undefined;
         InvestmentFundDetails?: {
             FundType?: string | undefined;
@@ -1308,11 +1291,8 @@ export declare const AssetDetails: {
             OriginCountry?: string | undefined;
             Documents?: string[] | undefined;
             Images?: string[] | undefined;
-            Vertical?: string | undefined;
             AllowedJurisdictions?: string[] | undefined;
             AllowedJurisdictionRestrictions?: string | undefined;
-            CreatedAt?: string | undefined;
-            UpdatedAt?: string | undefined;
         } | undefined;
         ExternalResources?: {
             Links?: {
@@ -1560,7 +1540,6 @@ export declare const AssetDetails: {
             ExpirationDate?: string | undefined;
             LicenseType?: string | undefined;
             LicenseTerms?: string | undefined;
-            Value?: number | undefined;
         } & {
             Category?: string | undefined;
             Owner?: string | undefined;
@@ -1569,7 +1548,6 @@ export declare const AssetDetails: {
             ExpirationDate?: string | undefined;
             LicenseType?: string | undefined;
             LicenseTerms?: string | undefined;
-            Value?: number | undefined;
         } & { [K_48 in Exclude<keyof I_1["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
         InvestmentFundDetails?: ({
             FundType?: string | undefined;
@@ -1641,11 +1619,8 @@ export declare const AssetDetails: {
             OriginCountry?: string | undefined;
             Documents?: string[] | undefined;
             Images?: string[] | undefined;
-            Vertical?: string | undefined;
             AllowedJurisdictions?: string[] | undefined;
             AllowedJurisdictionRestrictions?: string | undefined;
-            CreatedAt?: string | undefined;
-            UpdatedAt?: string | undefined;
         } & {
             Name?: string | undefined;
             Description?: string | undefined;
@@ -1663,11 +1638,8 @@ export declare const AssetDetails: {
             OriginCountry?: string | undefined;
             Documents?: (string[] & string[] & { [K_55 in Exclude<keyof I_1["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
             Images?: (string[] & string[] & { [K_56 in Exclude<keyof I_1["Description"]["Images"], keyof string[]>]: never; }) | undefined;
-            Vertical?: string | undefined;
             AllowedJurisdictions?: (string[] & string[] & { [K_57 in Exclude<keyof I_1["Description"]["AllowedJurisdictions"], keyof string[]>]: never; }) | undefined;
             AllowedJurisdictionRestrictions?: string | undefined;
-            CreatedAt?: string | undefined;
-            UpdatedAt?: string | undefined;
         } & { [K_58 in Exclude<keyof I_1["Description"], keyof Description>]: never; }) | undefined;
         ExternalResources?: ({
             Links?: {
@@ -1995,7 +1967,6 @@ export declare const Asset: {
                 ExpirationDate?: string | undefined;
                 LicenseType?: string | undefined;
                 LicenseTerms?: string | undefined;
-                Value?: number | undefined;
             } | undefined;
             InvestmentFundDetails?: {
                 FundType?: string | undefined;
@@ -2040,11 +2011,8 @@ export declare const Asset: {
                 OriginCountry?: string | undefined;
                 Documents?: string[] | undefined;
                 Images?: string[] | undefined;
-                Vertical?: string | undefined;
                 AllowedJurisdictions?: string[] | undefined;
                 AllowedJurisdictionRestrictions?: string | undefined;
-                CreatedAt?: string | undefined;
-                UpdatedAt?: string | undefined;
             } | undefined;
             ExternalResources?: {
                 Links?: {
@@ -2243,7 +2211,6 @@ export declare const Asset: {
                 ExpirationDate?: string | undefined;
                 LicenseType?: string | undefined;
                 LicenseTerms?: string | undefined;
-                Value?: number | undefined;
             } | undefined;
             InvestmentFundDetails?: {
                 FundType?: string | undefined;
@@ -2288,11 +2255,8 @@ export declare const Asset: {
                 OriginCountry?: string | undefined;
                 Documents?: string[] | undefined;
                 Images?: string[] | undefined;
-                Vertical?: string | undefined;
                 AllowedJurisdictions?: string[] | undefined;
                 AllowedJurisdictionRestrictions?: string | undefined;
-                CreatedAt?: string | undefined;
-                UpdatedAt?: string | undefined;
             } | undefined;
             ExternalResources?: {
                 Links?: {
@@ -2540,7 +2504,6 @@ export declare const Asset: {
                 ExpirationDate?: string | undefined;
                 LicenseType?: string | undefined;
                 LicenseTerms?: string | undefined;
-                Value?: number | undefined;
             } & {
                 Category?: string | undefined;
                 Owner?: string | undefined;
@@ -2549,7 +2512,6 @@ export declare const Asset: {
                 ExpirationDate?: string | undefined;
                 LicenseType?: string | undefined;
                 LicenseTerms?: string | undefined;
-                Value?: number | undefined;
             } & { [K_11 in Exclude<keyof I["AssetDetails"]["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
             InvestmentFundDetails?: ({
                 FundType?: string | undefined;
@@ -2621,11 +2583,8 @@ export declare const Asset: {
                 OriginCountry?: string | undefined;
                 Documents?: string[] | undefined;
                 Images?: string[] | undefined;
-                Vertical?: string | undefined;
                 AllowedJurisdictions?: string[] | undefined;
                 AllowedJurisdictionRestrictions?: string | undefined;
-                CreatedAt?: string | undefined;
-                UpdatedAt?: string | undefined;
             } & {
                 Name?: string | undefined;
                 Description?: string | undefined;
@@ -2643,11 +2602,8 @@ export declare const Asset: {
                 OriginCountry?: string | undefined;
                 Documents?: (string[] & string[] & { [K_18 in Exclude<keyof I["AssetDetails"]["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
                 Images?: (string[] & string[] & { [K_19 in Exclude<keyof I["AssetDetails"]["Description"]["Images"], keyof string[]>]: never; }) | undefined;
-                Vertical?: string | undefined;
                 AllowedJurisdictions?: (string[] & string[] & { [K_20 in Exclude<keyof I["AssetDetails"]["Description"]["AllowedJurisdictions"], keyof string[]>]: never; }) | undefined;
                 AllowedJurisdictionRestrictions?: string | undefined;
-                CreatedAt?: string | undefined;
-                UpdatedAt?: string | undefined;
             } & { [K_21 in Exclude<keyof I["AssetDetails"]["Description"], keyof Description>]: never; }) | undefined;
             ExternalResources?: ({
                 Links?: {
@@ -3031,7 +2987,6 @@ export declare const Asset: {
                 ExpirationDate?: string | undefined;
                 LicenseType?: string | undefined;
                 LicenseTerms?: string | undefined;
-                Value?: number | undefined;
             } | undefined;
             InvestmentFundDetails?: {
                 FundType?: string | undefined;
@@ -3076,11 +3031,8 @@ export declare const Asset: {
                 OriginCountry?: string | undefined;
                 Documents?: string[] | undefined;
                 Images?: string[] | undefined;
-                Vertical?: string | undefined;
                 AllowedJurisdictions?: string[] | undefined;
                 AllowedJurisdictionRestrictions?: string | undefined;
-                CreatedAt?: string | undefined;
-                UpdatedAt?: string | undefined;
             } | undefined;
             ExternalResources?: {
                 Links?: {
@@ -3279,7 +3231,6 @@ export declare const Asset: {
                 ExpirationDate?: string | undefined;
                 LicenseType?: string | undefined;
                 LicenseTerms?: string | undefined;
-                Value?: number | undefined;
             } | undefined;
             InvestmentFundDetails?: {
                 FundType?: string | undefined;
@@ -3324,11 +3275,8 @@ export declare const Asset: {
                 OriginCountry?: string | undefined;
                 Documents?: string[] | undefined;
                 Images?: string[] | undefined;
-                Vertical?: string | undefined;
                 AllowedJurisdictions?: string[] | undefined;
                 AllowedJurisdictionRestrictions?: string | undefined;
-                CreatedAt?: string | undefined;
-                UpdatedAt?: string | undefined;
             } | undefined;
             ExternalResources?: {
                 Links?: {
@@ -3576,7 +3524,6 @@ export declare const Asset: {
                 ExpirationDate?: string | undefined;
                 LicenseType?: string | undefined;
                 LicenseTerms?: string | undefined;
-                Value?: number | undefined;
             } & {
                 Category?: string | undefined;
                 Owner?: string | undefined;
@@ -3585,7 +3532,6 @@ export declare const Asset: {
                 ExpirationDate?: string | undefined;
                 LicenseType?: string | undefined;
                 LicenseTerms?: string | undefined;
-                Value?: number | undefined;
             } & { [K_53 in Exclude<keyof I_1["AssetDetails"]["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
             InvestmentFundDetails?: ({
                 FundType?: string | undefined;
@@ -3657,11 +3603,8 @@ export declare const Asset: {
                 OriginCountry?: string | undefined;
                 Documents?: string[] | undefined;
                 Images?: string[] | undefined;
-                Vertical?: string | undefined;
                 AllowedJurisdictions?: string[] | undefined;
                 AllowedJurisdictionRestrictions?: string | undefined;
-                CreatedAt?: string | undefined;
-                UpdatedAt?: string | undefined;
             } & {
                 Name?: string | undefined;
                 Description?: string | undefined;
@@ -3679,11 +3622,8 @@ export declare const Asset: {
                 OriginCountry?: string | undefined;
                 Documents?: (string[] & string[] & { [K_60 in Exclude<keyof I_1["AssetDetails"]["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
                 Images?: (string[] & string[] & { [K_61 in Exclude<keyof I_1["AssetDetails"]["Description"]["Images"], keyof string[]>]: never; }) | undefined;
-                Vertical?: string | undefined;
                 AllowedJurisdictions?: (string[] & string[] & { [K_62 in Exclude<keyof I_1["AssetDetails"]["Description"]["AllowedJurisdictions"], keyof string[]>]: never; }) | undefined;
                 AllowedJurisdictionRestrictions?: string | undefined;
-                CreatedAt?: string | undefined;
-                UpdatedAt?: string | undefined;
             } & { [K_63 in Exclude<keyof I_1["AssetDetails"]["Description"], keyof Description>]: never; }) | undefined;
             ExternalResources?: ({
                 Links?: {
@@ -4074,7 +4014,6 @@ export declare const Assets: {
                     ExpirationDate?: string | undefined;
                     LicenseType?: string | undefined;
                     LicenseTerms?: string | undefined;
-                    Value?: number | undefined;
                 } | undefined;
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
@@ -4119,11 +4058,8 @@ export declare const Assets: {
                     OriginCountry?: string | undefined;
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
-                    Vertical?: string | undefined;
                     AllowedJurisdictions?: string[] | undefined;
                     AllowedJurisdictionRestrictions?: string | undefined;
-                    CreatedAt?: string | undefined;
-                    UpdatedAt?: string | undefined;
                 } | undefined;
                 ExternalResources?: {
                     Links?: {
@@ -4325,7 +4261,6 @@ export declare const Assets: {
                     ExpirationDate?: string | undefined;
                     LicenseType?: string | undefined;
                     LicenseTerms?: string | undefined;
-                    Value?: number | undefined;
                 } | undefined;
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
@@ -4370,11 +4305,8 @@ export declare const Assets: {
                     OriginCountry?: string | undefined;
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
-                    Vertical?: string | undefined;
                     AllowedJurisdictions?: string[] | undefined;
                     AllowedJurisdictionRestrictions?: string | undefined;
-                    CreatedAt?: string | undefined;
-                    UpdatedAt?: string | undefined;
                 } | undefined;
                 ExternalResources?: {
                     Links?: {
@@ -4573,7 +4505,6 @@ export declare const Assets: {
                     ExpirationDate?: string | undefined;
                     LicenseType?: string | undefined;
                     LicenseTerms?: string | undefined;
-                    Value?: number | undefined;
                 } | undefined;
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
@@ -4618,11 +4549,8 @@ export declare const Assets: {
                     OriginCountry?: string | undefined;
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
-                    Vertical?: string | undefined;
                     AllowedJurisdictions?: string[] | undefined;
                     AllowedJurisdictionRestrictions?: string | undefined;
-                    CreatedAt?: string | undefined;
-                    UpdatedAt?: string | undefined;
                 } | undefined;
                 ExternalResources?: {
                     Links?: {
@@ -4821,7 +4749,6 @@ export declare const Assets: {
                     ExpirationDate?: string | undefined;
                     LicenseType?: string | undefined;
                     LicenseTerms?: string | undefined;
-                    Value?: number | undefined;
                 } | undefined;
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
@@ -4866,11 +4793,8 @@ export declare const Assets: {
                     OriginCountry?: string | undefined;
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
-                    Vertical?: string | undefined;
                     AllowedJurisdictions?: string[] | undefined;
                     AllowedJurisdictionRestrictions?: string | undefined;
-                    CreatedAt?: string | undefined;
-                    UpdatedAt?: string | undefined;
                 } | undefined;
                 ExternalResources?: {
                     Links?: {
@@ -5118,7 +5042,6 @@ export declare const Assets: {
                     ExpirationDate?: string | undefined;
                     LicenseType?: string | undefined;
                     LicenseTerms?: string | undefined;
-                    Value?: number | undefined;
                 } & {
                     Category?: string | undefined;
                     Owner?: string | undefined;
@@ -5127,7 +5050,6 @@ export declare const Assets: {
                     ExpirationDate?: string | undefined;
                     LicenseType?: string | undefined;
                     LicenseTerms?: string | undefined;
-                    Value?: number | undefined;
                 } & { [K_11 in Exclude<keyof I["Assets"][number]["AssetDetails"]["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
                 InvestmentFundDetails?: ({
                     FundType?: string | undefined;
@@ -5199,11 +5121,8 @@ export declare const Assets: {
                     OriginCountry?: string | undefined;
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
-                    Vertical?: string | undefined;
                     AllowedJurisdictions?: string[] | undefined;
                     AllowedJurisdictionRestrictions?: string | undefined;
-                    CreatedAt?: string | undefined;
-                    UpdatedAt?: string | undefined;
                 } & {
                     Name?: string | undefined;
                     Description?: string | undefined;
@@ -5221,11 +5140,8 @@ export declare const Assets: {
                     OriginCountry?: string | undefined;
                     Documents?: (string[] & string[] & { [K_18 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
                     Images?: (string[] & string[] & { [K_19 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Description"]["Images"], keyof string[]>]: never; }) | undefined;
-                    Vertical?: string | undefined;
                     AllowedJurisdictions?: (string[] & string[] & { [K_20 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Description"]["AllowedJurisdictions"], keyof string[]>]: never; }) | undefined;
                     AllowedJurisdictionRestrictions?: string | undefined;
-                    CreatedAt?: string | undefined;
-                    UpdatedAt?: string | undefined;
                 } & { [K_21 in Exclude<keyof I["Assets"][number]["AssetDetails"]["Description"], keyof Description>]: never; }) | undefined;
                 ExternalResources?: ({
                     Links?: {
@@ -5608,7 +5524,6 @@ export declare const Assets: {
                     ExpirationDate?: string | undefined;
                     LicenseType?: string | undefined;
                     LicenseTerms?: string | undefined;
-                    Value?: number | undefined;
                 } | undefined;
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
@@ -5653,11 +5568,8 @@ export declare const Assets: {
                     OriginCountry?: string | undefined;
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
-                    Vertical?: string | undefined;
                     AllowedJurisdictions?: string[] | undefined;
                     AllowedJurisdictionRestrictions?: string | undefined;
-                    CreatedAt?: string | undefined;
-                    UpdatedAt?: string | undefined;
                 } | undefined;
                 ExternalResources?: {
                     Links?: {
@@ -5860,7 +5772,6 @@ export declare const Assets: {
                     ExpirationDate?: string | undefined;
                     LicenseType?: string | undefined;
                     LicenseTerms?: string | undefined;
-                    Value?: number | undefined;
                 } | undefined;
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
@@ -5905,11 +5816,8 @@ export declare const Assets: {
                     OriginCountry?: string | undefined;
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
-                    Vertical?: string | undefined;
                     AllowedJurisdictions?: string[] | undefined;
                     AllowedJurisdictionRestrictions?: string | undefined;
-                    CreatedAt?: string | undefined;
-                    UpdatedAt?: string | undefined;
                 } | undefined;
                 ExternalResources?: {
                     Links?: {
@@ -6111,7 +6019,6 @@ export declare const Assets: {
                     ExpirationDate?: string | undefined;
                     LicenseType?: string | undefined;
                     LicenseTerms?: string | undefined;
-                    Value?: number | undefined;
                 } | undefined;
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
@@ -6156,11 +6063,8 @@ export declare const Assets: {
                     OriginCountry?: string | undefined;
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
-                    Vertical?: string | undefined;
                     AllowedJurisdictions?: string[] | undefined;
                     AllowedJurisdictionRestrictions?: string | undefined;
-                    CreatedAt?: string | undefined;
-                    UpdatedAt?: string | undefined;
                 } | undefined;
                 ExternalResources?: {
                     Links?: {
@@ -6359,7 +6263,6 @@ export declare const Assets: {
                     ExpirationDate?: string | undefined;
                     LicenseType?: string | undefined;
                     LicenseTerms?: string | undefined;
-                    Value?: number | undefined;
                 } | undefined;
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
@@ -6404,11 +6307,8 @@ export declare const Assets: {
                     OriginCountry?: string | undefined;
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
-                    Vertical?: string | undefined;
                     AllowedJurisdictions?: string[] | undefined;
                     AllowedJurisdictionRestrictions?: string | undefined;
-                    CreatedAt?: string | undefined;
-                    UpdatedAt?: string | undefined;
                 } | undefined;
                 ExternalResources?: {
                     Links?: {
@@ -6607,7 +6507,6 @@ export declare const Assets: {
                     ExpirationDate?: string | undefined;
                     LicenseType?: string | undefined;
                     LicenseTerms?: string | undefined;
-                    Value?: number | undefined;
                 } | undefined;
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
@@ -6652,11 +6551,8 @@ export declare const Assets: {
                     OriginCountry?: string | undefined;
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
-                    Vertical?: string | undefined;
                     AllowedJurisdictions?: string[] | undefined;
                     AllowedJurisdictionRestrictions?: string | undefined;
-                    CreatedAt?: string | undefined;
-                    UpdatedAt?: string | undefined;
                 } | undefined;
                 ExternalResources?: {
                     Links?: {
@@ -6904,7 +6800,6 @@ export declare const Assets: {
                     ExpirationDate?: string | undefined;
                     LicenseType?: string | undefined;
                     LicenseTerms?: string | undefined;
-                    Value?: number | undefined;
                 } & {
                     Category?: string | undefined;
                     Owner?: string | undefined;
@@ -6913,7 +6808,6 @@ export declare const Assets: {
                     ExpirationDate?: string | undefined;
                     LicenseType?: string | undefined;
                     LicenseTerms?: string | undefined;
-                    Value?: number | undefined;
                 } & { [K_55 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["IntellectualPropertyDetails"], keyof IntellectualProperty>]: never; }) | undefined;
                 InvestmentFundDetails?: ({
                     FundType?: string | undefined;
@@ -6985,11 +6879,8 @@ export declare const Assets: {
                     OriginCountry?: string | undefined;
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
-                    Vertical?: string | undefined;
                     AllowedJurisdictions?: string[] | undefined;
                     AllowedJurisdictionRestrictions?: string | undefined;
-                    CreatedAt?: string | undefined;
-                    UpdatedAt?: string | undefined;
                 } & {
                     Name?: string | undefined;
                     Description?: string | undefined;
@@ -7007,11 +6898,8 @@ export declare const Assets: {
                     OriginCountry?: string | undefined;
                     Documents?: (string[] & string[] & { [K_62 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"]["Documents"], keyof string[]>]: never; }) | undefined;
                     Images?: (string[] & string[] & { [K_63 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"]["Images"], keyof string[]>]: never; }) | undefined;
-                    Vertical?: string | undefined;
                     AllowedJurisdictions?: (string[] & string[] & { [K_64 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"]["AllowedJurisdictions"], keyof string[]>]: never; }) | undefined;
                     AllowedJurisdictionRestrictions?: string | undefined;
-                    CreatedAt?: string | undefined;
-                    UpdatedAt?: string | undefined;
                 } & { [K_65 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["Description"], keyof Description>]: never; }) | undefined;
                 ExternalResources?: ({
                     Links?: {
@@ -7394,7 +7282,6 @@ export declare const Assets: {
                     ExpirationDate?: string | undefined;
                     LicenseType?: string | undefined;
                     LicenseTerms?: string | undefined;
-                    Value?: number | undefined;
                 } | undefined;
                 InvestmentFundDetails?: {
                     FundType?: string | undefined;
@@ -7439,11 +7326,8 @@ export declare const Assets: {
                     OriginCountry?: string | undefined;
                     Documents?: string[] | undefined;
                     Images?: string[] | undefined;
-                    Vertical?: string | undefined;
                     AllowedJurisdictions?: string[] | undefined;
                     AllowedJurisdictionRestrictions?: string | undefined;
-                    CreatedAt?: string | undefined;
-                    UpdatedAt?: string | undefined;
                 } | undefined;
                 ExternalResources?: {
                     Links?: {
@@ -8838,7 +8722,6 @@ export declare const IntellectualProperty: {
         ExpirationDate?: string | undefined;
         LicenseType?: string | undefined;
         LicenseTerms?: string | undefined;
-        Value?: number | undefined;
     } & {
         Category?: string | undefined;
         Owner?: string | undefined;
@@ -8847,7 +8730,6 @@ export declare const IntellectualProperty: {
         ExpirationDate?: string | undefined;
         LicenseType?: string | undefined;
         LicenseTerms?: string | undefined;
-        Value?: number | undefined;
     } & { [K in Exclude<keyof I, keyof IntellectualProperty>]: never; }>(base?: I | undefined): IntellectualProperty;
     fromPartial<I_1 extends {
         Category?: string | undefined;
@@ -8857,7 +8739,6 @@ export declare const IntellectualProperty: {
         ExpirationDate?: string | undefined;
         LicenseType?: string | undefined;
         LicenseTerms?: string | undefined;
-        Value?: number | undefined;
     } & {
         Category?: string | undefined;
         Owner?: string | undefined;
@@ -8866,7 +8747,6 @@ export declare const IntellectualProperty: {
         ExpirationDate?: string | undefined;
         LicenseType?: string | undefined;
         LicenseTerms?: string | undefined;
-        Value?: number | undefined;
     } & { [K_1 in Exclude<keyof I_1, keyof IntellectualProperty>]: never; }>(object: I_1): IntellectualProperty;
 };
 export declare const InvestmentFund: {
@@ -9019,11 +8899,8 @@ export declare const Description: {
         OriginCountry?: string | undefined;
         Documents?: string[] | undefined;
         Images?: string[] | undefined;
-        Vertical?: string | undefined;
         AllowedJurisdictions?: string[] | undefined;
         AllowedJurisdictionRestrictions?: string | undefined;
-        CreatedAt?: string | undefined;
-        UpdatedAt?: string | undefined;
     } & {
         Name?: string | undefined;
         Description?: string | undefined;
@@ -9041,11 +8918,8 @@ export declare const Description: {
         OriginCountry?: string | undefined;
         Documents?: (string[] & string[] & { [K_1 in Exclude<keyof I["Documents"], keyof string[]>]: never; }) | undefined;
         Images?: (string[] & string[] & { [K_2 in Exclude<keyof I["Images"], keyof string[]>]: never; }) | undefined;
-        Vertical?: string | undefined;
         AllowedJurisdictions?: (string[] & string[] & { [K_3 in Exclude<keyof I["AllowedJurisdictions"], keyof string[]>]: never; }) | undefined;
         AllowedJurisdictionRestrictions?: string | undefined;
-        CreatedAt?: string | undefined;
-        UpdatedAt?: string | undefined;
     } & { [K_4 in Exclude<keyof I, keyof Description>]: never; }>(base?: I | undefined): Description;
     fromPartial<I_1 extends {
         Name?: string | undefined;
@@ -9060,11 +8934,8 @@ export declare const Description: {
         OriginCountry?: string | undefined;
         Documents?: string[] | undefined;
         Images?: string[] | undefined;
-        Vertical?: string | undefined;
         AllowedJurisdictions?: string[] | undefined;
         AllowedJurisdictionRestrictions?: string | undefined;
-        CreatedAt?: string | undefined;
-        UpdatedAt?: string | undefined;
     } & {
         Name?: string | undefined;
         Description?: string | undefined;
@@ -9082,11 +8953,8 @@ export declare const Description: {
         OriginCountry?: string | undefined;
         Documents?: (string[] & string[] & { [K_6 in Exclude<keyof I_1["Documents"], keyof string[]>]: never; }) | undefined;
         Images?: (string[] & string[] & { [K_7 in Exclude<keyof I_1["Images"], keyof string[]>]: never; }) | undefined;
-        Vertical?: string | undefined;
         AllowedJurisdictions?: (string[] & string[] & { [K_8 in Exclude<keyof I_1["AllowedJurisdictions"], keyof string[]>]: never; }) | undefined;
         AllowedJurisdictionRestrictions?: string | undefined;
-        CreatedAt?: string | undefined;
-        UpdatedAt?: string | undefined;
     } & { [K_9 in Exclude<keyof I_1, keyof Description>]: never; }>(object: I_1): Description;
 };
 export declare const ExternalResources: {

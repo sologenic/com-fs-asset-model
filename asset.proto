@@ -289,7 +289,6 @@ message IntellectualProperty {
     optional string ExpirationDate = 5;         
     optional string LicenseType = 7;            
     optional string LicenseTerms = 8;           
-    optional float Value = 9;                   
 }
 
 message InvestmentFund {
@@ -338,11 +337,8 @@ message Description {
     string OriginCountry = 6; // ISO 3166-1 alpha-3 code e.g. "USA", "CAD"                        
     repeated string Documents = 7;           
     repeated string Images = 8;              
-    string Vertical = 9;                
     repeated string AllowedJurisdictions = 12; // ISO 3166-1 alpha-3 code e.g. "USA", "CAD"
     string AllowedJurisdictionRestrictions = 13;     
-    optional string CreatedAt = 10;          
-    optional string UpdatedAt = 11;          
 }
 
 // ---------------- ExternalResources ----------------

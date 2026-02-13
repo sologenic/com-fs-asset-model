@@ -2398,7 +2398,6 @@ type IntellectualProperty struct {
 	ExpirationDate     *string                `protobuf:"bytes,5,opt,name=ExpirationDate,proto3,oneof" json:"ExpirationDate,omitempty"`
 	LicenseType        *string                `protobuf:"bytes,7,opt,name=LicenseType,proto3,oneof" json:"LicenseType,omitempty"`
 	LicenseTerms       *string                `protobuf:"bytes,8,opt,name=LicenseTerms,proto3,oneof" json:"LicenseTerms,omitempty"`
-	Value              *float32               `protobuf:"fixed32,9,opt,name=Value,proto3,oneof" json:"Value,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -2480,13 +2479,6 @@ func (x *IntellectualProperty) GetLicenseTerms() string {
 		return *x.LicenseTerms
 	}
 	return ""
-}
-
-func (x *IntellectualProperty) GetValue() float32 {
-	if x != nil && x.Value != nil {
-		return *x.Value
-	}
-	return 0
 }
 
 type InvestmentFund struct {
@@ -2799,11 +2791,8 @@ type Description struct {
 	OriginCountry                   string                 `protobuf:"bytes,6,opt,name=OriginCountry,proto3" json:"OriginCountry,omitempty"` // ISO 3166-1 alpha-3 code e.g. "USA", "CAD"
 	Documents                       []string               `protobuf:"bytes,7,rep,name=Documents,proto3" json:"Documents,omitempty"`
 	Images                          []string               `protobuf:"bytes,8,rep,name=Images,proto3" json:"Images,omitempty"`
-	Vertical                        string                 `protobuf:"bytes,9,opt,name=Vertical,proto3" json:"Vertical,omitempty"`
 	AllowedJurisdictions            []string               `protobuf:"bytes,12,rep,name=AllowedJurisdictions,proto3" json:"AllowedJurisdictions,omitempty"` // ISO 3166-1 alpha-3 code e.g. "USA", "CAD"
 	AllowedJurisdictionRestrictions string                 `protobuf:"bytes,13,opt,name=AllowedJurisdictionRestrictions,proto3" json:"AllowedJurisdictionRestrictions,omitempty"`
-	CreatedAt                       *string                `protobuf:"bytes,10,opt,name=CreatedAt,proto3,oneof" json:"CreatedAt,omitempty"`
-	UpdatedAt                       *string                `protobuf:"bytes,11,opt,name=UpdatedAt,proto3,oneof" json:"UpdatedAt,omitempty"`
 	unknownFields                   protoimpl.UnknownFields
 	sizeCache                       protoimpl.SizeCache
 }
@@ -2894,13 +2883,6 @@ func (x *Description) GetImages() []string {
 	return nil
 }
 
-func (x *Description) GetVertical() string {
-	if x != nil {
-		return x.Vertical
-	}
-	return ""
-}
-
 func (x *Description) GetAllowedJurisdictions() []string {
 	if x != nil {
 		return x.AllowedJurisdictions
@@ -2911,20 +2893,6 @@ func (x *Description) GetAllowedJurisdictions() []string {
 func (x *Description) GetAllowedJurisdictionRestrictions() string {
 	if x != nil {
 		return x.AllowedJurisdictionRestrictions
-	}
-	return ""
-}
-
-func (x *Description) GetCreatedAt() string {
-	if x != nil && x.CreatedAt != nil {
-		return *x.CreatedAt
-	}
-	return ""
-}
-
-func (x *Description) GetUpdatedAt() string {
-	if x != nil && x.UpdatedAt != nil {
-		return *x.UpdatedAt
 	}
 	return ""
 }
@@ -3604,7 +3572,7 @@ const file_asset_proto_rawDesc = "" +
 	"\x1aAssetExtensionContractAddr\x18\x0f \x01(\tH\x01R\x1aAssetExtensionContractAddr\x88\x01\x01\x12.\n" +
 	"\x12DistributionSupply\x18\x10 \x01(\tR\x12DistributionSupplyB\x18\n" +
 	"\x16_CrowdfundContractAddrB\x1d\n" +
-	"\x1b_AssetExtensionContractAddr\"\x9e\x03\n" +
+	"\x1b_AssetExtensionContractAddr\"\xf9\x02\n" +
 	"\x14IntellectualProperty\x12\x1a\n" +
 	"\bCategory\x18\x01 \x01(\tR\bCategory\x12\x14\n" +
 	"\x05Owner\x18\x02 \x01(\tR\x05Owner\x123\n" +
@@ -3614,14 +3582,12 @@ const file_asset_proto_rawDesc = "" +
 	"FilingDate\x88\x01\x01\x12+\n" +
 	"\x0eExpirationDate\x18\x05 \x01(\tH\x02R\x0eExpirationDate\x88\x01\x01\x12%\n" +
 	"\vLicenseType\x18\a \x01(\tH\x03R\vLicenseType\x88\x01\x01\x12'\n" +
-	"\fLicenseTerms\x18\b \x01(\tH\x04R\fLicenseTerms\x88\x01\x01\x12\x19\n" +
-	"\x05Value\x18\t \x01(\x02H\x05R\x05Value\x88\x01\x01B\x15\n" +
+	"\fLicenseTerms\x18\b \x01(\tH\x04R\fLicenseTerms\x88\x01\x01B\x15\n" +
 	"\x13_RegistrationNumberB\r\n" +
 	"\v_FilingDateB\x11\n" +
 	"\x0f_ExpirationDateB\x0e\n" +
 	"\f_LicenseTypeB\x0f\n" +
-	"\r_LicenseTermsB\b\n" +
-	"\x06_Value\"\x99\x03\n" +
+	"\r_LicenseTerms\"\x99\x03\n" +
 	"\x0eInvestmentFund\x12\x1a\n" +
 	"\bFundType\x18\x01 \x01(\tR\bFundType\x12\x1a\n" +
 	"\bExchange\x18\x02 \x01(\tR\bExchange\x127\n" +
@@ -3664,7 +3630,7 @@ const file_asset_proto_rawDesc = "" +
 	"\x10_ContractAddressB\x15\n" +
 	"\x13_ComplianceRequiredB\x0e\n" +
 	"\f_TotalSupplyB\x12\n" +
-	"\x10_RedemptionTerms\"\xec\x03\n" +
+	"\x10_RedemptionTerms\"\xee\x02\n" +
 	"\vDescription\x12\x12\n" +
 	"\x04Name\x18\x01 \x01(\tR\x04Name\x12 \n" +
 	"\vDescription\x18\x02 \x01(\tR\vDescription\x12#\n" +
@@ -3673,17 +3639,9 @@ const file_asset_proto_rawDesc = "" +
 	"\x03URL\x18\x05 \x01(\tR\x03URL\x12$\n" +
 	"\rOriginCountry\x18\x06 \x01(\tR\rOriginCountry\x12\x1c\n" +
 	"\tDocuments\x18\a \x03(\tR\tDocuments\x12\x16\n" +
-	"\x06Images\x18\b \x03(\tR\x06Images\x12\x1a\n" +
-	"\bVertical\x18\t \x01(\tR\bVertical\x122\n" +
+	"\x06Images\x18\b \x03(\tR\x06Images\x122\n" +
 	"\x14AllowedJurisdictions\x18\f \x03(\tR\x14AllowedJurisdictions\x12H\n" +
-	"\x1fAllowedJurisdictionRestrictions\x18\r \x01(\tR\x1fAllowedJurisdictionRestrictions\x12!\n" +
-	"\tCreatedAt\x18\n" +
-	" \x01(\tH\x00R\tCreatedAt\x88\x01\x01\x12!\n" +
-	"\tUpdatedAt\x18\v \x01(\tH\x01R\tUpdatedAt\x88\x01\x01B\f\n" +
-	"\n" +
-	"_CreatedAtB\f\n" +
-	"\n" +
-	"_UpdatedAt\"d\n" +
+	"\x1fAllowedJurisdictionRestrictions\x18\r \x01(\tR\x1fAllowedJurisdictionRestrictions\"d\n" +
 	"\x11ExternalResources\x12!\n" +
 	"\x05Links\x18\x01 \x03(\v2\v.asset.LinkR\x05Links\x12,\n" +
 	"\aSocials\x18\x02 \x03(\v2\x12.asset.SocialMediaR\aSocials\"=\n" +
@@ -3925,7 +3883,6 @@ func file_asset_proto_init() {
 	file_asset_proto_msgTypes[18].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[19].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[20].OneofWrappers = []any{}
-	file_asset_proto_msgTypes[21].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[25].OneofWrappers = []any{}
 	file_asset_proto_msgTypes[26].OneofWrappers = []any{}
 	type x struct{}
