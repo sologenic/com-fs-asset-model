@@ -78,8 +78,10 @@ type AssetQuery struct {
 	// On-chain issuer address (distinct from Denom.Issuer)
 	SmartContractIssuerAddr *string `protobuf:"bytes,7,opt,name=SmartContractIssuerAddr,proto3,oneof" json:"SmartContractIssuerAddr,omitempty"`
 	Limit                   *int32  `protobuf:"varint,8,opt,name=Limit,proto3,oneof" json:"Limit,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
+	// Asset Extension type filter
+	ExtensionType *ExtensionType `protobuf:"varint,9,opt,name=ExtensionType,proto3,enum=asset.ExtensionType,oneof" json:"ExtensionType,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *AssetQuery) Reset() {
@@ -166,6 +168,13 @@ func (x *AssetQuery) GetLimit() int32 {
 		return *x.Limit
 	}
 	return 0
+}
+
+func (x *AssetQuery) GetExtensionType() ExtensionType {
+	if x != nil && x.ExtensionType != nil {
+		return *x.ExtensionType
+	}
+	return ExtensionType_EXTENSION_TYPE_DO_NOT_USE
 }
 
 type UserAssetListKey struct {
@@ -318,7 +327,7 @@ const file_asset_grpc_proto_rawDesc = "" +
 	"\n" +
 	"\x10asset-grpc.proto\x12\x05asset\x1a\vasset.proto\x1a9sologenic/com-fs-utils-lib/models/metadata/metadata.proto\"\x1c\n" +
 	"\bAssetKey\x12\x10\n" +
-	"\x03Key\x18\x01 \x01(\tR\x03Key\"\xca\x03\n" +
+	"\x03Key\x18\x01 \x01(\tR\x03Key\"\x9d\x04\n" +
 	"\n" +
 	"AssetQuery\x12+\n" +
 	"\aNetwork\x18\x01 \x01(\x0e2\x11.metadata.NetworkR\aNetwork\x12\x1b\n" +
@@ -328,14 +337,16 @@ const file_asset_grpc_proto_rawDesc = "" +
 	"\x06Status\x18\x05 \x01(\x0e2\x12.asset.AssetStatusH\x02R\x06Status\x88\x01\x01\x123\n" +
 	"\tAssetType\x18\x06 \x01(\x0e2\x10.asset.AssetTypeH\x03R\tAssetType\x88\x01\x01\x12=\n" +
 	"\x17SmartContractIssuerAddr\x18\a \x01(\tH\x04R\x17SmartContractIssuerAddr\x88\x01\x01\x12\x19\n" +
-	"\x05Limit\x18\b \x01(\x05H\x05R\x05Limit\x88\x01\x01B\t\n" +
+	"\x05Limit\x18\b \x01(\x05H\x05R\x05Limit\x88\x01\x01\x12?\n" +
+	"\rExtensionType\x18\t \x01(\x0e2\x14.asset.ExtensionTypeH\x06R\rExtensionType\x88\x01\x01B\t\n" +
 	"\a_OffsetB\x11\n" +
 	"\x0f_OrganizationIDB\t\n" +
 	"\a_StatusB\f\n" +
 	"\n" +
 	"_AssetTypeB\x1a\n" +
 	"\x18_SmartContractIssuerAddrB\b\n" +
-	"\x06_Limit\"$\n" +
+	"\x06_LimitB\x10\n" +
+	"\x0e_ExtensionType\"$\n" +
 	"\x10UserAssetListKey\x12\x10\n" +
 	"\x03Key\x18\x01 \x01(\tR\x03Key\"\x9b\x03\n" +
 	"\x12UserAssetListQuery\x12+\n" +
@@ -385,35 +396,37 @@ var file_asset_grpc_proto_goTypes = []any{
 	(metadata.Network)(0),      // 4: metadata.Network
 	(AssetStatus)(0),           // 5: asset.AssetStatus
 	(AssetType)(0),             // 6: asset.AssetType
-	(UserAssetStatus)(0),       // 7: asset.UserAssetStatus
-	(*Asset)(nil),              // 8: asset.Asset
-	(*UserAssetList)(nil),      // 9: asset.UserAssetList
-	(*Assets)(nil),             // 10: asset.Assets
-	(*UserAssetLists)(nil),     // 11: asset.UserAssetLists
+	(ExtensionType)(0),         // 7: asset.ExtensionType
+	(UserAssetStatus)(0),       // 8: asset.UserAssetStatus
+	(*Asset)(nil),              // 9: asset.Asset
+	(*UserAssetList)(nil),      // 10: asset.UserAssetList
+	(*Assets)(nil),             // 11: asset.Assets
+	(*UserAssetLists)(nil),     // 12: asset.UserAssetLists
 }
 var file_asset_grpc_proto_depIdxs = []int32{
 	4,  // 0: asset.AssetQuery.Network:type_name -> metadata.Network
 	5,  // 1: asset.AssetQuery.Status:type_name -> asset.AssetStatus
 	6,  // 2: asset.AssetQuery.AssetType:type_name -> asset.AssetType
-	4,  // 3: asset.UserAssetListQuery.Network:type_name -> metadata.Network
-	7,  // 4: asset.UserAssetListQuery.Status:type_name -> asset.UserAssetStatus
-	8,  // 5: asset.AssetListService.UpsertAsset:input_type -> asset.Asset
-	0,  // 6: asset.AssetListService.GetAsset:input_type -> asset.AssetKey
-	1,  // 7: asset.AssetListService.GetAssets:input_type -> asset.AssetQuery
-	9,  // 8: asset.AssetListService.UpsertUserAssetList:input_type -> asset.UserAssetList
-	2,  // 9: asset.AssetListService.GetUserAssetList:input_type -> asset.UserAssetListKey
-	3,  // 10: asset.AssetListService.GetUserAssetLists:input_type -> asset.UserAssetListQuery
-	0,  // 11: asset.AssetListService.UpsertAsset:output_type -> asset.AssetKey
-	8,  // 12: asset.AssetListService.GetAsset:output_type -> asset.Asset
-	10, // 13: asset.AssetListService.GetAssets:output_type -> asset.Assets
-	2,  // 14: asset.AssetListService.UpsertUserAssetList:output_type -> asset.UserAssetListKey
-	9,  // 15: asset.AssetListService.GetUserAssetList:output_type -> asset.UserAssetList
-	11, // 16: asset.AssetListService.GetUserAssetLists:output_type -> asset.UserAssetLists
-	11, // [11:17] is the sub-list for method output_type
-	5,  // [5:11] is the sub-list for method input_type
-	5,  // [5:5] is the sub-list for extension type_name
-	5,  // [5:5] is the sub-list for extension extendee
-	0,  // [0:5] is the sub-list for field type_name
+	7,  // 3: asset.AssetQuery.ExtensionType:type_name -> asset.ExtensionType
+	4,  // 4: asset.UserAssetListQuery.Network:type_name -> metadata.Network
+	8,  // 5: asset.UserAssetListQuery.Status:type_name -> asset.UserAssetStatus
+	9,  // 6: asset.AssetListService.UpsertAsset:input_type -> asset.Asset
+	0,  // 7: asset.AssetListService.GetAsset:input_type -> asset.AssetKey
+	1,  // 8: asset.AssetListService.GetAssets:input_type -> asset.AssetQuery
+	10, // 9: asset.AssetListService.UpsertUserAssetList:input_type -> asset.UserAssetList
+	2,  // 10: asset.AssetListService.GetUserAssetList:input_type -> asset.UserAssetListKey
+	3,  // 11: asset.AssetListService.GetUserAssetLists:input_type -> asset.UserAssetListQuery
+	0,  // 12: asset.AssetListService.UpsertAsset:output_type -> asset.AssetKey
+	9,  // 13: asset.AssetListService.GetAsset:output_type -> asset.Asset
+	11, // 14: asset.AssetListService.GetAssets:output_type -> asset.Assets
+	2,  // 15: asset.AssetListService.UpsertUserAssetList:output_type -> asset.UserAssetListKey
+	10, // 16: asset.AssetListService.GetUserAssetList:output_type -> asset.UserAssetList
+	12, // 17: asset.AssetListService.GetUserAssetLists:output_type -> asset.UserAssetLists
+	12, // [12:18] is the sub-list for method output_type
+	6,  // [6:12] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_asset_grpc_proto_init() }

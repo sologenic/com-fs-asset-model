@@ -38,6 +38,9 @@ message AssetQuery {
     // On-chain issuer address (distinct from Denom.Issuer)
     optional string SmartContractIssuerAddr = 7;
     optional int32 Limit = 8;
+    // Asset Extension type filter
+    optional ExtensionType ExtensionType = 9;
+
 }
 
 message UserAssetListKey {
