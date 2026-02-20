@@ -37,6 +37,21 @@ message AssetDetails {
     optional Distribution DistributionDetails = 31;
     bool IsVisible = 32; // Controls whether the asset is visible in the marketplace
     string DefaultHoldLimit = 33; // Default hold limit for the asset
+
+    optional AssetExtension AssetExtensionDetails = 34;
+}
+
+message AssetExtension {
+    string ExtensionCodeID = 1;
+    string ExtensionContractAddress = 2;
+    repeated string ExtensionPreviousCodeIDs = 3;
+    ExtensionType ExtensionType = 4;
+}
+
+enum ExtensionType {
+    EXTENSION_TYPE_DO_NOT_USE = 0;
+    EXTENSION_TYPE_EQUITY = 1; // This extension is used for ATG Broker Contract related assets
+    EXTENSION_TYPE_RWA = 2; // This extension is used for Compliance Manager Contract related assets
 }
 
 // ---------------- Existing Messages ----------------
