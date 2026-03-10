@@ -21,6 +21,9 @@ service AssetListService {
     rpc GetUserAssetList(UserAssetListKey) returns (UserAssetList);
     // Get all UserAssetList for a given filter
     rpc GetUserAssetLists(UserAssetListQuery) returns (UserAssetLists);
+
+    // Count all Assets for a given filter
+    rpc CountAssets(AssetQuery) returns (CountResponse);
 }   
 
 message AssetKey {
@@ -56,4 +59,8 @@ message UserAssetListQuery {
     optional UserAssetStatus Status = 6;
     optional bool Visible = 7;
     optional string OrganizationID = 8;
+}
+
+message CountResponse {
+    int32 Count = 1;
 }
