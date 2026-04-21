@@ -2,7 +2,7 @@
 // versions:
 //   protoc-gen-ts_proto  v1.181.2
 //   protoc               v5.29.3
-// source: sologenic/com-fs-utils-lib/go/decimal/decimal.proto
+// source: sologenic/com-fs-utils-lib/models/decimal/decimal.proto
 
 /* eslint-disable */
 import Long from "long";
