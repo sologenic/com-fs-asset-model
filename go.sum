@@ -53,10 +53,10 @@ github.com/sologenic/com-fs-utils-internal-lib/go/logger v0.0.0-20260429144456-e
 github.com/sologenic/com-fs-utils-internal-lib/go/logger v0.0.0-20260429144456-e78936df6303/go.mod h1:lFO9Is0cyFZojUS8urk3+NB5ySU/dCoZ60w4DIA1Mfc=
 github.com/sologenic/com-fs-utils-internal-lib/go/unittest v0.0.0-20260429144456-e78936df6303 h1:rLcwr2r7y7aUHsBNn1a025jflQzcDnXU2A/Sq9B3hnA=
 github.com/sologenic/com-fs-utils-internal-lib/go/unittest v0.0.0-20260429144456-e78936df6303/go.mod h1:S8cUgRoJjNKBrY6Z32bxz8wItCHJ3HxOmnh01O3Vo+w=
-github.com/sologenic/com-fs-utils-lib/models/audit v0.0.0-20260425123444-395230fd9312 h1:Yeoqil5JqxJ30OpVpBZJFDVtF0OkDfrg8l8y6+mKL3U=
-github.com/sologenic/com-fs-utils-lib/models/audit v0.0.0-20260425123444-395230fd9312/go.mod h1:aesYC9CUzVQ4JUHZwpLYx0yeNK1Sl37vzLKmDKQiyoY=
-github.com/sologenic/com-fs-utils-lib/models/metadata v0.0.0-20260425123444-395230fd9312 h1:rRk52TPBi8r8C9fwy8njvGUXHuViYvFp07iZWfFgpyE=
-github.com/sologenic/com-fs-utils-lib/models/metadata v0.0.0-20260425123444-395230fd9312/go.mod h1:8pkOl9qWOoHOGHkya1GUTLjbag3sal2B9GGPcXRlRtQ=
+github.com/sologenic/com-fs-utils-lib/models/audit v0.0.0-20260501113306-8b02db1b65e4 h1:A2YVfs6UUkhow8ezxRMCjzBmWGLfklJQVK2OviE6ARU=
+github.com/sologenic/com-fs-utils-lib/models/audit v0.0.0-20260501113306-8b02db1b65e4/go.mod h1:aesYC9CUzVQ4JUHZwpLYx0yeNK1Sl37vzLKmDKQiyoY=
+github.com/sologenic/com-fs-utils-lib/models/metadata v0.0.0-20260501113306-8b02db1b65e4 h1:IH+6g8E0lMYxUknxKdIUa+0rXD5Uu/8kQD23r4joURY=
+github.com/sologenic/com-fs-utils-lib/models/metadata v0.0.0-20260501113306-8b02db1b65e4/go.mod h1:8pkOl9qWOoHOGHkya1GUTLjbag3sal2B9GGPcXRlRtQ=
 github.com/stretchr/testify v1.11.1 h1:7s2iGBzp5EwR7/aIZr8ao5+dra3wiQyKjjFuvgVKu7U=
 github.com/stretchr/testify v1.11.1/go.mod h1:wZwfW3scLgRK+23gO65QZefKpKQRnfz6sD981Nm4B6U=
 go.opentelemetry.io/auto/sdk v1.2.1 h1:jXsnJ4Lmnqd11kwkBV2LgLoFMZKizbCi5fNZ/ipaZ64=
