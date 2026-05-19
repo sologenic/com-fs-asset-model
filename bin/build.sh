@@ -52,8 +52,12 @@ for lib_dir in "${lib_dirs[@]}"; do
 done
 cd $rd
 
+# protovalidate schema (import buf/validate/validate.proto); path is stable vs git root
+THIRD_PARTY="$(cd "$(dirname "${BASH_SOURCE[0]}")/../third_party" && pwd)"
+
 protoc \
 --proto_path=. "asset.proto" \
+--proto_path="$THIRD_PARTY" \
 --proto_path=$(dirname $(dirname "$rd")) \
 "--go_out=." --go_opt=paths=source_relative \
 --go-grpc_opt=require_unimplemented_servers=false \
@@ -61,6 +65,7 @@ protoc \
 
 protoc \
 --proto_path=. "asset-grpc.proto" \
+--proto_path="$THIRD_PARTY" \
 --proto_path=$(dirname $(dirname "$rd")) \
 "--go_out=." --go_opt=paths=source_relative \
 --go-grpc_opt=require_unimplemented_servers=false \
@@ -71,6 +76,7 @@ npm i
 
 protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto \
 --proto_path=. \
+--proto_path="$THIRD_PARTY" \
 --proto_path=$(dirname $(dirname "$rd")) \
 --ts_proto_out=. \
 --ts_proto_opt=esModuleInterop=true \
