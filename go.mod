@@ -3,6 +3,7 @@ module github.com/sologenic/com-fs-asset-model
 go 1.26.2
 
 require (
+	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.11-20260415201107-50325440f8f2.1
 	github.com/google/go-cmp v0.7.0
 	github.com/sologenic/com-fs-utils-internal-lib/go/grpc-client v0.0.0-20260429144456-e78936df6303
 	github.com/sologenic/com-fs-utils-internal-lib/go/unittest v0.0.0-20260429144456-e78936df6303
@@ -10,7 +11,7 @@ require (
 	github.com/sologenic/com-fs-utils-lib/models/metadata v0.0.0-20260501113306-8b02db1b65e4
 	github.com/stretchr/testify v1.11.1
 	google.golang.org/grpc v1.75.1
-	google.golang.org/protobuf v1.36.9
+	google.golang.org/protobuf v1.36.11
 )
 
 require (
