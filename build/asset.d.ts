@@ -143,6 +143,8 @@ export interface AssetDetails {
     /** Default hold limit for the asset */
     DefaultHoldLimit: string;
     AssetExtensionDetails?: AssetExtension | undefined;
+    /** Shown in ATG promoted-assets panel */
+    IsPromoted: boolean;
 }
 export interface AssetExtension {
     ExtensionCodeID: string;
@@ -665,6 +667,7 @@ export declare const AssetDetails: {
             ExtensionPreviousCodeIDs?: string[] | undefined;
             ExtensionType?: ExtensionType | undefined;
         } | undefined;
+        IsPromoted?: boolean | undefined;
     } & {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -1178,6 +1181,7 @@ export declare const AssetDetails: {
             ExtensionPreviousCodeIDs?: (string[] & string[] & { [K_36 in Exclude<keyof I["AssetExtensionDetails"]["ExtensionPreviousCodeIDs"], keyof string[]>]: never; }) | undefined;
             ExtensionType?: ExtensionType | undefined;
         } & { [K_37 in Exclude<keyof I["AssetExtensionDetails"], keyof AssetExtension>]: never; }) | undefined;
+        IsPromoted?: boolean | undefined;
     } & { [K_38 in Exclude<keyof I, keyof AssetDetails>]: never; }>(base?: I | undefined): AssetDetails;
     fromPartial<I_1 extends {
         ID?: string | undefined;
@@ -1395,6 +1399,7 @@ export declare const AssetDetails: {
             ExtensionPreviousCodeIDs?: string[] | undefined;
             ExtensionType?: ExtensionType | undefined;
         } | undefined;
+        IsPromoted?: boolean | undefined;
     } & {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -1908,6 +1913,7 @@ export declare const AssetDetails: {
             ExtensionPreviousCodeIDs?: (string[] & string[] & { [K_75 in Exclude<keyof I_1["AssetExtensionDetails"]["ExtensionPreviousCodeIDs"], keyof string[]>]: never; }) | undefined;
             ExtensionType?: ExtensionType | undefined;
         } & { [K_76 in Exclude<keyof I_1["AssetExtensionDetails"], keyof AssetExtension>]: never; }) | undefined;
+        IsPromoted?: boolean | undefined;
     } & { [K_77 in Exclude<keyof I_1, keyof AssetDetails>]: never; }>(object: I_1): AssetDetails;
 };
 export declare const AssetExtension: {
@@ -2160,6 +2166,7 @@ export declare const Asset: {
                 ExtensionPreviousCodeIDs?: string[] | undefined;
                 ExtensionType?: ExtensionType | undefined;
             } | undefined;
+            IsPromoted?: boolean | undefined;
         } | undefined;
         MetaData?: {
             Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -2410,6 +2417,7 @@ export declare const Asset: {
                 ExtensionPreviousCodeIDs?: string[] | undefined;
                 ExtensionType?: ExtensionType | undefined;
             } | undefined;
+            IsPromoted?: boolean | undefined;
         } & {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -2923,6 +2931,7 @@ export declare const Asset: {
                 ExtensionPreviousCodeIDs?: (string[] & string[] & { [K_36 in Exclude<keyof I["AssetDetails"]["AssetExtensionDetails"]["ExtensionPreviousCodeIDs"], keyof string[]>]: never; }) | undefined;
                 ExtensionType?: ExtensionType | undefined;
             } & { [K_37 in Exclude<keyof I["AssetDetails"]["AssetExtensionDetails"], keyof AssetExtension>]: never; }) | undefined;
+            IsPromoted?: boolean | undefined;
         } & { [K_38 in Exclude<keyof I["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
         MetaData?: ({
             Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -3203,6 +3212,7 @@ export declare const Asset: {
                 ExtensionPreviousCodeIDs?: string[] | undefined;
                 ExtensionType?: ExtensionType | undefined;
             } | undefined;
+            IsPromoted?: boolean | undefined;
         } | undefined;
         MetaData?: {
             Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -3453,6 +3463,7 @@ export declare const Asset: {
                 ExtensionPreviousCodeIDs?: string[] | undefined;
                 ExtensionType?: ExtensionType | undefined;
             } | undefined;
+            IsPromoted?: boolean | undefined;
         } & {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -3966,6 +3977,7 @@ export declare const Asset: {
                 ExtensionPreviousCodeIDs?: (string[] & string[] & { [K_80 in Exclude<keyof I_1["AssetDetails"]["AssetExtensionDetails"]["ExtensionPreviousCodeIDs"], keyof string[]>]: never; }) | undefined;
                 ExtensionType?: ExtensionType | undefined;
             } & { [K_81 in Exclude<keyof I_1["AssetDetails"]["AssetExtensionDetails"], keyof AssetExtension>]: never; }) | undefined;
+            IsPromoted?: boolean | undefined;
         } & { [K_82 in Exclude<keyof I_1["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
         MetaData?: ({
             Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -4253,6 +4265,7 @@ export declare const Assets: {
                     ExtensionPreviousCodeIDs?: string[] | undefined;
                     ExtensionType?: ExtensionType | undefined;
                 } | undefined;
+                IsPromoted?: boolean | undefined;
             } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -4506,6 +4519,7 @@ export declare const Assets: {
                     ExtensionPreviousCodeIDs?: string[] | undefined;
                     ExtensionType?: ExtensionType | undefined;
                 } | undefined;
+                IsPromoted?: boolean | undefined;
             } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -4756,6 +4770,7 @@ export declare const Assets: {
                     ExtensionPreviousCodeIDs?: string[] | undefined;
                     ExtensionType?: ExtensionType | undefined;
                 } | undefined;
+                IsPromoted?: boolean | undefined;
             } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -5006,6 +5021,7 @@ export declare const Assets: {
                     ExtensionPreviousCodeIDs?: string[] | undefined;
                     ExtensionType?: ExtensionType | undefined;
                 } | undefined;
+                IsPromoted?: boolean | undefined;
             } & {
                 ID?: string | undefined;
                 OrganizationID?: string | undefined;
@@ -5519,6 +5535,7 @@ export declare const Assets: {
                     ExtensionPreviousCodeIDs?: (string[] & string[] & { [K_36 in Exclude<keyof I["Assets"][number]["AssetDetails"]["AssetExtensionDetails"]["ExtensionPreviousCodeIDs"], keyof string[]>]: never; }) | undefined;
                     ExtensionType?: ExtensionType | undefined;
                 } & { [K_37 in Exclude<keyof I["Assets"][number]["AssetDetails"]["AssetExtensionDetails"], keyof AssetExtension>]: never; }) | undefined;
+                IsPromoted?: boolean | undefined;
             } & { [K_38 in Exclude<keyof I["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
             MetaData?: ({
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -5798,6 +5815,7 @@ export declare const Assets: {
                     ExtensionPreviousCodeIDs?: string[] | undefined;
                     ExtensionType?: ExtensionType | undefined;
                 } | undefined;
+                IsPromoted?: boolean | undefined;
             } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -6052,6 +6070,7 @@ export declare const Assets: {
                     ExtensionPreviousCodeIDs?: string[] | undefined;
                     ExtensionType?: ExtensionType | undefined;
                 } | undefined;
+                IsPromoted?: boolean | undefined;
             } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -6305,6 +6324,7 @@ export declare const Assets: {
                     ExtensionPreviousCodeIDs?: string[] | undefined;
                     ExtensionType?: ExtensionType | undefined;
                 } | undefined;
+                IsPromoted?: boolean | undefined;
             } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -6555,6 +6575,7 @@ export declare const Assets: {
                     ExtensionPreviousCodeIDs?: string[] | undefined;
                     ExtensionType?: ExtensionType | undefined;
                 } | undefined;
+                IsPromoted?: boolean | undefined;
             } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -6805,6 +6826,7 @@ export declare const Assets: {
                     ExtensionPreviousCodeIDs?: string[] | undefined;
                     ExtensionType?: ExtensionType | undefined;
                 } | undefined;
+                IsPromoted?: boolean | undefined;
             } & {
                 ID?: string | undefined;
                 OrganizationID?: string | undefined;
@@ -7318,6 +7340,7 @@ export declare const Assets: {
                     ExtensionPreviousCodeIDs?: (string[] & string[] & { [K_82 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["AssetExtensionDetails"]["ExtensionPreviousCodeIDs"], keyof string[]>]: never; }) | undefined;
                     ExtensionType?: ExtensionType | undefined;
                 } & { [K_83 in Exclude<keyof I_1["Assets"][number]["AssetDetails"]["AssetExtensionDetails"], keyof AssetExtension>]: never; }) | undefined;
+                IsPromoted?: boolean | undefined;
             } & { [K_84 in Exclude<keyof I_1["Assets"][number]["AssetDetails"], keyof AssetDetails>]: never; }) | undefined;
             MetaData?: ({
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;
@@ -7597,6 +7620,7 @@ export declare const Assets: {
                     ExtensionPreviousCodeIDs?: string[] | undefined;
                     ExtensionType?: ExtensionType | undefined;
                 } | undefined;
+                IsPromoted?: boolean | undefined;
             } | undefined;
             MetaData?: {
                 Network?: import("./sologenic/com-fs-utils-lib/models/metadata/metadata").Network | undefined;

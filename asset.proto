@@ -40,6 +40,7 @@ message AssetDetails {
     string DefaultHoldLimit = 33; // Default hold limit for the asset
 
     optional AssetExtension AssetExtensionDetails = 34;
+    bool IsPromoted = 35; // Shown in ATG promoted-assets panel
 }
 
 message AssetExtension {

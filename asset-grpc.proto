@@ -46,6 +46,7 @@ message AssetQuery {
     // Asset Denom properties filter
     optional string DenomIssuer = 10;
     optional string DenomSubunit = 11;
+    optional bool IsPromoted = 12;
 }
 
 message UserAssetListKey {
