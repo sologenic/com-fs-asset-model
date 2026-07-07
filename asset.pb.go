@@ -2809,7 +2809,7 @@ type FinancialProperties struct {
 	Fractional         bool                   `protobuf:"varint,13,opt,name=Fractional,proto3" json:"Fractional,omitempty"`
 	ComplianceRequired *bool                  `protobuf:"varint,6,opt,name=ComplianceRequired,proto3,oneof" json:"ComplianceRequired,omitempty"`
 	TradeAllowances    []string               `protobuf:"bytes,8,rep,name=TradeAllowances,proto3" json:"TradeAllowances,omitempty"`
-	TotalSupply        *int32                 `protobuf:"varint,14,opt,name=TotalSupply,proto3,oneof" json:"TotalSupply,omitempty"`
+	TotalSupply        *int64                 `protobuf:"varint,14,opt,name=TotalSupply,proto3,oneof" json:"TotalSupply,omitempty"`
 	RedemptionTerms    *string                `protobuf:"bytes,5,opt,name=RedemptionTerms,proto3,oneof" json:"RedemptionTerms,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
@@ -2901,7 +2901,7 @@ func (x *FinancialProperties) GetTradeAllowances() []string {
 	return nil
 }
 
-func (x *FinancialProperties) GetTotalSupply() int32 {
+func (x *FinancialProperties) GetTotalSupply() int64 {
 	if x != nil && x.TotalSupply != nil {
 		return *x.TotalSupply
 	}
@@ -3771,7 +3771,7 @@ const file_asset_proto_rawDesc = "" +
 	"Fractional\x123\n" +
 	"\x12ComplianceRequired\x18\x06 \x01(\bH\x01R\x12ComplianceRequired\x88\x01\x01\x12(\n" +
 	"\x0fTradeAllowances\x18\b \x03(\tR\x0fTradeAllowances\x12%\n" +
-	"\vTotalSupply\x18\x0e \x01(\x05H\x02R\vTotalSupply\x88\x01\x01\x12-\n" +
+	"\vTotalSupply\x18\x0e \x01(\x03H\x02R\vTotalSupply\x88\x01\x01\x12-\n" +
 	"\x0fRedemptionTerms\x18\x05 \x01(\tH\x03R\x0fRedemptionTerms\x88\x01\x01B\x12\n" +
 	"\x10_ContractAddressB\x15\n" +
 	"\x13_ComplianceRequiredB\x0e\n" +
