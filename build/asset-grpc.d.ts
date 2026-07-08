@@ -1,6 +1,6 @@
 /// <reference types="node" />
 /// <reference types="node" />
-import { type CallOptions, Client, type ClientUnaryCall, type handleUnaryCall, Metadata, type ServiceError, type UntypedServiceImplementation } from "@grpc/grpc-js";
+import { type CallOptions, ChannelCredentials, Client, type ClientOptions, type ClientUnaryCall, type handleUnaryCall, Metadata, type ServiceError, type UntypedServiceImplementation } from "@grpc/grpc-js";
 import _m0 from "protobufjs/minimal";
 import { Asset, Assets, AssetStatus, AssetType, ExtensionType, UserAssetList, UserAssetLists, UserAssetStatus } from "./asset";
 import { Network } from "./sologenic/com-fs-utils-lib/models/metadata/metadata";
@@ -314,7 +314,7 @@ export interface AssetListServiceClient extends Client {
     countAssets(request: AssetQuery, metadata: Metadata, options: Partial<CallOptions>, callback: (error: ServiceError | null, response: CountResponse) => void): ClientUnaryCall;
 }
 export declare const AssetListServiceClient: {
-    new (address: string, credentials: ChannelCredentials, options?: any): AssetListServiceClient;
+    new (address: string, credentials: ChannelCredentials, options?: Partial<ClientOptions>): AssetListServiceClient;
     service: typeof AssetListServiceService;
     serviceName: string;
 };

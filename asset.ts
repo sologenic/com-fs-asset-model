@@ -4864,7 +4864,7 @@ export const FinancialProperties = {
       writer.uint32(66).string(v!);
     }
     if (message.TotalSupply !== undefined) {
-      writer.uint32(112).int32(message.TotalSupply);
+      writer.uint32(112).int64(message.TotalSupply);
     }
     if (message.RedemptionTerms !== undefined) {
       writer.uint32(42).string(message.RedemptionTerms);
@@ -4940,7 +4940,7 @@ export const FinancialProperties = {
             break;
           }
 
-          message.TotalSupply = reader.int32();
+          message.TotalSupply = longToNumber(reader.int64() as Long);
           continue;
         case 5:
           if (tag !== 42) {

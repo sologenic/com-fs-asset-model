@@ -339,7 +339,7 @@ message FinancialProperties {
     bool Fractional = 13;                     
     optional bool ComplianceRequired = 6;     
     repeated string TradeAllowances = 8;      
-    optional int32 TotalSupply = 14;            
+    optional int64 TotalSupply = 14;
     optional string RedemptionTerms = 5;      
 }
 
