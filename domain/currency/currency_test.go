@@ -81,7 +81,7 @@ func TestCurrency_ToSubunit(t *testing.T) {
 					Symbol:  "AAPL",
 					Version: "1",
 				}
-				want := "suaapl_1"
+				want := "uaapl_v1"
 
 				got, err := BuildSubunit(curr)
 				assert.NoError(t, err)
@@ -111,7 +111,7 @@ func TestCurrency_ToSubunit(t *testing.T) {
 					Version: "999", // 3 chars
 				}
 				// 2("su") + 45(symbol) + 1("_") + 3("999") = 51 chars
-				want := "sua12345678901234567890123456789012345678901234_999"
+				want := "ua12345678901234567890123456789012345678901234_v999"
 
 				got, err := BuildSubunit(curr)
 				assert.NoError(t, err)

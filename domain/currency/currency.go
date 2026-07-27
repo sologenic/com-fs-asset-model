@@ -10,7 +10,7 @@ import (
 var (
 	symbolRegex  = regexp.MustCompile(`^[a-zA-Z0-9]{1,45}$`)                // Max length of 45 characters
 	versionRegex = regexp.MustCompile(`^[1-9][0-9]{0,2}$`)                  // No leading zeros with a max length of 3 characters
-	subunitRegex = regexp.MustCompile(`^su[a-z0-9]{1,45}_[1-9][0-9]{0,2}$`) // Format: su{lowercase(symbol)}_{version}, total max 51 chars
+	subunitRegex = regexp.MustCompile(`^u[a-z0-9]{1,45}_v[1-9][0-9]{0,2}$`) // Format: su{lowercase(symbol)}_{version}, total max 51 chars
 )
 
 func NewCurrency(symbol, version string) (*Currency, error) {
@@ -53,7 +53,7 @@ func ValidateVersion(version string) error {
 }
 
 func BuildSubunit(c *Currency) (string, error) {
-	subunit := fmt.Sprintf("su%s_%s", strings.ToLower(c.Symbol), c.Version)
+	subunit := fmt.Sprintf("u%s_v%s", strings.ToLower(c.Symbol), c.Version)
 	if len(subunit) > 51 {
 		return "", fmt.Errorf("subunit length exceeds 51 characters: %s", subunit)
 	}
