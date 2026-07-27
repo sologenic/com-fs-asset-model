@@ -22,7 +22,7 @@ func NewSymbol(base, quote *denom.Denom) *Symbol {
 }
 
 // Symbol represents a trading pair of denoms
-// e.g. suwusdc_1-testcore13s2mmgg4uu4fn8mue6s3lgn74jwdupndjtqah8uxufugtajkeq2qgznc28:suaapl_1-testcore13s2mmgg4uu4fn8mue6s3lgn74jwdupndjtqah8uxufugtajkeq2qgznc28
+// e.g. uwusdc_1-testcore13s2mmgg4uu4fn8mue6s3lgn74jwdupndjtqah8uxufugtajkeq2qgznc28:uaapl_1-testcore13s2mmgg4uu4fn8mue6s3lgn74jwdupndjtqah8uxufugtajkeq2qgznc28
 func NewSymbolFromString(symbStr string) (*Symbol, error) {
 	symbolParts := strings.Split(symbStr, symbolSeparator)
 	// There are 4 parts in the symbol array:

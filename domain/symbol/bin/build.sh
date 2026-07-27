@@ -1,10 +1,13 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
 
-# move to the root dir of the package
+set -euo pipefail
+
+# Move to the root directory of the package
 rd=$(git rev-parse --show-toplevel)
 cd $rd
 
 protoc \
-  --proto_path=. "domain/symbol/symbol.proto" \
+  --proto_path=. \
+  --proto_path=$(dirname $(dirname "$rd")) \
+  "domain/symbol/symbol.proto" \
   "--go_out=." --go_opt=paths=source_relative
