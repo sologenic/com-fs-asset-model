@@ -9,9 +9,8 @@ import (
 	"github.com/sologenic/com-fs-asset-model/domain/currency"
 )
 
-var (
-	denomRegex = regexp.MustCompile(`^su([A-Za-z0-9]+)_([1-9][0-9]{0,2})-(.+)$`) // Format: su{symbol}_{version}-{issuer}
-)
+// Format: u{symbol}_v{version}-{issuer}
+var denomRegex = regexp.MustCompile(`^u([A-Za-z][A-Za-z0-9.]+)_v([1-9][0-9]{0,2})-([a-zA-Z][a-zA-Z0-9]{37,126})$`)
 
 // BuildDenom creates a new Denom from components
 func BuildDenom(symbol, version, issuer string) (*Denom, error) {
@@ -35,7 +34,7 @@ func BuildDenom(symbol, version, issuer string) (*Denom, error) {
 	}, nil
 }
 
-// ParseDenom parses a Denom from a string in the format: su{symbol}_{version}-{issuer}, equivalent to {subunit}-{issuer}
+// ParseDenom parses a Denom from a string in the format: u{symbol}_v{version}-{issuer}, equivalent to {subunit}-{issuer}
 func ParseDenom(denomStr string) (*Denom, error) {
 	matches := denomRegex.FindStringSubmatch(denomStr)
 	if matches == nil || len(matches) != 4 {

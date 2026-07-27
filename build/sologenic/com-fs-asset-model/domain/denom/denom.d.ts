@@ -5,16 +5,16 @@ export declare const protobufPackage = "denom";
  * Denom defines the on-chain denomination of a token and include on-chain data such as the issuer, precision, and description.
  * It is constructed according to the following conventions:
  *   1. Currency:  {lowercase(symbol)}_{version}
- *      - Example: "aapl_1", "btc-usd_2"
- *   2. Subunit:   su{currency}
- *      - Example: "suaapl_1"
+ *      - Example: "aapl_v1", "btc-usd_v2"
+ *   2. Subunit:   u{currency}
+ *      - Example: "uaapl_v1"
  *   3. Denom:     {subunit}-{issuer}
- *      - Example: "suaapl_1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
+ *      - Example: "uaapl_v1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
  */
 export interface Denom {
     /** Format: {symbol}_{version} */
     Currency: Currency | undefined;
-    /** Format: su{currency} */
+    /** Format: u{currency} */
     Subunit: string;
     Issuer: string;
     /** Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares. */

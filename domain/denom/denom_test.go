@@ -21,7 +21,7 @@ func TestBuildDenom(t *testing.T) {
 						Symbol:  "AAPL",
 						Version: "1",
 					},
-					Subunit: "suaapl_1",
+					Subunit: "uaapl_v1",
 					Issuer:  "testcore1et29c",
 				}
 
@@ -68,14 +68,14 @@ func TestParseDenom(t *testing.T) {
 		{
 			Name: "Valid denom",
 			Test: func(t *testing.T) {
-				got, err := ParseDenom("suaapl_1-testcore1et29c")
+				got, err := ParseDenom("uaapl_v1-testcore1j974n26f48wgt4dpcxryrakrnkg43")
 				want := &Denom{
 					Currency: &currency.Currency{
 						Symbol:  "AAPL",
 						Version: "1",
 					},
-					Subunit: "suaapl_1",
-					Issuer:  "testcore1et29c",
+					Subunit: "uaapl_v1",
+					Issuer:  "testcore1j974n26f48wgt4dpcxryrakrnkg43",
 				}
 
 				assert.NoError(t, err)
@@ -95,7 +95,7 @@ func TestParseDenom(t *testing.T) {
 		{
 			Name: "Missing smart contract address",
 			Test: func(t *testing.T) {
-				got, err := ParseDenom("suaapl_1-")
+				got, err := ParseDenom("uaapl_v1-")
 
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), "invalid denom format")
