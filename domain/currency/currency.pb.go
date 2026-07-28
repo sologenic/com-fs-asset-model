@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.11
 // 	protoc        v7.35.1
-// source: currency.proto
+// source: domain/currency/currency.proto
 
 package currency
 
@@ -22,16 +22,18 @@ const (
 )
 
 type Currency struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Symbol        string                 `protobuf:"bytes,1,opt,name=Symbol,proto3" json:"Symbol,omitempty"`   // User-entered ticker with format:[a-zA-Z0-9]{1,45}. e.g., APPL, PLTR, MSFT
-	Version       string                 `protobuf:"bytes,2,opt,name=Version,proto3" json:"Version,omitempty"` // Auto-incremented version (no leading zeros) with max length 3 characters (values 1 to 999)
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// User-entered ticker with format:[a-zA-Z0-9.\-]{1,45}. e.g., APPL, PLTR, MSFT, BAB.A, BTC-USD
+	Symbol string `protobuf:"bytes,1,opt,name=Symbol,proto3" json:"Symbol,omitempty"`
+	// Auto-incremented version (no leading zeros) with max length 3 characters (values 1 to 999)
+	Version       string `protobuf:"bytes,2,opt,name=Version,proto3" json:"Version,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Currency) Reset() {
 	*x = Currency{}
-	mi := &file_currency_proto_msgTypes[0]
+	mi := &file_domain_currency_currency_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +45,7 @@ func (x *Currency) String() string {
 func (*Currency) ProtoMessage() {}
 
 func (x *Currency) ProtoReflect() protoreflect.Message {
-	mi := &file_currency_proto_msgTypes[0]
+	mi := &file_domain_currency_currency_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +58,7 @@ func (x *Currency) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Currency.ProtoReflect.Descriptor instead.
 func (*Currency) Descriptor() ([]byte, []int) {
-	return file_currency_proto_rawDescGZIP(), []int{0}
+	return file_domain_currency_currency_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *Currency) GetSymbol() string {
@@ -73,32 +75,32 @@ func (x *Currency) GetVersion() string {
 	return ""
 }
 
-var File_currency_proto protoreflect.FileDescriptor
+var File_domain_currency_currency_proto protoreflect.FileDescriptor
 
-const file_currency_proto_rawDesc = "" +
+const file_domain_currency_currency_proto_rawDesc = "" +
 	"\n" +
-	"\x0ecurrency.proto\x12\bcurrency\"<\n" +
+	"\x1edomain/currency/currency.proto\x12\bcurrency\"<\n" +
 	"\bCurrency\x12\x16\n" +
 	"\x06Symbol\x18\x01 \x01(\tR\x06Symbol\x12\x18\n" +
 	"\aVersion\x18\x02 \x01(\tR\aVersionBBZ@github.com/sologenic/com-fs-asset-model/domain/currency;currencyb\x06proto3"
 
 var (
-	file_currency_proto_rawDescOnce sync.Once
-	file_currency_proto_rawDescData []byte
+	file_domain_currency_currency_proto_rawDescOnce sync.Once
+	file_domain_currency_currency_proto_rawDescData []byte
 )
 
-func file_currency_proto_rawDescGZIP() []byte {
-	file_currency_proto_rawDescOnce.Do(func() {
-		file_currency_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_currency_proto_rawDesc), len(file_currency_proto_rawDesc)))
+func file_domain_currency_currency_proto_rawDescGZIP() []byte {
+	file_domain_currency_currency_proto_rawDescOnce.Do(func() {
+		file_domain_currency_currency_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_domain_currency_currency_proto_rawDesc), len(file_domain_currency_currency_proto_rawDesc)))
 	})
-	return file_currency_proto_rawDescData
+	return file_domain_currency_currency_proto_rawDescData
 }
 
-var file_currency_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
-var file_currency_proto_goTypes = []any{
+var file_domain_currency_currency_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_domain_currency_currency_proto_goTypes = []any{
 	(*Currency)(nil), // 0: currency.Currency
 }
-var file_currency_proto_depIdxs = []int32{
+var file_domain_currency_currency_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
 	0, // [0:0] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -106,26 +108,26 @@ var file_currency_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_currency_proto_init() }
-func file_currency_proto_init() {
-	if File_currency_proto != nil {
+func init() { file_domain_currency_currency_proto_init() }
+func file_domain_currency_currency_proto_init() {
+	if File_domain_currency_currency_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_currency_proto_rawDesc), len(file_currency_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_domain_currency_currency_proto_rawDesc), len(file_domain_currency_currency_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_currency_proto_goTypes,
-		DependencyIndexes: file_currency_proto_depIdxs,
-		MessageInfos:      file_currency_proto_msgTypes,
+		GoTypes:           file_domain_currency_currency_proto_goTypes,
+		DependencyIndexes: file_domain_currency_currency_proto_depIdxs,
+		MessageInfos:      file_domain_currency_currency_proto_msgTypes,
 	}.Build()
-	File_currency_proto = out.File
-	file_currency_proto_goTypes = nil
-	file_currency_proto_depIdxs = nil
+	File_domain_currency_currency_proto = out.File
+	file_domain_currency_currency_proto_goTypes = nil
+	file_domain_currency_currency_proto_depIdxs = nil
 }

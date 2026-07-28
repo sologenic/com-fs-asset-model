@@ -5,10 +5,10 @@ go 1.26.2
 require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.11-20260415201107-50325440f8f2.1
 	github.com/google/go-cmp v0.7.0
-	github.com/sologenic/com-fs-utils-internal-lib/go/grpc-client v0.0.0-20260429144456-e78936df6303
-	github.com/sologenic/com-fs-utils-internal-lib/go/unittest v0.0.0-20260429144456-e78936df6303
-	github.com/sologenic/com-fs-utils-lib/models/audit v0.0.0-20260501113306-8b02db1b65e4
-	github.com/sologenic/com-fs-utils-lib/models/metadata v0.0.0-20260501113306-8b02db1b65e4
+	github.com/sologenic/com-fs-utils-internal-lib/go/grpc-client v0.0.0-20260728103404-9e2078b65184
+	github.com/sologenic/com-fs-utils-internal-lib/go/unittest v0.0.0-20260728103404-9e2078b65184
+	github.com/sologenic/com-fs-utils-lib/models/audit v0.0.0-20260716162548-122fbc8760ff
+	github.com/sologenic/com-fs-utils-lib/models/metadata v0.0.0-20260716162548-122fbc8760ff
 	github.com/stretchr/testify v1.11.1
 	google.golang.org/grpc v1.75.1
 	google.golang.org/protobuf v1.36.11
@@ -26,21 +26,21 @@ require (
 	github.com/googleapis/enterprise-certificate-proxy v0.3.6 // indirect
 	github.com/googleapis/gax-go/v2 v2.15.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
-	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/mattn/go-isatty v0.0.22 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/rs/zerolog v1.34.0 // indirect
-	github.com/sologenic/com-fs-utils-internal-lib/go/logger v0.0.0-20260429144456-e78936df6303 // indirect
+	github.com/rs/zerolog v1.35.1 // indirect
+	github.com/sologenic/com-fs-utils-internal-lib/go/logger v0.0.0-20260728103404-9e2078b65184 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.63.0 // indirect
 	go.opentelemetry.io/otel v1.38.0 // indirect
 	go.opentelemetry.io/otel/metric v1.38.0 // indirect
 	go.opentelemetry.io/otel/trace v1.38.0 // indirect
-	golang.org/x/crypto v0.42.0 // indirect
-	golang.org/x/net v0.44.0 // indirect
+	golang.org/x/crypto v0.51.0 // indirect
+	golang.org/x/net v0.55.0 // indirect
 	golang.org/x/oauth2 v0.31.0 // indirect
-	golang.org/x/sys v0.36.0 // indirect
-	golang.org/x/text v0.29.0 // indirect
+	golang.org/x/sys v0.45.0 // indirect
+	golang.org/x/text v0.37.0 // indirect
 	google.golang.org/api v0.249.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250908214217-97024824d090 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

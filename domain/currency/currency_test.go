@@ -68,26 +68,36 @@ func TestNewCurrency(t *testing.T) {
 				assert.Equal(t, want.Version, got.Version)
 			},
 		},
+		{
+			Name: "Valid currency with dot (BAB.A)",
+			Test: func(t *testing.T) {
+				expected, err := NewCurrency("BAB.A", "1")
+				wanted := &Currency{
+					Symbol:  "BAB.A",
+					Version: "1",
+				}
+				assert.NoError(t, err)
+				assertEventsEquality(t, wanted, expected)
+			},
+		},
+		{
+			Name: "Valid currency with dash (BTC-USD)",
+			Test: func(t *testing.T) {
+				expected, err := NewCurrency("BTC-USD", "2")
+				wanted := &Currency{
+					Symbol:  "BTC-USD",
+					Version: "2",
+				}
+				assert.NoError(t, err)
+				assertEventsEquality(t, wanted, expected)
+			},
+		},
 	}
 	unittest.RunTests(t, tests)
 }
 
 func TestCurrency_ToSubunit(t *testing.T) {
 	tests := []unittest.TestBase{
-		{
-			Name: "Valid subunit",
-			Test: func(t *testing.T) {
-				curr := &Currency{
-					Symbol:  "AAPL",
-					Version: "1",
-				}
-				want := "uaapl_v1"
-
-				got, err := BuildSubunit(curr)
-				assert.NoError(t, err)
-				assert.Equal(t, want, got)
-			},
-		},
 		{
 			Name: "Symbol too long",
 			Test: func(t *testing.T) {
@@ -119,6 +129,34 @@ func TestCurrency_ToSubunit(t *testing.T) {
 				assert.Len(t, got, 51) // correct total length
 			},
 		},
+		{
+			Name: "Valid subunit",
+			Test: func(t *testing.T) {
+				curr := &Currency{
+					Symbol:  "AAPL",
+					Version: "1", // Internal struct holds raw digit
+				}
+				want := "uaapl_v1" // Output string expects 'v'
+
+				got, err := BuildSubunit(curr)
+				assert.NoError(t, err)
+				assert.Equal(t, want, got)
+			},
+		},
+		{
+			Name: "Valid subunit with dot",
+			Test: func(t *testing.T) {
+				curr := &Currency{
+					Symbol:  "BAB.A",
+					Version: "1",
+				}
+				want := "ubab.a_v1"
+
+				got, err := BuildSubunit(curr)
+				assert.NoError(t, err)
+				assert.Equal(t, want, got)
+			},
+		},
 	}
 	unittest.RunTests(t, tests)
 }
@@ -132,7 +170,7 @@ func TestCurrency_ToString(t *testing.T) {
 					Symbol:  "AAPL",
 					Version: "1",
 				}
-				want := "aapl_1"
+				want := "aapl_v1"
 				assert.Equal(t, want, currency.ToString())
 			},
 		},
@@ -143,7 +181,7 @@ func TestCurrency_ToString(t *testing.T) {
 					Symbol:  "BTC2",
 					Version: "999",
 				}
-				want := "btc2_999"
+				want := "btc2_v999"
 				assert.Equal(t, want, currency.ToString())
 			},
 		},

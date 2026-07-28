@@ -59,6 +59,24 @@ func TestBuildDenom(t *testing.T) {
 				assert.Nil(t, got)
 			},
 		},
+		{
+			Name: "Valid denom with dot and complex issuer",
+			Test: func(t *testing.T) {
+				// We pass raw "1" during build
+				got, err := BuildDenom("BAB.A", "1", "testcore1cd0ezxp06xauqhrrpm4xe3h7yx9xmmeqr23vffppngld54sh9hnqmmep6g")
+				want := &Denom{
+					Currency: &currency.Currency{
+						Symbol:  "BAB.A",
+						Version: "1", // Internal field stores raw "1"
+					},
+					Subunit: "ubab.a_v1", // Subunit generation injects 'v'
+					Issuer:  "testcore1cd0ezxp06xauqhrrpm4xe3h7yx9xmmeqr23vffppngld54sh9hnqmmep6g",
+				}
+
+				assert.NoError(t, err)
+				assertEventsEquality(t, want, got)
+			},
+		},
 	}
 	unittest.RunTests(t, tests)
 }
@@ -100,6 +118,42 @@ func TestParseDenom(t *testing.T) {
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), "invalid denom format")
 				assert.Nil(t, got)
+			},
+		},
+		{
+			Name: "Valid denom parsing",
+			Test: func(t *testing.T) {
+				// Input contains 'v'
+				got, err := ParseDenom("uaapl_v1-testcore1j974n26f48wgt4dpcxryrakrnkg43")
+				want := &Denom{
+					Currency: &currency.Currency{
+						Symbol:  "AAPL",
+						Version: "1", // The parsed version is stripped of 'v'
+					},
+					Subunit: "uaapl_v1",
+					Issuer:  "testcore1j974n26f48wgt4dpcxryrakrnkg43",
+				}
+
+				assert.NoError(t, err)
+				assertEventsEquality(t, want, got)
+			},
+		},
+		{
+			Name: "Valid complex denom parsing with dot",
+			Test: func(t *testing.T) {
+				// Input contains 'v'
+				got, err := ParseDenom("ubab.a_v1-testcore1cd0ezxp06xauqhrrpm4xe3h7yx9xmmeqr23vffppngld54sh9hnqmmep6g")
+				want := &Denom{
+					Currency: &currency.Currency{
+						Symbol:  "BAB.A",
+						Version: "1", // The parsed version is stripped of 'v'
+					},
+					Subunit: "ubab.a_v1",
+					Issuer:  "testcore1cd0ezxp06xauqhrrpm4xe3h7yx9xmmeqr23vffppngld54sh9hnqmmep6g",
+				}
+
+				assert.NoError(t, err)
+				assertEventsEquality(t, want, got)
 			},
 		},
 	}
