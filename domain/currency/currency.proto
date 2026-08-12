@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package currency;
 
-option go_package = "domain/currency;currency";
+option go_package = "github.com/sologenic/com-fs-asset-model/domain/currency;currency";
 
 message Currency {
     // User-entered ticker with format:[a-zA-Z0-9.\-]{1,45}. e.g., APPL, PLTR, MSFT, BAB.A, BTC-USD

@@ -42,9 +42,8 @@ export function fileTypeToJSON(object: FileType): string {
 
 export enum AssetType {
   ASSET_TYPE_NONE = 0,
-  ASSET_TYPE_EQUITY = 1,
-  /** ASSET_TYPE_RWA - TODO: Add more asset types */
-  ASSET_TYPE_RWA = 2,
+  /** ASSET_TYPE_SECURITY - TODO: Add more asset types */
+  ASSET_TYPE_SECURITY = 1,
   UNRECOGNIZED = -1,
 }
 
@@ -54,11 +53,8 @@ export function assetTypeFromJSON(object: any): AssetType {
     case "ASSET_TYPE_NONE":
       return AssetType.ASSET_TYPE_NONE;
     case 1:
-    case "ASSET_TYPE_EQUITY":
-      return AssetType.ASSET_TYPE_EQUITY;
-    case 2:
-    case "ASSET_TYPE_RWA":
-      return AssetType.ASSET_TYPE_RWA;
+    case "ASSET_TYPE_SECURITY":
+      return AssetType.ASSET_TYPE_SECURITY;
     case -1:
     case "UNRECOGNIZED":
     default:
@@ -70,10 +66,8 @@ export function assetTypeToJSON(object: AssetType): string {
   switch (object) {
     case AssetType.ASSET_TYPE_NONE:
       return "ASSET_TYPE_NONE";
-    case AssetType.ASSET_TYPE_EQUITY:
-      return "ASSET_TYPE_EQUITY";
-    case AssetType.ASSET_TYPE_RWA:
-      return "ASSET_TYPE_RWA";
+    case AssetType.ASSET_TYPE_SECURITY:
+      return "ASSET_TYPE_SECURITY";
     case AssetType.UNRECOGNIZED:
     default:
       return "UNRECOGNIZED";
@@ -82,56 +76,85 @@ export function assetTypeToJSON(object: AssetType): string {
 
 export interface Asset {
   /**
-   * Denom represented as a string
-   * Immutable field
+   * Unique string representation of the asset's denom.
+   * Immutable: Cannot be modified after creation.
    */
   ID: string;
-  /** Immutable field */
+  /**
+   * Unique identifier of the organization that owns or issued the asset.
+   * Immutable: Cannot be modified after creation.
+   */
   OrganizationID: string;
   /**
-   * Contains symbol, version, issuer address
-   * Immutable field
+   * Structured denomination data (symbol, version, issuer address).
+   * Immutable: Cannot be modified after creation.
    */
   Denom:
     | Denom
     | undefined;
-  /** Immutable field */
+  /**
+   * Categorization of the asset.
+   * Immutable: Cannot be modified after creation.
+   */
   Type: AssetType;
-  /** @inject_tags: datastore:",noindex" */
+  /**
+   * Display name of the asset.
+   * @inject_tags: datastore:",noindex"
+   */
   Name: string;
-  /** @inject_tags: datastore:",noindex" */
+  /**
+   * Short plain-text summary of the asset.
+   * Suitable for UI previews, cards, and OG meta tags.
+   * @inject_tags: datastore:",noindex"
+   */
   Description: string;
-  /** @inject_tags: datastore:",noindex" */
-  HTML: string;
-  /** ISO 3166-1 alpha-3 code e.g. "USA", "CAD" */
+  /**
+   * Extended WYSIWYG content providing a detailed overview of the asset.
+   * @inject_tags: datastore:",noindex"
+   */
+  Content: string;
+  /** Country of origin represented as an ISO 3166-1 alpha-3 code (e.g., "USA", "CAD"). */
   OriginCountryAlpha3: string;
   /**
-   * If not nil means asset has been issued on chain
-   * Immutable field
+   * Timestamp indicating when the asset was issued on-chain.
+   * System-managed: Set automatically via on-chain events. Becomes immutable once set.
    */
   IssuedAt?:
     | Date
     | undefined;
-  /** Controls whether the asset is visible in the marketplace */
+  /**
+   * Indicates whether the asset is active/enabled on-chain.
+   * System-managed: Updated automatically via on-chain events. Cannot be mutated manually.
+   */
+  IsEnabled: boolean;
+  /**
+   * Controls whether the asset is visible in the public marketplace.
+   * Mutable by administrators.
+   */
   IsVisible: boolean;
-  /** Controls whether the asset is visible in the promoted assets panel */
+  /**
+   * Controls whether the asset is highlighted in the promoted assets panel.
+   * Mutable by administrators.
+   */
   IsPromoted: boolean;
-  SupersededAt?: Date | undefined;
-  SupersededByID: string;
+  /** Attached media and documents (e.g., legal agreements, brochures, images). */
   Files: File[];
-  /** Dynamic fields defined by front-end */
+  /** Flexible key-value store for arbitrary, frontend-defined dynamic attributes. */
   Details: { [key: string]: any } | undefined;
 }
 
 export interface Assets {
   Records: Asset[];
-  /** If there is more data, this is the offset to pass to the next call */
+  /** Pagination offset for fetching the next page of results. */
   Offset?: number | undefined;
 }
 
 export interface File {
+  /** Display name of the file. */
   Name: string;
+  /** Categorization of the file's purpose. */
   Type: FileType;
+  /** Google Cloud Storage URI pointing to the file blob (e.g., gs://bucket/path/file.pdf). */
   Reference: string;
 }
 
@@ -143,13 +166,12 @@ function createBaseAsset(): Asset {
     Type: 0,
     Name: "",
     Description: "",
-    HTML: "",
+    Content: "",
     OriginCountryAlpha3: "",
     IssuedAt: undefined,
+    IsEnabled: false,
     IsVisible: false,
     IsPromoted: false,
-    SupersededAt: undefined,
-    SupersededByID: "",
     Files: [],
     Details: undefined,
   };
@@ -175,8 +197,8 @@ export const Asset = {
     if (message.Description !== "") {
       writer.uint32(50).string(message.Description);
     }
-    if (message.HTML !== "") {
-      writer.uint32(58).string(message.HTML);
+    if (message.Content !== "") {
+      writer.uint32(58).string(message.Content);
     }
     if (message.OriginCountryAlpha3 !== "") {
       writer.uint32(66).string(message.OriginCountryAlpha3);
@@ -184,23 +206,20 @@ export const Asset = {
     if (message.IssuedAt !== undefined) {
       Timestamp.encode(toTimestamp(message.IssuedAt), writer.uint32(74).fork()).ldelim();
     }
+    if (message.IsEnabled !== false) {
+      writer.uint32(80).bool(message.IsEnabled);
+    }
     if (message.IsVisible !== false) {
-      writer.uint32(80).bool(message.IsVisible);
+      writer.uint32(88).bool(message.IsVisible);
     }
     if (message.IsPromoted !== false) {
-      writer.uint32(88).bool(message.IsPromoted);
-    }
-    if (message.SupersededAt !== undefined) {
-      Timestamp.encode(toTimestamp(message.SupersededAt), writer.uint32(98).fork()).ldelim();
-    }
-    if (message.SupersededByID !== "") {
-      writer.uint32(106).string(message.SupersededByID);
+      writer.uint32(96).bool(message.IsPromoted);
     }
     for (const v of message.Files) {
-      File.encode(v!, writer.uint32(114).fork()).ldelim();
+      File.encode(v!, writer.uint32(106).fork()).ldelim();
     }
     if (message.Details !== undefined) {
-      Struct.encode(Struct.wrap(message.Details), writer.uint32(122).fork()).ldelim();
+      Struct.encode(Struct.wrap(message.Details), writer.uint32(114).fork()).ldelim();
     }
     return writer;
   },
@@ -259,7 +278,7 @@ export const Asset = {
             break;
           }
 
-          message.HTML = reader.string();
+          message.Content = reader.string();
           continue;
         case 8:
           if (tag !== 66) {
@@ -280,38 +299,31 @@ export const Asset = {
             break;
           }
 
-          message.IsVisible = reader.bool();
+          message.IsEnabled = reader.bool();
           continue;
         case 11:
           if (tag !== 88) {
             break;
           }
 
-          message.IsPromoted = reader.bool();
+          message.IsVisible = reader.bool();
           continue;
         case 12:
-          if (tag !== 98) {
+          if (tag !== 96) {
             break;
           }
 
-          message.SupersededAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          message.IsPromoted = reader.bool();
           continue;
         case 13:
           if (tag !== 106) {
             break;
           }
 
-          message.SupersededByID = reader.string();
+          message.Files.push(File.decode(reader, reader.uint32()));
           continue;
         case 14:
           if (tag !== 114) {
-            break;
-          }
-
-          message.Files.push(File.decode(reader, reader.uint32()));
-          continue;
-        case 15:
-          if (tag !== 122) {
             break;
           }
 
@@ -334,13 +346,12 @@ export const Asset = {
       Type: isSet(object.Type) ? assetTypeFromJSON(object.Type) : 0,
       Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
       Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
-      HTML: isSet(object.HTML) ? globalThis.String(object.HTML) : "",
+      Content: isSet(object.Content) ? globalThis.String(object.Content) : "",
       OriginCountryAlpha3: isSet(object.OriginCountryAlpha3) ? globalThis.String(object.OriginCountryAlpha3) : "",
       IssuedAt: isSet(object.IssuedAt) ? fromJsonTimestamp(object.IssuedAt) : undefined,
+      IsEnabled: isSet(object.IsEnabled) ? globalThis.Boolean(object.IsEnabled) : false,
       IsVisible: isSet(object.IsVisible) ? globalThis.Boolean(object.IsVisible) : false,
       IsPromoted: isSet(object.IsPromoted) ? globalThis.Boolean(object.IsPromoted) : false,
-      SupersededAt: isSet(object.SupersededAt) ? fromJsonTimestamp(object.SupersededAt) : undefined,
-      SupersededByID: isSet(object.SupersededByID) ? globalThis.String(object.SupersededByID) : "",
       Files: globalThis.Array.isArray(object?.Files) ? object.Files.map((e: any) => File.fromJSON(e)) : [],
       Details: isObject(object.Details) ? object.Details : undefined,
     };
@@ -366,8 +377,8 @@ export const Asset = {
     if (message.Description !== "") {
       obj.Description = message.Description;
     }
-    if (message.HTML !== "") {
-      obj.HTML = message.HTML;
+    if (message.Content !== "") {
+      obj.Content = message.Content;
     }
     if (message.OriginCountryAlpha3 !== "") {
       obj.OriginCountryAlpha3 = message.OriginCountryAlpha3;
@@ -375,17 +386,14 @@ export const Asset = {
     if (message.IssuedAt !== undefined) {
       obj.IssuedAt = message.IssuedAt.toISOString();
     }
+    if (message.IsEnabled !== false) {
+      obj.IsEnabled = message.IsEnabled;
+    }
     if (message.IsVisible !== false) {
       obj.IsVisible = message.IsVisible;
     }
     if (message.IsPromoted !== false) {
       obj.IsPromoted = message.IsPromoted;
-    }
-    if (message.SupersededAt !== undefined) {
-      obj.SupersededAt = message.SupersededAt.toISOString();
-    }
-    if (message.SupersededByID !== "") {
-      obj.SupersededByID = message.SupersededByID;
     }
     if (message.Files?.length) {
       obj.Files = message.Files.map((e) => File.toJSON(e));
@@ -407,13 +415,12 @@ export const Asset = {
     message.Type = object.Type ?? 0;
     message.Name = object.Name ?? "";
     message.Description = object.Description ?? "";
-    message.HTML = object.HTML ?? "";
+    message.Content = object.Content ?? "";
     message.OriginCountryAlpha3 = object.OriginCountryAlpha3 ?? "";
     message.IssuedAt = object.IssuedAt ?? undefined;
+    message.IsEnabled = object.IsEnabled ?? false;
     message.IsVisible = object.IsVisible ?? false;
     message.IsPromoted = object.IsPromoted ?? false;
-    message.SupersededAt = object.SupersededAt ?? undefined;
-    message.SupersededByID = object.SupersededByID ?? "";
     message.Files = object.Files?.map((e) => File.fromPartial(e)) || [];
     message.Details = object.Details ?? undefined;
     return message;

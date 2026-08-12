@@ -71,22 +71,19 @@ func (FileType) EnumDescriptor() ([]byte, []int) {
 type AssetType int32
 
 const (
-	AssetType_ASSET_TYPE_NONE   AssetType = 0
-	AssetType_ASSET_TYPE_EQUITY AssetType = 1
-	AssetType_ASSET_TYPE_RWA    AssetType = 2 // TODO: Add more asset types
+	AssetType_ASSET_TYPE_NONE     AssetType = 0
+	AssetType_ASSET_TYPE_SECURITY AssetType = 1 // TODO: Add more asset types
 )
 
 // Enum value maps for AssetType.
 var (
 	AssetType_name = map[int32]string{
 		0: "ASSET_TYPE_NONE",
-		1: "ASSET_TYPE_EQUITY",
-		2: "ASSET_TYPE_RWA",
+		1: "ASSET_TYPE_SECURITY",
 	}
 	AssetType_value = map[string]int32{
-		"ASSET_TYPE_NONE":   0,
-		"ASSET_TYPE_EQUITY": 1,
-		"ASSET_TYPE_RWA":    2,
+		"ASSET_TYPE_NONE":     0,
+		"ASSET_TYPE_SECURITY": 1,
 	}
 )
 
@@ -119,36 +116,46 @@ func (AssetType) EnumDescriptor() ([]byte, []int) {
 
 type Asset struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Denom represented as a string
-	// Immutable field
+	// Unique string representation of the asset's denom.
+	// Immutable: Cannot be modified after creation.
 	ID string `protobuf:"bytes,1,opt,name=ID,proto3" json:"ID,omitempty"`
-	// Immutable field
+	// Unique identifier of the organization that owns or issued the asset.
+	// Immutable: Cannot be modified after creation.
 	OrganizationID string `protobuf:"bytes,2,opt,name=OrganizationID,proto3" json:"OrganizationID,omitempty"`
-	// Contains symbol, version, issuer address
-	// Immutable field
+	// Structured denomination data (symbol, version, issuer address).
+	// Immutable: Cannot be modified after creation.
 	Denom *denom.Denom `protobuf:"bytes,3,opt,name=Denom,proto3" json:"Denom,omitempty"`
-	// Immutable field
+	// Categorization of the asset.
+	// Immutable: Cannot be modified after creation.
 	Type AssetType `protobuf:"varint,4,opt,name=Type,proto3,enum=asset.AssetType" json:"Type,omitempty"`
+	// Display name of the asset.
 	// @inject_tags: datastore:",noindex"
 	Name string `protobuf:"bytes,5,opt,name=Name,proto3" json:"Name,omitempty" datastore:",noindex"`
+	// Short plain-text summary of the asset.
+	// Suitable for UI previews, cards, and OG meta tags.
 	// @inject_tags: datastore:",noindex"
 	Description string `protobuf:"bytes,6,opt,name=Description,proto3" json:"Description,omitempty" datastore:",noindex"`
+	// Extended WYSIWYG content providing a detailed overview of the asset.
 	// @inject_tags: datastore:",noindex"
-	HTML string `protobuf:"bytes,7,opt,name=HTML,proto3" json:"HTML,omitempty" datastore:",noindex"`
-	// ISO 3166-1 alpha-3 code e.g. "USA", "CAD"
+	Content string `protobuf:"bytes,7,opt,name=Content,proto3" json:"Content,omitempty" datastore:",noindex"`
+	// Country of origin represented as an ISO 3166-1 alpha-3 code (e.g., "USA", "CAD").
 	OriginCountryAlpha3 string `protobuf:"bytes,8,opt,name=OriginCountryAlpha3,proto3" json:"OriginCountryAlpha3,omitempty"`
-	// If not nil means asset has been issued on chain
-	// Immutable field
+	// Timestamp indicating when the asset was issued on-chain.
+	// System-managed: Set automatically via on-chain events. Becomes immutable once set.
 	IssuedAt *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=IssuedAt,proto3,oneof" json:"IssuedAt,omitempty"`
-	// Controls whether the asset is visible in the marketplace
-	IsVisible bool `protobuf:"varint,10,opt,name=IsVisible,proto3" json:"IsVisible,omitempty"`
-	// Controls whether the asset is visible in the promoted assets panel
-	IsPromoted     bool                   `protobuf:"varint,11,opt,name=IsPromoted,proto3" json:"IsPromoted,omitempty"`
-	SupersededAt   *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=SupersededAt,proto3,oneof" json:"SupersededAt,omitempty"`
-	SupersededByID string                 `protobuf:"bytes,13,opt,name=SupersededByID,proto3" json:"SupersededByID,omitempty"`
-	Files          []*File                `protobuf:"bytes,14,rep,name=Files,proto3" json:"Files,omitempty"`
-	// Dynamic fields defined by front-end
-	Details       *structpb.Struct `protobuf:"bytes,15,opt,name=Details,proto3" json:"Details,omitempty"`
+	// Indicates whether the asset is active/enabled on-chain.
+	// System-managed: Updated automatically via on-chain events. Cannot be mutated manually.
+	IsEnabled bool `protobuf:"varint,10,opt,name=IsEnabled,proto3" json:"IsEnabled,omitempty"`
+	// Controls whether the asset is visible in the public marketplace.
+	// Mutable by administrators.
+	IsVisible bool `protobuf:"varint,11,opt,name=IsVisible,proto3" json:"IsVisible,omitempty"`
+	// Controls whether the asset is highlighted in the promoted assets panel.
+	// Mutable by administrators.
+	IsPromoted bool `protobuf:"varint,12,opt,name=IsPromoted,proto3" json:"IsPromoted,omitempty"`
+	// Attached media and documents (e.g., legal agreements, brochures, images).
+	Files []*File `protobuf:"bytes,13,rep,name=Files,proto3" json:"Files,omitempty"`
+	// Flexible key-value store for arbitrary, frontend-defined dynamic attributes.
+	Details       *structpb.Struct `protobuf:"bytes,14,opt,name=Details,proto3" json:"Details,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -225,9 +232,9 @@ func (x *Asset) GetDescription() string {
 	return ""
 }
 
-func (x *Asset) GetHTML() string {
+func (x *Asset) GetContent() string {
 	if x != nil {
-		return x.HTML
+		return x.Content
 	}
 	return ""
 }
@@ -246,6 +253,13 @@ func (x *Asset) GetIssuedAt() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *Asset) GetIsEnabled() bool {
+	if x != nil {
+		return x.IsEnabled
+	}
+	return false
+}
+
 func (x *Asset) GetIsVisible() bool {
 	if x != nil {
 		return x.IsVisible
@@ -258,20 +272,6 @@ func (x *Asset) GetIsPromoted() bool {
 		return x.IsPromoted
 	}
 	return false
-}
-
-func (x *Asset) GetSupersededAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.SupersededAt
-	}
-	return nil
-}
-
-func (x *Asset) GetSupersededByID() string {
-	if x != nil {
-		return x.SupersededByID
-	}
-	return ""
 }
 
 func (x *Asset) GetFiles() []*File {
@@ -291,7 +291,7 @@ func (x *Asset) GetDetails() *structpb.Struct {
 type Assets struct {
 	state   protoimpl.MessageState `protogen:"open.v1"`
 	Records []*Asset               `protobuf:"bytes,1,rep,name=Records,proto3" json:"Records,omitempty"`
-	// If there is more data, this is the offset to pass to the next call
+	// Pagination offset for fetching the next page of results.
 	Offset        *int32 `protobuf:"varint,2,opt,name=Offset,proto3,oneof" json:"Offset,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -342,10 +342,13 @@ func (x *Assets) GetOffset() int32 {
 }
 
 type File struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=Name,proto3" json:"Name,omitempty"`
-	Type          FileType               `protobuf:"varint,2,opt,name=Type,proto3,enum=asset.FileType" json:"Type,omitempty"`
-	Reference     string                 `protobuf:"bytes,3,opt,name=Reference,proto3" json:"Reference,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Display name of the file.
+	Name string `protobuf:"bytes,1,opt,name=Name,proto3" json:"Name,omitempty"`
+	// Categorization of the file's purpose.
+	Type FileType `protobuf:"varint,2,opt,name=Type,proto3,enum=asset.FileType" json:"Type,omitempty"`
+	// Google Cloud Storage URI pointing to the file blob (e.g., gs://bucket/path/file.pdf).
+	Reference     string `protobuf:"bytes,3,opt,name=Reference,proto3" json:"Reference,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -405,30 +408,29 @@ var File_asset_proto protoreflect.FileDescriptor
 
 const file_asset_proto_rawDesc = "" +
 	"\n" +
-	"\vasset.proto\x12\x05asset\x1a5sologenic/com-fs-asset-model/domain/denom/denom.proto\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\"\xde\x06\n" +
+	"\vasset.proto\x12\x05asset\x1a5sologenic/com-fs-asset-model/domain/denom/denom.proto\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\"\xbc\x05\n" +
 	"\x05Asset\x12]\n" +
 	"\x02ID\x18\x01 \x01(\tBM\xbaHJ\xc8\x01\x01rE\x10+\x18\x80\x022>^u[A-Za-z0-9.-]+_v[1-9][0-9]{0,2}-[a-zA-Z][a-zA-Z0-9]{37,126}$R\x02ID\x120\n" +
 	"\x0eOrganizationID\x18\x02 \x01(\tB\b\xbaH\x05r\x03\xb0\x01\x01R\x0eOrganizationID\x12*\n" +
 	"\x05Denom\x18\x03 \x01(\v2\f.denom.DenomB\x06\xbaH\x03\xc8\x01\x01R\x05Denom\x120\n" +
 	"\x04Type\x18\x04 \x01(\x0e2\x10.asset.AssetTypeB\n" +
-	"\xbaH\a\x82\x01\x04\x10\x01 \x00R\x04Type\x12\x1a\n" +
-	"\x04Name\x18\x05 \x01(\tB\x06\xbaH\x03\xc8\x01\x01R\x04Name\x12*\n" +
-	"\vDescription\x18\x06 \x01(\tB\b\xbaH\x05r\x03\x18\x80\x02R\vDescription\x12\x1d\n" +
-	"\x04HTML\x18\a \x01(\tB\t\xbaH\x06r\x04\x18\x80\x80\x04R\x04HTML\x12I\n" +
+	"\xbaH\a\x82\x01\x04\x10\x01 \x00R\x04Type\x12!\n" +
+	"\x04Name\x18\x05 \x01(\tB\r\xbaH\n" +
+	"\xc8\x01\x01r\x05\x10\x02\x18\x80\x01R\x04Name\x12*\n" +
+	"\vDescription\x18\x06 \x01(\tB\b\xbaH\x05r\x03\x18\x80\x02R\vDescription\x12#\n" +
+	"\aContent\x18\a \x01(\tB\t\xbaH\x06r\x04\x18\x80\x80\x04R\aContent\x12I\n" +
 	"\x13OriginCountryAlpha3\x18\b \x01(\tB\x17\xbaH\x14\xd8\x01\x01r\x0f2\n" +
 	"^[A-Z]{3}$\x98\x01\x03R\x13OriginCountryAlpha3\x12;\n" +
 	"\bIssuedAt\x18\t \x01(\v2\x1a.google.protobuf.TimestampH\x00R\bIssuedAt\x88\x01\x01\x12\x1c\n" +
-	"\tIsVisible\x18\n" +
-	" \x01(\bR\tIsVisible\x12\x1e\n" +
+	"\tIsEnabled\x18\n" +
+	" \x01(\bR\tIsEnabled\x12\x1c\n" +
+	"\tIsVisible\x18\v \x01(\bR\tIsVisible\x12\x1e\n" +
 	"\n" +
-	"IsPromoted\x18\v \x01(\bR\n" +
-	"IsPromoted\x12C\n" +
-	"\fSupersededAt\x18\f \x01(\v2\x1a.google.protobuf.TimestampH\x01R\fSupersededAt\x88\x01\x01\x12u\n" +
-	"\x0eSupersededByID\x18\r \x01(\tBM\xbaHJ\xd8\x01\x01rE\x10+\x18\x80\x022>^u[A-Za-z0-9.-]+_v[1-9][0-9]{0,2}-[a-zA-Z][a-zA-Z0-9]{37,126}$R\x0eSupersededByID\x12,\n" +
-	"\x05Files\x18\x0e \x03(\v2\v.asset.FileB\t\xbaH\x06\x92\x01\x03\x10\x80\x01R\x05Files\x121\n" +
-	"\aDetails\x18\x0f \x01(\v2\x17.google.protobuf.StructR\aDetailsB\v\n" +
-	"\t_IssuedAtB\x0f\n" +
-	"\r_SupersededAt\"X\n" +
+	"IsPromoted\x18\f \x01(\bR\n" +
+	"IsPromoted\x12,\n" +
+	"\x05Files\x18\r \x03(\v2\v.asset.FileB\t\xbaH\x06\x92\x01\x03\x10\x80\x01R\x05Files\x121\n" +
+	"\aDetails\x18\x0e \x01(\v2\x17.google.protobuf.StructR\aDetailsB\v\n" +
+	"\t_IssuedAt\"X\n" +
 	"\x06Assets\x12&\n" +
 	"\aRecords\x18\x01 \x03(\v2\f.asset.AssetR\aRecords\x12\x1b\n" +
 	"\x06Offset\x18\x02 \x01(\x05H\x00R\x06Offset\x88\x01\x01B\t\n" +
@@ -439,11 +441,10 @@ const file_asset_proto_rawDesc = "" +
 	"\x04Type\x18\x02 \x01(\x0e2\x0f.asset.FileTypeB\b\xbaH\x05\x82\x01\x02\x10\x01R\x04Type\x123\n" +
 	"\tReference\x18\x03 \x01(\tB\x15\xbaH\x12\xc8\x01\x01r\r\x18\x80\x02:\x05gs://\x88\x01\x01R\tReference*\x1e\n" +
 	"\bFileType\x12\x12\n" +
-	"\x0eFILE_TYPE_NONE\x10\x00*K\n" +
+	"\x0eFILE_TYPE_NONE\x10\x00*9\n" +
 	"\tAssetType\x12\x13\n" +
-	"\x0fASSET_TYPE_NONE\x10\x00\x12\x15\n" +
-	"\x11ASSET_TYPE_EQUITY\x10\x01\x12\x12\n" +
-	"\x0eASSET_TYPE_RWA\x10\x02B/Z-github.com/sologenic/com-fs-asset-model;assetb\x06proto3"
+	"\x0fASSET_TYPE_NONE\x10\x00\x12\x17\n" +
+	"\x13ASSET_TYPE_SECURITY\x10\x01B/Z-github.com/sologenic/com-fs-asset-model;assetb\x06proto3"
 
 var (
 	file_asset_proto_rawDescOnce sync.Once
@@ -473,16 +474,15 @@ var file_asset_proto_depIdxs = []int32{
 	5, // 0: asset.Asset.Denom:type_name -> denom.Denom
 	1, // 1: asset.Asset.Type:type_name -> asset.AssetType
 	6, // 2: asset.Asset.IssuedAt:type_name -> google.protobuf.Timestamp
-	6, // 3: asset.Asset.SupersededAt:type_name -> google.protobuf.Timestamp
-	4, // 4: asset.Asset.Files:type_name -> asset.File
-	7, // 5: asset.Asset.Details:type_name -> google.protobuf.Struct
-	2, // 6: asset.Assets.Records:type_name -> asset.Asset
-	0, // 7: asset.File.Type:type_name -> asset.FileType
-	8, // [8:8] is the sub-list for method output_type
-	8, // [8:8] is the sub-list for method input_type
-	8, // [8:8] is the sub-list for extension type_name
-	8, // [8:8] is the sub-list for extension extendee
-	0, // [0:8] is the sub-list for field type_name
+	4, // 3: asset.Asset.Files:type_name -> asset.File
+	7, // 4: asset.Asset.Details:type_name -> google.protobuf.Struct
+	2, // 5: asset.Assets.Records:type_name -> asset.Asset
+	0, // 6: asset.File.Type:type_name -> asset.FileType
+	7, // [7:7] is the sub-list for method output_type
+	7, // [7:7] is the sub-list for method input_type
+	7, // [7:7] is the sub-list for extension type_name
+	7, // [7:7] is the sub-list for extension extendee
+	0, // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_asset_proto_init() }

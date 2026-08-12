@@ -15,19 +15,22 @@ service AssetListService { // TODO: Better name
     rpc GetAssets(AssetQuery) returns (Assets);
     // Count all Assets for a given filter
     rpc CountAssets(AssetQuery) returns (CountResponse);
-}   
+}
 
 message AssetKey {
     string Key = 1;
 }
 
-// TODO: Add more filters is IsIssued, IsVisible, IsSuperseded, ID
 message AssetQuery {
-    optional int32 Offset = 2;
-    optional string OrganizationID = 4;
-    optional AssetType AssetType = 6;
-    optional int32 Limit = 8;
-    optional bool IsPromoted = 12;
+    optional int32 Offset = 1;
+    optional string OrganizationID = 2;
+    optional string ID = 3;
+    optional AssetType Type = 4;
+    optional int32 Limit = 5;
+    optional bool IsIssued = 6; // IssuedAt != nil
+    optional bool IsEnabled = 7;
+    optional bool IsVisible = 8;
+    optional bool IsPromoted = 9;
 }
 
 message CountResponse {

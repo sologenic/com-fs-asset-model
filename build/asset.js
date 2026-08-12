@@ -38,9 +38,8 @@ export function fileTypeToJSON(object) {
 export var AssetType;
 (function (AssetType) {
     AssetType[AssetType["ASSET_TYPE_NONE"] = 0] = "ASSET_TYPE_NONE";
-    AssetType[AssetType["ASSET_TYPE_EQUITY"] = 1] = "ASSET_TYPE_EQUITY";
-    /** ASSET_TYPE_RWA - TODO: Add more asset types */
-    AssetType[AssetType["ASSET_TYPE_RWA"] = 2] = "ASSET_TYPE_RWA";
+    /** ASSET_TYPE_SECURITY - TODO: Add more asset types */
+    AssetType[AssetType["ASSET_TYPE_SECURITY"] = 1] = "ASSET_TYPE_SECURITY";
     AssetType[AssetType["UNRECOGNIZED"] = -1] = "UNRECOGNIZED";
 })(AssetType || (AssetType = {}));
 export function assetTypeFromJSON(object) {
@@ -49,11 +48,8 @@ export function assetTypeFromJSON(object) {
         case "ASSET_TYPE_NONE":
             return AssetType.ASSET_TYPE_NONE;
         case 1:
-        case "ASSET_TYPE_EQUITY":
-            return AssetType.ASSET_TYPE_EQUITY;
-        case 2:
-        case "ASSET_TYPE_RWA":
-            return AssetType.ASSET_TYPE_RWA;
+        case "ASSET_TYPE_SECURITY":
+            return AssetType.ASSET_TYPE_SECURITY;
         case -1:
         case "UNRECOGNIZED":
         default:
@@ -64,10 +60,8 @@ export function assetTypeToJSON(object) {
     switch (object) {
         case AssetType.ASSET_TYPE_NONE:
             return "ASSET_TYPE_NONE";
-        case AssetType.ASSET_TYPE_EQUITY:
-            return "ASSET_TYPE_EQUITY";
-        case AssetType.ASSET_TYPE_RWA:
-            return "ASSET_TYPE_RWA";
+        case AssetType.ASSET_TYPE_SECURITY:
+            return "ASSET_TYPE_SECURITY";
         case AssetType.UNRECOGNIZED:
         default:
             return "UNRECOGNIZED";
@@ -81,13 +75,12 @@ function createBaseAsset() {
         Type: 0,
         Name: "",
         Description: "",
-        HTML: "",
+        Content: "",
         OriginCountryAlpha3: "",
         IssuedAt: undefined,
+        IsEnabled: false,
         IsVisible: false,
         IsPromoted: false,
-        SupersededAt: undefined,
-        SupersededByID: "",
         Files: [],
         Details: undefined,
     };
@@ -112,8 +105,8 @@ export const Asset = {
         if (message.Description !== "") {
             writer.uint32(50).string(message.Description);
         }
-        if (message.HTML !== "") {
-            writer.uint32(58).string(message.HTML);
+        if (message.Content !== "") {
+            writer.uint32(58).string(message.Content);
         }
         if (message.OriginCountryAlpha3 !== "") {
             writer.uint32(66).string(message.OriginCountryAlpha3);
@@ -121,23 +114,20 @@ export const Asset = {
         if (message.IssuedAt !== undefined) {
             Timestamp.encode(toTimestamp(message.IssuedAt), writer.uint32(74).fork()).ldelim();
         }
+        if (message.IsEnabled !== false) {
+            writer.uint32(80).bool(message.IsEnabled);
+        }
         if (message.IsVisible !== false) {
-            writer.uint32(80).bool(message.IsVisible);
+            writer.uint32(88).bool(message.IsVisible);
         }
         if (message.IsPromoted !== false) {
-            writer.uint32(88).bool(message.IsPromoted);
-        }
-        if (message.SupersededAt !== undefined) {
-            Timestamp.encode(toTimestamp(message.SupersededAt), writer.uint32(98).fork()).ldelim();
-        }
-        if (message.SupersededByID !== "") {
-            writer.uint32(106).string(message.SupersededByID);
+            writer.uint32(96).bool(message.IsPromoted);
         }
         for (const v of message.Files) {
-            File.encode(v, writer.uint32(114).fork()).ldelim();
+            File.encode(v, writer.uint32(106).fork()).ldelim();
         }
         if (message.Details !== undefined) {
-            Struct.encode(Struct.wrap(message.Details), writer.uint32(122).fork()).ldelim();
+            Struct.encode(Struct.wrap(message.Details), writer.uint32(114).fork()).ldelim();
         }
         return writer;
     },
@@ -188,7 +178,7 @@ export const Asset = {
                     if (tag !== 58) {
                         break;
                     }
-                    message.HTML = reader.string();
+                    message.Content = reader.string();
                     continue;
                 case 8:
                     if (tag !== 66) {
@@ -206,34 +196,28 @@ export const Asset = {
                     if (tag !== 80) {
                         break;
                     }
-                    message.IsVisible = reader.bool();
+                    message.IsEnabled = reader.bool();
                     continue;
                 case 11:
                     if (tag !== 88) {
                         break;
                     }
-                    message.IsPromoted = reader.bool();
+                    message.IsVisible = reader.bool();
                     continue;
                 case 12:
-                    if (tag !== 98) {
+                    if (tag !== 96) {
                         break;
                     }
-                    message.SupersededAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+                    message.IsPromoted = reader.bool();
                     continue;
                 case 13:
                     if (tag !== 106) {
                         break;
                     }
-                    message.SupersededByID = reader.string();
+                    message.Files.push(File.decode(reader, reader.uint32()));
                     continue;
                 case 14:
                     if (tag !== 114) {
-                        break;
-                    }
-                    message.Files.push(File.decode(reader, reader.uint32()));
-                    continue;
-                case 15:
-                    if (tag !== 122) {
                         break;
                     }
                     message.Details = Struct.unwrap(Struct.decode(reader, reader.uint32()));
@@ -254,13 +238,12 @@ export const Asset = {
             Type: isSet(object.Type) ? assetTypeFromJSON(object.Type) : 0,
             Name: isSet(object.Name) ? globalThis.String(object.Name) : "",
             Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
-            HTML: isSet(object.HTML) ? globalThis.String(object.HTML) : "",
+            Content: isSet(object.Content) ? globalThis.String(object.Content) : "",
             OriginCountryAlpha3: isSet(object.OriginCountryAlpha3) ? globalThis.String(object.OriginCountryAlpha3) : "",
             IssuedAt: isSet(object.IssuedAt) ? fromJsonTimestamp(object.IssuedAt) : undefined,
+            IsEnabled: isSet(object.IsEnabled) ? globalThis.Boolean(object.IsEnabled) : false,
             IsVisible: isSet(object.IsVisible) ? globalThis.Boolean(object.IsVisible) : false,
             IsPromoted: isSet(object.IsPromoted) ? globalThis.Boolean(object.IsPromoted) : false,
-            SupersededAt: isSet(object.SupersededAt) ? fromJsonTimestamp(object.SupersededAt) : undefined,
-            SupersededByID: isSet(object.SupersededByID) ? globalThis.String(object.SupersededByID) : "",
             Files: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Files) ? object.Files.map((e) => File.fromJSON(e)) : [],
             Details: isObject(object.Details) ? object.Details : undefined,
         };
@@ -286,8 +269,8 @@ export const Asset = {
         if (message.Description !== "") {
             obj.Description = message.Description;
         }
-        if (message.HTML !== "") {
-            obj.HTML = message.HTML;
+        if (message.Content !== "") {
+            obj.Content = message.Content;
         }
         if (message.OriginCountryAlpha3 !== "") {
             obj.OriginCountryAlpha3 = message.OriginCountryAlpha3;
@@ -295,17 +278,14 @@ export const Asset = {
         if (message.IssuedAt !== undefined) {
             obj.IssuedAt = message.IssuedAt.toISOString();
         }
+        if (message.IsEnabled !== false) {
+            obj.IsEnabled = message.IsEnabled;
+        }
         if (message.IsVisible !== false) {
             obj.IsVisible = message.IsVisible;
         }
         if (message.IsPromoted !== false) {
             obj.IsPromoted = message.IsPromoted;
-        }
-        if (message.SupersededAt !== undefined) {
-            obj.SupersededAt = message.SupersededAt.toISOString();
-        }
-        if (message.SupersededByID !== "") {
-            obj.SupersededByID = message.SupersededByID;
         }
         if ((_a = message.Files) === null || _a === void 0 ? void 0 : _a.length) {
             obj.Files = message.Files.map((e) => File.toJSON(e));
@@ -319,7 +299,7 @@ export const Asset = {
         return Asset.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
         const message = createBaseAsset();
         message.ID = (_a = object.ID) !== null && _a !== void 0 ? _a : "";
         message.OrganizationID = (_b = object.OrganizationID) !== null && _b !== void 0 ? _b : "";
@@ -327,15 +307,14 @@ export const Asset = {
         message.Type = (_c = object.Type) !== null && _c !== void 0 ? _c : 0;
         message.Name = (_d = object.Name) !== null && _d !== void 0 ? _d : "";
         message.Description = (_e = object.Description) !== null && _e !== void 0 ? _e : "";
-        message.HTML = (_f = object.HTML) !== null && _f !== void 0 ? _f : "";
+        message.Content = (_f = object.Content) !== null && _f !== void 0 ? _f : "";
         message.OriginCountryAlpha3 = (_g = object.OriginCountryAlpha3) !== null && _g !== void 0 ? _g : "";
         message.IssuedAt = (_h = object.IssuedAt) !== null && _h !== void 0 ? _h : undefined;
-        message.IsVisible = (_j = object.IsVisible) !== null && _j !== void 0 ? _j : false;
-        message.IsPromoted = (_k = object.IsPromoted) !== null && _k !== void 0 ? _k : false;
-        message.SupersededAt = (_l = object.SupersededAt) !== null && _l !== void 0 ? _l : undefined;
-        message.SupersededByID = (_m = object.SupersededByID) !== null && _m !== void 0 ? _m : "";
-        message.Files = ((_o = object.Files) === null || _o === void 0 ? void 0 : _o.map((e) => File.fromPartial(e))) || [];
-        message.Details = (_p = object.Details) !== null && _p !== void 0 ? _p : undefined;
+        message.IsEnabled = (_j = object.IsEnabled) !== null && _j !== void 0 ? _j : false;
+        message.IsVisible = (_k = object.IsVisible) !== null && _k !== void 0 ? _k : false;
+        message.IsPromoted = (_l = object.IsPromoted) !== null && _l !== void 0 ? _l : false;
+        message.Files = ((_m = object.Files) === null || _m === void 0 ? void 0 : _m.map((e) => File.fromPartial(e))) || [];
+        message.Details = (_o = object.Details) !== null && _o !== void 0 ? _o : undefined;
         return message;
     },
 };

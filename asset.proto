@@ -10,8 +10,8 @@ import "google/protobuf/struct.proto";
 option go_package = "github.com/sologenic/com-fs-asset-model;asset";
 
 message Asset {
-    // Denom represented as a string
-    // Immutable field
+    // Unique string representation of the asset's denom.
+    // Immutable: Cannot be modified after creation.
     string ID = 1 [
         (buf.validate.field).required = true,
         (buf.validate.field).string = {
@@ -21,20 +21,22 @@ message Asset {
         }
     ];
 
-    // Immutable field
+    // Unique identifier of the organization that owns or issued the asset.
+    // Immutable: Cannot be modified after creation.
     string OrganizationID = 2 [
         (buf.validate.field).string = {
             uuid: true
         }
     ];
 
-    // Contains symbol, version, issuer address
-    // Immutable field
+    // Structured denomination data (symbol, version, issuer address).
+    // Immutable: Cannot be modified after creation.
     denom.Denom Denom = 3 [
         (buf.validate.field).required = true
     ];
 
-    // Immutable field
+    // Categorization of the asset.
+    // Immutable: Cannot be modified after creation.
     AssetType Type = 4 [
         (buf.validate.field).enum = {
             defined_only: true
@@ -42,11 +44,18 @@ message Asset {
         }
     ];
 
+    // Display name of the asset.
     // @inject_tags: datastore:",noindex"
     string Name = 5 [
-        (buf.validate.field).required = true
+        (buf.validate.field).required = true,
+        (buf.validate.field).string = {
+            min_len: 2,
+            max_len: 128
+        }
     ];
 
+    // Short plain-text summary of the asset.
+    // Suitable for UI previews, cards, and OG meta tags.
     // @inject_tags: datastore:",noindex"
     string Description = 6 [
         (buf.validate.field).string = {
@@ -54,15 +63,15 @@ message Asset {
         }
     ];
 
-    // TODO: Better name?
+    // Extended WYSIWYG content providing a detailed overview of the asset.
     // @inject_tags: datastore:",noindex"
-    string HTML = 7 [
+    string Content = 7 [
         (buf.validate.field).string = {
             max_len: 65536
         }
     ];
 
-    // ISO 3166-1 alpha-3 code e.g. "USA", "CAD"
+    // Country of origin represented as an ISO 3166-1 alpha-3 code (e.g., "USA", "CAD").
     string OriginCountryAlpha3 = 8 [
         (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
         (buf.validate.field).string = {
@@ -71,45 +80,42 @@ message Asset {
         }
     ];
 
-    // If not nil means asset has been issued on chain
-    // Immutable field
+    // Timestamp indicating when the asset was issued on-chain.
+    // System-managed: Set automatically via on-chain events. Becomes immutable once set.
     optional google.protobuf.Timestamp IssuedAt = 9;
 
-    // Controls whether the asset is visible in the marketplace
-    bool IsVisible = 10;
+    // Indicates whether the asset is active/enabled on-chain.
+    // System-managed: Updated automatically via on-chain events. Cannot be mutated manually.
+    bool IsEnabled = 10;
 
-    // Controls whether the asset is visible in the promoted assets panel
-    bool IsPromoted = 11;
+    // Controls whether the asset is visible in the public marketplace.
+    // Mutable by administrators.
+    bool IsVisible = 11;
 
-    optional google.protobuf.Timestamp SupersededAt = 12;
+    // Controls whether the asset is highlighted in the promoted assets panel.
+    // Mutable by administrators.
+    bool IsPromoted = 12;
 
-    string SupersededByID = 13 [
-        (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
-        (buf.validate.field).string = {
-            min_len: 43
-            max_len: 256
-            pattern: "^u[A-Za-z0-9.-]+_v[1-9][0-9]{0,2}-[a-zA-Z][a-zA-Z0-9]{37,126}$"
-        }
-    ];
-
-    repeated File Files = 14 [
+    // Attached media and documents (e.g., legal agreements, brochures, images).
+    repeated File Files = 13 [
         (buf.validate.field).repeated = {
             max_items: 128,
         }
     ];
 
-    // Dynamic fields defined by front-end
-    google.protobuf.Struct Details = 15;
+    // Flexible key-value store for arbitrary, frontend-defined dynamic attributes.
+    google.protobuf.Struct Details = 14;
 }
 
 message Assets {
     repeated Asset Records = 1;
 
-    // If there is more data, this is the offset to pass to the next call
+    // Pagination offset for fetching the next page of results.
     optional int32 Offset = 2;
 }
 
 message File {
+    // Display name of the file.
     string Name = 1 [
         (buf.validate.field).required = true,
         (buf.validate.field).string = {
@@ -118,12 +124,14 @@ message File {
         }
     ];
 
+    // Categorization of the file's purpose.
     FileType Type = 2 [
         (buf.validate.field).enum = {
             defined_only: true
         }
     ];
 
+    // Google Cloud Storage URI pointing to the file blob (e.g., gs://bucket/path/file.pdf).
     string Reference = 3 [
         (buf.validate.field).required = true,
         (buf.validate.field).string = {
@@ -141,7 +149,6 @@ enum FileType {
 
 enum AssetType {
     ASSET_TYPE_NONE = 0;
-    ASSET_TYPE_EQUITY = 1;
-    ASSET_TYPE_RWA = 2;
+    ASSET_TYPE_SECURITY = 1;
     // TODO: Add more asset types
 }

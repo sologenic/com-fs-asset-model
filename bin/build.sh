@@ -80,6 +80,10 @@ protoc \
 
 protoc-go-inject-tag -input="asset.pb.go"
 
+./domain/currency/bin/build.sh
+./domain/denom/bin/build.sh
+./domain/pair/bin/build.sh
+
 rm -rf node_modules
 npm i
 

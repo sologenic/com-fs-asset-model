@@ -65,14 +65,17 @@ func (x *AssetKey) GetKey() string {
 	return ""
 }
 
-// TODO: Add more filters is IsIssued, IsVisible, IsSuperseded, ID
 type AssetQuery struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
-	Offset         *int32                 `protobuf:"varint,2,opt,name=Offset,proto3,oneof" json:"Offset,omitempty"`
-	OrganizationID *string                `protobuf:"bytes,4,opt,name=OrganizationID,proto3,oneof" json:"OrganizationID,omitempty"`
-	AssetType      *AssetType             `protobuf:"varint,6,opt,name=AssetType,proto3,enum=asset.AssetType,oneof" json:"AssetType,omitempty"`
-	Limit          *int32                 `protobuf:"varint,8,opt,name=Limit,proto3,oneof" json:"Limit,omitempty"`
-	IsPromoted     *bool                  `protobuf:"varint,12,opt,name=IsPromoted,proto3,oneof" json:"IsPromoted,omitempty"`
+	Offset         *int32                 `protobuf:"varint,1,opt,name=Offset,proto3,oneof" json:"Offset,omitempty"`
+	OrganizationID *string                `protobuf:"bytes,2,opt,name=OrganizationID,proto3,oneof" json:"OrganizationID,omitempty"`
+	ID             *string                `protobuf:"bytes,3,opt,name=ID,proto3,oneof" json:"ID,omitempty"`
+	Type           *AssetType             `protobuf:"varint,4,opt,name=Type,proto3,enum=asset.AssetType,oneof" json:"Type,omitempty"`
+	Limit          *int32                 `protobuf:"varint,5,opt,name=Limit,proto3,oneof" json:"Limit,omitempty"`
+	IsIssued       *bool                  `protobuf:"varint,6,opt,name=IsIssued,proto3,oneof" json:"IsIssued,omitempty"` // IssuedAt != nil
+	IsEnabled      *bool                  `protobuf:"varint,7,opt,name=IsEnabled,proto3,oneof" json:"IsEnabled,omitempty"`
+	IsVisible      *bool                  `protobuf:"varint,8,opt,name=IsVisible,proto3,oneof" json:"IsVisible,omitempty"`
+	IsPromoted     *bool                  `protobuf:"varint,9,opt,name=IsPromoted,proto3,oneof" json:"IsPromoted,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -121,9 +124,16 @@ func (x *AssetQuery) GetOrganizationID() string {
 	return ""
 }
 
-func (x *AssetQuery) GetAssetType() AssetType {
-	if x != nil && x.AssetType != nil {
-		return *x.AssetType
+func (x *AssetQuery) GetID() string {
+	if x != nil && x.ID != nil {
+		return *x.ID
+	}
+	return ""
+}
+
+func (x *AssetQuery) GetType() AssetType {
+	if x != nil && x.Type != nil {
+		return *x.Type
 	}
 	return AssetType_ASSET_TYPE_NONE
 }
@@ -133,6 +143,27 @@ func (x *AssetQuery) GetLimit() int32 {
 		return *x.Limit
 	}
 	return 0
+}
+
+func (x *AssetQuery) GetIsIssued() bool {
+	if x != nil && x.IsIssued != nil {
+		return *x.IsIssued
+	}
+	return false
+}
+
+func (x *AssetQuery) GetIsEnabled() bool {
+	if x != nil && x.IsEnabled != nil {
+		return *x.IsEnabled
+	}
+	return false
+}
+
+func (x *AssetQuery) GetIsVisible() bool {
+	if x != nil && x.IsVisible != nil {
+		return *x.IsVisible
+	}
+	return false
 }
 
 func (x *AssetQuery) GetIsPromoted() bool {
@@ -192,21 +223,30 @@ const file_asset_grpc_proto_rawDesc = "" +
 	"\n" +
 	"\x10asset-grpc.proto\x12\x05asset\x1a\vasset.proto\"\x1c\n" +
 	"\bAssetKey\x12\x10\n" +
-	"\x03Key\x18\x01 \x01(\tR\x03Key\"\x90\x02\n" +
+	"\x03Key\x18\x01 \x01(\tR\x03Key\"\xad\x03\n" +
 	"\n" +
 	"AssetQuery\x12\x1b\n" +
-	"\x06Offset\x18\x02 \x01(\x05H\x00R\x06Offset\x88\x01\x01\x12+\n" +
-	"\x0eOrganizationID\x18\x04 \x01(\tH\x01R\x0eOrganizationID\x88\x01\x01\x123\n" +
-	"\tAssetType\x18\x06 \x01(\x0e2\x10.asset.AssetTypeH\x02R\tAssetType\x88\x01\x01\x12\x19\n" +
-	"\x05Limit\x18\b \x01(\x05H\x03R\x05Limit\x88\x01\x01\x12#\n" +
+	"\x06Offset\x18\x01 \x01(\x05H\x00R\x06Offset\x88\x01\x01\x12+\n" +
+	"\x0eOrganizationID\x18\x02 \x01(\tH\x01R\x0eOrganizationID\x88\x01\x01\x12\x13\n" +
+	"\x02ID\x18\x03 \x01(\tH\x02R\x02ID\x88\x01\x01\x12)\n" +
+	"\x04Type\x18\x04 \x01(\x0e2\x10.asset.AssetTypeH\x03R\x04Type\x88\x01\x01\x12\x19\n" +
+	"\x05Limit\x18\x05 \x01(\x05H\x04R\x05Limit\x88\x01\x01\x12\x1f\n" +
+	"\bIsIssued\x18\x06 \x01(\bH\x05R\bIsIssued\x88\x01\x01\x12!\n" +
+	"\tIsEnabled\x18\a \x01(\bH\x06R\tIsEnabled\x88\x01\x01\x12!\n" +
+	"\tIsVisible\x18\b \x01(\bH\aR\tIsVisible\x88\x01\x01\x12#\n" +
 	"\n" +
-	"IsPromoted\x18\f \x01(\bH\x04R\n" +
+	"IsPromoted\x18\t \x01(\bH\bR\n" +
 	"IsPromoted\x88\x01\x01B\t\n" +
 	"\a_OffsetB\x11\n" +
-	"\x0f_OrganizationIDB\f\n" +
+	"\x0f_OrganizationIDB\x05\n" +
+	"\x03_IDB\a\n" +
+	"\x05_TypeB\b\n" +
+	"\x06_LimitB\v\n" +
+	"\t_IsIssuedB\f\n" +
 	"\n" +
-	"_AssetTypeB\b\n" +
-	"\x06_LimitB\r\n" +
+	"_IsEnabledB\f\n" +
+	"\n" +
+	"_IsVisibleB\r\n" +
 	"\v_IsPromoted\"%\n" +
 	"\rCountResponse\x12\x14\n" +
 	"\x05Count\x18\x01 \x01(\x05R\x05Count2\xd2\x01\n" +
@@ -238,7 +278,7 @@ var file_asset_grpc_proto_goTypes = []any{
 	(*Assets)(nil),        // 5: asset.Assets
 }
 var file_asset_grpc_proto_depIdxs = []int32{
-	3, // 0: asset.AssetQuery.AssetType:type_name -> asset.AssetType
+	3, // 0: asset.AssetQuery.Type:type_name -> asset.AssetType
 	4, // 1: asset.AssetListService.UpsertAsset:input_type -> asset.Asset
 	0, // 2: asset.AssetListService.GetAsset:input_type -> asset.AssetKey
 	1, // 3: asset.AssetListService.GetAssets:input_type -> asset.AssetQuery

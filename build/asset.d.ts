@@ -10,61 +10,89 @@ export declare function fileTypeFromJSON(object: any): FileType;
 export declare function fileTypeToJSON(object: FileType): string;
 export declare enum AssetType {
     ASSET_TYPE_NONE = 0,
-    ASSET_TYPE_EQUITY = 1,
-    /** ASSET_TYPE_RWA - TODO: Add more asset types */
-    ASSET_TYPE_RWA = 2,
+    /** ASSET_TYPE_SECURITY - TODO: Add more asset types */
+    ASSET_TYPE_SECURITY = 1,
     UNRECOGNIZED = -1
 }
 export declare function assetTypeFromJSON(object: any): AssetType;
 export declare function assetTypeToJSON(object: AssetType): string;
 export interface Asset {
     /**
-     * Denom represented as a string
-     * Immutable field
+     * Unique string representation of the asset's denom.
+     * Immutable: Cannot be modified after creation.
      */
     ID: string;
-    /** Immutable field */
+    /**
+     * Unique identifier of the organization that owns or issued the asset.
+     * Immutable: Cannot be modified after creation.
+     */
     OrganizationID: string;
     /**
-     * Contains symbol, version, issuer address
-     * Immutable field
+     * Structured denomination data (symbol, version, issuer address).
+     * Immutable: Cannot be modified after creation.
      */
     Denom: Denom | undefined;
-    /** Immutable field */
+    /**
+     * Categorization of the asset.
+     * Immutable: Cannot be modified after creation.
+     */
     Type: AssetType;
-    /** @inject_tags: datastore:",noindex" */
+    /**
+     * Display name of the asset.
+     * @inject_tags: datastore:",noindex"
+     */
     Name: string;
-    /** @inject_tags: datastore:",noindex" */
+    /**
+     * Short plain-text summary of the asset.
+     * Suitable for UI previews, cards, and OG meta tags.
+     * @inject_tags: datastore:",noindex"
+     */
     Description: string;
-    /** @inject_tags: datastore:",noindex" */
-    HTML: string;
-    /** ISO 3166-1 alpha-3 code e.g. "USA", "CAD" */
+    /**
+     * Extended WYSIWYG content providing a detailed overview of the asset.
+     * @inject_tags: datastore:",noindex"
+     */
+    Content: string;
+    /** Country of origin represented as an ISO 3166-1 alpha-3 code (e.g., "USA", "CAD"). */
     OriginCountryAlpha3: string;
     /**
-     * If not nil means asset has been issued on chain
-     * Immutable field
+     * Timestamp indicating when the asset was issued on-chain.
+     * System-managed: Set automatically via on-chain events. Becomes immutable once set.
      */
     IssuedAt?: Date | undefined;
-    /** Controls whether the asset is visible in the marketplace */
+    /**
+     * Indicates whether the asset is active/enabled on-chain.
+     * System-managed: Updated automatically via on-chain events. Cannot be mutated manually.
+     */
+    IsEnabled: boolean;
+    /**
+     * Controls whether the asset is visible in the public marketplace.
+     * Mutable by administrators.
+     */
     IsVisible: boolean;
-    /** Controls whether the asset is visible in the promoted assets panel */
+    /**
+     * Controls whether the asset is highlighted in the promoted assets panel.
+     * Mutable by administrators.
+     */
     IsPromoted: boolean;
-    SupersededAt?: Date | undefined;
-    SupersededByID: string;
+    /** Attached media and documents (e.g., legal agreements, brochures, images). */
     Files: File[];
-    /** Dynamic fields defined by front-end */
+    /** Flexible key-value store for arbitrary, frontend-defined dynamic attributes. */
     Details: {
         [key: string]: any;
     } | undefined;
 }
 export interface Assets {
     Records: Asset[];
-    /** If there is more data, this is the offset to pass to the next call */
+    /** Pagination offset for fetching the next page of results. */
     Offset?: number | undefined;
 }
 export interface File {
+    /** Display name of the file. */
     Name: string;
+    /** Categorization of the file's purpose. */
     Type: FileType;
+    /** Google Cloud Storage URI pointing to the file blob (e.g., gs://bucket/path/file.pdf). */
     Reference: string;
 }
 export declare const Asset: {
@@ -88,13 +116,12 @@ export declare const Asset: {
         Type?: AssetType | undefined;
         Name?: string | undefined;
         Description?: string | undefined;
-        HTML?: string | undefined;
+        Content?: string | undefined;
         OriginCountryAlpha3?: string | undefined;
         IssuedAt?: Date | undefined;
+        IsEnabled?: boolean | undefined;
         IsVisible?: boolean | undefined;
         IsPromoted?: boolean | undefined;
-        SupersededAt?: Date | undefined;
-        SupersededByID?: string | undefined;
         Files?: {
             Name?: string | undefined;
             Type?: FileType | undefined;
@@ -131,13 +158,12 @@ export declare const Asset: {
         Type?: AssetType | undefined;
         Name?: string | undefined;
         Description?: string | undefined;
-        HTML?: string | undefined;
+        Content?: string | undefined;
         OriginCountryAlpha3?: string | undefined;
         IssuedAt?: Date | undefined;
+        IsEnabled?: boolean | undefined;
         IsVisible?: boolean | undefined;
         IsPromoted?: boolean | undefined;
-        SupersededAt?: Date | undefined;
-        SupersededByID?: string | undefined;
         Files?: ({
             Name?: string | undefined;
             Type?: FileType | undefined;
@@ -177,13 +203,12 @@ export declare const Asset: {
         Type?: AssetType | undefined;
         Name?: string | undefined;
         Description?: string | undefined;
-        HTML?: string | undefined;
+        Content?: string | undefined;
         OriginCountryAlpha3?: string | undefined;
         IssuedAt?: Date | undefined;
+        IsEnabled?: boolean | undefined;
         IsVisible?: boolean | undefined;
         IsPromoted?: boolean | undefined;
-        SupersededAt?: Date | undefined;
-        SupersededByID?: string | undefined;
         Files?: {
             Name?: string | undefined;
             Type?: FileType | undefined;
@@ -220,13 +245,12 @@ export declare const Asset: {
         Type?: AssetType | undefined;
         Name?: string | undefined;
         Description?: string | undefined;
-        HTML?: string | undefined;
+        Content?: string | undefined;
         OriginCountryAlpha3?: string | undefined;
         IssuedAt?: Date | undefined;
+        IsEnabled?: boolean | undefined;
         IsVisible?: boolean | undefined;
         IsPromoted?: boolean | undefined;
-        SupersededAt?: Date | undefined;
-        SupersededByID?: string | undefined;
         Files?: ({
             Name?: string | undefined;
             Type?: FileType | undefined;
@@ -273,13 +297,12 @@ export declare const Assets: {
             Type?: AssetType | undefined;
             Name?: string | undefined;
             Description?: string | undefined;
-            HTML?: string | undefined;
+            Content?: string | undefined;
             OriginCountryAlpha3?: string | undefined;
             IssuedAt?: Date | undefined;
+            IsEnabled?: boolean | undefined;
             IsVisible?: boolean | undefined;
             IsPromoted?: boolean | undefined;
-            SupersededAt?: Date | undefined;
-            SupersededByID?: string | undefined;
             Files?: {
                 Name?: string | undefined;
                 Type?: FileType | undefined;
@@ -307,13 +330,12 @@ export declare const Assets: {
             Type?: AssetType | undefined;
             Name?: string | undefined;
             Description?: string | undefined;
-            HTML?: string | undefined;
+            Content?: string | undefined;
             OriginCountryAlpha3?: string | undefined;
             IssuedAt?: Date | undefined;
+            IsEnabled?: boolean | undefined;
             IsVisible?: boolean | undefined;
             IsPromoted?: boolean | undefined;
-            SupersededAt?: Date | undefined;
-            SupersededByID?: string | undefined;
             Files?: {
                 Name?: string | undefined;
                 Type?: FileType | undefined;
@@ -338,13 +360,12 @@ export declare const Assets: {
             Type?: AssetType | undefined;
             Name?: string | undefined;
             Description?: string | undefined;
-            HTML?: string | undefined;
+            Content?: string | undefined;
             OriginCountryAlpha3?: string | undefined;
             IssuedAt?: Date | undefined;
+            IsEnabled?: boolean | undefined;
             IsVisible?: boolean | undefined;
             IsPromoted?: boolean | undefined;
-            SupersededAt?: Date | undefined;
-            SupersededByID?: string | undefined;
             Files?: {
                 Name?: string | undefined;
                 Type?: FileType | undefined;
@@ -381,13 +402,12 @@ export declare const Assets: {
             Type?: AssetType | undefined;
             Name?: string | undefined;
             Description?: string | undefined;
-            HTML?: string | undefined;
+            Content?: string | undefined;
             OriginCountryAlpha3?: string | undefined;
             IssuedAt?: Date | undefined;
+            IsEnabled?: boolean | undefined;
             IsVisible?: boolean | undefined;
             IsPromoted?: boolean | undefined;
-            SupersededAt?: Date | undefined;
-            SupersededByID?: string | undefined;
             Files?: ({
                 Name?: string | undefined;
                 Type?: FileType | undefined;
@@ -426,13 +446,12 @@ export declare const Assets: {
             Type?: AssetType | undefined;
             Name?: string | undefined;
             Description?: string | undefined;
-            HTML?: string | undefined;
+            Content?: string | undefined;
             OriginCountryAlpha3?: string | undefined;
             IssuedAt?: Date | undefined;
+            IsEnabled?: boolean | undefined;
             IsVisible?: boolean | undefined;
             IsPromoted?: boolean | undefined;
-            SupersededAt?: Date | undefined;
-            SupersededByID?: string | undefined;
             Files?: {
                 Name?: string | undefined;
                 Type?: FileType | undefined;
@@ -461,13 +480,12 @@ export declare const Assets: {
             Type?: AssetType | undefined;
             Name?: string | undefined;
             Description?: string | undefined;
-            HTML?: string | undefined;
+            Content?: string | undefined;
             OriginCountryAlpha3?: string | undefined;
             IssuedAt?: Date | undefined;
+            IsEnabled?: boolean | undefined;
             IsVisible?: boolean | undefined;
             IsPromoted?: boolean | undefined;
-            SupersededAt?: Date | undefined;
-            SupersededByID?: string | undefined;
             Files?: {
                 Name?: string | undefined;
                 Type?: FileType | undefined;
@@ -495,13 +513,12 @@ export declare const Assets: {
             Type?: AssetType | undefined;
             Name?: string | undefined;
             Description?: string | undefined;
-            HTML?: string | undefined;
+            Content?: string | undefined;
             OriginCountryAlpha3?: string | undefined;
             IssuedAt?: Date | undefined;
+            IsEnabled?: boolean | undefined;
             IsVisible?: boolean | undefined;
             IsPromoted?: boolean | undefined;
-            SupersededAt?: Date | undefined;
-            SupersededByID?: string | undefined;
             Files?: {
                 Name?: string | undefined;
                 Type?: FileType | undefined;
@@ -526,13 +543,12 @@ export declare const Assets: {
             Type?: AssetType | undefined;
             Name?: string | undefined;
             Description?: string | undefined;
-            HTML?: string | undefined;
+            Content?: string | undefined;
             OriginCountryAlpha3?: string | undefined;
             IssuedAt?: Date | undefined;
+            IsEnabled?: boolean | undefined;
             IsVisible?: boolean | undefined;
             IsPromoted?: boolean | undefined;
-            SupersededAt?: Date | undefined;
-            SupersededByID?: string | undefined;
             Files?: {
                 Name?: string | undefined;
                 Type?: FileType | undefined;
@@ -569,13 +585,12 @@ export declare const Assets: {
             Type?: AssetType | undefined;
             Name?: string | undefined;
             Description?: string | undefined;
-            HTML?: string | undefined;
+            Content?: string | undefined;
             OriginCountryAlpha3?: string | undefined;
             IssuedAt?: Date | undefined;
+            IsEnabled?: boolean | undefined;
             IsVisible?: boolean | undefined;
             IsPromoted?: boolean | undefined;
-            SupersededAt?: Date | undefined;
-            SupersededByID?: string | undefined;
             Files?: ({
                 Name?: string | undefined;
                 Type?: FileType | undefined;
@@ -614,13 +629,12 @@ export declare const Assets: {
             Type?: AssetType | undefined;
             Name?: string | undefined;
             Description?: string | undefined;
-            HTML?: string | undefined;
+            Content?: string | undefined;
             OriginCountryAlpha3?: string | undefined;
             IssuedAt?: Date | undefined;
+            IsEnabled?: boolean | undefined;
             IsVisible?: boolean | undefined;
             IsPromoted?: boolean | undefined;
-            SupersededAt?: Date | undefined;
-            SupersededByID?: string | undefined;
             Files?: {
                 Name?: string | undefined;
                 Type?: FileType | undefined;
