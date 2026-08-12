@@ -18,7 +18,7 @@ var (
 	subunitRegex = regexp.MustCompile(`^u[a-z0-9.\-]{1,45}_v[1-9][0-9]{0,2}$`)
 )
 
-func NewCurrency(symbol, version string) (*Currency, error) {
+func New(symbol, version string) (*Currency, error) {
 	if err := ValidateSymbol(symbol); err != nil {
 		return nil, err
 	}
@@ -32,23 +32,23 @@ func NewCurrency(symbol, version string) (*Currency, error) {
 	}, nil
 }
 
-// ParseCurrency parses format {symbol}_v{version}
-func ParseCurrency(currencyStr string) (*Currency, error) {
+// Parse parses format {symbol}_v{version}
+func Parse(value string) (*Currency, error) {
 	// Search for the last index of _v since the symbol itself might theoretically contain underscores
-	lastIdx := strings.LastIndex(currencyStr, "_v")
+	lastIdx := strings.LastIndex(value, "_v")
 	if lastIdx == -1 {
 		// Fallback to uppercase V just in case
-		lastIdx = strings.LastIndex(currencyStr, "_V")
+		lastIdx = strings.LastIndex(value, "_V")
 		if lastIdx == -1 {
-			return nil, fmt.Errorf("invalid currency string (missing _v): %s", currencyStr)
+			return nil, fmt.Errorf("invalid currency string (missing _v): %s", value)
 		}
 	}
 
-	symbol := strings.ToUpper(currencyStr[:lastIdx])
+	symbol := strings.ToUpper(value[:lastIdx])
 	// Skip "_v" (2 characters) to extract only the digits
-	version := currencyStr[lastIdx+2:]
+	version := value[lastIdx+2:]
 
-	return NewCurrency(symbol, version)
+	return New(symbol, version)
 }
 
 func ValidateSymbol(symbol string) error {

@@ -7,7 +7,7 @@
 package denom
 
 import (
-	currency "github.com/sologenic/com-fs-asset-model/domain/currency"
+	currency "domain/currency"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"

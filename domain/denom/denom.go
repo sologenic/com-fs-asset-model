@@ -13,13 +13,13 @@ import (
 // Group 2 captures only digits ([1-9][0-9]{0,2}), ignoring the 'v'
 var denomRegex = regexp.MustCompile(`^u([A-Za-z0-9.\-]+)_v([1-9][0-9]{0,2})-([a-zA-Z][a-zA-Z0-9]{37,126})$`)
 
-func BuildDenom(symbol, version, issuer string) (*Denom, error) {
+func New(symbol, version, issuer string) (*Denom, error) {
 	if issuer == "" {
 		return nil, errors.New("issuer is required")
 	}
 
 	// Pass the clean version (e.g., "1")
-	curr, err := currency.NewCurrency(symbol, version)
+	curr, err := currency.New(symbol, version)
 	if err != nil {
 		return nil, err
 	}
@@ -35,17 +35,17 @@ func BuildDenom(symbol, version, issuer string) (*Denom, error) {
 	}, nil
 }
 
-func ParseDenom(denomStr string) (*Denom, error) {
-	matches := denomRegex.FindStringSubmatch(denomStr)
+func Parse(value string) (*Denom, error) {
+	matches := denomRegex.FindStringSubmatch(value)
 	if matches == nil || len(matches) != 4 {
-		return nil, fmt.Errorf("invalid denom format: %s", denomStr)
+		return nil, fmt.Errorf("invalid denom format: %s", value)
 	}
 
 	symbol := strings.ToUpper(matches[1])
 	version := matches[2] // This will be "1", not "v1"
 	issuer := matches[3]
 
-	return BuildDenom(symbol, version, issuer)
+	return New(symbol, version, issuer)
 }
 
 func (d *Denom) ToString() string {

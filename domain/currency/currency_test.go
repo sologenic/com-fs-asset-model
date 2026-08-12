@@ -15,7 +15,7 @@ func TestNewCurrency(t *testing.T) {
 		{
 			Name: "Valid currency",
 			Test: func(t *testing.T) {
-				expected, err := NewCurrency("AAPL", "1")
+				expected, err := New("AAPL", "1")
 				wanted := &Currency{
 					Symbol:  "AAPL",
 					Version: "1",
@@ -27,7 +27,7 @@ func TestNewCurrency(t *testing.T) {
 		{
 			Name: "Empty symbol",
 			Test: func(t *testing.T) {
-				got, err := NewCurrency("", "1")
+				got, err := New("", "1")
 
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), "invalid symbol format")
@@ -37,7 +37,7 @@ func TestNewCurrency(t *testing.T) {
 		{
 			Name: "Symbol too long",
 			Test: func(t *testing.T) {
-				got, err := NewCurrency("A123456789012345678901234567890123456789012345678", "1")
+				got, err := New("A123456789012345678901234567890123456789012345678", "1")
 
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), "invalid symbol format")
@@ -47,7 +47,7 @@ func TestNewCurrency(t *testing.T) {
 		{
 			Name: "Invalid version with leading zero",
 			Test: func(t *testing.T) {
-				got, err := NewCurrency("AAPL", "01")
+				got, err := New("AAPL", "01")
 
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), "invalid version format")
@@ -61,7 +61,7 @@ func TestNewCurrency(t *testing.T) {
 					Symbol:  "APPL",
 					Version: "1",
 				}
-				got, err := NewCurrency("aPpL", "1")
+				got, err := New("aPpL", "1")
 
 				assert.NoError(t, err)
 				assert.Equal(t, want.Symbol, got.Symbol)
@@ -71,7 +71,7 @@ func TestNewCurrency(t *testing.T) {
 		{
 			Name: "Valid currency with dot (BAB.A)",
 			Test: func(t *testing.T) {
-				expected, err := NewCurrency("BAB.A", "1")
+				expected, err := New("BAB.A", "1")
 				wanted := &Currency{
 					Symbol:  "BAB.A",
 					Version: "1",
@@ -83,7 +83,7 @@ func TestNewCurrency(t *testing.T) {
 		{
 			Name: "Valid currency with dash (BTC-USD)",
 			Test: func(t *testing.T) {
-				expected, err := NewCurrency("BTC-USD", "2")
+				expected, err := New("BTC-USD", "2")
 				wanted := &Currency{
 					Symbol:  "BTC-USD",
 					Version: "2",

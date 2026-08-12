@@ -3,460 +3,144 @@ syntax = "proto3";
 package asset;
 
 import "sologenic/com-fs-asset-model/domain/denom/denom.proto";
-import "sologenic/com-fs-utils-lib/models/audit/audit.proto";
-import "sologenic/com-fs-utils-lib/models/metadata/metadata.proto";
 import "buf/validate/validate.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
 
 option go_package = "github.com/sologenic/com-fs-asset-model;asset";
 
-// ---------------- AssetDetails ----------------
-
-message AssetDetails {
-    string ID = 1; // Key string to prevent composing the key all the time and reduce errors
-    string OrganizationID = 2; 
-    AssetStatus Status = 3;
-    optional Reason Reason = 4;
-    AssetType Type = 6; // Better known as Category
-
-    denom.Denom Denom = 17; 
-    bool IsIssuedInSmartContract = 18; 
-    string SmartContractIssuerAddr = 19; 
-
-    optional RealEstate RealEstateDetails = 20;
-    optional StableCoin StableCoinDetails = 21;
-    optional Commodity CommodityDetails = 22;
-    optional Collectible CollectibleDetails = 23;
-    optional Vehicle VehicleDetails = 24;
-    optional IntellectualProperty IntellectualPropertyDetails = 25;
-    optional InvestmentFund InvestmentFundDetails = 26;
-    optional Equity EquityDetails = 29;
-
-    optional FinancialProperties FinancialProperties = 27; // Financial-specific properties
-    optional Description Description = 28;                 // Human-readable descriptive properties
-    optional ExternalResources ExternalResources = 30;     // External links and resources
-    
-    optional Distribution DistributionDetails = 31;
-    bool IsVisible = 32; // Controls whether the asset is visible in the marketplace
-    string DefaultHoldLimit = 33; // Default hold limit for the asset
-
-    optional AssetExtension AssetExtensionDetails = 34;
-    bool IsPromoted = 35; // Shown in ATG promoted-assets panel
-}
-
-message AssetExtension {
-    string ExtensionCodeID = 1;
-    string ExtensionContractAddress = 2;
-    repeated string ExtensionPreviousCodeIDs = 3;
-    ExtensionType ExtensionType = 4;
-}
-
-enum ExtensionType {
-    EXTENSION_TYPE_DO_NOT_USE = 0;
-    EXTENSION_TYPE_EQUITY = 1; // This extension is used for ATG Broker Contract related assets
-    EXTENSION_TYPE_RWA = 2; // This extension is used for Compliance Manager Contract related assets
-}
-
-// ---------------- Existing Messages ----------------
-
 message Asset {
-    AssetDetails AssetDetails = 1;
-    metadata.MetaData MetaData = 2;
-    audit.Audit Audit = 3;
-    IssuerDetails IssuerDetails = 4;
+    // Denom represented as a string
+    // Immutable field
+    string ID = 1 [
+        (buf.validate.field).required = true,
+        (buf.validate.field).string = {
+            min_len: 43
+            max_len: 256
+            pattern: "^u[A-Za-z0-9.-]+_v[1-9][0-9]{0,2}-[a-zA-Z][a-zA-Z0-9]{37,126}$"
+        }
+    ];
+
+    // Immutable field
+    string OrganizationID = 2 [
+        (buf.validate.field).string = {
+            uuid: true
+        }
+    ];
+
+    // Contains symbol, version, issuer address
+    // Immutable field
+    denom.Denom Denom = 3 [
+        (buf.validate.field).required = true
+    ];
+
+    // Immutable field
+    AssetType Type = 4 [
+        (buf.validate.field).enum = {
+            defined_only: true
+            not_in: [0]
+        }
+    ];
+
+    // @inject_tags: datastore:",noindex"
+    string Name = 5 [
+        (buf.validate.field).required = true
+    ];
+
+    // @inject_tags: datastore:",noindex"
+    string Description = 6 [
+        (buf.validate.field).string = {
+            max_len: 256
+        }
+    ];
+
+    // @inject_tags: datastore:",noindex"
+    string HTML = 7 [
+        (buf.validate.field).string = {
+            max_len: 65536
+        }
+    ];
+
+    // ISO 3166-1 alpha-3 code e.g. "USA", "CAD"
+    string OriginCountryAlpha3 = 8 [
+        (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+        (buf.validate.field).string = {
+            len: 3,
+            pattern: "^[A-Z]{3}$"
+        }
+    ];
+
+    // If not nil means asset has been issued on chain
+    // Immutable field
+    optional google.protobuf.Timestamp IssuedAt = 9;
+
+    // Controls whether the asset is visible in the marketplace
+    bool IsVisible = 10;
+
+    // Controls whether the asset is visible in the promoted assets panel
+    bool IsPromoted = 11;
+
+    optional google.protobuf.Timestamp SupersededAt = 12;
+
+    string SupersededByID = 13 [
+        (buf.validate.field).ignore = IGNORE_IF_ZERO_VALUE,
+        (buf.validate.field).string = {
+            min_len: 43
+            max_len: 256
+            pattern: "^u[A-Za-z0-9.-]+_v[1-9][0-9]{0,2}-[a-zA-Z][a-zA-Z0-9]{37,126}$"
+        }
+    ];
+
+    repeated File Files = 14 [
+        (buf.validate.field).repeated = {
+            max_items: 128,
+        }
+    ];
+
+    // Dynamic fields defined by front-end
+    google.protobuf.Struct Details = 15;
 }
 
 message Assets {
-    repeated Asset Assets = 1;
-    optional int32 Offset = 2; // If there is more data, this is the offset to pass to the next call
+    repeated Asset Records = 1;
+
+    // If there is more data, this is the offset to pass to the next call
+    optional int32 Offset = 2;
 }
 
-message UserAssetList {
-    string AccountID = 1 [(buf.validate.field).string = { min_len: 1, max_len: 64 }];
-    string Wallet = 2 [(buf.validate.field).string = { min_len: 1, max_len: 128 }];
-    string AssetKey = 3 [(buf.validate.field).string.min_len = 1];
-    UserAssetStatus Status = 4 [(buf.validate.field).enum = { defined_only: true, not_in: [0] }];
-    metadata.MetaData MetaData = 5 [(buf.validate.field).required = true];
-    bool Visible = 6;
-    string OrganizationID = 7 [(buf.validate.field).string.min_len = 1];
+message File {
+    string Name = 1 [
+        (buf.validate.field).required = true,
+        (buf.validate.field).string = {
+            min_len: 2,
+            max_len: 128
+        }
+    ];
+
+    FileType Type = 2 [
+        (buf.validate.field).enum = {
+            defined_only: true
+        }
+    ];
+
+    string Reference = 3 [
+        (buf.validate.field).required = true,
+        (buf.validate.field).string = {
+            uri: true,
+            prefix: "gs://",
+            max_len: 256
+        }
+    ];
 }
 
-message UserAssetLists {
-    repeated UserAssetList UserAssetLists = 1;
-}
-
-// ---------------- New Category Messages ----------------
-
-message RealEstate {
-    string Address = 1;
-    optional int32 Bathrooms = 2;
-    optional int32 Bedrooms = 3;
-    float Latitude = 4;
-    float Longitude = 5;
-    optional string OwnershipType = 6;
-    string PropertyType = 7;
-    optional string RiskRating = 8;
-    optional float SquareFootage = 9;
-    optional string TenancyStatus = 10;
-    optional int32 YearBuilt = 11;
-    repeated float YieldPercent = 12;
-
-    optional int32 Floors = 13;
-    optional float HeightMeters = 14;
-    optional int32 Units = 15;
-    optional int32 AvailableUnits = 16;
-    optional int32 ParkingSpaces = 17;
-    optional int32 Elevators = 18;
-    optional string Classification = 19;
-    optional int32 YearRenovated = 20;
-    optional float LotSize = 21;
-    optional string ZoningType = 22;
-
-    optional float CapRate = 23;
-    optional float NetOperatingIncome = 24;
-
-    repeated string KeyHighlights = 25;
-    repeated string Amenities = 26;
-
-    string PropertyDescription = 27;
-}
-
-message StableCoin {
-    optional string Version = 1;
-    optional string PegType = 2;
-    optional float PegRatio = 3;
-    optional string BackingAsset = 4;
-    optional string ExchangeTickerSymbol = 5;
-    optional string Exchange = 6;
-    optional float MinTransactionAmount = 7;
-    optional float TradingMarginPercentage = 8;
-    optional float AssetMarginPercentage = 9;
-}
-
-message Commodity {
-    string Category = 1;                       
-    optional string Quality = 2;               
-    string UnitOfMeasure = 3;                  
-    optional float Quantity = 4;               
-    optional string ExchangeTickerSymbol = 6;  
-    optional string Exchange = 7;              
-    optional float MinTransactionAmount = 8;   
-    optional string StorageLocation = 9;       
-    optional string ContractType = 10;         
-    optional string DeliveryDate = 11;         
-}
-
-message Collectible {
-    string Category = 1;                          
-    optional string CollectionName = 2;           
-    optional string TokenStandard = 3;            
-    optional string TokenID = 4;                  
-    optional string MetadataURI = 5;              
-    optional string Creator = 6;                  
-    repeated string OwnershipHistory = 7;        
-    string CurrentOwner = 8;                      
-}
-
-message Vehicle {
-    string Category = 1;               
-    string Manufacturer = 2;           
-    string Model = 3;                  
-    string SerialNumber = 4;           
-    optional int32 Year = 5;           
-    optional string Specifications = 6;
-    optional string FuelType = 7;      
-    optional float UsageHours = 8;     
-    optional float Mileage = 9;        
-    string Condition = 10;             
-    string CurrentOwner = 11;          
-    optional string Location = 12;     
-}
-
-message DecCoin {
-    string Denom = 1;
-    string Amount = 2;
-}
-
-message DecCoinWithPrecision {
-    string Denom = 1;
-    string Amount = 2;
-    int64 Precision = 3;
-}
-
-enum TransactionType {
-    TRANSACTION_TYPE_DO_NOT_USE = 0;
-    TRANSACTION_TYPE_MINT = 1;
-    TRANSACTION_TYPE_BURN = 2;
-    TRANSACTION_TYPE_FREEZE = 3;
-    TRANSACTION_TYPE_WHITELIST = 4;
-    TRANSACTION_TYPE_CLAWBACK = 5;
-    TRANSACTION_TYPE_ASSET_EXTENSTION = 6;
-    TRANSACTION_TYPE_DEPOSIT_DISTRIBUTION = 7;
-    TRANSACTION_TYPE_WITHDRAW_DISTRIBUTION = 8;
-    TRANSACTION_TYPE_CROWDFUND_DISTRIBUTION = 9;
-}
-
-message AssetTransaction {
-    int64 Amount = 1;
-    optional string DestinationAddress = 2;
-    optional bool IsGloballyFrozen = 3;
-    optional bool IsGloballyUnfrozen = 4;
-    TransactionType TransactionType = 5;
-    string AssetKey = 6;
-}
-
-message DistributionTransaction {
-    optional int64 Amount = 1;
-    optional AssetRole AssetRole = 2;
-    TransactionType TransactionType = 3;
-    string AssetKey = 4;
-}
-
-enum AssetRole {
-    ASSET_ROLE_DO_NOT_USE = 0;
-    ASSET_ROLE_DISTRIBUTED = 1;
-    ASSET_ROLE_FUNDED = 2;
-}
-
-
-
-message Distribution {
-    DistributionType Type = 1;
-    optional Crowdfund CrowdfundDetails = 2;
-    optional TokenSale TokenSaleDetails = 3;
-}
-
-enum DistributionType {
-    DISTRIBUTION_TYPE_DO_NOT_USE = 0;
-    DISTRIBUTION_TYPE_CROWDFUND = 1;
-    DISTRIBUTION_TYPE_TOKENSALE = 2;
-}
-
-message TokenSale {
-    // The smallest allowable step for the base_denom
-    string QuantityStep = 1;
-    // Price to purchase the tokenized asset with, per subunit
-    repeated DecCoinWithPrecision SellPricesPerSubunit = 2;
-    // Should be pre-issued (even with zero total supply)
-    string BaseDenom = 3; // Base denom (RWA tokens)
-    // Minimum amount of base_denom to purchase
-    string MinAmount = 4;
-    // Timestamp (in seconds) of when the token sale starts
-    int64 StartDate = 5;
-    // Timestamp (in seconds) of when the token sale ends
-    int64 EndDate = 6;
-    // Address of compliance manager contract. That contract is called to check if transfers are allowed or not
-    string ComplianceManagerContractAddr = 7;
-    // Buy prices per subunit. If empty, buy is not allowed for this token sale
-    repeated DecCoinWithPrecision BuyPricesPerSubunit = 8;
-    // Address of the asset registry contract
-    string AssetRegistryContractAddr = 9;
-    // Code of the asset extension
-    string AssetExtensionCode = 10;
-    // Address of the asset extension contract
-    optional string AssetExtensionContractAddr = 11;
-    // Address of the order hub contract
-    string OrderHubContractAddr = 12;
-    // Address of the token sale contract
-    optional string TokenSaleContractAddr = 13;
-    // Distribution supply (in subunits) - 
-    //To mint at the moment of registring the sale to the Smart Contract.
-    string DistributionSupply = 14;
-}
-
-message Crowdfund {
-    // The smallest allowable step for the base_denom   
-    string QuantityStep = 1;
-    // Price to purchase the tokenized asset with, per subunit
-    repeated DecCoinWithPrecision PricesPerSubunit = 2;
-    // Should be pre-issued (even with zero total supply)
-    string BaseDenom = 3; // Base denom (RWA tokens)
-    // Minimum amount of base_denom to purchase
-    string MinAmount = 4;
-    // Timestamp (in seconds) of when the token sale starts
-    int64 StartDate = 5;
-    // Timestamp (in seconds) of when the token sale ends
-    int64 EndDate = 6;
-    // Minimum threshold for the token sale
-    string MinThreshold = 7;
-    // Maximum threshold for the token sale
-    string MaxThreshold = 8;
-    // Allow order cancellation
-    bool AllowOrderCancellation = 9;
-    // Address of the compliance manager contract
-    string ComplianceManagerContractAddr = 10;
-    // Address of the order hub contract
-    string OrderHubContractAddr = 11;
-    // Address of the crowdfund contract
-    optional string CrowdfundContractAddr = 12;
-    // Address of the asset registry contract
-    string AssetRegistryContractAddr = 13;
-    // Code of the asset extension
-    string AssetExtensionCode = 14;
-    // Address of the asset extension contract
-    optional string AssetExtensionContractAddr = 15;
-    // Distribution supply (in subunits) - To mint after the crowdfund is successful
-    string DistributionSupply = 16;
-}
-
-message IntellectualProperty {
-    string Category = 1;                        
-    string Owner = 2;                           
-    optional string RegistrationNumber = 3;     
-    optional string FilingDate = 4;             
-    optional string ExpirationDate = 5;         
-    optional string LicenseType = 7;            
-    optional string LicenseTerms = 8;           
-}
-
-message InvestmentFund {
-    string FundType = 1;                
-    string Exchange = 2;                
-    optional string ExchangeTickerSymbol = 9;
-    optional string ISIN = 3;           
-    optional float NAV = 4;             
-    optional string InceptionDate = 5;  
-    optional string Manager = 6;        
-    optional float ExpenseRatio = 7;    
-    repeated string Holdings = 8;       
-}
-
-message Equity {
-    optional string ExchangeTickerSymbol = 1;
-    optional string Exchange = 2;
-    float MinTransactionAmount = 3; 
-    float TradingMarginPercentage = 4;
-    float AssetMarginPercentage = 5;
-}
-
-// ---------------- FinancialProperties ----------------
-
-message FinancialProperties {
-    string Issuer = 2; 
-    string Type = 7; // Purely informational                          
-    optional string ContractAddress = 12;     
-    string Platform = 10;                     
-    bool Transferable = 9;                    
-    bool Fractional = 13;                     
-    optional bool ComplianceRequired = 6;     
-    repeated string TradeAllowances = 8;      
-    optional int64 TotalSupply = 14;
-    optional string RedemptionTerms = 5;      
-}
-
-// ---------------- Description ----------------
-
-message Description {
-    string Name = 1;                         
-    string Description = 2;                  
-    LogoFile Logo = 3;               
-    string AssetID = 4;                      
-    string URL = 5; 
-    string OriginCountry = 6; // ISO 3166-1 alpha-3 code e.g. "USA", "CAD"                        
-    repeated string Documents = 7;           
-    repeated string Images = 8;              
-    repeated string AllowedJurisdictions = 12; // ISO 3166-1 alpha-3 code e.g. "USA", "CAD"
-    string AllowedJurisdictionRestrictions = 13;     
-}
-
-// ---------------- ExternalResources ----------------
-
-message ExternalResources {
-  repeated Link Links = 1;                 // Flexible list of links with type and URL
-  repeated SocialMedia Socials = 2;        // Flexible list of social media with type and URL
-}
-
-message Link {
-  LinkType Type = 1;                       // Type of link (e.g., "website", "github", "whitepaper", "docs", "explorer", "governance", etc.)
-  string URL = 2;                          // The actual URL
-}
-
-message SocialMedia {
-  SocialMediaType Type = 1;                // Type of social media (e.g., "twitter", "telegram", "discord", "medium", "linkedin", etc.)
-  string URL = 2;                          // The actual URL
-}
-
-// ---------------- Enums ----------------
-
-enum LinkType {
-    LINK_TYPE_DO_NOT_USE = 0;
-    WEBSITE = 1;
-    GITHUB = 2;
-    WHITEPAPER = 3;
-    DOCS = 4;
-    EXPLORER = 5;
-    GOVERNANCE = 6;
-}
-
-enum SocialMediaType {
-    SOCIAL_MEDIA_TYPE_DO_NOT_USE = 0;
-    TWITTER = 1;
-    TELEGRAM = 2;
-    DISCORD = 3;
-    MEDIUM = 4;
-    LINKEDIN = 5;
-}
-
-enum AssetStatus {
-    ASSET_STATUS_DO_NOT_USE = 0;
-    DO_NOT_LIST = 1; 
-    REQUEST_LISTING = 2; 
-    LISTED = 3; 
-    ORGANIZATION_ADMIN_DO_NOT_LIST = 4; 
-    OUTDATED_ASSET_VERSION = 5;
-}
-
-enum Reason {
-    REASON_DO_NOT_USE = 0;
-    DUPLICATE = 1;
-    UNWANTED_ASSET = 2;
-    UNSTABLE_ASSET = 3;
+enum FileType {
+    FILE_TYPE_NONE = 0;
+    // TODO: Add generic file types like FILE_TYPE_LEGAL_DOCUMENT, FILE_TYPE_IMAGE, FILE_TYPE_BROCHURE etc
 }
 
 enum AssetType {
-    ASSET_TYPE_DO_NOT_USE = 0;
-    FUNDS_AND_INVESTMENT_PRODUCT = 1;
-    COMMODITY = 2;
-    WRAPPED_STABLECOIN = 3;
-    CRYPTO = 4;
-    COLLECTIBLE = 5;
-    VEHICLE_INDUSTRIAL_EQUIPMENT = 6;
-    INTELLECTUAL_PROPERTY = 7;
-    REAL_ESTATE = 8;
-    EQUITY = 9;
-}
-
-enum UserAssetStatus {
-    USER_ASSET_STATUS_DO_NOT_USE = 0;
-    WHITELISTED = 1;
-    BLACKLISTED = 2;
-    SELL_ONLY = 3;
-    OUTDATED_VERSION = 4;
-}
-
-message IssuerDetails {
-  string Name = 1;                       
-  string Description = 2;                
-  string Image = 3;                      
-  string ExternalUrl = 4;                
-  string AddressLine1 = 5;               
-  optional string AddressLine2 = 6;      
-  string City = 7;                       
-  optional string Region = 8;            
-  optional string PostalCode = 9;        
-  string Country = 10;                   
-  int32 YearFounded = 11;                
-  bool Licensed = 12;                    
-  optional string LicenseCountry = 13;   
-  optional string LicenseNumber = 14;    
-  optional string Phone = 15;            
-  optional string Email = 16;            
-  repeated string SocialMediaLinks = 17; 
-  optional string KeyClients = 18;       
-  optional string Press = 19;            
-}
-
-message LogoFile {
-    string Reference = 1; // The reference to the file
-    string Extension = 2;
-    optional string Name = 3; // User defined name of the file, used as a "description" and not to reference the file
+    ASSET_TYPE_NONE = 0;
+    ASSET_TYPE_EQUITY = 1;
+    ASSET_TYPE_RWA = 2;
+    // TODO: Add more asset types
 }

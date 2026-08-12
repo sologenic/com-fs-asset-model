@@ -15,7 +15,7 @@ func TestBuildDenom(t *testing.T) {
 		{
 			Name: "Valid denom",
 			Test: func(t *testing.T) {
-				got, err := BuildDenom("AAPL", "1", "testcore1et29c")
+				got, err := New("AAPL", "1", "testcore1et29c")
 				want := &Denom{
 					Currency: &currency.Currency{
 						Symbol:  "AAPL",
@@ -32,7 +32,7 @@ func TestBuildDenom(t *testing.T) {
 		{
 			Name: "Empty smart contract address",
 			Test: func(t *testing.T) {
-				got, err := BuildDenom("AAPL", "1", "")
+				got, err := New("AAPL", "1", "")
 
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), "issuer is required")
@@ -42,7 +42,7 @@ func TestBuildDenom(t *testing.T) {
 		{
 			Name: "Invalid symbol",
 			Test: func(t *testing.T) {
-				got, err := BuildDenom("", "1", "testcore1et29c")
+				got, err := New("", "1", "testcore1et29c")
 
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), "invalid symbol format")
@@ -52,7 +52,7 @@ func TestBuildDenom(t *testing.T) {
 		{
 			Name: "Invalid version",
 			Test: func(t *testing.T) {
-				got, err := BuildDenom("AAPL", "1000", "testcore1et29c")
+				got, err := New("AAPL", "1000", "testcore1et29c")
 
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), "invalid version format")
@@ -63,7 +63,7 @@ func TestBuildDenom(t *testing.T) {
 			Name: "Valid denom with dot and complex issuer",
 			Test: func(t *testing.T) {
 				// We pass raw "1" during build
-				got, err := BuildDenom("BAB.A", "1", "testcore1cd0ezxp06xauqhrrpm4xe3h7yx9xmmeqr23vffppngld54sh9hnqmmep6g")
+				got, err := New("BAB.A", "1", "testcore1cd0ezxp06xauqhrrpm4xe3h7yx9xmmeqr23vffppngld54sh9hnqmmep6g")
 				want := &Denom{
 					Currency: &currency.Currency{
 						Symbol:  "BAB.A",
@@ -86,7 +86,7 @@ func TestParseDenom(t *testing.T) {
 		{
 			Name: "Valid denom",
 			Test: func(t *testing.T) {
-				got, err := ParseDenom("uaapl_v1-testcore1j974n26f48wgt4dpcxryrakrnkg43")
+				got, err := Parse("uaapl_v1-testcore1j974n26f48wgt4dpcxryrakrnkg43")
 				want := &Denom{
 					Currency: &currency.Currency{
 						Symbol:  "AAPL",
@@ -103,7 +103,7 @@ func TestParseDenom(t *testing.T) {
 		{
 			Name: "Invalid format",
 			Test: func(t *testing.T) {
-				got, err := ParseDenom("invalid-format")
+				got, err := Parse("invalid-format")
 
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), "invalid denom format")
@@ -113,7 +113,7 @@ func TestParseDenom(t *testing.T) {
 		{
 			Name: "Missing smart contract address",
 			Test: func(t *testing.T) {
-				got, err := ParseDenom("uaapl_v1-")
+				got, err := Parse("uaapl_v1-")
 
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), "invalid denom format")
@@ -124,7 +124,7 @@ func TestParseDenom(t *testing.T) {
 			Name: "Valid denom parsing",
 			Test: func(t *testing.T) {
 				// Input contains 'v'
-				got, err := ParseDenom("uaapl_v1-testcore1j974n26f48wgt4dpcxryrakrnkg43")
+				got, err := Parse("uaapl_v1-testcore1j974n26f48wgt4dpcxryrakrnkg43")
 				want := &Denom{
 					Currency: &currency.Currency{
 						Symbol:  "AAPL",
@@ -142,7 +142,7 @@ func TestParseDenom(t *testing.T) {
 			Name: "Valid complex denom parsing with dot",
 			Test: func(t *testing.T) {
 				// Input contains 'v'
-				got, err := ParseDenom("ubab.a_v1-testcore1cd0ezxp06xauqhrrpm4xe3h7yx9xmmeqr23vffppngld54sh9hnqmmep6g")
+				got, err := Parse("ubab.a_v1-testcore1cd0ezxp06xauqhrrpm4xe3h7yx9xmmeqr23vffppngld54sh9hnqmmep6g")
 				want := &Denom{
 					Currency: &currency.Currency{
 						Symbol:  "BAB.A",

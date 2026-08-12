@@ -9,5 +9,5 @@ cd $rd
 protoc \
   --proto_path=. \
   --proto_path=$(dirname $(dirname "$rd")) \
-  "domain/symbol/symbol.proto" \
+  "domain/pair/pair.proto" \
   "--go_out=." --go_opt=paths=source_relative

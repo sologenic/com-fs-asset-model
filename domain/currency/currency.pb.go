@@ -82,7 +82,7 @@ const file_domain_currency_currency_proto_rawDesc = "" +
 	"\x1edomain/currency/currency.proto\x12\bcurrency\"<\n" +
 	"\bCurrency\x12\x16\n" +
 	"\x06Symbol\x18\x01 \x01(\tR\x06Symbol\x12\x18\n" +
-	"\aVersion\x18\x02 \x01(\tR\aVersionBBZ@github.com/sologenic/com-fs-asset-model/domain/currency;currencyb\x06proto3"
+	"\aVersion\x18\x02 \x01(\tR\aVersionB\x1aZ\x18domain/currency;currencyb\x06proto3"
 
 var (
 	file_domain_currency_currency_proto_rawDescOnce sync.Once
