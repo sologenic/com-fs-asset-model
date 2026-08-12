@@ -54,6 +54,7 @@ message Asset {
         }
     ];
 
+    // TODO: Better name?
     // @inject_tags: datastore:",noindex"
     string HTML = 7 [
         (buf.validate.field).string = {
