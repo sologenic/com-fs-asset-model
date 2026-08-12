@@ -10,19 +10,21 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const mockValidAccountIssuer = "testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt"
+
 func TestBuildDenom(t *testing.T) {
 	tests := []unittest.TestBase{
 		{
 			Name: "Valid denom",
 			Test: func(t *testing.T) {
-				got, err := BuildDenom("AAPL", "1", "testcore1et29c")
+				got, err := New("AAPL", "1", mockValidAccountIssuer)
 				want := &Denom{
 					Currency: &currency.Currency{
 						Symbol:  "AAPL",
 						Version: "1",
 					},
 					Subunit: "uaapl_v1",
-					Issuer:  "testcore1et29c",
+					Issuer:  mockValidAccountIssuer,
 				}
 
 				assert.NoError(t, err)
@@ -32,7 +34,7 @@ func TestBuildDenom(t *testing.T) {
 		{
 			Name: "Empty smart contract address",
 			Test: func(t *testing.T) {
-				got, err := BuildDenom("AAPL", "1", "")
+				got, err := New("AAPL", "1", "")
 
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), "issuer is required")
@@ -42,7 +44,7 @@ func TestBuildDenom(t *testing.T) {
 		{
 			Name: "Invalid symbol",
 			Test: func(t *testing.T) {
-				got, err := BuildDenom("", "1", "testcore1et29c")
+				got, err := New("", "1", mockValidAccountIssuer)
 
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), "invalid symbol format")
@@ -52,7 +54,7 @@ func TestBuildDenom(t *testing.T) {
 		{
 			Name: "Invalid version",
 			Test: func(t *testing.T) {
-				got, err := BuildDenom("AAPL", "1000", "testcore1et29c")
+				got, err := New("AAPL", "1000", mockValidAccountIssuer)
 
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), "invalid version format")
@@ -63,7 +65,7 @@ func TestBuildDenom(t *testing.T) {
 			Name: "Valid denom with dot and complex issuer",
 			Test: func(t *testing.T) {
 				// We pass raw "1" during build
-				got, err := BuildDenom("BAB.A", "1", "testcore1cd0ezxp06xauqhrrpm4xe3h7yx9xmmeqr23vffppngld54sh9hnqmmep6g")
+				got, err := New("BAB.A", "1", "testcore1cd0ezxp06xauqhrrpm4xe3h7yx9xmmeqr23vffppngld54sh9hnqmmep6g")
 				want := &Denom{
 					Currency: &currency.Currency{
 						Symbol:  "BAB.A",
@@ -86,14 +88,14 @@ func TestParseDenom(t *testing.T) {
 		{
 			Name: "Valid denom",
 			Test: func(t *testing.T) {
-				got, err := ParseDenom("uaapl_v1-testcore1j974n26f48wgt4dpcxryrakrnkg43")
+				got, err := Parse("uaapl_v1-" + mockValidAccountIssuer)
 				want := &Denom{
 					Currency: &currency.Currency{
 						Symbol:  "AAPL",
 						Version: "1",
 					},
 					Subunit: "uaapl_v1",
-					Issuer:  "testcore1j974n26f48wgt4dpcxryrakrnkg43",
+					Issuer:  mockValidAccountIssuer,
 				}
 
 				assert.NoError(t, err)
@@ -103,7 +105,7 @@ func TestParseDenom(t *testing.T) {
 		{
 			Name: "Invalid format",
 			Test: func(t *testing.T) {
-				got, err := ParseDenom("invalid-format")
+				got, err := Parse("invalid-format")
 
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), "invalid denom format")
@@ -113,7 +115,7 @@ func TestParseDenom(t *testing.T) {
 		{
 			Name: "Missing smart contract address",
 			Test: func(t *testing.T) {
-				got, err := ParseDenom("uaapl_v1-")
+				got, err := Parse("uaapl_v1-")
 
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), "invalid denom format")
@@ -124,14 +126,14 @@ func TestParseDenom(t *testing.T) {
 			Name: "Valid denom parsing",
 			Test: func(t *testing.T) {
 				// Input contains 'v'
-				got, err := ParseDenom("uaapl_v1-testcore1j974n26f48wgt4dpcxryrakrnkg43")
+				got, err := Parse("uaapl_v1-" + mockValidAccountIssuer)
 				want := &Denom{
 					Currency: &currency.Currency{
 						Symbol:  "AAPL",
 						Version: "1", // The parsed version is stripped of 'v'
 					},
 					Subunit: "uaapl_v1",
-					Issuer:  "testcore1j974n26f48wgt4dpcxryrakrnkg43",
+					Issuer:  mockValidAccountIssuer,
 				}
 
 				assert.NoError(t, err)
@@ -142,7 +144,7 @@ func TestParseDenom(t *testing.T) {
 			Name: "Valid complex denom parsing with dot",
 			Test: func(t *testing.T) {
 				// Input contains 'v'
-				got, err := ParseDenom("ubab.a_v1-testcore1cd0ezxp06xauqhrrpm4xe3h7yx9xmmeqr23vffppngld54sh9hnqmmep6g")
+				got, err := Parse("ubab.a_v1-testcore1cd0ezxp06xauqhrrpm4xe3h7yx9xmmeqr23vffppngld54sh9hnqmmep6g")
 				want := &Denom{
 					Currency: &currency.Currency{
 						Symbol:  "BAB.A",

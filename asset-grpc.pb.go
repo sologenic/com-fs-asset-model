@@ -7,7 +7,6 @@
 package asset
 
 import (
-	metadata "github.com/sologenic/com-fs-utils-lib/models/metadata"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -67,25 +66,18 @@ func (x *AssetKey) GetKey() string {
 }
 
 type AssetQuery struct {
-	state   protoimpl.MessageState `protogen:"open.v1"`
-	Network metadata.Network       `protobuf:"varint,1,opt,name=Network,proto3,enum=metadata.Network" json:"Network,omitempty"`
-	Offset  *int32                 `protobuf:"varint,2,opt,name=Offset,proto3,oneof" json:"Offset,omitempty"`
-	// Compliance filter: list assets allowed in these jurisdictions
-	JurisdictionIDs []string     `protobuf:"bytes,3,rep,name=JurisdictionIDs,proto3" json:"JurisdictionIDs,omitempty"`
-	OrganizationID  *string      `protobuf:"bytes,4,opt,name=OrganizationID,proto3,oneof" json:"OrganizationID,omitempty"`
-	Status          *AssetStatus `protobuf:"varint,5,opt,name=Status,proto3,enum=asset.AssetStatus,oneof" json:"Status,omitempty"`
-	AssetType       *AssetType   `protobuf:"varint,6,opt,name=AssetType,proto3,enum=asset.AssetType,oneof" json:"AssetType,omitempty"`
-	// On-chain issuer address (distinct from Denom.Issuer)
-	SmartContractIssuerAddr *string `protobuf:"bytes,7,opt,name=SmartContractIssuerAddr,proto3,oneof" json:"SmartContractIssuerAddr,omitempty"`
-	Limit                   *int32  `protobuf:"varint,8,opt,name=Limit,proto3,oneof" json:"Limit,omitempty"`
-	// Asset Extension type filter
-	ExtensionType *ExtensionType `protobuf:"varint,9,opt,name=ExtensionType,proto3,enum=asset.ExtensionType,oneof" json:"ExtensionType,omitempty"`
-	// Asset Denom properties filter
-	DenomIssuer   *string `protobuf:"bytes,10,opt,name=DenomIssuer,proto3,oneof" json:"DenomIssuer,omitempty"`
-	DenomSubunit  *string `protobuf:"bytes,11,opt,name=DenomSubunit,proto3,oneof" json:"DenomSubunit,omitempty"`
-	IsPromoted    *bool   `protobuf:"varint,12,opt,name=IsPromoted,proto3,oneof" json:"IsPromoted,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Offset         *int32                 `protobuf:"varint,1,opt,name=Offset,proto3,oneof" json:"Offset,omitempty"`
+	OrganizationID *string                `protobuf:"bytes,2,opt,name=OrganizationID,proto3,oneof" json:"OrganizationID,omitempty"`
+	ID             *string                `protobuf:"bytes,3,opt,name=ID,proto3,oneof" json:"ID,omitempty"`
+	Type           *AssetType             `protobuf:"varint,4,opt,name=Type,proto3,enum=asset.AssetType,oneof" json:"Type,omitempty"`
+	Limit          *int32                 `protobuf:"varint,5,opt,name=Limit,proto3,oneof" json:"Limit,omitempty"`
+	IsIssued       *bool                  `protobuf:"varint,6,opt,name=IsIssued,proto3,oneof" json:"IsIssued,omitempty"` // IssuedAt != nil
+	IsEnabled      *bool                  `protobuf:"varint,7,opt,name=IsEnabled,proto3,oneof" json:"IsEnabled,omitempty"`
+	IsVisible      *bool                  `protobuf:"varint,8,opt,name=IsVisible,proto3,oneof" json:"IsVisible,omitempty"`
+	IsPromoted     *bool                  `protobuf:"varint,9,opt,name=IsPromoted,proto3,oneof" json:"IsPromoted,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *AssetQuery) Reset() {
@@ -118,25 +110,11 @@ func (*AssetQuery) Descriptor() ([]byte, []int) {
 	return file_asset_grpc_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *AssetQuery) GetNetwork() metadata.Network {
-	if x != nil {
-		return x.Network
-	}
-	return metadata.Network(0)
-}
-
 func (x *AssetQuery) GetOffset() int32 {
 	if x != nil && x.Offset != nil {
 		return *x.Offset
 	}
 	return 0
-}
-
-func (x *AssetQuery) GetJurisdictionIDs() []string {
-	if x != nil {
-		return x.JurisdictionIDs
-	}
-	return nil
 }
 
 func (x *AssetQuery) GetOrganizationID() string {
@@ -146,25 +124,18 @@ func (x *AssetQuery) GetOrganizationID() string {
 	return ""
 }
 
-func (x *AssetQuery) GetStatus() AssetStatus {
-	if x != nil && x.Status != nil {
-		return *x.Status
-	}
-	return AssetStatus_ASSET_STATUS_DO_NOT_USE
-}
-
-func (x *AssetQuery) GetAssetType() AssetType {
-	if x != nil && x.AssetType != nil {
-		return *x.AssetType
-	}
-	return AssetType_ASSET_TYPE_DO_NOT_USE
-}
-
-func (x *AssetQuery) GetSmartContractIssuerAddr() string {
-	if x != nil && x.SmartContractIssuerAddr != nil {
-		return *x.SmartContractIssuerAddr
+func (x *AssetQuery) GetID() string {
+	if x != nil && x.ID != nil {
+		return *x.ID
 	}
 	return ""
+}
+
+func (x *AssetQuery) GetType() AssetType {
+	if x != nil && x.Type != nil {
+		return *x.Type
+	}
+	return AssetType_ASSET_TYPE_NONE
 }
 
 func (x *AssetQuery) GetLimit() int32 {
@@ -174,25 +145,25 @@ func (x *AssetQuery) GetLimit() int32 {
 	return 0
 }
 
-func (x *AssetQuery) GetExtensionType() ExtensionType {
-	if x != nil && x.ExtensionType != nil {
-		return *x.ExtensionType
+func (x *AssetQuery) GetIsIssued() bool {
+	if x != nil && x.IsIssued != nil {
+		return *x.IsIssued
 	}
-	return ExtensionType_EXTENSION_TYPE_DO_NOT_USE
+	return false
 }
 
-func (x *AssetQuery) GetDenomIssuer() string {
-	if x != nil && x.DenomIssuer != nil {
-		return *x.DenomIssuer
+func (x *AssetQuery) GetIsEnabled() bool {
+	if x != nil && x.IsEnabled != nil {
+		return *x.IsEnabled
 	}
-	return ""
+	return false
 }
 
-func (x *AssetQuery) GetDenomSubunit() string {
-	if x != nil && x.DenomSubunit != nil {
-		return *x.DenomSubunit
+func (x *AssetQuery) GetIsVisible() bool {
+	if x != nil && x.IsVisible != nil {
+		return *x.IsVisible
 	}
-	return ""
+	return false
 }
 
 func (x *AssetQuery) GetIsPromoted() bool {
@@ -200,150 +171,6 @@ func (x *AssetQuery) GetIsPromoted() bool {
 		return *x.IsPromoted
 	}
 	return false
-}
-
-type UserAssetListKey struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Key           string                 `protobuf:"bytes,1,opt,name=Key,proto3" json:"Key,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *UserAssetListKey) Reset() {
-	*x = UserAssetListKey{}
-	mi := &file_asset_grpc_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UserAssetListKey) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UserAssetListKey) ProtoMessage() {}
-
-func (x *UserAssetListKey) ProtoReflect() protoreflect.Message {
-	mi := &file_asset_grpc_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UserAssetListKey.ProtoReflect.Descriptor instead.
-func (*UserAssetListKey) Descriptor() ([]byte, []int) {
-	return file_asset_grpc_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *UserAssetListKey) GetKey() string {
-	if x != nil {
-		return x.Key
-	}
-	return ""
-}
-
-type UserAssetListQuery struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Network        metadata.Network       `protobuf:"varint,1,opt,name=Network,proto3,enum=metadata.Network" json:"Network,omitempty"`
-	Offset         *int32                 `protobuf:"varint,2,opt,name=Offset,proto3,oneof" json:"Offset,omitempty"`
-	AccountID      *string                `protobuf:"bytes,3,opt,name=AccountID,proto3,oneof" json:"AccountID,omitempty"`
-	Wallet         *string                `protobuf:"bytes,4,opt,name=Wallet,proto3,oneof" json:"Wallet,omitempty"`
-	AssetKey       *string                `protobuf:"bytes,5,opt,name=AssetKey,proto3,oneof" json:"AssetKey,omitempty"`
-	Status         *UserAssetStatus       `protobuf:"varint,6,opt,name=Status,proto3,enum=asset.UserAssetStatus,oneof" json:"Status,omitempty"`
-	Visible        *bool                  `protobuf:"varint,7,opt,name=Visible,proto3,oneof" json:"Visible,omitempty"`
-	OrganizationID *string                `protobuf:"bytes,8,opt,name=OrganizationID,proto3,oneof" json:"OrganizationID,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *UserAssetListQuery) Reset() {
-	*x = UserAssetListQuery{}
-	mi := &file_asset_grpc_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *UserAssetListQuery) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UserAssetListQuery) ProtoMessage() {}
-
-func (x *UserAssetListQuery) ProtoReflect() protoreflect.Message {
-	mi := &file_asset_grpc_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UserAssetListQuery.ProtoReflect.Descriptor instead.
-func (*UserAssetListQuery) Descriptor() ([]byte, []int) {
-	return file_asset_grpc_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *UserAssetListQuery) GetNetwork() metadata.Network {
-	if x != nil {
-		return x.Network
-	}
-	return metadata.Network(0)
-}
-
-func (x *UserAssetListQuery) GetOffset() int32 {
-	if x != nil && x.Offset != nil {
-		return *x.Offset
-	}
-	return 0
-}
-
-func (x *UserAssetListQuery) GetAccountID() string {
-	if x != nil && x.AccountID != nil {
-		return *x.AccountID
-	}
-	return ""
-}
-
-func (x *UserAssetListQuery) GetWallet() string {
-	if x != nil && x.Wallet != nil {
-		return *x.Wallet
-	}
-	return ""
-}
-
-func (x *UserAssetListQuery) GetAssetKey() string {
-	if x != nil && x.AssetKey != nil {
-		return *x.AssetKey
-	}
-	return ""
-}
-
-func (x *UserAssetListQuery) GetStatus() UserAssetStatus {
-	if x != nil && x.Status != nil {
-		return *x.Status
-	}
-	return UserAssetStatus_USER_ASSET_STATUS_DO_NOT_USE
-}
-
-func (x *UserAssetListQuery) GetVisible() bool {
-	if x != nil && x.Visible != nil {
-		return *x.Visible
-	}
-	return false
-}
-
-func (x *UserAssetListQuery) GetOrganizationID() string {
-	if x != nil && x.OrganizationID != nil {
-		return *x.OrganizationID
-	}
-	return ""
 }
 
 type CountResponse struct {
@@ -355,7 +182,7 @@ type CountResponse struct {
 
 func (x *CountResponse) Reset() {
 	*x = CountResponse{}
-	mi := &file_asset_grpc_proto_msgTypes[4]
+	mi := &file_asset_grpc_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -367,7 +194,7 @@ func (x *CountResponse) String() string {
 func (*CountResponse) ProtoMessage() {}
 
 func (x *CountResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_asset_grpc_proto_msgTypes[4]
+	mi := &file_asset_grpc_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -380,7 +207,7 @@ func (x *CountResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CountResponse.ProtoReflect.Descriptor instead.
 func (*CountResponse) Descriptor() ([]byte, []int) {
-	return file_asset_grpc_proto_rawDescGZIP(), []int{4}
+	return file_asset_grpc_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *CountResponse) GetCount() int32 {
@@ -394,66 +221,39 @@ var File_asset_grpc_proto protoreflect.FileDescriptor
 
 const file_asset_grpc_proto_rawDesc = "" +
 	"\n" +
-	"\x10asset-grpc.proto\x12\x05asset\x1a\vasset.proto\x1a9sologenic/com-fs-utils-lib/models/metadata/metadata.proto\"\x1c\n" +
+	"\x10asset-grpc.proto\x12\x05asset\x1a\vasset.proto\"\x1c\n" +
 	"\bAssetKey\x12\x10\n" +
-	"\x03Key\x18\x01 \x01(\tR\x03Key\"\xc2\x05\n" +
+	"\x03Key\x18\x01 \x01(\tR\x03Key\"\xad\x03\n" +
 	"\n" +
-	"AssetQuery\x12+\n" +
-	"\aNetwork\x18\x01 \x01(\x0e2\x11.metadata.NetworkR\aNetwork\x12\x1b\n" +
-	"\x06Offset\x18\x02 \x01(\x05H\x00R\x06Offset\x88\x01\x01\x12(\n" +
-	"\x0fJurisdictionIDs\x18\x03 \x03(\tR\x0fJurisdictionIDs\x12+\n" +
-	"\x0eOrganizationID\x18\x04 \x01(\tH\x01R\x0eOrganizationID\x88\x01\x01\x12/\n" +
-	"\x06Status\x18\x05 \x01(\x0e2\x12.asset.AssetStatusH\x02R\x06Status\x88\x01\x01\x123\n" +
-	"\tAssetType\x18\x06 \x01(\x0e2\x10.asset.AssetTypeH\x03R\tAssetType\x88\x01\x01\x12=\n" +
-	"\x17SmartContractIssuerAddr\x18\a \x01(\tH\x04R\x17SmartContractIssuerAddr\x88\x01\x01\x12\x19\n" +
-	"\x05Limit\x18\b \x01(\x05H\x05R\x05Limit\x88\x01\x01\x12?\n" +
-	"\rExtensionType\x18\t \x01(\x0e2\x14.asset.ExtensionTypeH\x06R\rExtensionType\x88\x01\x01\x12%\n" +
-	"\vDenomIssuer\x18\n" +
-	" \x01(\tH\aR\vDenomIssuer\x88\x01\x01\x12'\n" +
-	"\fDenomSubunit\x18\v \x01(\tH\bR\fDenomSubunit\x88\x01\x01\x12#\n" +
+	"AssetQuery\x12\x1b\n" +
+	"\x06Offset\x18\x01 \x01(\x05H\x00R\x06Offset\x88\x01\x01\x12+\n" +
+	"\x0eOrganizationID\x18\x02 \x01(\tH\x01R\x0eOrganizationID\x88\x01\x01\x12\x13\n" +
+	"\x02ID\x18\x03 \x01(\tH\x02R\x02ID\x88\x01\x01\x12)\n" +
+	"\x04Type\x18\x04 \x01(\x0e2\x10.asset.AssetTypeH\x03R\x04Type\x88\x01\x01\x12\x19\n" +
+	"\x05Limit\x18\x05 \x01(\x05H\x04R\x05Limit\x88\x01\x01\x12\x1f\n" +
+	"\bIsIssued\x18\x06 \x01(\bH\x05R\bIsIssued\x88\x01\x01\x12!\n" +
+	"\tIsEnabled\x18\a \x01(\bH\x06R\tIsEnabled\x88\x01\x01\x12!\n" +
+	"\tIsVisible\x18\b \x01(\bH\aR\tIsVisible\x88\x01\x01\x12#\n" +
 	"\n" +
-	"IsPromoted\x18\f \x01(\bH\tR\n" +
+	"IsPromoted\x18\t \x01(\bH\bR\n" +
 	"IsPromoted\x88\x01\x01B\t\n" +
 	"\a_OffsetB\x11\n" +
-	"\x0f_OrganizationIDB\t\n" +
-	"\a_StatusB\f\n" +
+	"\x0f_OrganizationIDB\x05\n" +
+	"\x03_IDB\a\n" +
+	"\x05_TypeB\b\n" +
+	"\x06_LimitB\v\n" +
+	"\t_IsIssuedB\f\n" +
 	"\n" +
-	"_AssetTypeB\x1a\n" +
-	"\x18_SmartContractIssuerAddrB\b\n" +
-	"\x06_LimitB\x10\n" +
-	"\x0e_ExtensionTypeB\x0e\n" +
-	"\f_DenomIssuerB\x0f\n" +
-	"\r_DenomSubunitB\r\n" +
-	"\v_IsPromoted\"$\n" +
-	"\x10UserAssetListKey\x12\x10\n" +
-	"\x03Key\x18\x01 \x01(\tR\x03Key\"\x9b\x03\n" +
-	"\x12UserAssetListQuery\x12+\n" +
-	"\aNetwork\x18\x01 \x01(\x0e2\x11.metadata.NetworkR\aNetwork\x12\x1b\n" +
-	"\x06Offset\x18\x02 \x01(\x05H\x00R\x06Offset\x88\x01\x01\x12!\n" +
-	"\tAccountID\x18\x03 \x01(\tH\x01R\tAccountID\x88\x01\x01\x12\x1b\n" +
-	"\x06Wallet\x18\x04 \x01(\tH\x02R\x06Wallet\x88\x01\x01\x12\x1f\n" +
-	"\bAssetKey\x18\x05 \x01(\tH\x03R\bAssetKey\x88\x01\x01\x123\n" +
-	"\x06Status\x18\x06 \x01(\x0e2\x16.asset.UserAssetStatusH\x04R\x06Status\x88\x01\x01\x12\x1d\n" +
-	"\aVisible\x18\a \x01(\bH\x05R\aVisible\x88\x01\x01\x12+\n" +
-	"\x0eOrganizationID\x18\b \x01(\tH\x06R\x0eOrganizationID\x88\x01\x01B\t\n" +
-	"\a_OffsetB\f\n" +
+	"_IsEnabledB\f\n" +
 	"\n" +
-	"_AccountIDB\t\n" +
-	"\a_WalletB\v\n" +
-	"\t_AssetKeyB\t\n" +
-	"\a_StatusB\n" +
-	"\n" +
-	"\b_VisibleB\x11\n" +
-	"\x0f_OrganizationID\"%\n" +
+	"_IsVisibleB\r\n" +
+	"\v_IsPromoted\"%\n" +
 	"\rCountResponse\x12\x14\n" +
-	"\x05Count\x18\x01 \x01(\x05R\x05Count2\xa2\x03\n" +
+	"\x05Count\x18\x01 \x01(\x05R\x05Count2\xd2\x01\n" +
 	"\x10AssetListService\x12,\n" +
 	"\vUpsertAsset\x12\f.asset.Asset\x1a\x0f.asset.AssetKey\x12)\n" +
 	"\bGetAsset\x12\x0f.asset.AssetKey\x1a\f.asset.Asset\x12-\n" +
-	"\tGetAssets\x12\x11.asset.AssetQuery\x1a\r.asset.Assets\x12D\n" +
-	"\x13UpsertUserAssetList\x12\x14.asset.UserAssetList\x1a\x17.asset.UserAssetListKey\x12A\n" +
-	"\x10GetUserAssetList\x12\x17.asset.UserAssetListKey\x1a\x14.asset.UserAssetList\x12E\n" +
-	"\x11GetUserAssetLists\x12\x19.asset.UserAssetListQuery\x1a\x15.asset.UserAssetLists\x126\n" +
+	"\tGetAssets\x12\x11.asset.AssetQuery\x1a\r.asset.Assets\x126\n" +
 	"\vCountAssets\x12\x11.asset.AssetQuery\x1a\x14.asset.CountResponseB/Z-github.com/sologenic/com-fs-asset-model;assetb\x06proto3"
 
 var (
@@ -468,49 +268,30 @@ func file_asset_grpc_proto_rawDescGZIP() []byte {
 	return file_asset_grpc_proto_rawDescData
 }
 
-var file_asset_grpc_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_asset_grpc_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_asset_grpc_proto_goTypes = []any{
-	(*AssetKey)(nil),           // 0: asset.AssetKey
-	(*AssetQuery)(nil),         // 1: asset.AssetQuery
-	(*UserAssetListKey)(nil),   // 2: asset.UserAssetListKey
-	(*UserAssetListQuery)(nil), // 3: asset.UserAssetListQuery
-	(*CountResponse)(nil),      // 4: asset.CountResponse
-	(metadata.Network)(0),      // 5: metadata.Network
-	(AssetStatus)(0),           // 6: asset.AssetStatus
-	(AssetType)(0),             // 7: asset.AssetType
-	(ExtensionType)(0),         // 8: asset.ExtensionType
-	(UserAssetStatus)(0),       // 9: asset.UserAssetStatus
-	(*Asset)(nil),              // 10: asset.Asset
-	(*UserAssetList)(nil),      // 11: asset.UserAssetList
-	(*Assets)(nil),             // 12: asset.Assets
-	(*UserAssetLists)(nil),     // 13: asset.UserAssetLists
+	(*AssetKey)(nil),      // 0: asset.AssetKey
+	(*AssetQuery)(nil),    // 1: asset.AssetQuery
+	(*CountResponse)(nil), // 2: asset.CountResponse
+	(AssetType)(0),        // 3: asset.AssetType
+	(*Asset)(nil),         // 4: asset.Asset
+	(*Assets)(nil),        // 5: asset.Assets
 }
 var file_asset_grpc_proto_depIdxs = []int32{
-	5,  // 0: asset.AssetQuery.Network:type_name -> metadata.Network
-	6,  // 1: asset.AssetQuery.Status:type_name -> asset.AssetStatus
-	7,  // 2: asset.AssetQuery.AssetType:type_name -> asset.AssetType
-	8,  // 3: asset.AssetQuery.ExtensionType:type_name -> asset.ExtensionType
-	5,  // 4: asset.UserAssetListQuery.Network:type_name -> metadata.Network
-	9,  // 5: asset.UserAssetListQuery.Status:type_name -> asset.UserAssetStatus
-	10, // 6: asset.AssetListService.UpsertAsset:input_type -> asset.Asset
-	0,  // 7: asset.AssetListService.GetAsset:input_type -> asset.AssetKey
-	1,  // 8: asset.AssetListService.GetAssets:input_type -> asset.AssetQuery
-	11, // 9: asset.AssetListService.UpsertUserAssetList:input_type -> asset.UserAssetList
-	2,  // 10: asset.AssetListService.GetUserAssetList:input_type -> asset.UserAssetListKey
-	3,  // 11: asset.AssetListService.GetUserAssetLists:input_type -> asset.UserAssetListQuery
-	1,  // 12: asset.AssetListService.CountAssets:input_type -> asset.AssetQuery
-	0,  // 13: asset.AssetListService.UpsertAsset:output_type -> asset.AssetKey
-	10, // 14: asset.AssetListService.GetAsset:output_type -> asset.Asset
-	12, // 15: asset.AssetListService.GetAssets:output_type -> asset.Assets
-	2,  // 16: asset.AssetListService.UpsertUserAssetList:output_type -> asset.UserAssetListKey
-	11, // 17: asset.AssetListService.GetUserAssetList:output_type -> asset.UserAssetList
-	13, // 18: asset.AssetListService.GetUserAssetLists:output_type -> asset.UserAssetLists
-	4,  // 19: asset.AssetListService.CountAssets:output_type -> asset.CountResponse
-	13, // [13:20] is the sub-list for method output_type
-	6,  // [6:13] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	3, // 0: asset.AssetQuery.Type:type_name -> asset.AssetType
+	4, // 1: asset.AssetListService.UpsertAsset:input_type -> asset.Asset
+	0, // 2: asset.AssetListService.GetAsset:input_type -> asset.AssetKey
+	1, // 3: asset.AssetListService.GetAssets:input_type -> asset.AssetQuery
+	1, // 4: asset.AssetListService.CountAssets:input_type -> asset.AssetQuery
+	0, // 5: asset.AssetListService.UpsertAsset:output_type -> asset.AssetKey
+	4, // 6: asset.AssetListService.GetAsset:output_type -> asset.Asset
+	5, // 7: asset.AssetListService.GetAssets:output_type -> asset.Assets
+	2, // 8: asset.AssetListService.CountAssets:output_type -> asset.CountResponse
+	5, // [5:9] is the sub-list for method output_type
+	1, // [1:5] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_asset_grpc_proto_init() }
@@ -520,14 +301,13 @@ func file_asset_grpc_proto_init() {
 	}
 	file_asset_proto_init()
 	file_asset_grpc_proto_msgTypes[1].OneofWrappers = []any{}
-	file_asset_grpc_proto_msgTypes[3].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_asset_grpc_proto_rawDesc), len(file_asset_grpc_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

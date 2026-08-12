@@ -3,65 +3,34 @@ syntax = "proto3";
 package asset;
 
 import "asset.proto";
-import "sologenic/com-fs-utils-lib/models/metadata/metadata.proto";
 
 option go_package = "github.com/sologenic/com-fs-asset-model;asset";
 
-service AssetListService {
+service AssetListService { // TODO: Better name
     // Upsert on Asset
     rpc UpsertAsset(Asset) returns (AssetKey);
     // Get Asset by Key 
     rpc GetAsset(AssetKey) returns (Asset);
     // Get all Assets for a given filter
     rpc GetAssets(AssetQuery) returns (Assets);
-
-    // Upsert on UserAssetList
-    rpc UpsertUserAssetList(UserAssetList) returns (UserAssetListKey);
-    // Get UserAssetList by Key
-    rpc GetUserAssetList(UserAssetListKey) returns (UserAssetList);
-    // Get all UserAssetList for a given filter
-    rpc GetUserAssetLists(UserAssetListQuery) returns (UserAssetLists);
-
     // Count all Assets for a given filter
     rpc CountAssets(AssetQuery) returns (CountResponse);
-}   
+}
 
 message AssetKey {
     string Key = 1;
 }
 
 message AssetQuery {
-    metadata.Network Network = 1;
-    optional int32 Offset = 2;
-    // Compliance filter: list assets allowed in these jurisdictions
-    repeated string JurisdictionIDs = 3;
-    optional string OrganizationID = 4;
-    optional AssetStatus Status = 5;
-    optional AssetType AssetType = 6;
-    // On-chain issuer address (distinct from Denom.Issuer)
-    optional string SmartContractIssuerAddr = 7;
-    optional int32 Limit = 8;
-    // Asset Extension type filter
-    optional ExtensionType ExtensionType = 9;
-    // Asset Denom properties filter
-    optional string DenomIssuer = 10;
-    optional string DenomSubunit = 11;
-    optional bool IsPromoted = 12;
-}
-
-message UserAssetListKey {
-    string Key = 1;
-}
-
-message UserAssetListQuery {
-    metadata.Network Network = 1;
-    optional int32 Offset = 2;
-    optional string AccountID = 3;
-    optional string Wallet = 4;
-    optional string AssetKey = 5;
-    optional UserAssetStatus Status = 6;
-    optional bool Visible = 7;
-    optional string OrganizationID = 8;
+    optional int32 Offset = 1;
+    optional string OrganizationID = 2;
+    optional string ID = 3;
+    optional AssetType Type = 4;
+    optional int32 Limit = 5;
+    optional bool IsIssued = 6; // IssuedAt != nil
+    optional bool IsEnabled = 7;
+    optional bool IsVisible = 8;
+    optional bool IsPromoted = 9;
 }
 
 message CountResponse {

@@ -7,6 +7,7 @@
 package denom
 
 import (
+	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
 	currency "github.com/sologenic/com-fs-asset-model/domain/currency"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -33,11 +34,9 @@ const (
 //     - Example: "ubab.a_v1-testcore1cd0ezxp06xauqhrrpm4xe3h7yx9xmmeqr23vffppngld54sh9hnqmmep6g"
 type Denom struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Currency      *currency.Currency     `protobuf:"bytes,1,opt,name=Currency,proto3" json:"Currency,omitempty"` // Format: {symbol}_{version}
-	Subunit       string                 `protobuf:"bytes,2,opt,name=Subunit,proto3" json:"Subunit,omitempty"`   // Format: u{currency}
+	Currency      *currency.Currency     `protobuf:"bytes,1,opt,name=Currency,proto3" json:"Currency,omitempty"`
+	Subunit       string                 `protobuf:"bytes,2,opt,name=Subunit,proto3" json:"Subunit,omitempty"`
 	Issuer        string                 `protobuf:"bytes,3,opt,name=Issuer,proto3" json:"Issuer,omitempty"`
-	Precision     int64                  `protobuf:"varint,4,opt,name=Precision,proto3" json:"Precision,omitempty"`    // Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares.
-	Description   string                 `protobuf:"bytes,5,opt,name=Description,proto3" json:"Description,omitempty"` // On-chain description
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -93,31 +92,15 @@ func (x *Denom) GetIssuer() string {
 	return ""
 }
 
-func (x *Denom) GetPrecision() int64 {
-	if x != nil {
-		return x.Precision
-	}
-	return 0
-}
-
-func (x *Denom) GetDescription() string {
-	if x != nil {
-		return x.Description
-	}
-	return ""
-}
-
 var File_domain_denom_denom_proto protoreflect.FileDescriptor
 
 const file_domain_denom_denom_proto_rawDesc = "" +
 	"\n" +
-	"\x18domain/denom/denom.proto\x12\x05denom\x1a;sologenic/com-fs-asset-model/domain/currency/currency.proto\"\xa9\x01\n" +
-	"\x05Denom\x12.\n" +
-	"\bCurrency\x18\x01 \x01(\v2\x12.currency.CurrencyR\bCurrency\x12\x18\n" +
-	"\aSubunit\x18\x02 \x01(\tR\aSubunit\x12\x16\n" +
-	"\x06Issuer\x18\x03 \x01(\tR\x06Issuer\x12\x1c\n" +
-	"\tPrecision\x18\x04 \x01(\x03R\tPrecision\x12 \n" +
-	"\vDescription\x18\x05 \x01(\tR\vDescriptionB<Z:github.com/sologenic/com-fs-asset-model/domain/denom;denomb\x06proto3"
+	"\x18domain/denom/denom.proto\x12\x05denom\x1a\x1bbuf/validate/validate.proto\x1a;sologenic/com-fs-asset-model/domain/currency/currency.proto\"\xec\x01\n" +
+	"\x05Denom\x126\n" +
+	"\bCurrency\x18\x01 \x01(\v2\x12.currency.CurrencyB\x06\xbaH\x03\xc8\x01\x01R\bCurrency\x12J\n" +
+	"\aSubunit\x18\x02 \x01(\tB0\xbaH-\xc8\x01\x01r(\x1832$^u[a-z0-9.-]{1,45}_v[1-9][0-9]{0,2}$R\aSubunit\x12_\n" +
+	"\x06Issuer\x18\x03 \x01(\tBG\xbaHD\xc8\x01\x01r?2=^(?:test)?core1(?:[02-9ac-hj-np-z]{38}|[02-9ac-hj-np-z]{58})$R\x06IssuerB<Z:github.com/sologenic/com-fs-asset-model/domain/denom;denomb\x06proto3"
 
 var (
 	file_domain_denom_denom_proto_rawDescOnce sync.Once

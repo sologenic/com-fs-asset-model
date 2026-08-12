@@ -1,8 +1,20 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+
+set -euo pipefail
 
 # move to the root dir of the package
 rd=$(git rev-parse --show-toplevel)
+
+mkdir -p ../../buf/validate
+curl https://raw.githubusercontent.com/bufbuild/protovalidate/refs/heads/main/proto/protovalidate/buf/validate/validate.proto > ../../buf/validate/validate.proto
+
+mkdir -p ../../google/protobuf
+curl https://raw.githubusercontent.com/protocolbuffers/protobuf/refs/heads/main/src/google/protobuf/timestamp.proto > ../../google/protobuf/timestamp.proto
+curl https://raw.githubusercontent.com/protocolbuffers/protobuf/refs/heads/main/src/google/protobuf/struct.proto > ../../google/protobuf/struct.proto
+
+if ! command -v protoc-go-inject-tag &> /dev/null; then
+  go install github.com/favadi/protoc-go-inject-tag@latest
+fi
 
 # Handle dependencies
 lib_dirs=(
@@ -13,7 +25,7 @@ lib_dirs=(
 checkout_lib_branch() {
     # Fetch latest remote branches
     git fetch origin
-    
+
     # Check if staging branch exists in remote
     if git ls-remote --heads origin staging | grep -q staging; then
         echo "Switching to staging branch..."
@@ -28,7 +40,7 @@ for lib_dir in "${lib_dirs[@]}"; do
     # Extract directory name from path (e.g., "../com-fs-utils-lib" -> "com-fs-utils-lib")
     lib_name=$(basename "$lib_dir")
     lib_repo="git@github.com:sologenic/${lib_name}.git"
-    
+
     if [ -d "$lib_dir" ] && [ -d "$lib_dir/.git" ]; then
         echo "Updating ${lib_name} repository..."
         cd "$lib_dir"
@@ -52,39 +64,34 @@ for lib_dir in "${lib_dirs[@]}"; do
 done
 cd $rd
 
-# protovalidate schema (import buf/validate/validate.proto); path is stable vs git root
-THIRD_PARTY="$(cd "$(dirname "${BASH_SOURCE[0]}")/../third_party" && pwd)"
+protoc \
+  --proto_path=. "asset.proto" \
+  --proto_path=$(dirname $(dirname "$rd")) \
+  "--go_out=." --go_opt=paths=source_relative \
+  --go-grpc_opt=require_unimplemented_servers=false \
+  "--go-grpc_out=." --go-grpc_opt=paths=source_relative
 
 protoc \
---proto_path=. "asset.proto" \
---proto_path="$THIRD_PARTY" \
---proto_path=$(dirname $(dirname "$rd")) \
-"--go_out=." --go_opt=paths=source_relative \
---go-grpc_opt=require_unimplemented_servers=false \
-"--go-grpc_out=." --go-grpc_opt=paths=source_relative
+  --proto_path=. "asset-grpc.proto" \
+  --proto_path=$(dirname $(dirname "$rd")) \
+  "--go_out=." --go_opt=paths=source_relative \
+  --go-grpc_opt=require_unimplemented_servers=false \
+  "--go-grpc_out=." --go-grpc_opt=paths=source_relative
 
-protoc \
---proto_path=. "asset-grpc.proto" \
---proto_path="$THIRD_PARTY" \
---proto_path=$(dirname $(dirname "$rd")) \
-"--go_out=." --go_opt=paths=source_relative \
---go-grpc_opt=require_unimplemented_servers=false \
-"--go-grpc_out=." --go-grpc_opt=paths=source_relative
+protoc-go-inject-tag -input="asset.pb.go"
 
-rm -rf node_modules
 npm i
 
 protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto \
---proto_path=. \
---proto_path="$THIRD_PARTY" \
---proto_path=$(dirname $(dirname "$rd")) \
---ts_proto_out=. \
---ts_proto_opt=esModuleInterop=true \
---ts_proto_opt=outputServices=grpc-js \
-asset.proto
+  --proto_path=. \
+  --proto_path=$(dirname $(dirname "$rd")) \
+  --ts_proto_out=. \
+  --ts_proto_opt=esModuleInterop=true \
+  --ts_proto_opt=outputServices=grpc-js \
+  asset.proto
+
+./domain/currency/bin/build.sh
+./domain/denom/bin/build.sh
+./domain/pair/bin/build.sh
 
 npm run build-ts
-rm -rf node_modules
-git add build/
-
-git add *.ts

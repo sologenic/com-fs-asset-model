@@ -4,23 +4,18 @@ export declare const protobufPackage = "denom";
 /**
  * Denom defines the on-chain denomination of a token and include on-chain data such as the issuer, precision, and description.
  * It is constructed according to the following conventions:
- *   1. Currency:  {lowercase(symbol)}_{version}
- *      - Example: "aapl_v1", "btc-usd_v2"
- *   2. Subunit:   u{currency}
- *      - Example: "uaapl_v1"
- *   3. Denom:     {subunit}-{issuer}
- *      - Example: "uaapl_v1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
+ *  1. Currency:  {lowercase(symbol)}_v{version}
+ *     - Example: "aapl_v1", "btc-usd_v2"
+ *  2. Subunit:   u{currency}
+ *     - Example: "uaapl_v1", "ubtc-usd_v2"
+ *  3. Denom:     {subunit}-{issuer}
+ *     - Example: "uaapl_v1-testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt9yfy74spch7fpq3f8j0e"
+ *     - Example: "ubab.a_v1-testcore1cd0ezxp06xauqhrrpm4xe3h7yx9xmmeqr23vffppngld54sh9hnqmmep6g"
  */
 export interface Denom {
-    /** Format: {symbol}_{version} */
     Currency: Currency | undefined;
-    /** Format: u{currency} */
     Subunit: string;
     Issuer: string;
-    /** Decimal precision for the share count. e.g, if set to 6, the smallest unit represents 0.000001 shares. */
-    Precision: number;
-    /** On-chain description */
-    Description: string;
 }
 export declare const Denom: {
     encode(message: Denom, writer?: _m0.Writer): _m0.Writer;
@@ -34,8 +29,6 @@ export declare const Denom: {
         } | undefined;
         Subunit?: string | undefined;
         Issuer?: string | undefined;
-        Precision?: number | undefined;
-        Description?: string | undefined;
     } & {
         Currency?: ({
             Symbol?: string | undefined;
@@ -46,8 +39,6 @@ export declare const Denom: {
         } & { [K in Exclude<keyof I["Currency"], keyof Currency>]: never; }) | undefined;
         Subunit?: string | undefined;
         Issuer?: string | undefined;
-        Precision?: number | undefined;
-        Description?: string | undefined;
     } & { [K_1 in Exclude<keyof I, keyof Denom>]: never; }>(base?: I | undefined): Denom;
     fromPartial<I_1 extends {
         Currency?: {
@@ -56,8 +47,6 @@ export declare const Denom: {
         } | undefined;
         Subunit?: string | undefined;
         Issuer?: string | undefined;
-        Precision?: number | undefined;
-        Description?: string | undefined;
     } & {
         Currency?: ({
             Symbol?: string | undefined;
@@ -68,8 +57,6 @@ export declare const Denom: {
         } & { [K_2 in Exclude<keyof I_1["Currency"], keyof Currency>]: never; }) | undefined;
         Subunit?: string | undefined;
         Issuer?: string | undefined;
-        Precision?: number | undefined;
-        Description?: string | undefined;
     } & { [K_3 in Exclude<keyof I_1, keyof Denom>]: never; }>(object: I_1): Denom;
 };
 type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;

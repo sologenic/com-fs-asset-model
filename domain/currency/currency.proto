@@ -2,11 +2,24 @@ syntax = "proto3";
 
 package currency;
 
+import "buf/validate/validate.proto";
+
 option go_package = "github.com/sologenic/com-fs-asset-model/domain/currency;currency";
 
 message Currency {
     // User-entered ticker with format:[a-zA-Z0-9.\-]{1,45}. e.g., APPL, PLTR, MSFT, BAB.A, BTC-USD
-    string Symbol = 1;
+    string Symbol = 1 [
+        (buf.validate.field).required = true,
+        (buf.validate.field).string = {
+            pattern: "^[a-zA-Z0-9.-]{1,45}$"
+        }
+    ];
+
     // Auto-incremented version (no leading zeros) with max length 3 characters (values 1 to 999)
-    string Version = 2;
+    string Version = 2 [
+        (buf.validate.field).required = true,
+        (buf.validate.field).string = {
+            pattern: "^[1-9][0-9]{0,2}$"
+        }
+    ];
 }
