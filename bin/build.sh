@@ -80,11 +80,6 @@ protoc \
 
 protoc-go-inject-tag -input="asset.pb.go"
 
-./domain/currency/bin/build.sh
-./domain/denom/bin/build.sh
-./domain/pair/bin/build.sh
-
-rm -rf node_modules
 npm i
 
 protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto \
@@ -95,8 +90,8 @@ protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto \
   --ts_proto_opt=outputServices=grpc-js \
   asset.proto
 
-npm run build-ts
-rm -rf node_modules
-git add build/
+./domain/currency/bin/build.sh
+./domain/denom/bin/build.sh
+./domain/pair/bin/build.sh
 
-git add *.ts
+npm run build-ts

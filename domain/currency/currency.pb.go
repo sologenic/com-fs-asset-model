@@ -7,6 +7,7 @@
 package currency
 
 import (
+	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -79,10 +80,10 @@ var File_domain_currency_currency_proto protoreflect.FileDescriptor
 
 const file_domain_currency_currency_proto_rawDesc = "" +
 	"\n" +
-	"\x1edomain/currency/currency.proto\x12\bcurrency\"<\n" +
-	"\bCurrency\x12\x16\n" +
-	"\x06Symbol\x18\x01 \x01(\tR\x06Symbol\x12\x18\n" +
-	"\aVersion\x18\x02 \x01(\tR\aVersionBBZ@github.com/sologenic/com-fs-asset-model/domain/currency;currencyb\x06proto3"
+	"\x1edomain/currency/currency.proto\x12\bcurrency\x1a\x1bbuf/validate/validate.proto\"z\n" +
+	"\bCurrency\x127\n" +
+	"\x06Symbol\x18\x01 \x01(\tB\x1f\xbaH\x1c\xc8\x01\x01r\x172\x15^[a-zA-Z0-9.-]{1,45}$R\x06Symbol\x125\n" +
+	"\aVersion\x18\x02 \x01(\tB\x1b\xbaH\x18\xc8\x01\x01r\x132\x11^[1-9][0-9]{0,2}$R\aVersionBBZ@github.com/sologenic/com-fs-asset-model/domain/currency;currencyb\x06proto3"
 
 var (
 	file_domain_currency_currency_proto_rawDescOnce sync.Once

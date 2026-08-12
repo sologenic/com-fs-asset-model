@@ -10,19 +10,21 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const mockValidAccountIssuer = "testcore1et29cek95pl0zralsf43u4uply0g9nmxnj7fyt"
+
 func TestBuildDenom(t *testing.T) {
 	tests := []unittest.TestBase{
 		{
 			Name: "Valid denom",
 			Test: func(t *testing.T) {
-				got, err := New("AAPL", "1", "testcore1et29c")
+				got, err := New("AAPL", "1", mockValidAccountIssuer)
 				want := &Denom{
 					Currency: &currency.Currency{
 						Symbol:  "AAPL",
 						Version: "1",
 					},
 					Subunit: "uaapl_v1",
-					Issuer:  "testcore1et29c",
+					Issuer:  mockValidAccountIssuer,
 				}
 
 				assert.NoError(t, err)
@@ -42,7 +44,7 @@ func TestBuildDenom(t *testing.T) {
 		{
 			Name: "Invalid symbol",
 			Test: func(t *testing.T) {
-				got, err := New("", "1", "testcore1et29c")
+				got, err := New("", "1", mockValidAccountIssuer)
 
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), "invalid symbol format")
@@ -52,7 +54,7 @@ func TestBuildDenom(t *testing.T) {
 		{
 			Name: "Invalid version",
 			Test: func(t *testing.T) {
-				got, err := New("AAPL", "1000", "testcore1et29c")
+				got, err := New("AAPL", "1000", mockValidAccountIssuer)
 
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), "invalid version format")
@@ -86,14 +88,14 @@ func TestParseDenom(t *testing.T) {
 		{
 			Name: "Valid denom",
 			Test: func(t *testing.T) {
-				got, err := Parse("uaapl_v1-testcore1j974n26f48wgt4dpcxryrakrnkg43")
+				got, err := Parse("uaapl_v1-" + mockValidAccountIssuer)
 				want := &Denom{
 					Currency: &currency.Currency{
 						Symbol:  "AAPL",
 						Version: "1",
 					},
 					Subunit: "uaapl_v1",
-					Issuer:  "testcore1j974n26f48wgt4dpcxryrakrnkg43",
+					Issuer:  mockValidAccountIssuer,
 				}
 
 				assert.NoError(t, err)
@@ -124,14 +126,14 @@ func TestParseDenom(t *testing.T) {
 			Name: "Valid denom parsing",
 			Test: func(t *testing.T) {
 				// Input contains 'v'
-				got, err := Parse("uaapl_v1-testcore1j974n26f48wgt4dpcxryrakrnkg43")
+				got, err := Parse("uaapl_v1-" + mockValidAccountIssuer)
 				want := &Denom{
 					Currency: &currency.Currency{
 						Symbol:  "AAPL",
 						Version: "1", // The parsed version is stripped of 'v'
 					},
 					Subunit: "uaapl_v1",
-					Issuer:  "testcore1j974n26f48wgt4dpcxryrakrnkg43",
+					Issuer:  mockValidAccountIssuer,
 				}
 
 				assert.NoError(t, err)

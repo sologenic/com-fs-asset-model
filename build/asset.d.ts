@@ -110,8 +110,6 @@ export declare const Asset: {
             } | undefined;
             Subunit?: string | undefined;
             Issuer?: string | undefined;
-            Precision?: number | undefined;
-            Description?: string | undefined;
         } | undefined;
         Type?: AssetType | undefined;
         Name?: string | undefined;
@@ -140,8 +138,6 @@ export declare const Asset: {
             } | undefined;
             Subunit?: string | undefined;
             Issuer?: string | undefined;
-            Precision?: number | undefined;
-            Description?: string | undefined;
         } & {
             Currency?: ({
                 Symbol?: string | undefined;
@@ -152,8 +148,6 @@ export declare const Asset: {
             } & { [K in Exclude<keyof I["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
             Subunit?: string | undefined;
             Issuer?: string | undefined;
-            Precision?: number | undefined;
-            Description?: string | undefined;
         } & { [K_1 in Exclude<keyof I["Denom"], keyof Denom>]: never; }) | undefined;
         Type?: AssetType | undefined;
         Name?: string | undefined;
@@ -197,8 +191,6 @@ export declare const Asset: {
             } | undefined;
             Subunit?: string | undefined;
             Issuer?: string | undefined;
-            Precision?: number | undefined;
-            Description?: string | undefined;
         } | undefined;
         Type?: AssetType | undefined;
         Name?: string | undefined;
@@ -227,8 +219,6 @@ export declare const Asset: {
             } | undefined;
             Subunit?: string | undefined;
             Issuer?: string | undefined;
-            Precision?: number | undefined;
-            Description?: string | undefined;
         } & {
             Currency?: ({
                 Symbol?: string | undefined;
@@ -239,8 +229,6 @@ export declare const Asset: {
             } & { [K_6 in Exclude<keyof I_1["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
             Subunit?: string | undefined;
             Issuer?: string | undefined;
-            Precision?: number | undefined;
-            Description?: string | undefined;
         } & { [K_7 in Exclude<keyof I_1["Denom"], keyof Denom>]: never; }) | undefined;
         Type?: AssetType | undefined;
         Name?: string | undefined;
@@ -291,8 +279,6 @@ export declare const Assets: {
                 } | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
-                Precision?: number | undefined;
-                Description?: string | undefined;
             } | undefined;
             Type?: AssetType | undefined;
             Name?: string | undefined;
@@ -324,8 +310,6 @@ export declare const Assets: {
                 } | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
-                Precision?: number | undefined;
-                Description?: string | undefined;
             } | undefined;
             Type?: AssetType | undefined;
             Name?: string | undefined;
@@ -354,8 +338,6 @@ export declare const Assets: {
                 } | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
-                Precision?: number | undefined;
-                Description?: string | undefined;
             } | undefined;
             Type?: AssetType | undefined;
             Name?: string | undefined;
@@ -384,8 +366,6 @@ export declare const Assets: {
                 } | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
-                Precision?: number | undefined;
-                Description?: string | undefined;
             } & {
                 Currency?: ({
                     Symbol?: string | undefined;
@@ -396,8 +376,6 @@ export declare const Assets: {
                 } & { [K in Exclude<keyof I["Records"][number]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
-                Precision?: number | undefined;
-                Description?: string | undefined;
             } & { [K_1 in Exclude<keyof I["Records"][number]["Denom"], keyof Denom>]: never; }) | undefined;
             Type?: AssetType | undefined;
             Name?: string | undefined;
@@ -440,8 +418,6 @@ export declare const Assets: {
                 } | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
-                Precision?: number | undefined;
-                Description?: string | undefined;
             } | undefined;
             Type?: AssetType | undefined;
             Name?: string | undefined;
@@ -474,8 +450,6 @@ export declare const Assets: {
                 } | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
-                Precision?: number | undefined;
-                Description?: string | undefined;
             } | undefined;
             Type?: AssetType | undefined;
             Name?: string | undefined;
@@ -507,8 +481,6 @@ export declare const Assets: {
                 } | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
-                Precision?: number | undefined;
-                Description?: string | undefined;
             } | undefined;
             Type?: AssetType | undefined;
             Name?: string | undefined;
@@ -537,8 +509,6 @@ export declare const Assets: {
                 } | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
-                Precision?: number | undefined;
-                Description?: string | undefined;
             } | undefined;
             Type?: AssetType | undefined;
             Name?: string | undefined;
@@ -567,8 +537,6 @@ export declare const Assets: {
                 } | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
-                Precision?: number | undefined;
-                Description?: string | undefined;
             } & {
                 Currency?: ({
                     Symbol?: string | undefined;
@@ -579,8 +547,6 @@ export declare const Assets: {
                 } & { [K_8 in Exclude<keyof I_1["Records"][number]["Denom"]["Currency"], keyof import("./sologenic/com-fs-asset-model/domain/currency/currency").Currency>]: never; }) | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
-                Precision?: number | undefined;
-                Description?: string | undefined;
             } & { [K_9 in Exclude<keyof I_1["Records"][number]["Denom"], keyof Denom>]: never; }) | undefined;
             Type?: AssetType | undefined;
             Name?: string | undefined;
@@ -623,8 +589,6 @@ export declare const Assets: {
                 } | undefined;
                 Subunit?: string | undefined;
                 Issuer?: string | undefined;
-                Precision?: number | undefined;
-                Description?: string | undefined;
             } | undefined;
             Type?: AssetType | undefined;
             Name?: string | undefined;

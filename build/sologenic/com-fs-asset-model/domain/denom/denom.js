@@ -4,12 +4,11 @@
 //   protoc               v7.35.1
 // source: sologenic/com-fs-asset-model/domain/denom/denom.proto
 /* eslint-disable */
-import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { Currency } from "../currency/currency";
 export const protobufPackage = "denom";
 function createBaseDenom() {
-    return { Currency: undefined, Subunit: "", Issuer: "", Precision: 0, Description: "" };
+    return { Currency: undefined, Subunit: "", Issuer: "" };
 }
 export const Denom = {
     encode(message, writer = _m0.Writer.create()) {
@@ -21,12 +20,6 @@ export const Denom = {
         }
         if (message.Issuer !== "") {
             writer.uint32(26).string(message.Issuer);
-        }
-        if (message.Precision !== 0) {
-            writer.uint32(32).int64(message.Precision);
-        }
-        if (message.Description !== "") {
-            writer.uint32(42).string(message.Description);
         }
         return writer;
     },
@@ -55,18 +48,6 @@ export const Denom = {
                     }
                     message.Issuer = reader.string();
                     continue;
-                case 4:
-                    if (tag !== 32) {
-                        break;
-                    }
-                    message.Precision = longToNumber(reader.int64());
-                    continue;
-                case 5:
-                    if (tag !== 42) {
-                        break;
-                    }
-                    message.Description = reader.string();
-                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -80,8 +61,6 @@ export const Denom = {
             Currency: isSet(object.Currency) ? Currency.fromJSON(object.Currency) : undefined,
             Subunit: isSet(object.Subunit) ? globalThis.String(object.Subunit) : "",
             Issuer: isSet(object.Issuer) ? globalThis.String(object.Issuer) : "",
-            Precision: isSet(object.Precision) ? globalThis.Number(object.Precision) : 0,
-            Description: isSet(object.Description) ? globalThis.String(object.Description) : "",
         };
     },
     toJSON(message) {
@@ -95,43 +74,22 @@ export const Denom = {
         if (message.Issuer !== "") {
             obj.Issuer = message.Issuer;
         }
-        if (message.Precision !== 0) {
-            obj.Precision = Math.round(message.Precision);
-        }
-        if (message.Description !== "") {
-            obj.Description = message.Description;
-        }
         return obj;
     },
     create(base) {
         return Denom.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d;
+        var _a, _b;
         const message = createBaseDenom();
         message.Currency = (object.Currency !== undefined && object.Currency !== null)
             ? Currency.fromPartial(object.Currency)
             : undefined;
         message.Subunit = (_a = object.Subunit) !== null && _a !== void 0 ? _a : "";
         message.Issuer = (_b = object.Issuer) !== null && _b !== void 0 ? _b : "";
-        message.Precision = (_c = object.Precision) !== null && _c !== void 0 ? _c : 0;
-        message.Description = (_d = object.Description) !== null && _d !== void 0 ? _d : "";
         return message;
     },
 };
-function longToNumber(long) {
-    if (long.gt(globalThis.Number.MAX_SAFE_INTEGER)) {
-        throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
-    }
-    if (long.lt(globalThis.Number.MIN_SAFE_INTEGER)) {
-        throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
-    }
-    return long.toNumber();
-}
-if (_m0.util.Long !== Long) {
-    _m0.util.Long = Long;
-    _m0.configure();
-}
 function isSet(value) {
     return value !== null && value !== undefined;
 }

@@ -7,6 +7,7 @@
 package pair
 
 import (
+	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
 	denom "github.com/sologenic/com-fs-asset-model/domain/denom"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -78,10 +79,10 @@ var File_domain_pair_pair_proto protoreflect.FileDescriptor
 
 const file_domain_pair_pair_proto_rawDesc = "" +
 	"\n" +
-	"\x16domain/pair/pair.proto\x12\x04pair\x1a5sologenic/com-fs-asset-model/domain/denom/denom.proto\"L\n" +
-	"\x04Pair\x12 \n" +
-	"\x04Base\x18\x01 \x01(\v2\f.denom.DenomR\x04Base\x12\"\n" +
-	"\x05Quote\x18\x02 \x01(\v2\f.denom.DenomR\x05QuoteB:Z8github.com/sologenic/com-fs-asset-model/domain/pair;pairb\x06proto3"
+	"\x16domain/pair/pair.proto\x12\x04pair\x1a\x1bbuf/validate/validate.proto\x1a5sologenic/com-fs-asset-model/domain/denom/denom.proto\"\\\n" +
+	"\x04Pair\x12(\n" +
+	"\x04Base\x18\x01 \x01(\v2\f.denom.DenomB\x06\xbaH\x03\xc8\x01\x01R\x04Base\x12*\n" +
+	"\x05Quote\x18\x02 \x01(\v2\f.denom.DenomB\x06\xbaH\x03\xc8\x01\x01R\x05QuoteB:Z8github.com/sologenic/com-fs-asset-model/domain/pair;pairb\x06proto3"
 
 var (
 	file_domain_pair_pair_proto_rawDescOnce sync.Once
