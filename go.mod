@@ -1,14 +1,12 @@
 module github.com/sologenic/com-fs-asset-model
 
-go 1.26.2
+go 1.26.5
 
 require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.11-20260415201107-50325440f8f2.1
 	github.com/google/go-cmp v0.7.0
-	github.com/sologenic/com-fs-utils-internal-lib/go/grpc-client v0.0.0-20260728103404-9e2078b65184
-	github.com/sologenic/com-fs-utils-internal-lib/go/unittest v0.0.0-20260728103404-9e2078b65184
-	github.com/sologenic/com-fs-utils-lib/models/audit v0.0.0-20260716162548-122fbc8760ff
-	github.com/sologenic/com-fs-utils-lib/models/metadata v0.0.0-20260716162548-122fbc8760ff
+	github.com/sologenic/com-fs-utils-internal-lib/go/grpc-client v0.0.0-20260812100054-f93a2c88c2fb
+	github.com/sologenic/com-fs-utils-internal-lib/go/unittest v0.0.0-20260812100054-f93a2c88c2fb
 	github.com/stretchr/testify v1.11.1
 	google.golang.org/grpc v1.75.1
 	google.golang.org/protobuf v1.36.12
@@ -22,7 +20,6 @@ require (
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/google/s2a-go v0.1.9 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.6 // indirect
 	github.com/googleapis/gax-go/v2 v2.15.0 // indirect
@@ -31,8 +28,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rs/zerolog v1.35.1 // indirect
-	github.com/sologenic/com-fs-utils-internal-lib/go/logger v0.0.0-20260728103404-9e2078b65184 // indirect
-	github.com/syncore/protoc-go-inject-tag v1.1.3 // indirect
+	github.com/sologenic/com-fs-utils-internal-lib/go/logger v0.0.0-20260812100054-f93a2c88c2fb // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.63.0 // indirect
 	go.opentelemetry.io/otel v1.38.0 // indirect
