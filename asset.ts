@@ -143,12 +143,12 @@ export interface Asset {
   Details:
     | { [key: string]: any }
     | undefined;
-  /** Set on first store upsert. Immutable afterwards. */
-  CreatedAt?:
+  /** Set to now on create. Immutable afterwards. */
+  CreatedAt:
     | Date
     | undefined;
-  /** Updated on every store upsert. */
-  UpdatedAt?: Date | undefined;
+  /** Set to now on create and on every upsert. */
+  UpdatedAt: Date | undefined;
 }
 
 export interface Assets {

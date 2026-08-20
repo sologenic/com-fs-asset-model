@@ -156,10 +156,10 @@ type Asset struct {
 	Files []*File `protobuf:"bytes,13,rep,name=Files,proto3" json:"Files,omitempty"`
 	// Flexible key-value store for arbitrary, frontend-defined dynamic attributes.
 	Details *structpb.Struct `protobuf:"bytes,14,opt,name=Details,proto3" json:"Details,omitempty"`
-	// Set on first store upsert. Immutable afterwards.
-	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,15,opt,name=CreatedAt,proto3,oneof" json:"CreatedAt,omitempty"`
-	// Updated on every store upsert.
-	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,16,opt,name=UpdatedAt,proto3,oneof" json:"UpdatedAt,omitempty"`
+	// Set to now on create. Immutable afterwards.
+	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,15,opt,name=CreatedAt,proto3" json:"CreatedAt,omitempty"`
+	// Set to now on create and on every upsert.
+	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,16,opt,name=UpdatedAt,proto3" json:"UpdatedAt,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -426,7 +426,7 @@ var File_asset_proto protoreflect.FileDescriptor
 
 const file_asset_proto_rawDesc = "" +
 	"\n" +
-	"\vasset.proto\x12\x05asset\x1a5sologenic/com-fs-asset-model/domain/denom/denom.proto\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\"\xd6\x06\n" +
+	"\vasset.proto\x12\x05asset\x1a5sologenic/com-fs-asset-model/domain/denom/denom.proto\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\"\xc0\x06\n" +
 	"\x05Asset\x12]\n" +
 	"\x02ID\x18\x01 \x01(\tBM\xbaHJ\xc8\x01\x01rE\x10+\x18\x80\x022>^u[A-Za-z0-9.-]+_v[1-9][0-9]{0,2}-[a-zA-Z][a-zA-Z0-9]{37,126}$R\x02ID\x120\n" +
 	"\x0eOrganizationID\x18\x02 \x01(\tB\b\xbaH\x05r\x03\xb0\x01\x01R\x0eOrganizationID\x12*\n" +
@@ -447,14 +447,10 @@ const file_asset_proto_rawDesc = "" +
 	"IsPromoted\x18\f \x01(\bR\n" +
 	"IsPromoted\x12,\n" +
 	"\x05Files\x18\r \x03(\v2\v.asset.FileB\t\xbaH\x06\x92\x01\x03\x10\x80\x01R\x05Files\x121\n" +
-	"\aDetails\x18\x0e \x01(\v2\x17.google.protobuf.StructR\aDetails\x12=\n" +
-	"\tCreatedAt\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampH\x01R\tCreatedAt\x88\x01\x01\x12=\n" +
-	"\tUpdatedAt\x18\x10 \x01(\v2\x1a.google.protobuf.TimestampH\x02R\tUpdatedAt\x88\x01\x01B\v\n" +
-	"\t_IssuedAtB\f\n" +
-	"\n" +
-	"_CreatedAtB\f\n" +
-	"\n" +
-	"_UpdatedAt\"X\n" +
+	"\aDetails\x18\x0e \x01(\v2\x17.google.protobuf.StructR\aDetails\x12@\n" +
+	"\tCreatedAt\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\tCreatedAt\x12@\n" +
+	"\tUpdatedAt\x18\x10 \x01(\v2\x1a.google.protobuf.TimestampB\x06\xbaH\x03\xc8\x01\x01R\tUpdatedAtB\v\n" +
+	"\t_IssuedAt\"X\n" +
 	"\x06Assets\x12&\n" +
 	"\aRecords\x18\x01 \x03(\v2\f.asset.AssetR\aRecords\x12\x1b\n" +
 	"\x06Offset\x18\x02 \x01(\x05H\x00R\x06Offset\x88\x01\x01B\t\n" +
