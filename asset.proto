@@ -105,6 +105,12 @@ message Asset {
 
     // Flexible key-value store for arbitrary, frontend-defined dynamic attributes.
     google.protobuf.Struct Details = 14;
+
+    // Set on first store upsert. Immutable afterwards.
+    optional google.protobuf.Timestamp CreatedAt = 15;
+
+    // Updated on every store upsert.
+    optional google.protobuf.Timestamp UpdatedAt = 16;
 }
 
 message Assets {

@@ -83,6 +83,8 @@ function createBaseAsset() {
         IsPromoted: false,
         Files: [],
         Details: undefined,
+        CreatedAt: undefined,
+        UpdatedAt: undefined,
     };
 }
 export const Asset = {
@@ -128,6 +130,12 @@ export const Asset = {
         }
         if (message.Details !== undefined) {
             Struct.encode(Struct.wrap(message.Details), writer.uint32(114).fork()).ldelim();
+        }
+        if (message.CreatedAt !== undefined) {
+            Timestamp.encode(toTimestamp(message.CreatedAt), writer.uint32(122).fork()).ldelim();
+        }
+        if (message.UpdatedAt !== undefined) {
+            Timestamp.encode(toTimestamp(message.UpdatedAt), writer.uint32(130).fork()).ldelim();
         }
         return writer;
     },
@@ -222,6 +230,18 @@ export const Asset = {
                     }
                     message.Details = Struct.unwrap(Struct.decode(reader, reader.uint32()));
                     continue;
+                case 15:
+                    if (tag !== 122) {
+                        break;
+                    }
+                    message.CreatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+                    continue;
+                case 16:
+                    if (tag !== 130) {
+                        break;
+                    }
+                    message.UpdatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -246,6 +266,8 @@ export const Asset = {
             IsPromoted: isSet(object.IsPromoted) ? globalThis.Boolean(object.IsPromoted) : false,
             Files: globalThis.Array.isArray(object === null || object === void 0 ? void 0 : object.Files) ? object.Files.map((e) => File.fromJSON(e)) : [],
             Details: isObject(object.Details) ? object.Details : undefined,
+            CreatedAt: isSet(object.CreatedAt) ? fromJsonTimestamp(object.CreatedAt) : undefined,
+            UpdatedAt: isSet(object.UpdatedAt) ? fromJsonTimestamp(object.UpdatedAt) : undefined,
         };
     },
     toJSON(message) {
@@ -293,13 +315,19 @@ export const Asset = {
         if (message.Details !== undefined) {
             obj.Details = message.Details;
         }
+        if (message.CreatedAt !== undefined) {
+            obj.CreatedAt = message.CreatedAt.toISOString();
+        }
+        if (message.UpdatedAt !== undefined) {
+            obj.UpdatedAt = message.UpdatedAt.toISOString();
+        }
         return obj;
     },
     create(base) {
         return Asset.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
         const message = createBaseAsset();
         message.ID = (_a = object.ID) !== null && _a !== void 0 ? _a : "";
         message.OrganizationID = (_b = object.OrganizationID) !== null && _b !== void 0 ? _b : "";
@@ -315,6 +343,8 @@ export const Asset = {
         message.IsPromoted = (_l = object.IsPromoted) !== null && _l !== void 0 ? _l : false;
         message.Files = ((_m = object.Files) === null || _m === void 0 ? void 0 : _m.map((e) => File.fromPartial(e))) || [];
         message.Details = (_o = object.Details) !== null && _o !== void 0 ? _o : undefined;
+        message.CreatedAt = (_p = object.CreatedAt) !== null && _p !== void 0 ? _p : undefined;
+        message.UpdatedAt = (_q = object.UpdatedAt) !== null && _q !== void 0 ? _q : undefined;
         return message;
     },
 };

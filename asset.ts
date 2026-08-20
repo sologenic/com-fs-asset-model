@@ -140,7 +140,15 @@ export interface Asset {
   /** Attached media and documents (e.g., legal agreements, brochures, images). */
   Files: File[];
   /** Flexible key-value store for arbitrary, frontend-defined dynamic attributes. */
-  Details: { [key: string]: any } | undefined;
+  Details:
+    | { [key: string]: any }
+    | undefined;
+  /** Set on first store upsert. Immutable afterwards. */
+  CreatedAt?:
+    | Date
+    | undefined;
+  /** Updated on every store upsert. */
+  UpdatedAt?: Date | undefined;
 }
 
 export interface Assets {
@@ -174,6 +182,8 @@ function createBaseAsset(): Asset {
     IsPromoted: false,
     Files: [],
     Details: undefined,
+    CreatedAt: undefined,
+    UpdatedAt: undefined,
   };
 }
 
@@ -220,6 +230,12 @@ export const Asset = {
     }
     if (message.Details !== undefined) {
       Struct.encode(Struct.wrap(message.Details), writer.uint32(114).fork()).ldelim();
+    }
+    if (message.CreatedAt !== undefined) {
+      Timestamp.encode(toTimestamp(message.CreatedAt), writer.uint32(122).fork()).ldelim();
+    }
+    if (message.UpdatedAt !== undefined) {
+      Timestamp.encode(toTimestamp(message.UpdatedAt), writer.uint32(130).fork()).ldelim();
     }
     return writer;
   },
@@ -329,6 +345,20 @@ export const Asset = {
 
           message.Details = Struct.unwrap(Struct.decode(reader, reader.uint32()));
           continue;
+        case 15:
+          if (tag !== 122) {
+            break;
+          }
+
+          message.CreatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          continue;
+        case 16:
+          if (tag !== 130) {
+            break;
+          }
+
+          message.UpdatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -354,6 +384,8 @@ export const Asset = {
       IsPromoted: isSet(object.IsPromoted) ? globalThis.Boolean(object.IsPromoted) : false,
       Files: globalThis.Array.isArray(object?.Files) ? object.Files.map((e: any) => File.fromJSON(e)) : [],
       Details: isObject(object.Details) ? object.Details : undefined,
+      CreatedAt: isSet(object.CreatedAt) ? fromJsonTimestamp(object.CreatedAt) : undefined,
+      UpdatedAt: isSet(object.UpdatedAt) ? fromJsonTimestamp(object.UpdatedAt) : undefined,
     };
   },
 
@@ -401,6 +433,12 @@ export const Asset = {
     if (message.Details !== undefined) {
       obj.Details = message.Details;
     }
+    if (message.CreatedAt !== undefined) {
+      obj.CreatedAt = message.CreatedAt.toISOString();
+    }
+    if (message.UpdatedAt !== undefined) {
+      obj.UpdatedAt = message.UpdatedAt.toISOString();
+    }
     return obj;
   },
 
@@ -423,6 +461,8 @@ export const Asset = {
     message.IsPromoted = object.IsPromoted ?? false;
     message.Files = object.Files?.map((e) => File.fromPartial(e)) || [];
     message.Details = object.Details ?? undefined;
+    message.CreatedAt = object.CreatedAt ?? undefined;
+    message.UpdatedAt = object.UpdatedAt ?? undefined;
     return message;
   },
 };
