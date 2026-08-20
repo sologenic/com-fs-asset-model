@@ -81,6 +81,10 @@ export interface Asset {
     Details: {
         [key: string]: any;
     } | undefined;
+    /** Set to now on create. Immutable afterwards. */
+    CreatedAt: Date | undefined;
+    /** Set to now on create and on every upsert. */
+    UpdatedAt: Date | undefined;
 }
 export interface Assets {
     Records: Asset[];
@@ -128,6 +132,8 @@ export declare const Asset: {
         Details?: {
             [x: string]: any;
         } | undefined;
+        CreatedAt?: Date | undefined;
+        UpdatedAt?: Date | undefined;
     } & {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -180,6 +186,8 @@ export declare const Asset: {
         } & {
             [x: string]: any;
         } & { [K_4 in Exclude<keyof I["Details"], string | number>]: never; }) | undefined;
+        CreatedAt?: Date | undefined;
+        UpdatedAt?: Date | undefined;
     } & { [K_5 in Exclude<keyof I, keyof Asset>]: never; }>(base?: I | undefined): Asset;
     fromPartial<I_1 extends {
         ID?: string | undefined;
@@ -209,6 +217,8 @@ export declare const Asset: {
         Details?: {
             [x: string]: any;
         } | undefined;
+        CreatedAt?: Date | undefined;
+        UpdatedAt?: Date | undefined;
     } & {
         ID?: string | undefined;
         OrganizationID?: string | undefined;
@@ -261,6 +271,8 @@ export declare const Asset: {
         } & {
             [x: string]: any;
         } & { [K_10 in Exclude<keyof I_1["Details"], string | number>]: never; }) | undefined;
+        CreatedAt?: Date | undefined;
+        UpdatedAt?: Date | undefined;
     } & { [K_11 in Exclude<keyof I_1, keyof Asset>]: never; }>(object: I_1): Asset;
 };
 export declare const Assets: {
@@ -297,6 +309,8 @@ export declare const Assets: {
             Details?: {
                 [x: string]: any;
             } | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedAt?: Date | undefined;
         }[] | undefined;
         Offset?: number | undefined;
     } & {
@@ -328,6 +342,8 @@ export declare const Assets: {
             Details?: {
                 [x: string]: any;
             } | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedAt?: Date | undefined;
         }[] & ({
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -356,6 +372,8 @@ export declare const Assets: {
             Details?: {
                 [x: string]: any;
             } | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedAt?: Date | undefined;
         } & {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -408,6 +426,8 @@ export declare const Assets: {
             } & {
                 [x: string]: any;
             } & { [K_4 in Exclude<keyof I["Records"][number]["Details"], string | number>]: never; }) | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedAt?: Date | undefined;
         } & { [K_5 in Exclude<keyof I["Records"][number], keyof Asset>]: never; })[] & { [K_6 in Exclude<keyof I["Records"], keyof {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -436,6 +456,8 @@ export declare const Assets: {
             Details?: {
                 [x: string]: any;
             } | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedAt?: Date | undefined;
         }[]>]: never; }) | undefined;
         Offset?: number | undefined;
     } & { [K_7 in Exclude<keyof I, keyof Assets>]: never; }>(base?: I | undefined): Assets;
@@ -468,6 +490,8 @@ export declare const Assets: {
             Details?: {
                 [x: string]: any;
             } | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedAt?: Date | undefined;
         }[] | undefined;
         Offset?: number | undefined;
     } & {
@@ -499,6 +523,8 @@ export declare const Assets: {
             Details?: {
                 [x: string]: any;
             } | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedAt?: Date | undefined;
         }[] & ({
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -527,6 +553,8 @@ export declare const Assets: {
             Details?: {
                 [x: string]: any;
             } | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedAt?: Date | undefined;
         } & {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -579,6 +607,8 @@ export declare const Assets: {
             } & {
                 [x: string]: any;
             } & { [K_12 in Exclude<keyof I_1["Records"][number]["Details"], string | number>]: never; }) | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedAt?: Date | undefined;
         } & { [K_13 in Exclude<keyof I_1["Records"][number], keyof Asset>]: never; })[] & { [K_14 in Exclude<keyof I_1["Records"], keyof {
             ID?: string | undefined;
             OrganizationID?: string | undefined;
@@ -607,6 +637,8 @@ export declare const Assets: {
             Details?: {
                 [x: string]: any;
             } | undefined;
+            CreatedAt?: Date | undefined;
+            UpdatedAt?: Date | undefined;
         }[]>]: never; }) | undefined;
         Offset?: number | undefined;
     } & { [K_15 in Exclude<keyof I_1, keyof Assets>]: never; }>(object: I_1): Assets;
