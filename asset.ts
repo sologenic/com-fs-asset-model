@@ -148,7 +148,14 @@ export interface Asset {
     | Date
     | undefined;
   /** Set to now on create and on every upsert. */
-  UpdatedAt: Date | undefined;
+  UpdatedAt:
+    | Date
+    | undefined;
+  /**
+   * Indicates whether the asset has been issued on-chain.
+   * System-managed: Derived from IssuedAt on upsert. Becomes immutable once true.
+   */
+  IsIssued: boolean;
 }
 
 export interface Assets {
@@ -184,6 +191,7 @@ function createBaseAsset(): Asset {
     Details: undefined,
     CreatedAt: undefined,
     UpdatedAt: undefined,
+    IsIssued: false,
   };
 }
 
@@ -236,6 +244,9 @@ export const Asset = {
     }
     if (message.UpdatedAt !== undefined) {
       Timestamp.encode(toTimestamp(message.UpdatedAt), writer.uint32(130).fork()).ldelim();
+    }
+    if (message.IsIssued !== false) {
+      writer.uint32(136).bool(message.IsIssued);
     }
     return writer;
   },
@@ -359,6 +370,13 @@ export const Asset = {
 
           message.UpdatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
           continue;
+        case 17:
+          if (tag !== 136) {
+            break;
+          }
+
+          message.IsIssued = reader.bool();
+          continue;
       }
       if ((tag & 7) === 4 || tag === 0) {
         break;
@@ -386,6 +404,7 @@ export const Asset = {
       Details: isObject(object.Details) ? object.Details : undefined,
       CreatedAt: isSet(object.CreatedAt) ? fromJsonTimestamp(object.CreatedAt) : undefined,
       UpdatedAt: isSet(object.UpdatedAt) ? fromJsonTimestamp(object.UpdatedAt) : undefined,
+      IsIssued: isSet(object.IsIssued) ? globalThis.Boolean(object.IsIssued) : false,
     };
   },
 
@@ -439,6 +458,9 @@ export const Asset = {
     if (message.UpdatedAt !== undefined) {
       obj.UpdatedAt = message.UpdatedAt.toISOString();
     }
+    if (message.IsIssued !== false) {
+      obj.IsIssued = message.IsIssued;
+    }
     return obj;
   },
 
@@ -463,6 +485,7 @@ export const Asset = {
     message.Details = object.Details ?? undefined;
     message.CreatedAt = object.CreatedAt ?? undefined;
     message.UpdatedAt = object.UpdatedAt ?? undefined;
+    message.IsIssued = object.IsIssued ?? false;
     return message;
   },
 };
