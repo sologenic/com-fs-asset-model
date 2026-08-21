@@ -115,6 +115,10 @@ message Asset {
     google.protobuf.Timestamp UpdatedAt = 16 [
         (buf.validate.field).required = true
     ];
+
+    // Indicates whether the asset has been issued on-chain.
+    // System-managed: Derived from IssuedAt on upsert. Becomes immutable once true.
+    bool IsIssued = 17;
 }
 
 message Assets {

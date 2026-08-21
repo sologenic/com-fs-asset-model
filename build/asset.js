@@ -85,6 +85,7 @@ function createBaseAsset() {
         Details: undefined,
         CreatedAt: undefined,
         UpdatedAt: undefined,
+        IsIssued: false,
     };
 }
 export const Asset = {
@@ -136,6 +137,9 @@ export const Asset = {
         }
         if (message.UpdatedAt !== undefined) {
             Timestamp.encode(toTimestamp(message.UpdatedAt), writer.uint32(130).fork()).ldelim();
+        }
+        if (message.IsIssued !== false) {
+            writer.uint32(136).bool(message.IsIssued);
         }
         return writer;
     },
@@ -242,6 +246,12 @@ export const Asset = {
                     }
                     message.UpdatedAt = fromTimestamp(Timestamp.decode(reader, reader.uint32()));
                     continue;
+                case 17:
+                    if (tag !== 136) {
+                        break;
+                    }
+                    message.IsIssued = reader.bool();
+                    continue;
             }
             if ((tag & 7) === 4 || tag === 0) {
                 break;
@@ -268,6 +278,7 @@ export const Asset = {
             Details: isObject(object.Details) ? object.Details : undefined,
             CreatedAt: isSet(object.CreatedAt) ? fromJsonTimestamp(object.CreatedAt) : undefined,
             UpdatedAt: isSet(object.UpdatedAt) ? fromJsonTimestamp(object.UpdatedAt) : undefined,
+            IsIssued: isSet(object.IsIssued) ? globalThis.Boolean(object.IsIssued) : false,
         };
     },
     toJSON(message) {
@@ -321,13 +332,16 @@ export const Asset = {
         if (message.UpdatedAt !== undefined) {
             obj.UpdatedAt = message.UpdatedAt.toISOString();
         }
+        if (message.IsIssued !== false) {
+            obj.IsIssued = message.IsIssued;
+        }
         return obj;
     },
     create(base) {
         return Asset.fromPartial(base !== null && base !== void 0 ? base : {});
     },
     fromPartial(object) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
         const message = createBaseAsset();
         message.ID = (_a = object.ID) !== null && _a !== void 0 ? _a : "";
         message.OrganizationID = (_b = object.OrganizationID) !== null && _b !== void 0 ? _b : "";
@@ -345,6 +359,7 @@ export const Asset = {
         message.Details = (_o = object.Details) !== null && _o !== void 0 ? _o : undefined;
         message.CreatedAt = (_p = object.CreatedAt) !== null && _p !== void 0 ? _p : undefined;
         message.UpdatedAt = (_q = object.UpdatedAt) !== null && _q !== void 0 ? _q : undefined;
+        message.IsIssued = (_r = object.IsIssued) !== null && _r !== void 0 ? _r : false;
         return message;
     },
 };
