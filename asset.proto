@@ -104,6 +104,7 @@ message Asset {
     ];
 
     // Flexible key-value store for arbitrary, frontend-defined dynamic attributes.
+    // @inject_tags: datastore:"-"
     google.protobuf.Struct Details = 14;
 
     // Set to now on create. Immutable afterwards.
