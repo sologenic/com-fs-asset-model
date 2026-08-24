@@ -155,6 +155,7 @@ type Asset struct {
 	// Attached media and documents (e.g., legal agreements, brochures, images).
 	Files []*File `protobuf:"bytes,13,rep,name=Files,proto3" json:"Files,omitempty"`
 	// Flexible key-value store for arbitrary, frontend-defined dynamic attributes.
+	// @inject_tags: datastore:"-"
 	Details *structpb.Struct `protobuf:"bytes,14,opt,name=Details,proto3" json:"Details,omitempty" datastore:"-"`
 	// Set to now on create. Immutable afterwards.
 	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,15,opt,name=CreatedAt,proto3" json:"CreatedAt,omitempty"`
@@ -444,7 +445,7 @@ const file_asset_proto_rawDesc = "" +
 	"\x04Type\x18\x04 \x01(\x0e2\x10.asset.AssetTypeB\n" +
 	"\xbaH\a\x82\x01\x04\x10\x01 \x00R\x04Type\x12!\n" +
 	"\x04Name\x18\x05 \x01(\tB\r\xbaH\n" +
-	"\xc8\x01\x01r\x05\x10\x02\x18\x80\x01R\x04Name\x12*\n" +
+	"\xc8\x01\x01r\x05\x10\x02\x18\x80\x02R\x04Name\x12*\n" +
 	"\vDescription\x18\x06 \x01(\tB\b\xbaH\x05r\x03\x18\x80\x02R\vDescription\x12#\n" +
 	"\aContent\x18\a \x01(\tB\t\xbaH\x06r\x04\x18\x80\x80\x04R\aContent\x12I\n" +
 	"\x13OriginCountryAlpha3\x18\b \x01(\tB\x17\xbaH\x14\xd8\x01\x01r\x0f2\n" +

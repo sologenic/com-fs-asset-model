@@ -50,7 +50,7 @@ message Asset {
         (buf.validate.field).required = true,
         (buf.validate.field).string = {
             min_len: 2,
-            max_len: 128
+            max_len: 256
         }
     ];
 
