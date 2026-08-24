@@ -155,7 +155,7 @@ type Asset struct {
 	// Attached media and documents (e.g., legal agreements, brochures, images).
 	Files []*File `protobuf:"bytes,13,rep,name=Files,proto3" json:"Files,omitempty"`
 	// Flexible key-value store for arbitrary, frontend-defined dynamic attributes.
-	Details *structpb.Struct `protobuf:"bytes,14,opt,name=Details,proto3" json:"Details,omitempty"`
+	Details *structpb.Struct `protobuf:"bytes,14,opt,name=Details,proto3" json:"Details,omitempty" datastore:"-"`
 	// Set to now on create. Immutable afterwards.
 	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,15,opt,name=CreatedAt,proto3" json:"CreatedAt,omitempty"`
 	// Set to now on create and on every upsert.
