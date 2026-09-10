@@ -8,14 +8,15 @@ import (
 )
 
 var (
-	// Supports dot (.) and dash (-) for complex tickers like BAB.A or BTC-USD
-	symbolRegex = regexp.MustCompile(`^[a-zA-Z0-9.\-]{1,45}$`)
+	// Supports dot (.) for complex tickers like BAB.A (dashes are not allowed;
+	// the chain splits denom on '-' between subunit and issuer)
+	symbolRegex = regexp.MustCompile(`^[a-zA-Z0-9.]{1,45}$`)
 
 	// Internally we strictly store only digits (without 'v')
 	versionRegex = regexp.MustCompile(`^[1-9][0-9]{0,2}$`)
 
 	// In the string representation of a subunit, 'v' is mandatory
-	subunitRegex = regexp.MustCompile(`^u[a-z0-9.\-]{1,45}_v[1-9][0-9]{0,2}$`)
+	subunitRegex = regexp.MustCompile(`^u[a-z0-9.]{1,45}_v[1-9][0-9]{0,2}$`)
 )
 
 func New(symbol, version string) (*Currency, error) {
@@ -53,7 +54,7 @@ func Parse(value string) (*Currency, error) {
 
 func ValidateSymbol(symbol string) error {
 	if !symbolRegex.MatchString(symbol) {
-		return errors.New("invalid symbol format: must be [a-zA-Z0-9.\\-]{1,45}")
+		return errors.New("invalid symbol format: must be [a-zA-Z0-9.]{1,45}")
 	}
 	return nil
 }
