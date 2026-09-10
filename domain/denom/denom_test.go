@@ -158,6 +158,16 @@ func TestParseDenom(t *testing.T) {
 				assertEventsEquality(t, want, got)
 			},
 		},
+		{
+			Name: "Invalid denom with dash in symbol",
+			Test: func(t *testing.T) {
+				got, err := Parse("ubtc-usd_v2-" + mockValidAccountIssuer)
+
+				assert.Error(t, err)
+				assert.Contains(t, err.Error(), "invalid denom format")
+				assert.Nil(t, got)
+			},
+		},
 	}
 	unittest.RunTests(t, tests)
 }

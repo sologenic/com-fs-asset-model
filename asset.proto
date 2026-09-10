@@ -17,7 +17,7 @@ message Asset {
         (buf.validate.field).string = {
             min_len: 43
             max_len: 256
-            pattern: "^u[A-Za-z0-9.-]+_v[1-9][0-9]{0,2}-[a-zA-Z][a-zA-Z0-9]{37,126}$"
+            pattern: "^u[A-Za-z0-9.]+_v[1-9][0-9]{0,2}-[a-zA-Z][a-zA-Z0-9]{37,126}$"
         }
     ];
 

@@ -139,7 +139,10 @@ export interface Asset {
   IsPromoted: boolean;
   /** Attached media and documents (e.g., legal agreements, brochures, images). */
   Files: File[];
-  /** Flexible key-value store for arbitrary, frontend-defined dynamic attributes. */
+  /**
+   * Flexible key-value store for arbitrary, frontend-defined dynamic attributes.
+   * @inject_tags: datastore:"-"
+   */
   Details:
     | { [key: string]: any }
     | undefined;

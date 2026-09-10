@@ -81,15 +81,13 @@ func TestNewCurrency(t *testing.T) {
 			},
 		},
 		{
-			Name: "Valid currency with dash (BTC-USD)",
+			Name: "Invalid currency with dash (BTC-USD)",
 			Test: func(t *testing.T) {
-				expected, err := New("BTC-USD", "2")
-				wanted := &Currency{
-					Symbol:  "BTC-USD",
-					Version: "2",
-				}
-				assert.NoError(t, err)
-				assertEventsEquality(t, wanted, expected)
+				got, err := New("BTC-USD", "2")
+
+				assert.Error(t, err)
+				assert.Contains(t, err.Error(), "invalid symbol format")
+				assert.Nil(t, got)
 			},
 		},
 	}

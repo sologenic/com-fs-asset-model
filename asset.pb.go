@@ -437,9 +437,9 @@ var File_asset_proto protoreflect.FileDescriptor
 
 const file_asset_proto_rawDesc = "" +
 	"\n" +
-	"\vasset.proto\x12\x05asset\x1a5sologenic/com-fs-asset-model/domain/denom/denom.proto\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\"\xdc\x06\n" +
-	"\x05Asset\x12]\n" +
-	"\x02ID\x18\x01 \x01(\tBM\xbaHJ\xc8\x01\x01rE\x10+\x18\x80\x022>^u[A-Za-z0-9.-]+_v[1-9][0-9]{0,2}-[a-zA-Z][a-zA-Z0-9]{37,126}$R\x02ID\x120\n" +
+	"\vasset.proto\x12\x05asset\x1a5sologenic/com-fs-asset-model/domain/denom/denom.proto\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\"\xdb\x06\n" +
+	"\x05Asset\x12\\\n" +
+	"\x02ID\x18\x01 \x01(\tBL\xbaHI\xc8\x01\x01rD\x10+\x18\x80\x022=^u[A-Za-z0-9.]+_v[1-9][0-9]{0,2}-[a-zA-Z][a-zA-Z0-9]{37,126}$R\x02ID\x120\n" +
 	"\x0eOrganizationID\x18\x02 \x01(\tB\b\xbaH\x05r\x03\xb0\x01\x01R\x0eOrganizationID\x12*\n" +
 	"\x05Denom\x18\x03 \x01(\v2\f.denom.DenomB\x06\xbaH\x03\xc8\x01\x01R\x05Denom\x120\n" +
 	"\x04Type\x18\x04 \x01(\x0e2\x10.asset.AssetTypeB\n" +
