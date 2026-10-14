@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"sync"
 
 	grpcdef "github.com/sologenic/com-fs-asset-model"
 	grpcclient "github.com/sologenic/com-fs-utils-internal-lib/go/grpc-client"
@@ -12,6 +13,7 @@ const endpoint = "ASSET_STORE"
 var (
 	client     grpcdef.AssetListServiceClient
 	grpcClient *grpcclient.GRPCClient
+	once       sync.Once
 )
 
 func initClient() {
@@ -20,15 +22,11 @@ func initClient() {
 }
 
 func Client() grpcdef.AssetListServiceClient {
-	if client == nil {
-		initClient()
-	}
+	once.Do(initClient)
 	return client
 }
 
 func AuthCtx(ctx context.Context) context.Context {
-	if grpcClient == nil {
-		initClient()
-	}
+	once.Do(initClient)
 	return grpcClient.AuthCtx(ctx)
 }
