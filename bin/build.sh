@@ -78,7 +78,7 @@ protoc \
   --go-grpc_opt=require_unimplemented_servers=false \
   "--go-grpc_out=." --go-grpc_opt=paths=source_relative
 
-protoc-go-inject-tag -input="asset.pb.go"
+protoc-go-inject-tag -input="*.pb.go"
 
 npm i
 
