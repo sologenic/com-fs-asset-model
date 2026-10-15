@@ -5,9 +5,9 @@ go 1.27.1
 require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.11-20260415201107-50325440f8f2.1
 	github.com/google/go-cmp v0.7.0
-	github.com/sologenic/com-fs-utils-internal-lib/go/grpc-client v0.0.0-20261014184121-6933fe0a39b9
-	github.com/sologenic/com-fs-utils-internal-lib/go/unittest v0.0.0-20261014184121-6933fe0a39b9
-	github.com/sologenic/gclouddatastore v0.0.0-20261014152241-c4ec85f6c0ad
+	github.com/sologenic/com-fs-utils-internal-lib/go/grpc-client v0.0.0-20261015114510-759dd7e97daf
+	github.com/sologenic/com-fs-utils-internal-lib/go/unittest v0.0.0-20261015114510-759dd7e97daf
+	github.com/sologenic/gclouddatastore v0.0.0-20261015094531-bfc95c300b22
 	github.com/stretchr/testify v1.11.1
 	google.golang.org/grpc v1.83.2
 	google.golang.org/protobuf v1.36.12
@@ -31,7 +31,7 @@ require (
 	github.com/mattn/go-isatty v0.0.23 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/rs/zerolog v1.35.1 // indirect
-	github.com/sologenic/com-fs-utils-internal-lib/go/logger v0.0.0-20261014184121-6933fe0a39b9 // indirect
+	github.com/sologenic/com-fs-utils-internal-lib/go/logger v0.0.0-20261015114510-759dd7e97daf // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.69.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.69.0 // indirect
