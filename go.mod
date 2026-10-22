@@ -1,6 +1,6 @@
 module github.com/sologenic/com-fs-asset-model
 
-go 1.27.1
+go 1.27.3
 
 require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.11-20260415201107-50325440f8f2.1
