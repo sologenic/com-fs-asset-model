@@ -13,10 +13,10 @@ var (
 	symbolRegex = regexp.MustCompile(`^[a-zA-Z0-9.]{1,45}$`)
 
 	// Internally we strictly store only digits (without 'v')
-	versionRegex = regexp.MustCompile(`^[1-9][0-9]{0,2}$`)
+	versionRegex = regexp.MustCompile(`^[1-9]\d{0,2}$`)
 
 	// In the string representation of a subunit, 'v' is mandatory
-	subunitRegex = regexp.MustCompile(`^u[a-z0-9.]{1,45}_v[1-9][0-9]{0,2}$`)
+	subunitRegex = regexp.MustCompile(`^u[a-z0-9.]{1,45}_v[1-9]\d{0,2}$`)
 )
 
 func New(symbol, version string) (*Currency, error) {
@@ -54,14 +54,14 @@ func Parse(value string) (*Currency, error) {
 
 func ValidateSymbol(symbol string) error {
 	if !symbolRegex.MatchString(symbol) {
-		return errors.New("invalid symbol format: must be [a-zA-Z0-9.]{1,45}")
+		return errors.New("invalid symbol format: must be [a-zA-Z\\d.]{1,45}")
 	}
 	return nil
 }
 
 func ValidateVersion(version string) error {
 	if !versionRegex.MatchString(version) {
-		return errors.New("invalid version format: must be [1-9][0-9]{0,2}")
+		return errors.New("invalid version format: must be [1-9]\\d{0,2}")
 	}
 	return nil
 }
