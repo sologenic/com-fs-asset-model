@@ -370,7 +370,6 @@ Contains general financial information applicable to any asset. Financial-specif
 | InitialValuation         | float            | Required          | Initial asset valuation                 |
 | CurrentValuation         | float            | Required          | Current asset valuation                 |
 | ValuationDate            | string           | Optional          | Date of last valuation                  |
-| Network                  | metadata.Network | Required          | Blockchain network                      |
 | Status                   | string           | Required          | Financial status                        |
 
 **Use Cases:**
@@ -904,7 +903,6 @@ Query parameters for asset filtering and retrieval. Compliance filter: list asse
 
 | Field                   | Type             | Required/Optional | Description                                                   |
 | ----------------------- | ---------------- | ----------------- | ------------------------------------------------------------- |
-| Network                 | metadata.Network | Required          | Blockchain network filter                                     |
 | Offset                  | int32            | Optional          | Pagination offset                                             |
 | JurisdictionIDs         | repeated string  | Optional          | Compliance filter: list assets allowed in these jurisdictions |
 | OrganizationID          | string           | Optional          | Organization filter                                           |
@@ -939,7 +937,6 @@ Query parameters for user asset list filtering and retrieval.
 
 | Field          | Type             | Required/Optional | Description               |
 | -------------- | ---------------- | ----------------- | ------------------------- |
-| Network        | metadata.Network | Required          | Blockchain network filter |
 | Offset         | int32            | Optional          | Pagination offset         |
 | AccountID      | string           | Optional          | User account filter       |
 | Wallet         | string           | Optional          | Wallet address filter     |
